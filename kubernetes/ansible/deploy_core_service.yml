@@ -9,8 +9,6 @@
     - name: check for kong db migration
       include_role:
         name: kong-migration
-      environment:
-        ANSIBLE_PYTHON_INTERPRETER: "/usr/bin/python2"
       when: release_name == "apimanager"
   roles:
     - "{{ role_name }}"

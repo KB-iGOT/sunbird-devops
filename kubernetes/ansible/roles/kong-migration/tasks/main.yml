@@ -1,14 +1,12 @@
 - name: Check if tables exist in Kong Postgres database
   become: true  # Required for docker commands
-  command: docker run --rm postgres psql -h {{ kong_postgres_host }} -U {{ kong_postgres_user }} -d {{ kong_postgres_database }} -p 5432 -c "\dt" | grep -qE '^Did not find any relations\.'
+  shell: (docker run --rm -e PGPASSWORD={{ kong_postgres_password }} postgres psql -h {{ kong_postgres_host }} -U {{ kong_postgres_user }} -d {{ kong_postgres_database }} -p 5432 -c "\dt") |  grep schema_migrations | wc -l
   register: table_check
-  environment:
-    POSTGRES_PASSWORD: "{{ kong_postgres_password }}"
   when: release_name == "apimanager"
 
 - name: Run Kong migrations
   become: true  # Required for docker commands
-  command: docker run --rm -e KONG_DATABASE=postgres \
+  shell: docker run --rm -e KONG_DATABASE=postgres \
            -e KONG_PG_DATABASE={{ kong_postgres_database }} \
            -e KONG_PG_HOST={{ kong_postgres_host }} \
            -e KONG_PG_PASSWORD={{ kong_postgres_password }} \
@@ -18,9 +16,4 @@
            -e KONG_PROXY_ERROR_LOG=/dev/stderr \
            -e KONG_ADMIN_ERROR_LOG=/dev/stderr kong:0.14.1 kong migrations up --v
   register: kong_migration_output
-  when: table_check.rc == 0 and release_name == "apimanager"
-
-- name: fail when migration failed
-  fail:
-    msg: Kong migration failed. Aborting!
-  when: docker_container_output.ansible_facts.docker_container.Output == "Did not find any relations.\n" and release_name == "apimanager" and kong_migration_output.ansible_facts.docker_container.Output is not search("migrations up to date")
+  when: table_check.stdout == 0 and release_name == "apimanager"
