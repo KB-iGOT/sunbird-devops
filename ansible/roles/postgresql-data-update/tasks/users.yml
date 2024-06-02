@@ -3,7 +3,7 @@
   postgresql_user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
-    login_unix_socket: "{{ default(postgresql_unix_socket_directories[0]) }}"
+    login_unix_socket: "{{ item.login_unix_socket | default(postgresql_unix_socket_directories[0]) }}"
   with_items: "{{ postgresql_users }}"
   no_log: "{{ postgres_users_no_log }}"
   become: true
