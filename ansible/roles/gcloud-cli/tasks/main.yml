@@ -16,4 +16,4 @@
     - curl
     - apt-transport-https
     - gnupg
-    - google-cloud-cli=479.0.0-0
+    - google-cloud-cli=478.0.0-0
