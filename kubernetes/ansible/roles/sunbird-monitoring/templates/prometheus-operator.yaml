@@ -51,6 +51,8 @@ prometheus:
   prometheusSpec:
     thanos:
       version: {{ thanos_sidecar_version | d('v0.11.0') }}
+    evaluationInterval: "30s"
+    scrapeInterval: "30s"
     additionalScrapeConfigsExternal: true
     retention: "{{ prometheus_retention_time | d('90d') }}"
     externalLabels:
