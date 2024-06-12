@@ -14,7 +14,7 @@
   poll: 10
 
 - name: upload to GCS
-  import_playbook: artifacts-upload.yml
+  include_tasks: artifacts-upload.yml
   vars:
     artifacts_container: "{{ backup_bucket }}"
     artifact_path: "{{ postgresql_backup_gzip_file_path }}"
