@@ -17,7 +17,7 @@
   include_role:
     name: artifacts-upload-gcp
   vars:
-    artifacts_container: "{{ backup_bucket }}"
+    artifacts_container: "{{ backup_bucket }}/{{ postgresql_backup_folder }}"
     artifact_path: "{{ postgresql_backup_gzip_file_path }}"
     artifact: "{{ postgresql_backup_gzip_file_name }}"
     service_account:  "{{ gcp_backups_service_account }}"
