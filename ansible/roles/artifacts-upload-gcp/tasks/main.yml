@@ -11,7 +11,7 @@
 
 - name: Write GCP service account file
   copy:
-    content: "{{ gcp_artifcats_upload_service_account }}"
+    content: "{{ service_account }}"
     dest: /tmp/gcp_service_account.json
     mode: "0600"
 

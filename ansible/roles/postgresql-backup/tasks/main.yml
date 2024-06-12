@@ -20,6 +20,7 @@
     artifacts_container: "{{ backup_bucket }}"
     artifact_path: "{{ postgresql_backup_gzip_file_path }}"
     artifact: "{{ postgresql_backup_gzip_file_name }}"
+    service_account:  "{{ gcp_backups_service_account }}"
 
 - name: clean up backup dir after upload
   file: path="{{ postgresql_backup_dir }}" state=absent
