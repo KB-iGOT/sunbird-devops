@@ -13,8 +13,9 @@
   async: 3600
   poll: 10
 
-- name: upload to GCS
-  include_tasks: artifacts-upload.yml
+- name: upload to gcs
+  include_role:
+    name: artifacts-upload-gcp
   vars:
     artifacts_container: "{{ backup_bucket }}"
     artifact_path: "{{ postgresql_backup_gzip_file_path }}"
