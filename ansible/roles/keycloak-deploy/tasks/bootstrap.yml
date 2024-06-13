@@ -81,7 +81,7 @@
     dest: /tmp
 
 - name: Run the keycloak bootstrap script
-  shell: cd /tmp/keycloak/ && python keycloak_main.py /tmp/keycloak-bootstrap.conf.json
+  shell: cd /tmp/keycloak/ && python3 keycloak_main.py /tmp/keycloak-bootstrap.conf.json
   register: out
   until: '"404" not in out.stderr'
   retries: 2
