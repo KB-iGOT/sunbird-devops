@@ -26,7 +26,7 @@
 
 - name: start keycloak with script upload feature temporarily
   shell: "nohup {{keycloak_home}}/bin/standalone.sh -Dkeycloak.profile.feature.upload_scripts=enabled -b={{ansible_default_ipv4.address}} -bprivate={{ansible_default_ipv4.address}} --server-config standalone-ha.xml &"
-  become: yes
+  become: true
   become_user: "{{ wildfly_user }}"
   notify: wait for keycloak to start
 
@@ -34,7 +34,7 @@
 
 - name: Install dependencies for keycloak
   apt:
-    name: ["python-setuptools"]
+    name: ["python-setuptools", "python3.7-dev", "python3.7-distutils"]
     update_cache: true
 
 - name: Ensure python packages are installed
