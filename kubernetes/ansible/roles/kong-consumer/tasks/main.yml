@@ -50,5 +50,7 @@
     - /tmp/jwt_token.txt
 
 - name: Reload kong
+  become: true
+  become_user: "jenkins"
   shell: kubectl get pod -l app=apimanager --namespace={{namespace}} -o name | xargs -I{} kubectl exec --namespace={{namespace}} {} -- kong reload
   ignore_errors: true
