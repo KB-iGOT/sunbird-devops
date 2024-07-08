@@ -11,7 +11,7 @@ resources:
     cpu: "4"
     memory: "4Gi"
 
-healthCheckPath: "/dashboard"
+healthCheckPath: "/kibana"
 
 kibanaConfig:
    kibana.yml: |
