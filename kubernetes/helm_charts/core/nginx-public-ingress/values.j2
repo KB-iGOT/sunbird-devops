@@ -7,6 +7,10 @@ service:
   {% if nginx_public_ingress_ip is defined %}
   nginx_public_ingress_ip: {{ nginx_public_ingress_ip }}
   {% endif %}
+  {% if nginx_public_ingress_annotations is defined %}
+  annotations:
+    {{ nginx_public_ingress_annotations }}
+  {% endif %}
   ports:
   - port: 80
     name: http
