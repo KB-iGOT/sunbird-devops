@@ -89,7 +89,6 @@ metadata:
 {{ toYaml .Values.service.annotations | indent 4 }}
 {{- end }}
 spec:
-  externalTrafficPolicy: Local
   selector:
     app: nginx-public-ingress
   type: {{ .Values.service.type }}
