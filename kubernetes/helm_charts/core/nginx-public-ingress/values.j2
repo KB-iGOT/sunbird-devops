@@ -9,7 +9,7 @@ service:
   {% endif %}
   {% if nginx_public_ingress_annotations is defined %}
   annotations:
-    {{ nginx_public_ingress_annotations | to_yaml }}
+    {{ nginx_public_ingress_annotations | to_json }}
   {% endif %}
   ports:
   - port: 80
