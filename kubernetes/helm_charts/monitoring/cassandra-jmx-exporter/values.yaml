@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: CASSANDRA_EXPORTER_CONFIG_host
+  repository: criteord/cassandra_exporter:2.3
   pullPolicy: IfNotPresent
   imageTag: 0.11
 
