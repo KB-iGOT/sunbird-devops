@@ -18,6 +18,7 @@
     method: PUT
     headers:
       Content-Type: "application/json"
+    timeout: 300
 
 - name: Print all snapshots
   uri:
