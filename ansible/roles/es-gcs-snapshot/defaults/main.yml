@@ -4,7 +4,7 @@ snapshot_create_request_body: {
       bucket: "{{ gcs_management_bucket_name }}",
       base_path: "{{ es_gcs_backup_folder_name }}/{{ snapshot_base_path }}_{{ base_path_date }}",
       connect_timeout: "{{gcs_connect_timeout}}",
-      read_timeout: "{{read_timeout}}"
+      read_timeout: "{{gcs_read_timeout}}"
     }
 }
 
