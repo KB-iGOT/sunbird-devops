@@ -276,8 +276,8 @@ sb.env.chiper.password={{cipher_password}}
 
 sb.es.user.notification.preference.index=notify_preference
 
-assessment.read.assessmentLevel.params=name,identifier,primaryCategory,versionKey,mimeType,code,version,objectType,status,expectedDuration,totalQuestions,maxQuestions,description,maxAssessmentRetakeAttempts,competencies_v3,assessmentType,sectionTimeBound,showMarks
-assessment.read.sectionLevel.params=parent,name,identifier,description,trackable,primaryCategory,versionKey,mimeType,code,version,objectType,status,index,maxQuestions,scoreCutoffType,minimumPassPercentage,additionalInstructions,sectionLevelDefinition,assessmentType,expectedDuration
+assessment.read.assessmentLevel.params=name,identifier,primaryCategory,versionKey,mimeType,code,version,objectType,status,expectedDuration,totalQuestions,maxQuestions,description,maxAssessmentRetakeAttempts,competencies_v3,assessmentType,sectionTimeBound,showMarks,questionParagraph,sectionType
+assessment.read.sectionLevel.params=parent,name,identifier,description,trackable,primaryCategory,versionKey,mimeType,code,version,objectType,status,index,maxQuestions,scoreCutoffType,minimumPassPercentage,additionalInstructions,sectionLevelDefinition,assessmentType,expectedDuration,questionParagraph,sectionType
 assessment.read.questionLevel.params=parent,name,identifier,primaryCategory,body,versionKey,mimeType,code,objectType,status,qType,index,showSolutions,allowAnonymousAccess,visibility,version,showFeedback,license,questionLevel,expectedDuration,totalMarks
 
 assessment.read.min.question.params=parent,name,identifier,primaryCategory,versionKey,mimeType,objectType,qType
@@ -418,3 +418,52 @@ spring.servlet.multipart.max-request-size=100MB
 #SearchService
 sb.search.service.host=http://search-service:9000
 sb.composite.v4.search=/v4/search
+
+spv.full.report.folder.name=full_report
+spv.full.report.file.name=reports.zip
+
+master.competency.framework.name={{kcmframeworkname}}
+bulk.upload.competency.your.workspace.name=Your Workspace
+bulk.upload.competency.reference.workspace.name=Reference Sheet Competency
+bulk.upload.master.designation.workspace.name=Org Designation master
+bulk.upload.competency.designation.file.name=bulkUploadMasterData.xlsx
+competency.designation.bulk.upload.container.name=competencyDesignation
+
+kafka.topics.competency.designation.bulk.upload.event={{env}}.competency.designation.bulk.upload
+kafka.topics.competency.designation.bulk.upload.event.group=competencyDesignationBulkUpload
+designation.competency.bulk.upload.update.threshold.value=10
+
+competency.selected.version=competencies_v6
+competency.selected.version.facets.map={"competencies_v6":"competencies_v6.competencyAreaName,competencies_v6.competencyThemeName,competencies_v6.competencySubThemeName","competencies_v5":"competencies_v5.competencyArea,competencies_v5.competencyTheme,competencies_v5.competencySubTheme"}
+national.learning.insights.fields={{ national_learning_insights_fields }}
+national.learning.insights.property.fields={"valueColor": "#FFFFFF","labelColor": "#FFFFFF","linebreak":"false","background": "#1B4CA1","iconColor": "#FFFFFF"}
+national.learning.insights.redis.key.mapping={"Certificate Issued Yesterday":"dashboard_content_certificates_generated_yday_nlw_count","Total Certificate Issued So Far":"dashboard_content_certificates_generated_nlw_count","Events Published":"dashboard_events_published_nlw_count","Total Enrolments":"dashboard_content_enrolment_nlw_count"}
+
+#cbPoresService
+cb.pores.service.host=http://cb-pores-service:7001
+cb.pores.master.designation.endpoint=/designation/search
+sample.file.master.designation.workspace.name=Master
+Designationsample.bulk.upload.designation.file.name=bulkUploadDesignationMasterData.xlsx
+org.designation.bulk.upload.container.name=orgDesignation
+kafka.topics.org.designation.bulk.upload.event={{env}}.org.designation.bulk.upload
+kafka.topics.org.designation.bulk.upload.event.group=orgDesignationBulkUpload
+redis.master.data.read.timeout=3600
+
+kafka.topics.cqf.assessment.postpublish={{env}}.questionset.postpublish
+kafka.groupId.cqf.assessment.postpublish={{env}}-cqf-publish-group
+
+spring.kafka.public.assessment.topic.name={{env}}.public.assessment.cert.generation.post.process
+spring.kafka.public.assessment.consumer.group.id=public.assessment.cert.generation.post.process
+public.assessment.cloud.certificate.folder.name=public-assessment-certificate
+ 
+public-assessment-service-host=http://public-assessment-service:8090
+public-assessment-email-notify-url=/assessment/notify
+
+user.registration.custodian.orgName=iGOT
+
+public.assessment.encryption.key={{public_assessment_service_encryption_key}}
+spring.kafka.public.assessment.notification.topic.name={{env}}.public.assessment.cert.generation.email
+public.user.assessment.table.name={{ public_assessment_service_assessment_data }}
+
+sb.csv.delimiter=,
+sb.tags.delimiter=;

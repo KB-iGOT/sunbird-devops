@@ -1,4 +1,4 @@
-### Default variable file for lms-service ###
+### Default variable file for ui_cbp-service ###
 
 namespace: {{ namespace }}
 imagepullsecrets: {{ imagepullsecrets }}
@@ -6,25 +6,26 @@ dockerhub: {{ docker_hub_url }}
 portalname: {{ karmayogi_portal_url }}
 
 env:
-  javaoptions: {{lms_java_mem_limit|default('-Xmx600m')}}
+  javaoptions: {{ui_cbp_java_mem_limit|default('-Xmx600m')}}
 
-replicaCount: {{lms_replicacount|default(1)}}
+replicaCount: {{ui_cbp_replicacount|default(1)}}
 repository: {{ image_ui_cbp_igot }}
 image_tag: {{image_tag}}
 resources:
   requests:
-    cpu: {{lms_cpu_req|default('100m')}}
-    memory: {{lms_mem_req|default('100Mi')}}
+    cpu: {{ui_cbp_cpu_req|default('100m')}}
+    memory: {{ui_cbp_mem_req|default('100Mi')}}
   limits:
-    cpu: {{lms_cpu_limit|default('1')}}
-    memory: {{lms_mem_limit|default('1024Mi')}}
+    cpu: {{ui_cbp_cpu_limit|default('300m')}}
+    memory: {{ui_cbp_mem_limit|default('512Mi')}}
+
 network:
   port: {{ service_ui_cbp_igot_port }}
   targetport: 3002
 strategy:
   type: RollingUpdate
-  maxsurge: {{ lms_maxsurge|default('25%') }}
-  maxunavailable: {{ lms_maxunavailable|default('25%') }}
+  maxsurge: {{ ui_cbp_maxsurge|default('25%') }}
+  maxunavailable: {{ ui_cbp_maxunavailable|default('25%') }}
 
 ui_proxies_bulk_upload: {{ host_bulk_upload }}
 
@@ -1402,28 +1403,41 @@ appsjson: |-
   ]
  }
 
-envjs: |-
- (function (window) {
-    window["env"] = window["env"] || {};
-    // Environment variables
-    window["env"]["name"] = 'dev'
-    window["env"]["debug"] = '';
-    window["env"]["sitePath"] = '{{ cbp_domain_name }}';
-    window["env"]["organisation"] = '{{ igot_organisation }}';
-    window["env"]["framework"] = '{{ igot_framework }}'
-    window["env"]["karmYogi"] = '{{ igot_portal_name }}/'	
-    window["env"]["channelId"] = '{{ igot_channelid }}'
-    window["env"]["azureHost"] = '{{ igot_cbp_azurehost }}'
-    window["env"]["azureBucket"] = '{{ igot_azurebucket }}'
-    window["env"]["azureOldHost"] = '{{ igot_azureoldhost }}'
-    window["env"]["azureOldBuket"] = '{{ igot_azureoldbuket }}'
-    window["env"]["portalRoles"] = ['CBP_ADMIN','CONTENT_CREATOR','CONTENT_REVIEWER','CONTENT_PUBLISHER','PROGRAM_COORDINATOR','SPV_PUBLISHER'];
-    window["env"]["scromContentEndpoint"] = 'assets/public/content/html/'
-    window["env"]["cbpPortal"] = 'https://{{ cbp_domain_name }}/'
-    window["env"]["isretakeAllowed"] = false
-    window["env"]["contentBucket"] = 'assets/public'
-    window["env"]["certImage"] = 'assets/certimage/content'
-    window["env"]["timeForContentQuality"] = {{time_for_content_quality}}
-    window["env"]["compatibilityLevel"] = {{ compatibilitylevel | default('6')}}
-    window["env"]["assessmentBuffer"] = 120
- })(this);
+envjson: |-
+ {
+    "name": "dev",
+    "debug": "",
+    "sitePath": "{{ cbp_domain_name }}",
+    "organisation": "{{ igot_organisation }}",
+    "framework": "{{ igot_framework }}",
+    "karmYogi": "{{ igot_portal_name }}/",	
+    "channelId": "{{ igot_channelid }}",
+    "azureHost": "{{ igot_cbp_azurehost }}",
+    "azureBucket": "{{ igot_azurebucket }}",
+    "azureOldHost": "{{ igot_azureoldhost }}",
+    "azureOldBuket": "{{ igot_azureoldbuket }}",
+    "portalRoles": ["CBP_ADMIN","CONTENT_CREATOR","CONTENT_REVIEWER","CONTENT_PUBLISHER","PROGRAM_COORDINATOR","SPV_PUBLISHER"],
+    "scromContentEndpoint": "assets/public/content/html/",
+    "cbpPortal": "https://{{ cbp_domain_name }}/",
+    "isretakeAllowed": false,
+    "contentBucket": "assets/public",
+    "certImage": "assets/certimage/content",
+    "timeForContentQuality": {{time_for_content_quality}},
+    "compatibilityLevel": {{ compatibilitylevel | default("6")}},
+    "assessmentBuffer": 120,
+    "spvorgID": "{{ spv_org_id }}"
+ }
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ ui_cbp_igot_autoscaling_enabled | default('false') }}
+  minReplicas: {{ ui_cbp_igot_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ ui_cbp_igot_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ ui_cbp_igot_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ ui_cbp_igot_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
