@@ -209,6 +209,25 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+
+    location ~ ^/(ta|hi)/?$ {
+      proxy_ssl_server_name on;
+      proxy_set_header
+      X-Real-IP $remote_addr;
+      proxy_set_header
+      X-Forwarded-For
+     $proxy_add_x_forwarded_for;
+      proxy_set_header
+     X-Forwarded-Proto
+     $scheme;
+     proxy_set_header
+     X-Forwarded-Host $host;
+     proxy_set_header
+      X-Forwarded-Port
+      $server_port;
+     proxy_set_header X-Server-Platform  "Nginx";
+     proxy_pass https://dns.devnagri.com;
+  }  
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
       # Enabling caching
