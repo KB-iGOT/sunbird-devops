@@ -1,10 +1,10 @@
 server.port={{ application_port }}
 
-spring.data.cassandra.bodhi.contact-points={{ cassandra_host }}
-spring.data.cassandra.bodhi.port={{ cassandra_port }}
-spring.data.cassandra.bodhi.keyspace-name={{ keyspace_bodhi }}
-spring.data.cassandra.bodhi.username={{ cassandra_username }}
-spring.data.cassandra.bodhi.password={{ cassandra_password }}
+spring.cassandra.bodhi.contact-points={{ cassandra_host }}
+spring.cassandra.bodhi.port={{ cassandra_port }}
+spring.cassandra.bodhi.keyspace-name={{ keyspace_bodhi }}
+spring.cassandra.bodhi.username={{ cassandra_username }}
+spring.cassandra.bodhi.password={{ cassandra_password }}
 
 #spring data jpa for postgres
 spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
@@ -65,12 +65,12 @@ lms.system.settings.verified.profile.fields.path=v1/system/settings/get/verified
 notification.sender.mail={{ igot_cb_ext_mailsender }}
 
 ####Sunbird Cassandra details
-spring.data.cassandra.port={{ cassandra_port }}
-spring.data.cassandra.keyspace-name={{ keyspace_sunbird }}
-spring.data.cassandra.username={{ cassandra_username }}
-spring.data.cassandra.password={{ cassandra_password }}
-spring.data.cassandra.sb.startupTimeoutInSeconds=100000
-spring.data.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port={{ cassandra_port }}
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
+spring.cassandra.sb.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
 cassandra.config.host={{ sunbird_cassandra_db_host }}
 sunbird_cassandra_consistency_level=quorum
 
