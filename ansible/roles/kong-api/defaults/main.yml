@@ -132,7 +132,7 @@ comp_theme_prefix : /competencyTheme
 comp_sub_theme_prefix : /competencySubTheme
 org_prefix : /org
 contentpartner_prefix: /contentpartner
-halloffame_prefix: /halloffame
+walloffame_prefix: /walloffame
 cqf_questionset_prefix: /cqfquestionset
 cqf_prefix: /cqf
 service_registry_prefix: /serviceregistry
@@ -10673,9 +10673,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: halloffame
-    uris: "/halloffame/read"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/halloffame/read"
+  - name: walloffame
+    uris: "/walloffame/read"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/walloffame/read"
     strip_uri: true
     plugins:
       - name: cors
@@ -12627,8 +12627,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: learnerleaderboard
-    uris: "/halloffame/learnerleaderboard"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/halloffame/learnerleaderboard"
+    uris: "/walloffame/learnerleaderboard"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/walloffame/learnerleaderboard"
     strip_uri: true
     plugins:
       - name: cors
@@ -16410,7 +16410,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: topTenlearners
-    uris: "/halloffame/top/learners"
+    uris: "/walloffame/top/learners"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/top/learners"
     strip_uri: true
     plugins:
@@ -16718,9 +16718,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: hallOfFameMdoLeaderBoard
-    uris: "{{ halloffame_prefix }}/v1/mdoleaderboard"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/halloffame/mdoleaderboard"
+  - name: wallOfFameMdoLeaderBoard
+    uris: "{{ walloffame_prefix }}/v1/mdoleaderboard"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/walloffame/mdoleaderboard"
     strip_uri: true
     plugins:
     - name: jwt
@@ -16736,9 +16736,9 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: hallOfFameUserLeaderBoard
-    uris: "{{ halloffame_prefix }}/v1/userleaderboard"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/halloffame/user/read"
+  - name: wallOfFameUserLeaderBoard
+    uris: "{{ walloffame_prefix }}/v1/userleaderboard"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/walloffame/user/read"
     strip_uri: true
     plugins:
     - name: jwt
