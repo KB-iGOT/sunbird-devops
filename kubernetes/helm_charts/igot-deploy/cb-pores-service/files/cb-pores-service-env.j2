@@ -23,6 +23,17 @@ spring.data.cassandra.keyspace-name={{ keyspace_sunbird }}
 spring.data.cassandra.username={{ cassandra_username }}
 spring.data.cassandra.password={{ cassandra_password }}
 
+spring.cassandra.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
+spring.cassandra.local-datacenter=DC1
+ 
+ 
+sunbird_cassandra_consistency_level=ONE
+
 cassandra.config.host={{ sunbird_cassandra_db_host }}
 
 playlist.redis.key.mapping={"ORG_FEATURED_COURSES":"orgID_Featured_Courses", "MDO_RECOMMENDED_PROGRAMS":"mdo_Recommended_Programs","MDO_RECOMMENDED_COURSES":"mdo_Recommended_courses","MDO_FEATURED_COURSES":"mdo_Featured_Courses"}
