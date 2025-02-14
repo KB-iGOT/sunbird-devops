@@ -71,4 +71,4 @@ postgres_users_no_log: true
 
 # apt postgres repo details
 postgres_repo_key: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
-postgres_repo: 'deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg main'
+postgres_repo: 'deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main'
