@@ -45,13 +45,13 @@ spring.redis.host={{ kp_redis_ip }}
 spring.redis.port=6379
 spring.redis.password=
 spring.redis.cacheTtl=86400
-spring.data.cassandra.startupTimeoutInSeconds=100000
-spring.data.cassandra.contact-points={{ sunbird_cassandra_db_host }}
-spring.data.cassandra.port=9042
-spring.data.cassandra.keyspace-name={{ keyspace_sunbird }}
-spring.data.cassandra.username={{ cassandra_username }}
-spring.data.cassandra.password={{ cassandra_password }}
-spring.data.cassandra.local-datacenter=DC1
+spring.cassandra.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
+spring.cassandra.local-datacenter=DC1
 cassandra.config.host={{ sunbird_cassandra_db_host }}
 cios.read.api.base.url=http://cb-pores-service:7001
 cios.read.api.fixed.url=/cios/v1/content/readby/externalid/
@@ -95,4 +95,6 @@ coursera.scheduler.enabled={{cios_coursera_scheduler_enabled| default('true')}}
 
 coursera.date.before=completedAtBefore
 coursera.date.after=completedAtAfter
+
+sunbird_cassandra_consistency_level=ONE
 
