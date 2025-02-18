@@ -2446,7 +2446,10 @@ proxyconfig: |-
     location ~* ^/auth/admin/master/console/ {
       return 301 {{proto}}://{{ nginx_proxy_server_name }};
     }
-
+    location /api/faq/v1/assistant/available/language {
+      return 200 'faq disabled on dev';
+    }
+    
     error_page 404 500 502 503 504 /50x.html;
         location = /50x.html {
                 root /usr/share/nginx/html;
