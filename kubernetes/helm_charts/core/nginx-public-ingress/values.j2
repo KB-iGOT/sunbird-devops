@@ -161,6 +161,9 @@ proxyconfig: |-
     location ~* ^/auth/admin/master/console/ {
       return 301 {{proto}}://portal.{{ nginx_proxy_server_name }};
     }
+    location /api/faq/v1/assistant/available/language {
+      return 404;
+    }    
     location ~* ^/auth/v1/refresh/token  {
       rewrite ^/auth/(.*) /auth/$1 break;
       proxy_set_header Connection "";
