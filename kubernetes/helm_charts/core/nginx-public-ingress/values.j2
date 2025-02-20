@@ -162,7 +162,7 @@ proxyconfig: |-
       return 301 {{proto}}://portal.{{ nginx_proxy_server_name }};
     }
     location /api/faq/v1/assistant/available/language {
-      return 200 '{"status": {"message": "success", "code": 200}, "payload": {"languages": [{"value": "en", "viewValue": "English"}, {"value": "hi", "viewValue": "हिंदी"}]}}';
+      return 204;
     }    
     location ~* ^/auth/v1/refresh/token  {
       rewrite ^/auth/(.*) /auth/$1 break;
@@ -2450,7 +2450,7 @@ proxyconfig: |-
       return 301 {{proto}}://{{ nginx_proxy_server_name }};
     }
     location /api/faq/v1/assistant/available/language {
-      return 200 '{"status": {"message": "success", "code": 200}, "payload": {"languages": [{"value": "en", "viewValue": "English"}, {"value": "hi", "viewValue": "हिंदी"}]}}';
+      return 204;
     }
 
     error_page 404 500 502 503 504 /50x.html;
