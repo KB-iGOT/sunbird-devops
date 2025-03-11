@@ -16430,6 +16430,24 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: stateTopTenlearners
+    uris: "/halloffame/state/top/learners"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/state/top/learners"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
   - name: ciosReadByExtId
     uris: "{{ cios_prefix }}/v1/content/readby/externalid"
     upstream_url: "{{ cb_pores_service_url }}/cios/v1/content/readby/externalid"
@@ -16724,6 +16742,24 @@ kong_apis:
   - name: hallOfFameMdoLeaderBoard
     uris: "{{ halloffame_prefix }}/v1/mdoleaderboard"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/halloffame/mdoleaderboard"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: hallOfFameStateMdoLeaderBoard
+    uris: "{{ halloffame_prefix }}/v1/state/mdoleaderboard"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/halloffame/state/mdoleaderboard"
     strip_uri: true
     plugins:
     - name: jwt
@@ -17840,6 +17876,24 @@ kong_apis:
   - name: nationalLearningWeekInsights
     uris: "/national/learning/week/insights"
     upstream_url: "{{ sb_cb_ext_service_url }}/national/learning/week/insights"
+    strip_uri: true
+    plugins:
+     - name: jwt
+     - name: cors
+     - "{{ statsd_pulgin }}"
+     - name: acl
+       config.whitelist:
+        - 'dataAccess'
+     - name: rate-limiting
+       config.policy: local
+       config.hour: "{{ medium_rate_limit_per_hour }}"
+       config.limit_by: credential
+     - name: request-size-limiting
+       config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: stateLearningWeekInsights
+    uris: "/state/learning/week/insights"
+    upstream_url: "{{ sb_cb_ext_service_url }}/state/learning/week/insights"
     strip_uri: true
     plugins:
      - name: jwt
