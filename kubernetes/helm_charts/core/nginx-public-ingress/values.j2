@@ -468,6 +468,22 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
+    location ~ /apis/reset {
+      # add_header Access-Control-Allow-Origin "*";
+      # add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_pass http://ui-proxies:3003;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
+
     location ~ /apis/proxies/v8/discussion/tags {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
