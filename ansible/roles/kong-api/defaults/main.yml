@@ -151,6 +151,7 @@ chatbot_prefix: /chatbot
 nlp_prefix: /nlp
 thumbnail_service_prefix: /thumbnail
 certificate_generate_service_prefix: /certificate
+report_generator_service_prefix: /report
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -203,6 +204,7 @@ course_recommendation_service_url : "http://course-recommendation-service:8000"
 nlp_search_service_url : "http://nlp-search-service:8000"
 thumbnail_service_url : "http://thumbnail-generation-service:8000"
 certificate_generator_service_url : "http://certificate-generator-service:9000"
+report_generator_service_url : "http://report-generation-service:5000"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -20637,6 +20639,24 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: dynamicReportGeneratorSync
+    uris: "{{ report_generator_service_prefix }}/org/user/report/sync"
+    upstream_url: "{{ report_generator_service_url }}/report/org"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
