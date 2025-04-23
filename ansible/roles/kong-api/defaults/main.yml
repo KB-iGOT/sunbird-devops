@@ -20842,7 +20842,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: PrivateContentUpdateAPI
-    uris: "private/content/v4/updateReviewStatus"
+    uris: "/private/content/v4/updateReviewStatus"
     upstream_url: "{{ content_service_url }}/content/v4/update"
     strip_uri: true
     plugins:
