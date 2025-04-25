@@ -21,7 +21,7 @@
         dest: "{{ helm_env_file_location }}/{{ item | basename}}.env"
       with_fileglob:
         - "{{ template_shared_env_file_name }}"
-      when: release_name not in ['ml-kb-portal-service','pdf-generator-service','ml-template-validation-portal','ml-template-validation-backend-service','nlp-search-service','certificate-generator-service','report-generation-service']
+      when: release_name not in ['ml-kb-portal-service','pdf-generator-service','ml-template-validation-portal','ml-template-validation-backend-service','nlp-search-service','certificate-generator-service','report-generation-service','comment-tree-service','cb-search-service']
     - name: template helm env file
       template:
         src: "{{ item }}"
@@ -69,6 +69,8 @@
     "certificate-generator-service",
     "report-generation-service",
     "cb-ext-assessment-service",
+    "comment-tree-service",
+    "cb-search-service",
     ]
 
 - name: helm upgrade

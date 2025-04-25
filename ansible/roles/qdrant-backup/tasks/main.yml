@@ -1,0 +1,30 @@
+- name: Create the backup directory
+  file: path={{ qdrant_backup_dir }} state=directory recurse=yes
+  
+-   set_fact:
+      qdrant_backup_name: "qdrant_backup_{{ lookup('pipe', 'date +%Z-%Y-%m-%d-%H-%M-%S') }}"
+
+- set_fact:
+    qdrant_backup_file_name: "{{ qdrant_backup_name }}.tar.gz"
+ 
+- set_fact:
+    qdrant_backup_file_path: "{{ qdrant_backup_dir }}/{{ qdrant_backup_file_name }}"
+
+
+- name: Compress qdrant storage directory into a tar.gz
+  archive:
+    path: "{{ qdrant_volume_dir }}"
+    dest: "{{ qdrant_backup_dir }}/{{ qdrant_backup_file_name }}"
+    format: gz
+
+- name: upload to gcs
+  include_role:
+    name: artifacts-upload-gcp
+  vars:
+    artifacts_container: "{{ backup_bucket }}/{{ qdrant_backup_folder }}/{{qdrant_backup_name}}"
+    artifact_path: "{{qdrant_backup_dir}}"
+    artifact: "{{qdrant_backup_file_name}}"
+    service_account: "{{ gcp_backups_service_account }}"
+
+- name: clean up backup dir after upload
+  file: path={{ qdrant_backup_dir }} state=absent

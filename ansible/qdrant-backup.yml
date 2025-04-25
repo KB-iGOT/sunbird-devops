@@ -1,0 +1,8 @@
+- hosts: qdrant
+  become: yes
+  gather_facts: false
+  vars_files:
+    - ['{{inventory_dir}}/secrets.yml']
+  roles:
+   - qdrant-backup
+  run_once: true

@@ -1,0 +1,6 @@
+qdrant_volume_dir: /opt/qdrant_storage
+qdrant_backup_dir: /tmp/qdrant-backup
+qdrant_backup_folder: qdrant
+
+
+

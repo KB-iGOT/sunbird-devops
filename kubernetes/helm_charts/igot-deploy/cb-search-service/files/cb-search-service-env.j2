@@ -1,0 +1,28 @@
+server.port={{ application_port }}
+elastic.required.field.search.json.path=/EsFieldsmapping/trendingSearchEsMapping.json
+
+non.text.fields=search_count
+
+elasticsearch.iGotESClient.host={{ elasticsearch_host }}
+elasticsearch.iGotESClient.port={{ elasticsearch_http_port }}
+elasticsearch.iGotESClient.username={{ elasticsearch_username }}
+elasticsearch.iGotESClient.password={{ elasticsearch_password }}
+
+spring.cassandra.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
+spring.cassandra.local-datacenter=DC1
+sunbird_cassandra_consistency_level=ONE
+
+cassandra.config.host={{ sunbird_cassandra_db_host }}
+
+
+sso.url=https://{{ domain_name }}/auth/
+sso.realm={{ keycloak_sso_realm }}
+sso.connection.pool.size=20
+sso.enabled=true
+
+accesstoken.publickey.basepath=/keys/

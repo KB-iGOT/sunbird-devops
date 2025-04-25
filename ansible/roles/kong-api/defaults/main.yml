@@ -151,6 +151,8 @@ chatbot_prefix: /chatbot
 nlp_prefix: /nlp
 thumbnail_service_prefix: /thumbnail
 certificate_generate_service_prefix: /certificate
+comment_tree_prefix: /commentTree
+search_service_prefix: /search
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -204,6 +206,8 @@ nlp_search_service_url : "http://nlp-search-service:8000"
 thumbnail_service_url : "http://thumbnail-generation-service:8000"
 cb_ext_assessment_service_url: "http://cb-ext-assessment-service:7002"
 certificate_generator_service_url : "http://certificate-generator-service:9000"
+comment_tree_service_url: "http://comment-tree-service:8098"
+cb_search_service_url: "http://cb-search-service:7001"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -20841,3 +20845,200 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: likeAnswerPostReply
+    uris: "{{ discussionfeed_prefix }}/answerPostReply/like"
+    upstream_url: "{{ cb_discussion_service_url }}/v1/discussion/answerPostReply/like"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: unLikeAnswerPostReply
+    uris: "{{ discussionfeed_prefix }}/answerPostReply/dislike"
+    upstream_url: "{{ cb_discussion_service_url }}/v1/discussion/answerPostReply/dislike"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: PrivateContentUpdateAPI
+    uris: "{{ private_content_prefix }}/v4/update"
+    upstream_url: "{{ content_service_url }}/content/v4/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentSuperAdmin'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ x_large_request_size_limit }}"
+
+  - name: PrivateContentSystemUpdateAPI
+    uris: "{{ private_content_prefix }}/v4/system/update"
+    upstream_url: "{{ content_service_url }}/content/v4/system/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentSuperAdmin'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ x_large_request_size_limit }}"
+
+  - name: commentTreeGet
+    uris: "{{ comment_tree_prefix }}/v1/get"
+    upstream_url: "{{ comment_tree_service_url }}/commentTree/v1/get"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: recentSearchCreate
+    uris: "{{ search_service_prefix }}/v1/recent/create"
+    upstream_url: "{{ cb_search_service_url }}/search/v1/recent/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: recentSearchRead
+    uris: "{{ search_service_prefix }}/v1/recent/read"
+    upstream_url: "{{ cb_search_service_url }}/search/v1/recent/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: recentSearchDelete
+    uris: "{{ search_service_prefix }}/v1/recent/delete"
+    upstream_url: "{{ cb_search_service_url }}/search/v1/recent/delete"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: trendingSearchCreate
+    uris: "{{ search_service_prefix }}/v1/trending/create"
+    upstream_url: "{{ cb_search_service_url }}/search/v1/trending/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: trendingSearchRead
+    uris: "{{ search_service_prefix }}/v1/trending/read"
+    upstream_url: "{{ cb_search_service_url }}/search/v1/trending/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: commentV3Search
+    uris: "{{ comment_prefix }}/v3/search"
+    upstream_url: "{{ cb_comment_service_url }}/comment/v3/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"

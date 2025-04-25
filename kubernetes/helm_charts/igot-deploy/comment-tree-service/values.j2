@@ -1,0 +1,45 @@
+### Default variable file for comment_tree_service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{comment_tree_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{comment_tree_replicacount|default(1)}}
+repository: {{ image_comment_tree_service }}
+image_tag: {{image_tag}}
+resources:
+  requests:
+    cpu: {{comment_tree_cpu_req|default('100m')}}
+    memory: {{comment_tree_mem_req|default('100Mi')}}
+  limits:
+    cpu: {{comment_tree_cpu_limit|default('1')}}
+    memory: {{comment_tree_mem_limit|default('1024Mi')}}
+network:
+  port: {{ comment_tree_service_port }}
+  targetport: {{ comment_tree_service_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ comment_tree_maxsurge|default('25%') }}
+  maxunavailable: {{ comment_tree_maxunavailable|default('25%') }}
+
+
+comment_tree_backend_basepath: {{ comment_tree_backend_basepath | default('/keys/') }}
+
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ comment_tree_service_autoscaling_enabled | default('false') }}
+  minReplicas: {{ comment_tree_service_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ comment_tree_service_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ comment_tree_service_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ comment_tree_service_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
