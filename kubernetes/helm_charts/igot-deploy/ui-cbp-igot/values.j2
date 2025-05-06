@@ -480,6 +480,20 @@ siteconfig: |
           }
         },
         {
+          "type": "featureButton",
+          "config": {
+            "actionBtnId": "feature_lookerpro",
+            "toolTip": "Lookerpro Dashboard",
+            "className": "fixtopMargin",
+            "config": {
+              "actionBtnId": "feature_lookerpro",
+              "type": "card-mini",
+              "hideTitle": true
+            }
+          },
+          "enabled": true
+        },        
+        {
           "type": "widgetButton",
           "config": {
             "widgetType": "actionButton",
@@ -818,6 +832,25 @@ appsjson: |-
       "toolTip": "How Tos",
       "url": "/author/cbp/how-to",
       "shortName": "RD"
+    },
+    "feature_lookerpro": {
+      "accessKey": "",
+      "icon": "bar_chart",
+      "iconType": "mat-icon",
+      "id": "feature_lookerpro",
+      "keywords": [
+        "lookerpro",
+        "dashboard"
+      ],
+      "name": "Lookerpro dashboard",
+      "permission": [
+        "ABOUT_US"
+      ],
+      "show": true,
+      "status": "live",
+      "toolTip": "Dashboard",
+      "url": "/app/rainDashboard",
+      "shortName": "LD"
     },
     "feature_badges": {
       "accessKey": "",
