@@ -1,3 +1,21 @@
-SUNBIRD_SSO_URL=https://{{portal_domain_name}}/auth/
+GCP_CREDENTIALS_PATH: /app/gcp_storage_credentials.json
+GCP_DB_NAME: cumulative_master_data
+GCP_ENROLMENT_TABLE_NAME: master_user_enrolments
+GCP_ORG_HIERARCHY_TABLE_NAME: master_org_hierarchy_data
+GCP_ORG_USER_TABLE_NAME: master_user_details
+GCP_PROJECT: {{ cloud_public_storage_project }}
+GCS_URI_MASTER_ORG_HIERARCHY_DATA: cumulative_master_data
+GCS_URI_MASTER_USER_DETAILS: gs://{{druid_gcloud_bucket}}/unifiedReports/unified_user_details.parquet
+GCS_URI_MASTER_USER_ENROLMENTS: gs://{{druid_gcloud_bucket}}/unifiedReports/unified_enrolments_latest.parquet
+IS_MASKING_ENABLED: "false"
+IS_VALIDATION_ENABLED: "false"
+MERGE_KEYS_MASTER_ORG_HIERARCHY_DATA: mdo_id
+MERGE_KEYS_MASTER_USER_DETAILS: user_id, mdo_id
+MERGE_KEYS_MASTER_USER_ENROLMENTS: user_id, content_id, mdo_id, batch_id
+SUNBIRD_SSO_REALM: {{keycloak_sso_realm}}
+SUNBIRD_SSO_URL: https://{{portal_domain_name}}/auth/
+SYNC_TABLES: master_user_enrolments, master_org_hierarchy_data, master_user_details
+accesstoken_publickey_basepath: /keys
+
 
 
