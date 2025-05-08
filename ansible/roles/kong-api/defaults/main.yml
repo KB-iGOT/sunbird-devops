@@ -21133,6 +21133,24 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: privateUserEventEnrollmentList
+    uris: "{{ user_service_prefix }}/private/v1/events/list"
+    upstream_url: "{{ lms_service_url }}/private/v1/user/events/list"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'contentCreate'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
   - name: workflowBlendedProgramDownloadApprovalCSVFile
     uris: "{{ workflow_handler_service_prefix }}/blendedprogram/getUserApprovalDataInCsv"
     upstream_url: "{{ workflow_handler_service_url }}/v1/blendedprogram/workflow/getUserApprovalDataInCsv"
