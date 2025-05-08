@@ -20487,6 +20487,24 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: thumbnailGenerationV2
+    uris: "{{ thumbnail_service_prefix }}/v2/image/variations/course"
+    upstream_url: "{{ thumbnail_service_url }}/v2/image/variations/course"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
   - name: communityPublish
     uris: "{{ community_prefix }}/publish"
     upstream_url: "{{ cb_community_service_url }}/community/v1/publish"
