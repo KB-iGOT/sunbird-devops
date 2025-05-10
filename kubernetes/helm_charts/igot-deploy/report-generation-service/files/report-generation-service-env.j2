@@ -16,6 +16,11 @@ SUNBIRD_SSO_REALM: {{keycloak_sso_realm}}
 SUNBIRD_SSO_URL: https://{{portal_domain_name}}/auth/
 SYNC_TABLES: master_user_enrolments, master_org_hierarchy_data, master_user_details
 accesstoken_publickey_basepath: /keys
+GCS_URI_MASTER_USER_DETAILS: gs://{{druid_gcloud_bucket}}/airflowData/unified_user_details.parquet
+GCS_URI_MASTER_USER_ENROLMENTS: gs://{{druid_gcloud_bucket}}/airflowData/unified_enrolments.parquet
+GCS_URI_MASTER_ORG_HIERARCHY_DATA: gs://{{druid_gcloud_bucket}}/airflowData/org_hierarchy.parquet
+MAX_ORG_CACHE_SIZE: 8000
+MAX_ORG_CACHE_AGE: 86400
 
 
 
