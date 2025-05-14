@@ -105,3 +105,15 @@ cios.content.service.update.api=/ciosIntegration/v1/update/content
 cios.content.service.search.api=/ciosIntegration/v1/search/content
 cornell.partner.code=CORNELL
 upgrad.partner.code=UPGRAD
+
+#ClientHttpRequestFactory
+http.client.request.factory.timeout=45000
+http.pooling.client.cm.max.total.connections=2000
+http.pooling.client.cm.default.max.per.route=500
+
+# Redis pool configuration
+redis.pool.max.total=3000
+redis.pool.max.idle=128
+redis.pool.min.idle=100
+redis.pool.max.wait=5000
+redis.connection.timeout=60000
