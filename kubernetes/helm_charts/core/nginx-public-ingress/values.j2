@@ -826,7 +826,7 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://kong;
     }
-	
+
     location ~ /apis/protected/v8/user/profileRegistry/getMasterLanguages {
       # Enabling caching
       proxy_cache_key "$request_uri";
@@ -853,7 +853,7 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://kong;
     }
-	
+
     location ~ /api/masterData/v1/getLanguages {
       # Enabling caching
       proxy_cache_key "$request_uri";
@@ -880,7 +880,7 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://kong;
     }
-	
+
     location ~ /apis/protected/v8/user/profileRegistry/getMasterNationalities {
       # Enabling caching
       proxy_cache_key "$request_uri";
@@ -907,7 +907,7 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://kong;
     }
-	
+
     location ~ /api/masterData/v1/getNationalities {
       # Enabling caching
       proxy_cache_key "$request_uri";
@@ -934,7 +934,7 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://kong;
     }
-	
+
     location ~ /apis/proxies/v8/masterData/v2/deptPosition {
       # Enabling caching
       proxy_cache_key "$request_uri";
@@ -961,7 +961,7 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://kong;
     }
-	
+
     location ~ /api/masterData/v2/deptPosition {
       # Enabling caching
       proxy_cache_key "$request_uri";
@@ -988,7 +988,7 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://kong;
     }
-	
+
     location ~ /api/course/v2/explore {
       # Enabling caching
       proxy_cache_key "$request_uri";
