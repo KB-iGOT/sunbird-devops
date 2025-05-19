@@ -154,7 +154,8 @@ certificate_generate_service_prefix: /certificate
 comment_tree_prefix: /commentTree
 search_service_prefix: /search
 cb_ext_userprofile_prefix: /user/profile
-
+master_data_prefix: /masterdata
+extended_profile_prefox: /extendedprofile
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
 learning_service_url: "http://learner-service:9000"
@@ -21337,6 +21338,78 @@ kong_apis:
   - name: fetchBasicProfile
     uris: "{{ cb_ext_userprofile_prefix }}/v1/basic"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/basic"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: extendedProfileListDistricts
+    uris: "{{ ext_userprofile_prefix }}/list/districts"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/extendedprofile/list/districts"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: extendedProfileListStates
+    uris: "{{ ext_userprofile_prefix }}/list/states"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/extendedprofile/list/states"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: masterDataListInsitutions
+    uris: "{{ master_data_prefix }}/list/institutions"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/list/institutions"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: masterDataListDegrees
+    uris: "{{ master_data_prefix }}/list/degrees"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/list/degrees"
     strip_uri: true
     plugins:
       - name: jwt
