@@ -21299,7 +21299,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: updateExtendedProfile
-    uris: "{{ cb_ext_userprofile_prefix }}/v1/extended"
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/extended/update"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/extended"
     strip_uri: true
     plugins:
@@ -21317,7 +21317,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: deleteExtendedProfile
-    uris: "{{ cb_ext_userprofile_prefix }}/v1/extended"
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/extended/delete"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/extended"
     strip_uri: true
     plugins:
