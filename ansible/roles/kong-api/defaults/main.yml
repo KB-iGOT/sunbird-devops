@@ -155,7 +155,7 @@ comment_tree_prefix: /commentTree
 search_service_prefix: /search
 cb_ext_userprofile_prefix: /user/profile
 master_data_prefix: /masterdata
-extended_profile_prefox: /extendedprofile
+extended_profile_prefix: /extendedprofile
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
 learning_service_url: "http://learner-service:9000"
@@ -21354,7 +21354,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: extendedProfileListDistricts
-    uris: "{{ ext_userprofile_prefix }}/list/districts"
+    uris: "{{ extended_profile_prefix }}/list/districts"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/extendedprofile/list/districts"
     strip_uri: true
     plugins:
@@ -21372,7 +21372,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: extendedProfileListStates
-    uris: "{{ ext_userprofile_prefix }}/list/states"
+    uris: "{{ extended_profile_prefix }}/list/states"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/extendedprofile/list/states"
     strip_uri: true
     plugins:
