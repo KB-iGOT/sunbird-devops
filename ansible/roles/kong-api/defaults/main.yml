@@ -156,7 +156,7 @@ search_service_prefix: /search
 cb_ext_userprofile_prefix: /user/profile
 master_data_prefix: /masterdata
 extended_profile_prefix: /extendedprofile
-cb_notification_data_prefix: /api/notifications
+cb_notification_data_prefix: /v1/notifications
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
 learning_service_url: "http://learner-service:9000"
@@ -21429,7 +21429,7 @@ kong_apis:
 
   - name: createNotification
     uris: "{{ cb_notification_data_prefix }}/create"
-    upstream_url: "{{ cb_notification_service_url }}/api/notifications/create"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21447,7 +21447,7 @@ kong_apis:
 
   - name: readNotificationById
     uris: "{{ cb_notification_data_prefix }}/readById"
-    upstream_url: "{{ cb_notification_service_url }}/api/notifications/readby"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/readby"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21465,7 +21465,7 @@ kong_apis:
 
   - name: listNotification
     uris: "{{ cb_notification_data_prefix }}/list"
-    upstream_url: "{{ cb_notification_service_url }}/api/notifications/list"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21483,7 +21483,7 @@ kong_apis:
 
   - name: readNotification
     uris: "{{ cb_notification_data_prefix }}/read"
-    upstream_url: "{{ cb_notification_service_url }}/api/notifications/read"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21502,7 +21502,7 @@ kong_apis:
 
   - name: deleteNotification
     uris: "{{ cb_notification_data_prefix }}/delete"
-    upstream_url: "{{ cb_notification_service_url }}/api/notifications/delete"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/delete"
     strip_uri: true
     plugins:
       - name: jwt
