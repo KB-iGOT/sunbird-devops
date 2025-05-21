@@ -105,7 +105,7 @@
       function validateOtpChar() {
         let userOptVal = document.getElementById("totp").value.trim()
         if (userOptVal && userOptVal.length !== 6) {
-            document.getElementById("otpLengthErr").innerHTML = "OPT should have 6 digits"
+            document.getElementById("otpLengthErr").innerHTML = "OTP should have 6 digits"
         } else if (userOptVal && userOptVal.length === 6) {
             document.getElementById("otpLengthErr").innerHTML = ""
         }
