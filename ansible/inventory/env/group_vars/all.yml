@@ -756,6 +756,7 @@ service_cb_ext_assessment_service: cb-ext-assessment-service
 service_comment_tree_service: comment-tree-service
 service_cb_search_service: cb-search-service
 service_cb_ext_userprofile_service: cb-ext-userprofile-service
+service_cb_notification_service: cb-notification-service
 
 # Ports
 service_bulk_upload_port: 3009
@@ -845,6 +846,7 @@ service_cb_ext_assessment_port: 7002
 comment_tree_service_port: 8098
 service_cb_search_port: 7001
 service_cb_ext_userprofile_port: 7001
+service_cb_notification_port: 7001
 
 # Network alias names, so that one service can talk to another
 network_alias_content_service: private-content-service
@@ -917,6 +919,7 @@ network_alias_cb_ext_assessment_service: cb-ext-assessment-service
 network_alias_comment_tree_service: comment-tree-service
 network_alias_cb_search_service: cb-search-service
 network_alias_cb_ext_userprofile_service: cb-ext-userprofile-service
+network_alias_cb_notification_service: cb-notification-service
 
 # Image names, this is used by the service alone, but since we want to have all the images in one place, we are oncfiguring the images here
 image_ui_static: ui-static
@@ -986,6 +989,7 @@ image_cb_ext_assessment_service: cb-ext-assessment-service
 image_comment_tree_service: comment-tree-service
 image_cb_search_service: cb-search-service
 image_cb_ext_userprofile_service: cb-ext-userprofile-service
+image_cb_notification_service: cb-notification-service
 
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload
