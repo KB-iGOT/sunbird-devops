@@ -12,8 +12,6 @@ spring.datasource.password={{ postgresql_password_sunbird }}
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.show-sql=false
-# Hibernate ddl auto (create, create-drop, validate, update)
-spring.jpa.hibernate.ddl-auto=update
 
 spring.cassandra.local-datacenter=DC1
 spring.cassandra.startupTimeoutInSeconds=100000
@@ -22,80 +20,35 @@ spring.cassandra.port=9042
 spring.cassandra.keyspace-name={{ keyspace_sunbird }}
 spring.cassandra.username={{ cassandra_username }}
 spring.cassandra.password={{ cassandra_password }}
-
 sunbird_cassandra_consistency_level=ONE
-
 cassandra.config.host={{ sunbird_cassandra_db_host }}
 
-spring.redis.host={{ kp_redis_ip }}
-spring.redis.port=6379
-spring.redis.cacheTtl=60000
+sb.api.key={{ bearer_token }}
 
-elasticsearch.host={{ elasticsearch_host }}
-elasticsearch.port={{ elasticsearch_http_port }}
-elasticsearch.username={{ elasticsearch_username }}
-elasticsearch.password={{ elasticsearch_password }}
-# 10 min in second  10 * 60
-search.result.redis.ttl=600
-
+##Authentication configuration
 accesstoken.publickey.basepath=/keys/
 sso.url=https://{{ domain_name }}/auth/
 sso.realm={{ keycloak_sso_realm }}
-sso.connection.pool.size=20
-sso.enabled=true
 
-elastic.required.field.community.json.path=/EsFieldsmapping/esRequiredFieldsJsonFilePath.json
-search.string.max.regex.length=500
+#Redis Cache Service properties
+#redis timeout value is in seconds
+redis.timeout=84600
+spring.redis.host={{ kp_redis_ip }}
+spring.redis.port=6379
+spring.redis.cacheTtl= 60000
 
-# HTTP Client Configuration
-rest.client.connect.timeout=45000
-rest.client.read.timeout=45000
-rest.client.connection.request.timeout=45000
-rest.client.max.connections=2000
-rest.client.max.connections.per.route=500
 
-#kafka Server
-spring.kafka.bootstrap.servers={{ kafka_servers_list }}
-#kafka properties
-kakfa.offset.reset.value=latest
-kafka.max.poll.interval.ms=15000
-kafka.max.poll.records=100
-kafka.auto.commit.interval.ms=10000
-#kafka topics and group
-kafka.topic.community.group=community.request.group
+#ClientHttpRequestFactory
+http.client.request.factory.timeout=45000
+http.pooling.client.cm.max.total.connections=2000
+http.pooling.client.cm.default.max.per.route=500
 
-kafka.topic.community.user.count.group={{env}}.community.user.count.group
-kafka.topic.community.user.count={{env}}.community.joined.user.count
-kafka.topic.community.discusion.post.count.group={{env}}.community.discusion.post.count.group
-kafka.topic.community.discusion.post.count={{env}}.community.discusion.post.count
+# Redis pool configuration
+redis.pool.max.total=3000
+redis.pool.max.idle=128
+redis.pool.min.idle=100
+redis.pool.max.wait=5000
+redis.connection.timeout=60000
 
-sunbird_user_index=user_alias
-report.community.user.limit=5
-
-elasticsearch.sbESClient.host={{ sb_es_host }}
-elasticsearch.sbESClient.port={{ sb_es_clstr_port }}
-elasticsearch.sbESClient.username={{ sb_es_username }}
-elasticsearch.sbESClient.password={{ sb_es_password }}
-
-discussion.cloud.folder.name=discussionhub
-discussion.container.name={{sb_cb_ext_container}}
-cloud.storage.type.name={{ cloud_service_provider }}
-cloud.storage.key={{ cloud_storage_key }}
-cloud.storage.secret={{ cloud_storage_secret | replace('\n', '\\n')}}
-cloud.storage.endpoint={{ cloud_storage_endpoint }}
-no.of.popular.community=5
-
-spring.redis.data.host={{ redis_host }}
-spring.redis.data.port={{ redis_port }}
-
-community.index=community_entity_alias
-community.category.index=community_category_entity_alias
-
-community.moderator.email=community_moderator_email
-notification.support.mail={{sunbird_notification_sender_email}}
-notify.service.path.async=/v2/notification/send
-notify.service.host=http://notification-service:9000
-domain.url=https://{{domain_name}}
-fixed.community.url=/app/discussion-forum-v2/community/
-moderator.mail.subject=You Have Been Assigned as a Community Moderator
-
+redis.insights.index=12
+search.result.redis.ttl=600

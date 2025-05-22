@@ -21519,9 +21519,13 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
 
+
   - name: bulkCreateNotification
     uris: "{{ cb_notification_data_prefix }}/bulk/create"
     upstream_url: "{{ cb_notification_service_url }}/v1/notifications/bulk/create"
+  - name: masterDataUpdateDegree
+    uris: "{{ master_data_prefix }}/update/degree"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/update/degree"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21537,9 +21541,67 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: masterDataUpdateInstitution
+    uris: "{{ master_data_prefix }}/update/institution"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/update/institution"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
   - name: unReadNotificationCount
     uris: "{{ cb_notification_data_prefix }}/unread/count"
     upstream_url: "{{ cb_notification_service_url }}/v1/notifications/unread/count"
+  - name: adminUserSerach
+    uris: "{{ user_service_prefix }}/v1/admin/search"
+    upstream_url: "{{ learning_service_url }}/v1/user/search"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'userTempAdmin'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: adminOrgSearch
+    uris: "{{ org_service_prefix }}/v1/admin/search"
+    upstream_url: "{{ learning_service_url }}/v1/org/search"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'userTempAdmin'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: fetchLocationDetails
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/extended/locationDetails"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/extended/locationDetails"
     strip_uri: true
     plugins:
       - name: jwt
