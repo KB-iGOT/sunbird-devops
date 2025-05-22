@@ -21499,7 +21499,6 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-
   - name: deleteNotification
     uris: "{{ cb_notification_data_prefix }}/delete"
     upstream_url: "{{ cb_notification_service_url }}/v1/notifications/delete"
@@ -21517,8 +21516,6 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
-
 
   - name: bulkCreateNotification
     uris: "{{ cb_notification_data_prefix }}/bulk/create"
@@ -21559,10 +21556,6 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-
-  - name: unReadNotificationCount
-    uris: "{{ cb_notification_data_prefix }}/unread/count"
-    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/unread/count"
   - name: adminUserSerach
     uris: "{{ user_service_prefix }}/v1/admin/search"
     upstream_url: "{{ learning_service_url }}/v1/user/search"
@@ -21599,3 +21592,56 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: fetchLocationDetails
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/extended/locationDetails"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/extended/locationDetails"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: unReadNotificationCount
+    uris: "{{ cb_notification_data_prefix }}/unread/count"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/unread/count"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'userTempAdmin'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: bulkCreateNotification
+    uris: "{{ cb_notification_data_prefix }}/bulk/create"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/bulk/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
