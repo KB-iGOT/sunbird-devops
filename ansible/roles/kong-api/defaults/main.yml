@@ -21518,6 +21518,11 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+
+
+  - name: bulkCreateNotification
+    uris: "{{ cb_notification_data_prefix }}/bulk/create"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/bulk/create"
   - name: masterDataUpdateDegree
     uris: "{{ master_data_prefix }}/update/degree"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/update/degree"
@@ -21554,6 +21559,10 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+
+  - name: unReadNotificationCount
+    uris: "{{ cb_notification_data_prefix }}/unread/count"
+    upstream_url: "{{ cb_notification_service_url }}/v1/notifications/unread/count"
   - name: adminUserSerach
     uris: "{{ user_service_prefix }}/v1/admin/search"
     upstream_url: "{{ learning_service_url }}/v1/user/search"
