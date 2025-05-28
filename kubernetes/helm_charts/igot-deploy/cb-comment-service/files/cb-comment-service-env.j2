@@ -17,9 +17,11 @@ spring.jpa.hibernate.ddl-auto=update
 jwt.secret.key={{comment_hub_jwt_secret_key}}
  
 #----------------------------------Redis -----------------------------
-spring.redis.host={{ redis_host }}
+spring.redis.host={{ kp_redis_ip }}
 spring.redis.port=6379
 redis.ttl=720000
+spring.redis.data.host={{ redis_host }}
+spring.redis.data.port=6379
  
 #----------------------------Configure Logback pattern -----------------------
 logging.pattern.console=%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
@@ -51,7 +53,4 @@ server.compression.min-response-size=2048
 redis.ttl.comment.tree=86400
 
 sunbird_cassandra_consistency_level=ONE
-
-kp.redis.host={{kp_redis_ip}}
-kp.redis.port={{redis_port}}
 
