@@ -117,3 +117,12 @@ redis.pool.max.idle=128
 redis.pool.min.idle=100
 redis.pool.max.wait=5000
 redis.connection.timeout=60000
+
+validation.required-fields.educationalQualification=degree,institutionName,startYear,endYear,fieldOfStudy
+validation.required-fields.achievement=title
+validation.required-fields.serviceHistory=orgName,designation,orgState,orgDistrict,startDate,endDate,currentlyWorking
+basic.profile.fields=id,channel,firstName,profiledetails,rootOrgId
+profile.completion.required.fields=firstName,profilePicture,currentLocation,bannerImage,serviceHistory,educationalQualifications
+profile.completion.extended.fields=serviceHistory,educationalQualifications,location
+profile.completion.field.weight=16.7
+context.types=educationalQualifications,achievements,serviceHistory,locationDetails
