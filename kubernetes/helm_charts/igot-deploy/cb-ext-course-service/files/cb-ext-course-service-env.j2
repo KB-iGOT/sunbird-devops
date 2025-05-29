@@ -5,6 +5,12 @@ server.tomcat.min-spare-threads=20
 server.tomcat.max-connections=15000
 server.tomcat.accept-count=500
 
+spring.cassandra.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
 spring.cassandra.local-datacenter=DC1
 sunbird_cassandra_consistency_level=ONE
 
