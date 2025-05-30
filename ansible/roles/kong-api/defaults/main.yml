@@ -487,10 +487,6 @@ kong_apis:
       config.whitelist: 
         - 'contentAdmin'
         - 'contentTempAccess'
-    - name: rate-limiting
-      config.policy: local
-      config.hour: 0
-      config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
@@ -10995,10 +10991,6 @@ kong_apis:
       config.whitelist: 
         - 'contentAdmin'
         - 'contentTempAccess'
-    - name: rate-limiting
-      config.policy: local
-      config.hour: 0
-      config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
