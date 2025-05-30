@@ -4009,7 +4009,7 @@ proxyconfig: |-
       proxy_pass http://keycloak;
     }
 
-    location /api/ {
+    location /routes/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
