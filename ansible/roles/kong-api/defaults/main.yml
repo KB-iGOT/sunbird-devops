@@ -157,7 +157,7 @@ cb_ext_userprofile_prefix: /user/profile
 master_data_prefix: /masterdata
 extended_profile_prefix: /extendedprofile
 cb_notification_data_prefix: /v1/notifications
-cb-ext-course_prefix: /accessSetttings
+cb_ext_course_prefix: /accessSetttings
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
 learning_service_url: "http://learner-service:9000"
@@ -215,7 +215,7 @@ cb_search_service_url: "http://cb-search-service:7001"
 chatBot_service_url: "http://{{chatBotService_IP}}:5008"
 cb_ext_userprofile_service_url: "http://cb-ext-userprofile-service:7001"
 cb_notification_service_url: "http://cb-notification-service:7001"
-cb-ext-course-service_url: "http://cb-ext-course-service:7005"
+cb_ext_course_service_url: "http://cb-ext-course-service:7005"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -21623,8 +21623,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: accessRuleUpsert
-    uris: "{{ cb-ext-course_prefix }}/v1/upsert"
-    upstream_url: "{{ cb-ext-course-service_url }}/accessSetttings/v1/upsert"
+    uris: "{{ cb_ext_course_prefix }}/v1/upsert"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/upsert"
     strip_uri: true
     plugins:
       - name: jwt
