@@ -8087,7 +8087,6 @@ kong_apis:
     - name: acl
       config.whitelist:
           - 'dataAccess'
-      config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
