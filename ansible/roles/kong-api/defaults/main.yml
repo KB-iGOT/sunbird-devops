@@ -380,8 +380,8 @@ kong_apis:
     upstream_url: "{{ lms_service_url }}/v1/page/assemble"
     strip_uri: true
     plugins:
-    - name: cors
     - name: jwt
+    - name: cors
     - "{{ statsd_pulgin }}"
     - name: rate-limiting
       config.policy: local
@@ -2954,8 +2954,8 @@ kong_apis:
     upstream_url: "{{ knowledge_mw_service_url }}/v1/channel/read"
     strip_uri: true
     plugins:
-    - name: cors
     - name: jwt
+    - name: cors
     - "{{ statsd_pulgin }}"
     - name: rate-limiting
       config.policy: local
@@ -3813,8 +3813,8 @@ kong_apis:
     upstream_url: "{{ learning_service_url }}/v1/org/search"
     strip_uri: true
     plugins:
-    - name: cors
     - name: jwt
+    - name: cors
     - "{{ statsd_pulgin }}"
     - name: rate-limiting
       config.policy: local
@@ -3864,8 +3864,8 @@ kong_apis:
     upstream_url: "{{ learning_service_url }}/v1/org/search"
     strip_uri: true
     plugins:
-    - name: cors
     - name: jwt
+    - name: cors
     - "{{ statsd_pulgin }}"
     - name: rate-limiting
       config.policy: local
