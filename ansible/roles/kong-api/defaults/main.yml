@@ -21642,7 +21642,7 @@ kong_apis:
 
   - name: AccessRuleRead
     uris: "{{ cb_ext_course_prefix }}/read"
-    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/read"
     strip_uri: true
     plugins:
       - name: jwt
