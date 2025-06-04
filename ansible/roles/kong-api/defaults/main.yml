@@ -21700,7 +21700,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: deleteAccessRule
-    uris: "{{ cb_ext_course_prefix }}/delete"
+    uris: "{{ cb_ext_course_prefix }}/v1/delete"
     upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/delete"
     strip_uri: true
     plugins:
