@@ -1,30 +1,30 @@
-GCP_CREDENTIALS_PATH: /app/gcp_storage_credentials.json
-GCP_DB_NAME: cumulative_master_data
-GCP_ENROLMENT_TABLE_NAME: master_user_enrolments
-GCP_ORG_HIERARCHY_TABLE_NAME: master_org_hierarchy_data
-GCP_ORG_USER_TABLE_NAME: master_user_details
-GCP_PROJECT: {{ cloud_public_storage_project }}
-GCS_URI_MASTER_ORG_HIERARCHY_DATA: cumulative_master_data
-GCS_URI_MASTER_USER_DETAILS: gs://{{druid_gcloud_bucket}}/unifiedReports/unified_user_details.parquet
-GCS_URI_MASTER_USER_ENROLMENTS: gs://{{druid_gcloud_bucket}}/unifiedReports/unified_enrolments_latest.parquet
-IS_MASKING_ENABLED: "false"
-IS_VALIDATION_ENABLED: "false"
-MERGE_KEYS_MASTER_ORG_HIERARCHY_DATA: mdo_id
-MERGE_KEYS_MASTER_USER_DETAILS: user_id, mdo_id
-MERGE_KEYS_MASTER_USER_ENROLMENTS: user_id, content_id, mdo_id, batch_id
-SUNBIRD_SSO_REALM: {{keycloak_sso_realm}}
-SUNBIRD_SSO_URL: https://{{portal_domain_name}}/auth/
-SYNC_TABLES: master_user_enrolments, master_org_hierarchy_data, master_user_details
-accesstoken_publickey_basepath: /keys
-GCS_URI_MASTER_USER_DETAILS: gs://{{druid_gcloud_bucket}}/airflowData/unified_user_details.parquet
-GCS_URI_MASTER_USER_ENROLMENTS: gs://{{druid_gcloud_bucket}}/airflowData/unified_enrolments.parquet
-GCS_URI_MASTER_ORG_HIERARCHY_DATA: gs://{{druid_gcloud_bucket}}/airflowData/org_hierarchy.parquet
-MAX_ORG_CACHE_SIZE: 8000
-MAX_ORG_CACHE_AGE: 86400
+GCP_CREDENTIALS_PATH=/app/gcp_storage_credentials.json
+GCP_DB_NAME=cumulative_master_data
+GCP_ENROLMENT_TABLE_NAME=master_user_enrolments
+GCP_ORG_HIERARCHY_TABLE_NAME=master_org_hierarchy_data
+GCP_ORG_USER_TABLE_NAME=master_user_details
+GCP_PROJECT={{ cloud_public_storage_project }}
+GCS_URI_MASTER_ORG_HIERARCHY_DATA=cumulative_master_data
+GCS_URI_MASTER_USER_DETAILS=gs://{{druid_gcloud_bucket}}/unifiedReports/unified_user_details.parquet
+GCS_URI_MASTER_USER_ENROLMENTS=gs://{{druid_gcloud_bucket}}/unifiedReports/unified_enrolments_latest.parquet
+IS_MASKING_ENABLED="false"
+IS_VALIDATION_ENABLED="false"
+MERGE_KEYS_MASTER_ORG_HIERARCHY_DATA=mdo_id
+MERGE_KEYS_MASTER_USER_DETAILS=user_id, mdo_id
+MERGE_KEYS_MASTER_USER_ENROLMENTS=user_id, content_id, mdo_id, batch_id
+SUNBIRD_SSO_REALM={{keycloak_sso_realm}}
+SUNBIRD_SSO_URL=https://{{portal_domain_name}}/auth/
+SYNC_TABLES=master_user_enrolments, master_org_hierarchy_data, master_user_details
+accesstoken_publickey_basepath=/keys
+GCS_URI_MASTER_USER_DETAILS=gs://{{druid_gcloud_bucket}}/airflowData/unified_user_details.parquet
+GCS_URI_MASTER_USER_ENROLMENTS=gs://{{druid_gcloud_bucket}}/airflowData/unified_enrolments.parquet
+GCS_URI_MASTER_ORG_HIERARCHY_DATA=gs://{{druid_gcloud_bucket}}/airflowData/org_hierarchy.parquet
+MAX_ORG_CACHE_SIZE=8000
+MAX_ORG_CACHE_AGE=86400
 
-DATASET: cumulative_master_data
+DATASET=cumulative_master_data
 
-ENROLMENT_FILTER_CONFIG: |
+ENROLMENT_FILTER_CONFIG=|
     {
       "content_id": {"type": "list"},
       "mdo_id_list": {"type": "list"},
@@ -32,7 +32,7 @@ ENROLMENT_FILTER_CONFIG: |
       "content_progress_percentage": {"type": "comparison", "valid_operators": [">", "<", ">=", "<=", "="]},
       "certificate_generated": {"type": "string"}
     }
-  USER_FILTER_CONFIG: |
+USER_FILTER_CONFIG=|
     {
       "mdo_id_list": {"type": "list"},
       "status": {"type": "string", "values": {"Active": 1, "Inactive": 0}},
@@ -42,19 +42,18 @@ ENROLMENT_FILTER_CONFIG: |
       "user_id": {"type": "list"},
       "designation": {"type": "list"}
     }
-  USER_REPORT_FILTER_CONFIG: |
+USER_REPORT_FILTER_CONFIG=|
     {
       "content_id": {"type": "list"},
       "mdo_id_list": {"type": "list"},
       "content_progress_percentage": {"type": "comparison", "valid_operators": [">", "<", ">=", "<=", "="]},
       "certificate_generated": {"type": "string"}
     }
-  REDIS_HOST: "{{kp_redis_ip}}
-  REDIS_PORT: "6379"
-  REDIS_DB: "0"
-  REDIS_SSL: "False"
-  REDIS_TIMEOUT: "5"
-  REDIS_KEY_MDO_PREFIX: "igot_mdo_"
-  REDIS_DEFAULT_TTL: "86400"
-
+REDIS_HOST="{{kp_redis_ip}}
+REDIS_PORT="6379"
+REDIS_DB="0"
+REDIS_SSL="False"
+REDIS_TIMEOUT="5"
+REDIS_KEY_MDO_PREFIX="igot_mdo_"
+REDIS_DEFAULT_TTL="86400"
 
