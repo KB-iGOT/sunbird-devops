@@ -159,6 +159,7 @@ extended_profile_prefix: /extendedprofile
 cb_notification_data_prefix: /v1/notifications
 cb_notification_wrapper_data_prefix: /notifications
 cb_ext_course_prefix: /accessSetttings
+customfield_prefix : /customFields
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
 learning_service_url: "http://learner-service:9000"
@@ -218,6 +219,7 @@ cb_ext_userprofile_service_url: "http://cb-ext-userprofile-service:7001"
 cb_notification_service_url: "http://cb-notification-service:7001"
 cb_ext_course_service_url: "http://cb-ext-course-service:7005"
 cb_notification_wrapper_service_url: "http://cb-notification-wrapper-service:8081"
+custom_field_service_url : "http://custom-field-service:7003"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -21718,6 +21720,96 @@ kong_apis:
   - name: OrgFrameworkHierarchy
     uris: "{{ org_prefix }}/framework/v1/create"
     upstream_url: "{{ cb_pores_service_url }}/org/hierarchy/framework"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: createCustomFields
+    uris: "{{ customfield_prefix }}/create"
+    upstream_url: "{{ custom_field_service_url }}/customFields/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: readCustomFields
+    uris: "{{ customfield_prefix }}/read"
+    upstream_url: "{{ custom_field_service_url }}/customFields/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: UpdateCustomFields
+    uris: "{{ customfield_prefix }}/update"
+    upstream_url: "{{ custom_field_service_url }}/customFields/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: deleteCustomFields
+    uris: "{{ customfield_prefix }}/delete"
+    upstream_url: "{{ custom_field_service_url }}/customFields/delete"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: searchCustomFields
+    uris: "{{ customfield_prefix }}/search"
+    upstream_url: "{{ custom_field_service_url }}/customFields/search"
     strip_uri: true
     plugins:
       - name: jwt
