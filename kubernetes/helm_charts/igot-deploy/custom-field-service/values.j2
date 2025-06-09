@@ -1,0 +1,44 @@
+### Default variable file for custom_field_service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{custom_field_service_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{custom_field_service_replicacount|default(1)}}
+repository: {{ image_custom_field_service }}
+image_tag: {{image_tag}}
+resources:
+  requests:
+    cpu: {{custom_field_service_cpu_req|default('100m')}}
+    memory: {{custom_field_service_mem_req|default('100Mi')}}
+  limits:
+    cpu: {{custom_field_service_cpu_limit|default('1')}}
+    memory: {{custom_field_service_mem_limit|default('1024Mi')}}
+network:
+  port: {{ service_custom_field_service_port }}
+  targetport: {{ service_custom_field_service_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ custom_field_service_maxsurge|default('25%') }}
+  maxunavailable: {{ custom_field_service_maxunavailable|default('25%') }}
+
+custom_field_service_backend_basepath: {{ custom_field_service_backend_basepath | default('/keys/') }}
+
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ custom_field_service_autoscaling_enabled | default('false') }}
+  minReplicas: {{ custom_field_service_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ custom_field_service_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ custom_field_service_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ custom_field_service_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
