@@ -53,7 +53,12 @@ redis.connection.timeout=60000
 redis.insights.index=12
 search.result.redis.ttl=600
 
+#kafka properties
 spring.kafka.bootstrap.servers={{ kafka_servers_list }}
 kafka.topic.name={{env}}.user.notification
+kakfa.offset.reset.value=latest
+kafka.max.poll.interval.ms=15000
+kafka.max.poll.records=100
+kafka.auto.commit.interval.ms=10000
 
 
