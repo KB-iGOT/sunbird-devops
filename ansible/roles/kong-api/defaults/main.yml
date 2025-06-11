@@ -21758,8 +21758,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: createCustomFields
-    uris: "{{ customfield_prefix }}/create"
-    upstream_url: "{{ custom_field_service_url }}/customFields/create"
+    uris: "{{ customfield_prefix }}/v1/create"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21776,8 +21776,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: readCustomFields
-    uris: "{{ customfield_prefix }}/read"
-    upstream_url: "{{ custom_field_service_url }}/customFields/read"
+    uris: "{{ customfield_prefix }}/v1/read"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21794,8 +21794,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: UpdateCustomFields
-    uris: "{{ customfield_prefix }}/update"
-    upstream_url: "{{ custom_field_service_url }}/customFields/update"
+    uris: "{{ customfield_prefix }}/v1/update"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/update"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21812,8 +21812,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: deleteCustomFields
-    uris: "{{ customfield_prefix }}/delete"
-    upstream_url: "{{ custom_field_service_url }}/customFields/delete"
+    uris: "{{ customfield_prefix }}/v1/delete"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/delete"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21830,8 +21830,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: searchCustomFields
-    uris: "{{ customfield_prefix }}/search"
-    upstream_url: "{{ custom_field_service_url }}/customFields/search"
+    uris: "{{ customfield_prefix }}/v1/search"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21848,8 +21848,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: createMasterListCustomFields
-    uris: "{{ customfield_prefix }}/masterList/create"
-    upstream_url: "{{ custom_field_service_url }}/customFields/masterList/create"
+    uris: "{{ customfield_prefix }}/v1/masterList/create"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/masterList/create"
     strip_uri: true
     plugins:
       - name: jwt
