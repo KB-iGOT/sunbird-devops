@@ -220,6 +220,7 @@ cb_notification_service_url: "http://cb-notification-service:7001"
 cb_ext_course_service_url: "http://cb-ext-course-service:7005"
 cb_notification_wrapper_service_url: "http://cb-notification-wrapper-service:8081"
 custom_field_service_url : "http://custom-field-service:7003"
+chatBot_global_service_url : "{{chatBot_global_service_url}}"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -21882,3 +21883,75 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"     
+
+  - name: aiChatBotGetFeedBackAPI
+    uris: "{{ chatbot_prefix }}/v3/feedbacks/get"
+    upstream_url: "{{ chatBot_service_url }}/api/kb-pipeline/v3/feedbacks/get"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: aiChatBotFeedBackSaveAPI
+    uris: "{{ chatbot_prefix }}/v3/feedbacks/save"
+    upstream_url: "{{ chatBot_service_url }}/api/kb-pipeline/v3/feedbacks/save"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: aiChatBotTranscodeStatsAPI
+    uris: "{{ chatbot_prefix }}/v3/transcoder/stats"
+    upstream_url: "{{ chatBot_service_url }}/api/kb-pipeline/v3/transcoder/stats"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: aiChatBotGlobalSearchAPI
+    uris: "{{ chatbot_prefix }}/v3/global/search"
+    upstream_url: "{{ chatBot_global_service_url }}/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
