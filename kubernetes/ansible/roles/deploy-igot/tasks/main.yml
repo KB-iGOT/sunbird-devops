@@ -76,6 +76,7 @@
     "cb-notification-wrapper-service",
     "cb-ext-course-service",
     "custom-field-service",
+    "hub-graph-service",
     ]
 
 - name: helm upgrade
