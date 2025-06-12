@@ -4111,29 +4111,6 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
-    location /googleadk/ {
-      if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
-              add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
-              add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
-              add_header Content-Length 0;
-              add_header Content-Type text/plain;
-              return 200;
-      }
-      add_header Access-Control-Allow-Origin "*";
-      add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
-      proxy_cookie_path ~*^/.* /;
-      proxy_set_header X-Real-IP  $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      proxy_set_header Host $host;
-      proxy_set_header X-Forwarded-Host $host;
-      proxy_set_header X-Forwarded-Server $host;
-      rewrite ^/googleadk/(.*) /$1 break;
-      proxy_pass http://10.175.4.33:9091;
-      proxy_connect_timeout 10;
-      proxy_send_timeout 300;
-      proxy_read_timeout 300;
-    }
     location / {
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
@@ -4147,6 +4124,123 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://10.175.4.33:5000;
+    }
+
+    location /oauth2callback {
+      return 200 'OK';
+      add_header Content-Type text/plain;
+    }
+    client_max_body_size 1126M;
+
+    }
+
+  server {
+    if ($host = kbagent.{{ nginx_proxy_server_name }}) {
+        return 301 https://$host$request_uri;
+        }
+
+      listen       80;
+      server_name  kbagent.{{ nginx_proxy_server_name }};
+      return 404;
+    }
+
+   server {
+    listen                443 ssl;
+    ssl_certificate       /etc/secrets/site.crt;
+    ssl_certificate_key   /etc/secrets/site.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA HIGH !RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS";
+    server_name *.kbagent.{{ nginx_proxy_server_name }} kbagent.{{ nginx_proxy_server_name }};
+    {#
+    custom nginx server config section
+    eg:
+    nginx_server_config: |
+      if ($allowed_country = no) {
+          return 444;
+      }
+    #}
+{% if nginx_server_config is defined and nginx_server_config %}
+  {{ nginx_server_config | indent( width=6, indentfirst=True)  }}
+{% endif %}
+    # Limitting open connection per ip
+    limit_conn limitbyaddr {{ nginx_per_ip_connection_limit }};
+    proxy_set_header    Host              $host;
+    proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
+    proxy_set_header    X-Forwarded-SSL   on;
+    proxy_set_header    X-Forwarded-Proto $scheme;
+    ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
+    resolver {{ kube_dns_ip }} valid=30s;
+    location ~* ^/auth/(.*)/impersonation {
+      return 301 {{proto}}://kbagent.{{ nginx_proxy_server_name }};
+    }
+    location ~* ^/auth/realms/master {
+      return 301 {{proto}}://kbagent.{{ nginx_proxy_server_name }};
+    }
+    location ~* ^/auth/admin/master/console/ {
+      return 301 {{proto}}://kbagent.{{ nginx_proxy_server_name }};
+    }
+    location ~* ^/auth/realms/(.+)/token/introspect/ {
+          return 301 {{proto}}://$host/api/auth/v1/realms/$1/token/introspect;
+    }
+    location ~* ^/auth/realms/(.+)/token/ {
+      return 301  {{proto}}://$host/api/auth/v1/realms/$1/token/;
+    }
+    location ~* ^/auth/realms/(.+)/userinfo/ {
+      return 301 {{proto}}://$host/api/auth/v1/realms/$1/userinfo/;
+    }
+    location ~* ^/auth/realms/(.+)/logout/ {
+      return 301 {{proto}}://$host/api/auth/v1/realms/$1/logout/;
+    }
+    location ~* ^/auth/realms/(.+)/certs/ {
+      return 301 {{proto}}://$host/api/auth/v1/realms/$1/certs/;
+    }
+    location ~* ^/auth/realms/(.+)/clients-registrations/ {
+      return 301 {{proto}}://$host/api/auth/v1/realms/$1/clients-registrations/;
+    }
+    location ~* ^/auth/admin/master/console/ {
+      return 301 {{proto}}://kbagent.{{ nginx_proxy_server_name }};
+    }
+    location ~* ^/auth/v1/refresh/token  {
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://kong;
+    }
+    location /auth/ {
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+    }
+
+    location / {
+      rewrite ^/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_set_header    X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://10.175.4.33:9091;
     }
 
     location /oauth2callback {
