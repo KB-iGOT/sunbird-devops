@@ -881,6 +881,33 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
 
+    location ~ /api/faq/v1/assistant/configs/language {
+      # Enabling caching
+      proxy_cache_key "$request_uri";
+      proxy_cache sunbirdigot_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200s;
+      # Increasing the proxy buffer size
+      proxy_buffer_size 16k;
+      proxy_busy_buffers_size 16k;
+      rewrite ^/api/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://kong;
+    }
+
     location ~ /apis/protected/v8/user/profileRegistry/getMasterNationalities {
       # Enabling caching
       proxy_cache_key "$request_uri";
@@ -4036,7 +4063,7 @@ proxyconfig: |-
       proxy_pass http://keycloak;
     }
 
-    location /api/ {
+    location /routes/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
@@ -4053,7 +4080,7 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
-      rewrite ^/api/(.*) /$1 break;
+      rewrite ^/routes/(.*) /$1 break;
       proxy_pass http://10.175.4.33:5000/api;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
@@ -4083,7 +4110,30 @@ proxyconfig: |-
       proxy_send_timeout 300;
       proxy_read_timeout 300;
     }
-    
+
+    location /googleadk/ {
+      if ($request_method = OPTIONS ) {
+              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
+              add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
+              add_header Content-Length 0;
+              add_header Content-Type text/plain;
+              return 200;
+      }
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/googleadk/(.*) /$1 break;
+      proxy_pass http://10.175.4.33:9091;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
     location / {
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
