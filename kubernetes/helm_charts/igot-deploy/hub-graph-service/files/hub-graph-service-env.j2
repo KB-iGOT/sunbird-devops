@@ -73,3 +73,10 @@ redis.userList.read.timeout={{ redis_hub_userlist_read_timeout | default('84600'
 read.assess.questions.from.redis={{ hub_read_assess_questions_from_redis | default('true') }}
 network.request.default.limit={{ hub_network_request_default_limit | default('50') }}
 network.request.max.limit={{ hub_network_request_max_limit | default('100') }}
+
+accesstoken.publickey.basepath=/keys/
+sso.url=https://{{ domain_name }}/auth/
+sso.realm={{ keycloak_sso_realm }}
+sso.connection.pool.size=20
+sso.enabled=true
+

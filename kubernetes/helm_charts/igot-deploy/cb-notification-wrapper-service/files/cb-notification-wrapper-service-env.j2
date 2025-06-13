@@ -13,6 +13,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.show-sql=false
 
+
 spring.cassandra.local-datacenter=DC1
 spring.cassandra.startupTimeoutInSeconds=100000
 spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
@@ -23,12 +24,12 @@ spring.cassandra.password={{ cassandra_password }}
 sunbird_cassandra_consistency_level=ONE
 cassandra.config.host={{ sunbird_cassandra_db_host }}
 
-sb.api.key={{ bearer_token }}
-
 ##Authentication configuration
 accesstoken.publickey.basepath=/keys/
 sso.url=https://{{ domain_name }}/auth/
 sso.realm={{ keycloak_sso_realm }}
+
+sb.api.key={{ bearer_token }}
 
 #Redis Cache Service properties
 #redis timeout value is in seconds
@@ -53,12 +54,16 @@ redis.connection.timeout=60000
 redis.insights.index=12
 search.result.redis.ttl=600
 
-#kafka properties
 spring.kafka.bootstrap.servers={{ kafka_servers_list }}
 kafka.topic.name={{env}}.user.notification
-kakfa.offset.reset.value=latest
+kafka.offset.reset.value=latest
 kafka.max.poll.interval.ms=15000
 kafka.max.poll.records=100
 kafka.auto.commit.interval.ms=10000
 
+spring.kafka.producer.acks=1
+spring.kafka.producer.retries=3
+spring.kafka.producer.delivery-timeout=180000
+spring.kafka.producer.request-timeout=60000
 
+notification.base.url=https://{{ domain_name }}/apis/proxies/v8/v1/notifications

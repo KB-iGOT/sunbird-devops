@@ -758,6 +758,8 @@ service_cb_search_service: cb-search-service
 service_cb_ext_userprofile_service: cb-ext-userprofile-service
 service_cb_notification_service: cb-notification-service
 service_cb_ext_course_service: cb-ext-course-service
+service_cb_notification_wrapper_service: cb-notification-wrapper-service
+service_custom_field_service: custom-field-service
 
 # Ports
 service_bulk_upload_port: 3009
@@ -849,6 +851,8 @@ service_cb_search_port: 7001
 service_cb_ext_userprofile_port: 7001
 service_cb_notification_port: 7001
 service_cb_ext_course_port: 7005
+service_cb_notification_wrapper_port: 8081
+service_custom_field_service_port: 7003
 
 # Network alias names, so that one service can talk to another
 network_alias_content_service: private-content-service
@@ -923,6 +927,8 @@ network_alias_cb_search_service: cb-search-service
 network_alias_cb_ext_userprofile_service: cb-ext-userprofile-service
 network_alias_cb_notification_service: cb-notification-service
 network_alias_cb_ext_course_service: cb-ext-course-service
+network_alias_cb_notification_wrapper_service: cb-notification-wrapper-service
+network_alias_custom_field_service: custom-field-service
 
 # Image names, this is used by the service alone, but since we want to have all the images in one place, we are oncfiguring the images here
 image_ui_static: ui-static
@@ -994,6 +1000,8 @@ image_cb_search_service: cb-search-service
 image_cb_ext_userprofile_service: cb-ext-userprofile-service
 image_cb_notification_service: cb-notification-service
 image_cb_ext_course_service: cb-ext-course-service
+image_cb_notification_wrapper_service: cb-notification-wrapper-service
+image_custom_field_service: custom-field-service
 
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload

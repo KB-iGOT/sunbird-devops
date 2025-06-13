@@ -157,7 +157,9 @@ cb_ext_userprofile_prefix: /user/profile
 master_data_prefix: /masterdata
 extended_profile_prefix: /extendedprofile
 cb_notification_data_prefix: /v1/notifications
+cb_notification_wrapper_data_prefix: /notifications
 cb_ext_course_prefix: /accessSetttings
+customfield_prefix : /customFields
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
 learning_service_url: "http://learner-service:9000"
@@ -212,10 +214,13 @@ cb_ext_assessment_service_url: "http://cb-ext-assessment-service:7002"
 certificate_generator_service_url : "http://certificate-generator-service:9000"
 comment_tree_service_url: "http://comment-tree-service:8098"
 cb_search_service_url: "http://cb-search-service:7001"
-chatBot_service_url: "http://{{chatBotService_IP}}:5008"
+chatBot_service_url: "http://{{chatBotService_IP}}"
 cb_ext_userprofile_service_url: "http://cb-ext-userprofile-service:7001"
 cb_notification_service_url: "http://cb-notification-service:7001"
 cb_ext_course_service_url: "http://cb-ext-course-service:7005"
+cb_notification_wrapper_service_url: "http://cb-notification-wrapper-service:8081"
+custom_field_service_url : "http://custom-field-service:7003"
+chatBot_global_service_url : "{{chatBot_global_service_url}}"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -21175,7 +21180,7 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: workflowBlendedProgramDownloadApprovalCSVFile
     uris: "{{ workflow_handler_service_prefix }}/blendedprogram/getUserApprovalDataInCsv"
@@ -21645,6 +21650,24 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: SendNotification
+    uris: "{{ cb_notification_wrapper_data_prefix }}/create"
+    upstream_url: "{{ cb_notification_wrapper_service_url }}/notifications/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
   - name: accessRuleUpsert
     uris: "{{ cb_ext_course_prefix }}/v1/upsert"
     upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/upsert"
@@ -21665,7 +21688,7 @@ kong_apis:
 
   - name: AccessRuleRead
     uris: "{{ cb_ext_course_prefix }}/read"
-    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21680,7 +21703,43 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
-        
+
+  - name: recentSearchDeleteByTimestamp
+    uris: "{{ search_service_prefix }}/v1/recent/delete/timestamp"
+    upstream_url: "{{ cb_search_service_url }}/search/v1/recent/delete/timestamp"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: deleteAccessRule
+    uris: "{{ cb_ext_course_prefix }}/v1/delete"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/delete"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
   - name: OrgFrameworkHierarchy
     uris: "{{ org_prefix }}/framework/v1/create"
     upstream_url: "{{ cb_pores_service_url }}/org/hierarchy/framework"
@@ -21699,9 +21758,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: sampleFileDownloadForOrgHirarchyMapping
-    uris: "{{ organisation_prefix }}/v1/getMappingFile/sample"
-    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/getMappingFile/sample"
+  - name: createCustomFields
+    uris: "{{ customfield_prefix }}/v1/create"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21709,7 +21768,7 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'dataAccess'
+          - 'contentCreate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -21717,9 +21776,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: bulkUploadForOrgHierarchyMapping
-    uris: "{{ organisation_prefix }}/v1/hierarchy/bulkUpload"
-    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/bulkUpload"
+  - name: readCustomFields
+    uris: "{{ customfield_prefix }}/v1/read"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21727,7 +21786,7 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'dataAccess'
+          - 'contentAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -21735,9 +21794,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: bulkUploadForOrgHierarchyMappingProgressDetails
-    uris: "{{ organisation_prefix }}/v1/hierarchy/progress/details/bulkUpload"
-    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/progress/details/bulkUpload"
+  - name: UpdateCustomFields
+    uris: "{{ customfield_prefix }}/v1/update"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/update"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21745,7 +21804,7 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'dataAccess'
+          - 'contentCreate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -21753,9 +21812,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: bulkUploadFileDownloadForOrgHierarchyMapping
-    uris: "{{ organisation_prefix }}/v1/hierarchy/download"
-    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/download"
+  - name: deleteCustomFields
+    uris: "{{ customfield_prefix }}/v1/delete"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/delete"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21763,17 +21822,17 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'dataAccess'
+          - 'contentUpdate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: bulkUploadSampleFrameworkFileForOrgHierarchyMapping
-    uris: "{{ organisation_prefix }}/v1/hierarchy/download/file"
-    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/download/file"
+  - name: searchCustomFields
+    uris: "{{ customfield_prefix }}/v1/search"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21781,10 +21840,136 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'dataAccess'
+          - 'contentAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: createMasterListCustomFields
+    uris: "{{ customfield_prefix }}/v1/masterList/create"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/masterList/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: extendedCompetencies
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/extended/competencies"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/extended/competencies"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"     
+
+  - name: aiChatBotGetFeedBackAPI
+    uris: "{{ chatbot_prefix }}/v3/feedbacks/get"
+    upstream_url: "{{ chatBot_service_url }}/api/kb-pipeline/v3/feedbacks/get"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: aiChatBotFeedBackSaveAPI
+    uris: "{{ chatbot_prefix }}/v3/feedbacks/save"
+    upstream_url: "{{ chatBot_service_url }}/api/kb-pipeline/v3/feedbacks/save"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: aiChatBotTranscodeStatsAPI
+    uris: "{{ chatbot_prefix }}/v3/transcoder/stats"
+    upstream_url: "{{ chatBot_service_url }}/api/kb-pipeline/v3/transcoder/stats"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: aiChatBotGlobalSearchAPI
+    uris: "{{ chatbot_prefix }}/v3/global/search"
+    upstream_url: "{{ chatBot_global_service_url }}/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: profileRelationship
+    uris: "{{ hub_graph_service_prefix }}/v1/profile/relationship"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/relationship"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_large_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"  

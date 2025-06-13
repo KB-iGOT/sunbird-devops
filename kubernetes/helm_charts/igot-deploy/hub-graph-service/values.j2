@@ -27,7 +27,7 @@ strategy:
   maxsurge: {{ hubgraph_maxsurge|default('25%') }}
   maxunavailable: {{ hubgraph_maxunavailable|default('25%') }}
 
-
+hub_graph_backend_basepath: {{ hub_graph_backend_basepath | default('/keys/') }}
 
 
 serviceMonitor:
