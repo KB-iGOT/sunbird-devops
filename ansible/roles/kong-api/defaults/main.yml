@@ -21698,3 +21698,93 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: sampleFileDownloadForOrgHirarchyMapping
+    uris: "{{ organisation_prefix }}/v1/getMappingFile/sample"
+    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/getMappingFile/sample"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: bulkUploadForOrgHierarchyMapping
+    uris: "{{ organisation_prefix }}/v1/hierarchy/bulkUpload"
+    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/bulkUpload"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: bulkUploadForOrgHierarchyMappingProgressDetails
+    uris: "{{ organisation_prefix }}/v1/hierarchy/progress/details/bulkUpload"
+    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/progress/details/bulkUpload"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: bulkUploadFileDownloadForOrgHierarchyMapping
+    uris: "{{ organisation_prefix }}/v1/hierarchy/download"
+    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/download"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: bulkUploadSampleFrameworkFileForOrgHierarchyMapping
+    uris: "{{ organisation_prefix }}/v1/hierarchy/download/file"
+    upstream_url: "{{ sb_cb_ext_service_url }}/organisation/v1/hierarchy/download/file"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
