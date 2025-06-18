@@ -518,3 +518,15 @@ mdo.leader.board.size.list=XS,S,M,L,XL
 content-read-endpoint-fields=?fields=primaryCategory,identifier,batches,versionKey,additionalTags,courseCategory
 maximum.allow.limit.bulk.designation.upload=300
 
+bulk.upload.org.hierarchy.reference.workspace.name=referenceSheet
+bulk.upload.org.hierarchy.master.data.name=masterData
+org.hierarchy.headers.master.data=orgId,orgName,DisplayName
+org.hierarchy.headers.references=L1 - Districts,L2 - Tehsil,L3 - Offices,L4,L5,L6,L7,L8,L9,L10
+org.hierarchy.bulk.upload.file.name=orgHierarchyBulkMasterData.xlsx
+org.search.limit=784
+org.search.url=v1/org/search
+org.hierarchy.column.width=9999
+validation.message.duplicate-levels=Avoid selecting duplicate values across levels (L1 to L10).
+kafka.topics.org.hierarchy.bulk.upload.event={{env}}.org.hierarchy.bulk.upload
+kafka.topics.org.hierarchy.bulk.upload.event.group=orgHierarchyBulkUpload
+org.hierarchy.bulk.upload.container.name=orghierarchy
