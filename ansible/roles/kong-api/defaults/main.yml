@@ -22094,3 +22094,39 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateUserAdditionalFields
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/update/additionalFields"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/update/additionalFields"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: getUserAdditionalFields
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/getAdditionalFields"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/getAdditionalFields"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"        

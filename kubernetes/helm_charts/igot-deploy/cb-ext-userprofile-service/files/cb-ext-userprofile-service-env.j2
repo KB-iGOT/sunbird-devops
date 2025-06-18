@@ -122,10 +122,31 @@ validation.required-fields.educationalQualification=degree,institutionName,start
 validation.required-fields.achievement=title
 validation.required-fields.serviceHistory=orgName,designation,orgState,orgDistrict,startDate,endDate,currentlyWorking
 basic.profile.fields=id,channel,firstname,profiledetails,rootOrgId,username
-profile.completion.required.fields=firstName,profilePicture,currentLocation,bannerImage,serviceHistory,educationalQualifications
-profile.completion.extended.fields=serviceHistory,educationalQualifications,location
+profile.completion.required.fields=firstName,profileImageUrl,locationDetails,profileBannerUrl,serviceHistory,educationalQualifications
+profile.completion.extended.fields=serviceHistory,educationalQualifications,locationDetails
 profile.completion.field.weight=16.7
 context.types=educationalQualifications,achievements,serviceHistory,locationDetails
 
 configmap.community.base.url=http://discussion-metaupdate-service:7002
 community.post.count.api.url=/v1/postcount/
+
+redis.host.name={{ kp_redis_ip }}
+redis.port={{ redis_port }}
+
+redis.data.host.name={{ redis_host }}
+redis.data.port={{ redis_port }}
+
+cb.redis.maxIdle=128
+cb.redis.maxTotal=3000
+cb.redis.minIdle=100
+cb.redis.testOnBorrow=true
+cb.redis.testOnReturn=true
+cb.redis.testWhileIdle=true
+cb.redis.minEvictableIdleTimeMillis=120000
+cb.redis.timeBetweenEvictionRunsMillis=30000
+cb.redis.numTestsPerEvictionRun=3
+cb.redis.blockWhenExhausted=true
+cb.data.index=12
+cb.cache.ttl=86400
+cb.certificate.count.redis.key=user_wise_certificate_count
+
