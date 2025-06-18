@@ -22119,7 +22119,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: updateUserAdditionalFields
-    uris: "{{ cb_ext_userprofile_prefix }}/update/additionalFields"
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/update/additionalFields"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/update/additionalFields"
     strip_uri: true
     plugins:
@@ -22137,7 +22137,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: getUserAdditionalFields
-    uris: "{{ cb_ext_userprofile_prefix }}/update/additionalFields"
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/getAdditionalFields"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/getAdditionalFields"
     strip_uri: true
     plugins:
