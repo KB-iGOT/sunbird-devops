@@ -153,6 +153,8 @@ thumbnail_service_prefix: /thumbnail
 certificate_generate_service_prefix: /certificate
 comment_tree_prefix: /commentTree
 search_service_prefix: /search
+cb_ext_userprofile_prefix: /user/profile
+customfield_prefix : /customFields
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -209,6 +211,8 @@ certificate_generator_service_url : "http://certificate-generator-service:9000"
 comment_tree_service_url: "http://comment-tree-service:8098"
 cb_search_service_url: "http://cb-search-service:7001"
 chatBot_service_url: "http://{{chatBotService_IP}}:5008"
+cb_ext_userprofile_service_url: "http://cb-ext-userprofile-service:7001"
+custom_field_service_url : "http://custom-field-service:7003"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -21169,3 +21173,183 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: createCustomFields
+    uris: "{{ customfield_prefix }}/v1/create"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: readCustomFields
+    uris: "{{ customfield_prefix }}/v1/read"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: UpdateCustomFields
+    uris: "{{ customfield_prefix }}/v1/update"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: deleteCustomFields
+    uris: "{{ customfield_prefix }}/v1/delete"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/delete"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: searchCustomFields
+    uris: "{{ customfield_prefix }}/v1/search"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: createMasterListCustomFields
+    uris: "{{ customfield_prefix }}/v1/masterList/create"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/masterList/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+		
+  - name: UpdateMasterListCustomFields
+    uris: "{{ customfield_prefix }}/v1/masterList/update"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/masterList/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: UpdateCustomFieldStatus
+    uris: "{{ customfield_prefix }}/v1/status/update"
+    upstream_url: "{{ custom_field_service_url }}/customFields/v1/status/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateUserAdditionalFields
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/update/additionalFields"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/update/additionalFields"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: getUserAdditionalFields
+    uris: "{{ cb_ext_userprofile_prefix }}/v1/getAdditionalFields"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/getAdditionalFields"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
