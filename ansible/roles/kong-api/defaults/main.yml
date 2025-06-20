@@ -22154,7 +22154,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"        
 
   - name: UpdateCustomFieldsPopUp
-    uris: "{{ customfield_prefix }}/customFields/v1/popup/update"
+    uris: "{{ customfield_prefix }}/v1/popup/update"
     upstream_url: "{{ custom_field_service_url }}/customFields/v1/popup/update"
     strip_uri: true
     plugins:
