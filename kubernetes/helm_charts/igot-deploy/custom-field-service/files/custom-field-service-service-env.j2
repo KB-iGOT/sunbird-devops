@@ -51,3 +51,11 @@ customField.list.update.validation.file.path=/payloadValidation/customFieldListU
 customField.status.update.validation.file.path=/payloadValidation/customFieldStatusUpdateValidation.json
 
 custom.field.max.allowed.count=10
+
+spring.cassandra.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
+
