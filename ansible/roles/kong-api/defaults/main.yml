@@ -157,6 +157,7 @@ cb_ext_userprofile_prefix: /user/profile
 master_data_prefix: /masterdata
 extended_profile_prefix: /extendedprofile
 cb_notification_data_prefix: /v1/notifications
+cb_notification_setting_data_prefix: /notificationSetting
 cb_notification_wrapper_data_prefix: /notifications
 cb_ext_course_prefix: /accessSetttings
 customfield_prefix : /customFields
@@ -21531,6 +21532,42 @@ kong_apis:
   - name: unreadCountReset
     uris: "{{ cb_notification_data_prefix }}/reset/unread/count"
     upstream_url: "{{ cb_notification_service_url }}/v1/notifications/reset/unread/count"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: userSettingUpsert
+    uris: "{{ cb_notification_setting_data_prefix }}/upsert"
+    upstream_url: "{{ cb_notification_service_url }}/notificationSetting/upsert"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: userSettingList
+    uris: "{{ cb_notification_setting_data_prefix }}/read"
+    upstream_url: "{{ cb_notification_service_url }}/notificationSetting/read"
     strip_uri: true
     plugins:
       - name: jwt
