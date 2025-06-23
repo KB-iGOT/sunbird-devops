@@ -1,0 +1,30 @@
+GOOGLE_APPLICATION_CREDENTIALS="/app/kbagentgcp_gemini_credentials.json"
+KB_DIR="/app/docs"
+KB_AUTH_TOKEN="{{bearer_token}}"
+GEMINI_MODEL="{{kbaget_gemini_model_pro}}"
+KB_BASE_URL="https://{{domain_name}}"
+
+BHASHINI_USER_ID={{kbaget_bhashini_user_id}}
+BHASHINI_API_KEY={{kbaget_bhashini_api_key}}
+BHASHINI_PIPELINE_ID={{kbaget_bhashini_pipeline_id}}
+
+GCP_BUCKET_NAME="{{thumbnail_generation_bucket_name}}"
+GCP_STORAGE_CREDENTIALS="/app/kbagentgcp_storage_credentials.json"
+
+USE_API_KEY=True
+GOOGLE_API_KEY="{{kbaget_google_api_key}}"
+GOOGLE_APPLICATION_API_KEY="{{kbaget_google_application_api_key}}"
+
+ZOHO_AUTH_TOKEN="{{kbaget_zoho_auth_token}}"
+
+ZOHO_REFRESH_TOKEN_URL="{{kbaget_zoho_refresh_token_url}}"
+COOKIES="{{kbagent_cookies}}"
+
+OPIK_URL="{{kbagent_opik_url}}"
+OPIK_PROJECT="ITSM Chatbot"
+
+REDIS_HOST="{{redis.host.name}}"
+REDIS_PORT=6379
+REDIS_DB=2
+
+POSTGRES_URL = "postgresql://{{kbagentpg_user}}:{{kbagentpg_password}}@{{kbagentpg_host}}:5432/{{kbagentpg_db}}"
