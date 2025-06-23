@@ -160,7 +160,9 @@ cb_notification_data_prefix: /v1/notifications
 cb_notification_wrapper_data_prefix: /notifications
 cb_ext_course_prefix: /accessSetttings
 customfield_prefix : /customFields
+supportAi_prefix : /support/ai
 cb_ext_content_prefix: /content/v2
+
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
 learning_service_url: "http://learner-service:9000"
@@ -222,6 +224,7 @@ cb_ext_course_service_url: "http://cb-ext-course-service:7005"
 cb_notification_wrapper_service_url: "http://cb-notification-wrapper-service:8081"
 custom_field_service_url : "http://custom-field-service:7003"
 chatBot_global_service_url : "{{chatBot_global_service_url}}"
+support_ai_service_url: "{{supportAIService_IP}}"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -22174,7 +22177,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"        
 
   - name: UpdateCustomFieldsPopUp
-    uris: "{{ customfield_prefix }}/customFields/v1/popup/update"
+    uris: "{{ customfield_prefix }}/v1/popup/update"
     upstream_url: "{{ custom_field_service_url }}/customFields/v1/popup/update"
     strip_uri: true
     plugins:
@@ -22184,6 +22187,42 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: supportAIChatStart
+    uris: "{{ supportAi_prefix }}/chat/start"
+    upstream_url: "{{ support_ai_service_url }}/chat/start"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: supportAIChatSend
+    uris: "{{ supportAi_prefix }}/chat/send"
+    upstream_url: "{{ support_ai_service_url }}/chat/send"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
