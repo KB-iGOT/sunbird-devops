@@ -1,0 +1,48 @@
+### Default variable file for kb_agent-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{kb_agent_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{kb_agent_replicacount|default(1)}}
+repository: {{ image_kb_agent_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{kb_agent_cpu_req|default('200m')}}
+    memory: {{kb_agent_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{kb_agent_cpu_limit|default('500m')}}
+    memory: {{kb_agent_mem_limit|default('800Mi')}}
+network:
+  port: {{ service_kb_agent_port }}
+  targetport: {{ service_kb_agent_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ kb_agent_maxsurge|default('25%') }}
+  maxunavailable: {{ kb_agent_maxunavailable|default('25%') }}
+
+kbagentgcpstoragecredentialsjson: |-
+ {{gcp_artifcats_upload_service_account}}
+
+kbagentgcpgeminicredentialsjson: |-
+ {{gcp_gemini_upload_service_account}}
+
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ kb_agent_autoscaling_enabled | default('false') }}
+  minReplicas: {{ kb_agent_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ kb_agent_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ kb_agent_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ kb_agent_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
