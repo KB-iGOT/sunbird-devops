@@ -159,9 +159,9 @@ extended_profile_prefix: /extendedprofile
 cb_notification_data_prefix: /v1/notifications
 cb_notification_wrapper_data_prefix: /notifications
 cb_ext_course_prefix: /accessSetttings
+cb_ext_content_prefix: /content/v2
 customfield_prefix : /customFields
 supportAi_prefix : /support/ai
-cb_ext_content_prefix: /content/v2
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
