@@ -154,14 +154,14 @@ certificate_generate_service_prefix: /certificate
 comment_tree_prefix: /commentTree
 search_service_prefix: /search
 cb_ext_userprofile_prefix: /user/profile
+customfield_prefix : /customFields
+supportAi_prefix : /support/ai
 master_data_prefix: /masterdata
 extended_profile_prefix: /extendedprofile
 cb_notification_data_prefix: /v1/notifications
 cb_notification_wrapper_data_prefix: /notifications
 cb_ext_course_prefix: /accessSetttings
 cb_ext_content_prefix: /content/v2
-customfield_prefix : /customFields
-supportAi_prefix : /support/ai
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
