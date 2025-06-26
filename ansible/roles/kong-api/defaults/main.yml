@@ -21247,7 +21247,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
-        config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
