@@ -29,8 +29,6 @@ cluster.initial_master_nodes: {{ groups['es7'] }}
 network.host: "{{ es_network_host | default('0.0.0.0') }}"
 
 http.port: 9200
-bootstrap.memory_lock: true
-
 
 {% if es_path_repo is defined %}
 path.repo: {{ es_path_repo }}
