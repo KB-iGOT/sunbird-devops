@@ -22283,4 +22283,58 @@ kong_apis:
       config.hour: "{{ medium_rate_limit_per_hour }}"
       config.limit_by: credential
     - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"      
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findRecommendedConnectionV3
+    uris: "{{ hub_graph_service_prefix }}/v3/connections/recommended"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/v2/find/recommended"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findRecommendedMentors
+    uris: "{{ hub_graph_service_prefix }}/v3/connections/recommended/mentors"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/find/recommended/mentors"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findBlockedUsers
+    uris: "{{ hub_graph_service_prefix }}/v2/connections/requests/blocked"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/fetch/blocked"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
