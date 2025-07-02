@@ -218,7 +218,7 @@ cb_ext_assessment_service_url: "http://cb-ext-assessment-service:7002"
 certificate_generator_service_url : "http://certificate-generator-service:9000"
 comment_tree_service_url: "http://comment-tree-service:8098"
 cb_search_service_url: "http://cb-search-service:7001"
-chatBot_service_url: "http://{{chatBotService_IP}}"
+chatBot_service_url: "{{chatBotService_IP}}"
 cb_ext_userprofile_service_url: "http://cb-ext-userprofile-service:7001"
 cb_notification_service_url: "http://cb-notification-service:7001"
 cb_ext_course_service_url: "http://cb-ext-course-service:7005"
@@ -22266,3 +22266,75 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateContentV2State
+    uris: "{{ cb_ext_content_prefix }}/state/update"
+    upstream_url: "{{ cb_ext_course_service_url }}/content/v2/state/update"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findRecommendedConnectionV3
+    uris: "{{ hub_graph_service_prefix }}/v3/connections/recommended"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/v2/find/recommended"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findRecommendedMentors
+    uris: "{{ hub_graph_service_prefix }}/v3/connections/recommended/mentors"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/find/recommended/mentors"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findBlockedUsers
+    uris: "{{ hub_graph_service_prefix }}/v2/connections/requests/blocked"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/fetch/blocked"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
