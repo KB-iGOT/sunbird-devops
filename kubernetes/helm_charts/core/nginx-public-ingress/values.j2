@@ -6056,7 +6056,7 @@ nginxconfig: |
       #add_header X-XSS-Protection "1; mode=block" always;
 
       #dont add this add_header Content-Security-Policy "default-src 'self'; font-src *;img-src * data:; script-src *; style-src *";
-      add_header Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.userway.org; script-src 'self' 'unsafe-inline' https://api.userway.org https://cdn.userway.org https://cdnt.netcoresmartech.com https://js.zohostatic.in https://www.youtube.com; font-src 'self' data:; connect-src 'self' https://api.userway.org https://cdn.userway.org; img-src 'self' data: https:; frame-src 'self' https://www.youtube.com;";
+      add_header Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.userway.org; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.userway.org https://cdn.userway.org https://cdnt.netcoresmartech.com https://js.zohostatic.in https://www.youtube.com; font-src 'self' data:; connect-src 'self' https://api.userway.org https://cdn.userway.org; img-src 'self' data: https:; frame-src 'self' https://www.youtube.com;";
       #add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains; preload';
       add_header Referrer-Policy "strict-origin";
       add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
