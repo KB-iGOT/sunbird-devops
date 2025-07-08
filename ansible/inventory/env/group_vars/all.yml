@@ -761,6 +761,7 @@ service_cb_ext_course_service: cb-ext-course-service
 service_cb_notification_wrapper_service: cb-notification-wrapper-service
 service_custom_field_service: custom-field-service
 service_kb_agent_service: kb-agent-service
+service_id_mapping_service: id-mapping-service
 
 # Ports
 service_bulk_upload_port: 3009
@@ -855,6 +856,7 @@ service_cb_ext_course_port: 7005
 service_cb_notification_wrapper_port: 8081
 service_custom_field_service_port: 7003
 service_kb_agent_port: 8000
+service_id_mapping_port: 8080
 
 # Network alias names, so that one service can talk to another
 network_alias_content_service: private-content-service
@@ -932,6 +934,7 @@ network_alias_cb_ext_course_service: cb-ext-course-service
 network_alias_cb_notification_wrapper_service: cb-notification-wrapper-service
 network_alias_custom_field_service: custom-field-service
 network_alias_kb_agent_service: kb-agent-service
+network_alias_id_mapping_service: id-mapping-service
 
 # Image names, this is used by the service alone, but since we want to have all the images in one place, we are oncfiguring the images here
 image_ui_static: ui-static
@@ -1006,6 +1009,7 @@ image_cb_ext_course_service: cb-ext-course-service
 image_cb_notification_wrapper_service: cb-notification-wrapper-service
 image_custom_field_service: custom-field-service
 image_kb_agent_service: kb-agent-service
+image_id_mapping_service: id-mapping-service
 
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload

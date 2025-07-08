@@ -1,0 +1,14 @@
+spring.application.name=id-mapping-service
+spring.datasource.url=jdbc:postgresql://{{ postgresql_host }}:{{ postgresql_port }}/bitdb
+spring.datasource.username={{postgresql_username_sunbird }}
+spring.datasource.password={{ postgresql_password_sunbird }}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=2
+spring.datasource.hikari.idle-timeout=30000
+spring.datasource.hikari.connection-timeout=20000
+spring.datasource.hikari.max-lifetime=1800000
+management.endpoints.web.exposure.include=*
+management.metrics.enable.all=true
+management.endpoint.metrics.enabled=true
+idmapping.lookup.query=WITH ins AS (INSERT INTO master_bitposition_lookup(name) VALUES (?) ON CONFLICT (name) DO NOTHING RETURNING id) SELECT id FROM ins UNION SELECT id FROM master_bitposition_lookup WHERE name = ?

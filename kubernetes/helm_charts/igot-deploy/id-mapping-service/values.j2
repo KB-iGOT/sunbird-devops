@@ -1,0 +1,44 @@
+### Default variable file for id_mapping_service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{id_mapping_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{id_mapping_replicacount|default(1)}}
+repository: {{ image_id_mapping_service }}
+image_tag: {{image_tag}}
+resources:
+  requests:
+    cpu: {{id_mapping_cpu_req|default('100m')}}
+    memory: {{id_mapping_mem_req|default('100Mi')}}
+  limits:
+    cpu: {{id_mapping_cpu_limit|default('1')}}
+    memory: {{id_mapping_mem_limit|default('1024Mi')}}
+network:
+  port: {{ service_id_mapping_port }}
+  targetport: {{ service_id_mapping_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ id_mapping_maxsurge|default('25%') }}
+  maxunavailable: {{ id_mapping_maxunavailable|default('25%') }}
+
+id_mapping_backend_basepath: {{ id_mapping_backend_basepath | default('/keys/') }}
+
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ id_mapping_service_autoscaling_enabled | default('false') }}
+  minReplicas: {{ id_mapping_service_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ id_mapping_service_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ id_mapping_service_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ id_mapping_service_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
