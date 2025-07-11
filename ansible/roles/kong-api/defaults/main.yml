@@ -22429,7 +22429,6 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-
   - name: updateContentState
     uris: "{{ course_service_prefix }}/v2/content/state/update"
     upstream_url: "{{ lms_service_url }}/v2/content/state/update"
