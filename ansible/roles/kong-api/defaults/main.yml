@@ -22267,6 +22267,24 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: privateListCourseEnrollmentsV4
+    uris: "{{ course_service_prefix }}/private/v4/user/enrollment/list"
+    upstream_url: "{{ lms_service_url }}/private/v1/user/enrol/courses/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
   - name: updateContentV2State
     uris: "{{ cb_ext_content_prefix }}/state/update"
     upstream_url: "{{ cb_ext_course_service_url }}/content/v2/state/update"
@@ -22338,6 +22356,79 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: blockUserAPI
+    uris: "{{ hub_graph_service_prefix }}/block"
+    upstream_url: "{{ hub_graph_service_url }}/connections/block"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findTotalConnectionsCountByStatus
+    uris: "{{ hub_graph_service_prefix }}/user/v1/network/connections/list"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/user/v1/network/connections/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: eventIssueCertificate
+    uris: "{{ course_service_prefix }}/event/batch/cert/v1/issue"
+    upstream_url: "{{ lms_service_url }}/v1/event/batch/cert/issue"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'certificateCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: extendedCourseEnrolment
+    uris: "{{ course_service_prefix }}/v2/enrol"
+    upstream_url: "{{ lms_service_url }}/v2/course/enroll"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
 
   - name: updateContentState
     uris: "{{ course_service_prefix }}/v2/content/state/update"
