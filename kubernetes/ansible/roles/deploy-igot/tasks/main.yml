@@ -78,6 +78,7 @@
     "custom-field-service",
     "hub-graph-service",
     "id-mapping-service",
+    "frac-backend-service",
     ]
 
 - name: helm upgrade
