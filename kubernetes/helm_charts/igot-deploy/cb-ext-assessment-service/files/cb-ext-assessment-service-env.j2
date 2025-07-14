@@ -315,7 +315,7 @@ assessment.ratake.count.verification.enabled=true
 ##### content Progress#####
 kafka.topic.update.content.progress={{ env }}.update.content.progress
 kafka.topic.update.content.progress.group=updateContentProgressAsyncHandlerGroup
-progress.api.update.endpoint=/v1/content/state/admin/update
+progress.api.update.endpoint=/v2/content/state/admin/update
 
 bulk.upload.tag.verification.regex=^[a-zA-Z\\\s,]+$
 
@@ -510,3 +510,5 @@ state.learning.insights.redis.key.mapping={"Certificate Issued Yesterday":"dashb
 
 sb.service.bulk.user.create.path=/v5/cb/user/bulkcreate
 
+assessment.user.submit.data.table=user_assessment_data_v2
+course.read.path=content/v3/read/
