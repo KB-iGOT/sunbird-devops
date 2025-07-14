@@ -91,3 +91,17 @@ user.read.v5=/v5/user/read/
 client.http.request.factory.timeout=45000
 client.http.request.factory.pooling.max.total.connections=2000
 client.http.request.factory.pooling.default.max.per.route=500
+
+spring.kafka.bootstrap.servers={{ kafka_servers_list }}
+kafka.topic.name.user.profile.update={{env}}.user.profile.update
+kafka.group.name.user.profile.update={{env}}.user.profile.update.networkhub.group
+#kafka properties
+kakfa.offset.reset.value=latest
+kafka.max.poll.interval.ms=15000
+kafka.max.poll.records=100
+kafka.auto.commit.interval.ms=10000
+
+id.map.lookup.service.url=http://id-mapping-service:8080
+id.map.lookup.byname=/idmapping/lookup?name=
+id.map.lookup.bylist=/idmapping/lookup?list=
+
