@@ -19295,7 +19295,7 @@ kong_apis:
 
   - name: listCourseEnrollmentsV4
     uris: "{{ course_service_prefix }}/v4/user/enrollment/list"
-    upstream_url: "{{ lms_service_url }}/v1/user/enrol/courses/list"
+    upstream_url: "{{ lms_service_url }}/v2/user/enrol/courses/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -19313,7 +19313,7 @@ kong_apis:
 
   - name: listCourseEnrollmentSummary
     uris: "{{ course_service_prefix }}/v4/user/enrollment/summary"
-    upstream_url: "{{ lms_service_url }}/v1/user/enrol/summary"
+    upstream_url: "{{ lms_service_url }}/v2/user/enrol/summary"
     strip_uri: true
     plugins:
       - name: jwt
@@ -19331,7 +19331,7 @@ kong_apis:
 
   - name: listCourseEnrollmentDetails
     uris: "{{ course_service_prefix }}/v4/user/enrollment/details"
-    upstream_url: "{{ lms_service_url }}/v1/user/enrol/courses/details"
+    upstream_url: "{{ lms_service_url }}/v2/user/enrol/courses/details"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22269,7 +22269,7 @@ kong_apis:
 
   - name: privateListCourseEnrollmentsV4
     uris: "{{ course_service_prefix }}/private/v4/user/enrollment/list"
-    upstream_url: "{{ lms_service_url }}/private/v1/user/enrol/courses/list"
+    upstream_url: "{{ lms_service_url }}/private/v2/user/enrol/courses/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22428,3 +22428,147 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: createFormV2
+    uris: "{{ forms_service_prefix }}/v2/createForm"
+    upstream_url: "{{ forms_service_url }}/forms/v2/createForm"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: updateFormV2
+    uris: "{{ forms_service_prefix }}/v2/updateForm"
+    upstream_url: "{{ forms_service_url }}/forms/v2/updateForm"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: getFormByIdV2
+    uris: "{{ forms_service_prefix }}/v2/getFormById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getFormById"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: saveFormSubmitV2
+    uris: "{{ forms_service_prefix }}/v2/saveFormSubmit"
+    upstream_url: "{{ forms_service_url }}/forms/v2/saveFormSubmit"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: formSearchV2
+    uris: "{{ forms_service_prefix }}/v2/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: getAllApplicationsV2
+    uris: "{{ forms_service_prefix }}/v2/getAllApplications"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getAllApplications"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: getApplicationsByIdV2
+    uris: "{{ forms_service_prefix }}/v2/getApplicationsById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getApplicationsById"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: formSubmissionsSearchV2
+    uris: "{{ forms_service_prefix }}/v2/submissions/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/submissions/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
