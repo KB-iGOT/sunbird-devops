@@ -1,0 +1,31 @@
+---
+# vars file for deploy-vega-service
+# For script
+release_name: "{{ network_alias_content_moderation_service }}"
+user_friendly_name: content_moderation service
+#template_compose_file_name: ui-spv-igot.j2
+template_env_file_name: "content_moderation.j2"
+compose_file_name: "{{ service_content_moderation_service }}.yml"
+env_file_name: "{{ service_content_moderation_service }}.env"
+helm_env_file_location: "../helm_charts/igot-deploy/templates/"
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_content_moderation_service }}.env"
+
+
+env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
+compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
+
+# For service
+application_port: "{{ service_content_moderation_port }}"
+image_name: "{{ image_content_moderation_service }}"
+tag: "{{ tags_content_moderation_service }}"
+host_port: "{{ application_port }}"
+docker_port: "{{ application_port }}"
+replicas: "{{ service_replicas_content_moderation_service }}"
+reserved_memory: "{{ service_mem_reserved_content_moderation_service }}"
+limited_memory: "{{ service_mem_limit_content_moderation_service }}"
+health_check_endpoint: http://127.0.0.1:{{ docker_port }}/healthcheck
+network_alias_name: "{{ network_alias_content_moderation_service }}"
+docker_service_stack_name: ui
+docker_service_name: "{{ service_content_moderation_service }}"
+force_reload: "{{ force_reload_content_moderation_service }}"
+
