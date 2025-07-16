@@ -22629,7 +22629,7 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
- - name: PrivateContentCreateAPIs
+  - name: PrivateContentCreateAPIs
     uris: "{{ content_prefix }}/v4/mlcreate"
     upstream_url: "{{ content_service_url }}/content/v4/mlcreate"
     strip_uri: true
