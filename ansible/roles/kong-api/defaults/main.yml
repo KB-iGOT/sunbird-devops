@@ -162,6 +162,8 @@ cb_ext_course_prefix: /accessSetttings
 customfield_prefix : /customFields
 supportAi_prefix : /support/ai
 cb_ext_content_prefix: /content/v2
+cb_notification_setting_data_prefix: /notificationSetting
+content_moderation_prefix: /v1/content/moderation
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -22247,3 +22249,183 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findRecommendedConnectionV3
+    uris: "{{ hub_graph_service_prefix }}/v3/connections/recommended"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/v2/find/recommended"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findRecommendedMentors
+    uris: "{{ hub_graph_service_prefix }}/v3/connections/recommended/mentors"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/find/recommended/mentors"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findBlockedUsers
+    uris: "{{ hub_graph_service_prefix }}/v2/connections/requests/blocked"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/fetch/blocked"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: blockUserAPI
+    uris: "{{ hub_graph_service_prefix }}/block"
+    upstream_url: "{{ hub_graph_service_url }}/connections/block"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: findTotalConnectionsCountByStatus
+    uris: "{{ hub_graph_service_prefix }}/user/v1/network/connections/list"
+    upstream_url: "{{ hub_graph_service_url }}/connections/profile/user/v1/network/connections/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: userSettingUpsert
+    uris: "{{ cb_notification_setting_data_prefix }}/upsert"
+    upstream_url: "{{ cb_notification_service_url }}/notificationSetting/upsert"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: userSettingList
+    uris: "{{ cb_notification_setting_data_prefix }}/read"
+    upstream_url: "{{ cb_notification_service_url }}/notificationSetting/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: contentModerationLLM
+    uris: "{{ content_moderation_prefix }}/llm"
+    upstream_url: "{{ content_moderation_service_url }}/api/v1/profanity/check-llm"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: contentModerationTransformer
+    uris: "{{ content_moderation_prefix }}/transformer"
+    upstream_url: "{{ content_moderation_service_url }}/api/v1/profanity/transformer"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: contentModerationLanguageDetection
+    uris: "{{ content_moderation_prefix }}/detect-language"
+    upstream_url: "{{ content_moderation_service_url }}/api/v1/profanity/detect-language"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
