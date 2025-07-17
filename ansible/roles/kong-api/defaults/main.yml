@@ -227,6 +227,7 @@ cb_notification_wrapper_service_url: "http://cb-notification-wrapper-service:808
 custom_field_service_url : "http://custom-field-service:7003"
 chatBot_global_service_url : "{{chatBot_global_service_url}}"
 support_ai_service_url: "{{supportAIService_IP}}"
+content_moderation_service_url: "http://content-moderation-service:8000"
 
 premium_consumer_rate_limits:
   - api: createContent
