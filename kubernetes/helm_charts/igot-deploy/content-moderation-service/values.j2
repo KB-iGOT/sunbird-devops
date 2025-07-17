@@ -1,0 +1,41 @@
+### Default variable file for content_moderation-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{content_moderation_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{content_moderation_replicacount|default(1)}}
+repository: {{ image_content_moderation_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{content_moderation_cpu_req|default('200m')}}
+    memory: {{content_moderation_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{content_moderation_cpu_limit|default('500m')}}
+    memory: {{content_moderation_mem_limit|default('800Mi')}}
+network:
+  port: {{ service_content_moderation_port }}
+  targetport: {{ service_content_moderation_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ content_moderation_maxsurge|default('25%') }}
+  maxunavailable: {{ content_moderation_maxunavailable|default('25%') }}
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ content_moderation_autoscaling_enabled | default('false') }}
+  minReplicas: {{ content_moderation_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ content_moderation_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ content_moderation_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ content_moderation_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
