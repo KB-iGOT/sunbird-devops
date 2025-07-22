@@ -1,0 +1,28 @@
+---
+# vars file for deploy-lex-core-service
+
+# For script
+release_name: "{{ network_alias_id_mapping_service }}"
+template_compose_file_name: id-mapping-service.j2
+template_env_file_name: id-mapping-service-env.j2
+compose_file_name: "{{ service_id_mapping_service }}.yml"
+env_file_name: "{{ service_id_mapping_service }}.env"
+helm_env_file_location: "../helm_charts/igot-deploy/templates/"
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_id_mapping_service }}.env"
+#chart_path: "../kubernetes-deploy/id-mapping-service"
+
+env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
+compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
+user_friendly_name: id-mapping service
+
+# For service
+application_port: "{{ service_id_mapping_port }}"
+image_name: "{{ image_id_mapping_service }}"
+tag: "{{ tags_id_mapping_service }}"
+host_port: "{{ application_port }}"
+docker_port: "{{ application_port }}"
+replicas: "{{ service_replicas_id_mapping_service }}"
+reserved_memory: "{{ service_mem_reserved_id_mapping_service }}"
+limited_memory: "{{ service_mem_limit_id_mapping_service }}"
+#limited_memory: 2048M
+

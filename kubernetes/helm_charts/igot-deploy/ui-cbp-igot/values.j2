@@ -1464,7 +1464,8 @@ envjson: |-
     "cdnContentHost": "{{ cdn_content_host }}",
     "compentencyVersionKey": "competencies_v6",
     "doptOrg": "{{ igot_portal_doptorg }}",
-    "eventPhaseTwo": "{{ cbp_eventphase_two }}"
+    "eventPhaseTwo": "{{ cbp_eventphase_two }}",
+    "portalsForNotifications": { "cbp": "https://{{ cbp_portal_url }}", "mdo": "https://{{ mdo_portal_url }}", "learner": "https://{{ karmayogi_portal_url }}" }
  }
 
 serviceMonitor:

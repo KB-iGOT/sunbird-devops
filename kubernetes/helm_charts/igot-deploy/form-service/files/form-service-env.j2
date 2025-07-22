@@ -71,3 +71,44 @@ kafka.topics.nps.upgraded.survey.submission={{env}}.nps_upgraded_submission
 
 nps.form.upgraded.id={{platform_rating_survey_id}}
 
+es.fs.forms.index.name.v2=fs-forms-v2
+es.fs.formsdata.index.name.v2=fs-forms-data-v2
+max.allowed.page=10000
+max.allowed.page.size=50
+max.allowed.form.fields.size.create=100
+max.allowed.form.fields.size.search=100
+get.all.applications.response.size=250
+es.search.timeout=30
+allowed.search.filters.keys=formId,status,createdBy,createdDate
+ 
+# Redis configuration
+redis.host.name={{ kp_redis_ip }}
+redis.port={{ redis_port }}
+redis.pool.max.total=3000
+redis.pool.max.idle=128
+redis.pool.min.idle=100
+redis.pool.max.wait=5000
+redis.connection.timeout=60000
+cb.redis.maxIdle=128
+cb.redis.maxTotal=3000
+cb.redis.minIdle=100
+cb.redis.testOnBorrow=true
+cb.redis.testOnReturn=true
+cb.redis.testWhileIdle=true
+cb.redis.minEvictableIdleTimeMillis=120000
+cb.redis.timeBetweenEvictionRunsMillis=30000
+cb.redis.numTestsPerEvictionRun=3
+cb.redis.blockWhenExhausted=true
+ 
+#Cassandra
+spring.cassandra.startupTimeoutInSeconds=100000
+cassandra.config.host={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name=sunbird
+spring.cassandra.username=sunbird
+spring.cassandra.password=""
+spring.cassandra.local-datacenter=DC1
+sunbird_cassandra_consistency_level=ONE
+ 
+basic.profile.fields=id,channel,firstName,profiledetails,rootOrgId,username
+

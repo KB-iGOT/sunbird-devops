@@ -19,6 +19,17 @@ path.data: {{ es_data_dirs | array_to_str }}
 
 path.logs: {{ es_log_dir }}
 
+# Node roles
+node.master: {{ es_node_master | default(true) }}
+node.data: {{ es_node_data | default(true) }}
+
+discovery.seed_hosts: {{ groups['es7'] }}
+cluster.initial_master_nodes: {{ groups['es7'] }}
+
+network.host: "{{ es_network_host | default('0.0.0.0') }}"
+
+http.port: 9200
+
 {% if es_path_repo is defined %}
 path.repo: {{ es_path_repo }}
 {% endif %}
