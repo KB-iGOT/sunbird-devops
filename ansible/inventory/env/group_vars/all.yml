@@ -857,7 +857,7 @@ service_cb_ext_course_port: 7005
 service_cb_notification_wrapper_port: 8081
 service_custom_field_service_port: 7003
 service_kb_agent_port: 8000
-service_id_mapping_port: 8080
+service_id_mapping_port: 7001
 service_content_moderation_port: 8000
 
 # Network alias names, so that one service can talk to another
