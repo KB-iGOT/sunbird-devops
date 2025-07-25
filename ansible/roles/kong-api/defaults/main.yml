@@ -7000,7 +7000,7 @@ kong_apis:
     
   - name: assessmentSubmit
     uris: "/v2/user/assessment/submit"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v2/user/assessment/submit"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v2/user/assessment/submit"
     strip_uri: true
     plugins:
     - name: jwt
@@ -8191,7 +8191,7 @@ kong_apis:
 
   - name: assessmentSubmitV3
     uris: "/v3/user/assessment/submit"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v3/user/assessment/submit"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v3/user/assessment/submit"
     strip_uri: true
     plugins:
     - name: jwt
@@ -8209,7 +8209,7 @@ kong_apis:
 
   - name: playerQuSetReadHierarchy
     uris: "{{ player_prefix }}/questionset/v1/hierarchy"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/quml/assessment/read"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v1/quml/assessment/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -8227,7 +8227,7 @@ kong_apis:
         
   - name: retakeAssessment
     uris: "{{ user_service_prefix }}/assessment/retake"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v4/quml/assessment/retake"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v4/quml/assessment/retake"
     strip_uri: true
     plugins:
       - name: jwt
@@ -8281,7 +8281,7 @@ kong_apis:
 
   - name: playerQuestionList
     uris: "{{ player_prefix }}/question/v1/list"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/quml/question/list"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v1/quml/question/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -9898,7 +9898,7 @@ kong_apis:
 
   - name: assessmentSubmitV4
     uris: "/v4/user/assessment/submit"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v4/user/assessment/submit"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v4/user/assessment/submit"
     strip_uri: true
     plugins:
     - name: jwt
@@ -9916,7 +9916,7 @@ kong_apis:
 
   - name: playerQuSetReadHierarchyV4
     uris: "{{ player_prefix }}/questionset/v4/hierarchy"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v4/quml/assessment/read"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v4/quml/assessment/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -9934,7 +9934,7 @@ kong_apis:
 
   - name: playerQuestionListV4
     uris: "{{ player_prefix }}/question/v4/list"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v4/quml/question/list"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v4/quml/question/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -9952,7 +9952,7 @@ kong_apis:
 
   - name: playerGetAssessmentResultV4
     uris: "{{ user_service_prefix }}/assessment/v4/result"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v4/quml/assessment/result"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v4/quml/assessment/result"
     strip_uri: true
     plugins:
       - name: jwt
@@ -12564,7 +12564,7 @@ kong_apis:
 
   - name: wheeboxRead
     uris: "/wheebox/read"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/fetch/assessment/wheebox"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v1/fetch/assessment/wheebox"
     strip_uri: true
     plugins:
     - name: jwt
@@ -13367,7 +13367,7 @@ kong_apis:
 
   - name: playerGetAssessmentResultV5
     uris: "{{ user_service_prefix }}/assessment/v5/result"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v5/quml/assessment/result"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v5/quml/assessment/result"
     strip_uri: true
     plugins:
       - name: jwt
@@ -13385,7 +13385,7 @@ kong_apis:
 
   - name: retakeAssessmentV5
     uris: "{{ user_service_prefix }}/assessment/v5/retake"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v5/quml/assessment/retake"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v5/quml/assessment/retake"
     strip_uri: true
     plugins:
       - name: jwt
@@ -13403,7 +13403,7 @@ kong_apis:
 
   - name: assessmentSubmitV5
     uris: "/v5/user/assessment/submit"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v5/user/assessment/submit"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v5/user/assessment/submit"
     strip_uri: true
     plugins:
       - name: jwt
@@ -13421,7 +13421,7 @@ kong_apis:
 
   - name: playerQuestionListV5
     uris: "{{ player_prefix }}/question/v5/list"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v5/quml/question/list"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v5/quml/question/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -13439,7 +13439,7 @@ kong_apis:
 
   - name: playerQuSetReadHierarchyV5
     uris: "{{ player_prefix }}/questionset/v5/hierarchy"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v5/quml/assessment/read"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v5/quml/assessment/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -13547,7 +13547,7 @@ kong_apis:
 
   - name: assessmentSaveV5
     uris: "/assessment/save"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v5/user/assessment/save"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v5/user/assessment/save"
     strip_uri: true
     plugins:
       - name: jwt
@@ -13781,7 +13781,7 @@ kong_apis:
 
   - name: assessmentSavePointV5
     uris: "/assessment/savepoint"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v5/quml/assessment/savepoint"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v5/quml/assessment/savepoint"
     strip_uri: true
     plugins:
       - name: jwt
@@ -17392,7 +17392,7 @@ kong_apis:
 
   - name: assessmentSubmitV6
     uris: "/v6/user/assessment/submit"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v6/user/assessment/submit"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/v6/user/assessment/submit"
     strip_uri: true
     plugins:
       - name: jwt
@@ -17750,7 +17750,7 @@ kong_apis:
 
   - name: questionSetAutoPublish
     uris: "{{ questionset_prefix }}/autopublish"
-    upstream_url: "{{ sb_cb_ext_service_url }}/autoPublish"
+    upstream_url: "{{ cb_ext_assessment_service_url }}/autoPublish"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22466,6 +22466,24 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: extendedCourseEnrolment
+    uris: "{{ course_service_prefix }}/v2/enrol"
+    upstream_url: "{{ lms_service_url }}/v2/course/enroll"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
 
 
   - name: creteaMLCourse
