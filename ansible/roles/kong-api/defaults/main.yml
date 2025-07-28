@@ -158,7 +158,7 @@ master_data_prefix: /masterdata
 extended_profile_prefix: /extendedprofile
 cb_notification_data_prefix: /v1/notifications
 cb_notification_wrapper_data_prefix: /notifications
-cb_ext_course_prefix: /accessSetttings
+cb_ext_course_prefix: /accessSettings
 customfield_prefix : /customFields
 supportAi_prefix : /support/ai
 cb_ext_content_prefix: /content/v2
@@ -21695,7 +21695,7 @@ kong_apis:
 
   - name: accessRuleUpsert
     uris: "{{ cb_ext_course_prefix }}/v1/upsert"
-    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/upsert"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/v1/upsert"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21713,7 +21713,7 @@ kong_apis:
 
   - name: AccessRuleRead
     uris: "{{ cb_ext_course_prefix }}/read"
-    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/read"
     strip_uri: true
     plugins:
       - name: jwt
@@ -21749,7 +21749,7 @@ kong_apis:
 
   - name: deleteAccessRule
     uris: "{{ cb_ext_course_prefix }}/v1/delete"
-    upstream_url: "{{ cb_ext_course_service_url }}/accessSetttings/v1/delete"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/v1/delete"
     strip_uri: true
     plugins:
       - name: jwt
