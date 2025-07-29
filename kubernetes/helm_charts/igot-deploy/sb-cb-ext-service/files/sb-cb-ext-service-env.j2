@@ -315,7 +315,7 @@ assessment.ratake.count.verification.enabled=true
 ##### content Progress#####
 kafka.topic.update.content.progress={{ env }}.update.content.progress
 kafka.topic.update.content.progress.group=updateContentProgressAsyncHandlerGroup
-progress.api.update.endpoint=/v1/content/state/admin/update
+progress.api.update.endpoint=/v2/content/state/admin/update
 
 bulk.upload.tag.verification.regex=^[a-zA-Z\\\s,]+$
 
@@ -538,3 +538,6 @@ org.hierarchy.bulk.upload.retry.delay.ms=5000
 
 notification.api.url=http://cb-notification-wrapper-service:8081/notifications/create
 pre.enrollment.assessment.key=Pre Enrolment Assessment
+
+assessment.user.submit.data.table=user_assessment_data_v2
+
