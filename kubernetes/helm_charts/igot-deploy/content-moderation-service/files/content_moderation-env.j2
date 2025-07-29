@@ -1,2 +1,11 @@
 LOG_LEVEL=INFO
-GEMINI_API_KEY={{gemini_api_key}}
+
+# Kafka Settings
+KAFKA_ENABLED=True
+KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
+KAFKA_MODERATION_RESULTS_TOPIC={{env}}.process.check.content.profanity
+KAFKA_RETRIES=3
+KAFKA_RETRY_BACKOFF_MS=100
+
+#Hugging face settings
+HF_HUB_OFFLINE=1
