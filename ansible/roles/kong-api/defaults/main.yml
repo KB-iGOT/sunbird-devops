@@ -10161,8 +10161,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: curatedProgramEnrolment
-    uris: "{{ curated_program_prefix }}/v1/enrol"
-    upstream_url: "{{ lms_service_url }}/v1/program/enroll"
+    uris: "{{ curated_program_prefix }}/v2/enrol"
+    upstream_url: "{{ lms_service_url }}/v2/program/enroll"
     strip_uri: true
     plugins:
       - name: jwt
