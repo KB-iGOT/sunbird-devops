@@ -22485,7 +22485,6 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-
   - name: creteaMLCourse
     uris: "{{ content_prefix }}/v4/mlcreate"
     upstream_url: "{{ content_service_url }}/content/v4/mlcreate"
@@ -22504,4 +22503,30 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-
+  - name: anonymousSupportAIChatStart
+    uris: "{{ supportAi_prefix }}/anonymous/chat/start"
+    upstream_url: "{{ support_ai_service_url }}/anonymous/chat/start"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: ip
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+ 
+  - name: anonymousSupportAIChatSend
+    uris: "{{ supportAi_prefix }}/anonymous/chat/send"
+    upstream_url: "{{ support_ai_service_url }}/anonymous/chat/send"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: ip
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
