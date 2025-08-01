@@ -163,7 +163,7 @@ customfield_prefix : /customFields
 supportAi_prefix : /support/ai
 cb_ext_content_prefix: /content/v2
 cb_notification_setting_data_prefix: /notificationSetting
-content_moderation_prefix: /v1/content
+content_moderation_prefix: /v1/content/moderation
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -22377,9 +22377,27 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: contentModerationText
-    uris: "{{ content_moderation_prefix }}/moderation/text"
-    upstream_url: "{{ content_moderation_service_url }}/api/v1/moderation/text"
+  - name: contentModerationLLM
+    uris: "{{ content_moderation_prefix }}/llm"
+    upstream_url: "{{ content_moderation_service_url }}/api/v1/profanity/check-llm"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: contentModerationTransformer
+    uris: "{{ content_moderation_prefix }}/transformer"
+    upstream_url: "{{ content_moderation_service_url }}/api/v1/profanity/transformer"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22396,8 +22414,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: contentModerationLanguageDetection
-    uris: "{{ content_moderation_prefix }}/language/detect"
-    upstream_url: "{{ content_moderation_service_url }}/api/v1/language/detect"
+    uris: "{{ content_moderation_prefix }}/detect-language"
+    upstream_url: "{{ content_moderation_service_url }}/api/v1/profanity/detect-language"
     strip_uri: true
     plugins:
       - name: jwt
