@@ -748,7 +748,7 @@ proxyconfig: |-
 
     location ~ /api/content/v2/read {
       # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache_key "$proxy_host$request_uri|$http_x_authenticated_user_token|$http_x_authenticated_user_orgid|$http_x_channel_id";
       proxy_cache sunbirdigot_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
