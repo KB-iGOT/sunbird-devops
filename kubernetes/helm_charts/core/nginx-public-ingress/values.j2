@@ -785,6 +785,93 @@ proxyconfig: |-
         }';
     }
 
+    location = apis/proxies/v8/connections/v3/connections/recommended {
+        default_type application/json;
+        return 200 '{
+    "id": "api.user.recommendations.v2",
+    "ver": "1.0",
+    "ts": "2025-08-03T14:41:23.991Z",
+    "params": {
+        "resmsgid": "aca80b7c-06a0-4c8b-846e-7734fa25f857",
+        "msgid": "aca80b7c-06a0-4c8b-846e-7734fa25f857",
+        "err": null,
+        "status": "200 OK",
+        "errmsg": null
+    },
+    "responseCode": "OK",
+    "result": {
+        "message": "Recommended users count is empty"
+     }
+         }';
+    }
+	
+    location = api/connections/v3/connections/recommended {
+        default_type application/json;
+        return 200 '{
+    "id": "api.user.recommendations.v2",
+    "ver": "1.0",
+    "ts": "2025-08-03T14:41:23.991Z",
+    "params": {
+        "resmsgid": "aca80b7c-06a0-4c8b-846e-7734fa25f857",
+        "msgid": "aca80b7c-06a0-4c8b-846e-7734fa25f857",
+        "err": null,
+        "status": "200 OK",
+        "errmsg": null
+    },
+    "responseCode": "OK",
+    "result": {
+        "message": "Recommended users count is empty"
+     }
+         }';
+    }
+	
+    location = api/connections/profile/find/recommended {
+        default_type application/json;
+        return 200 '{
+            "result": {
+                "data": [],
+                "message": "Successful",
+                "status": "OK"
+            }
+        }';
+    }
+	
+    location = apis/protected/v8/connections/v2/connections/requested {
+        default_type application/json;
+        return 200 '{
+            "result": {
+                "data": [],
+                "count": 0,
+                "message": "Successful",
+                "status": "OK"
+            }
+        }';
+    }
+
+    location = api/connections/profile/fetch/requested {
+        default_type application/json;
+        return 200 '{
+            "result": {
+                "data": [],
+                "count": 0,
+                "message": "Successful",
+                "status": "OK"
+            }
+        }';
+    }
+	
+    location = api/connections/profile/find/suggests {
+        default_type application/json;
+        return 200 '{
+            "result": {
+                "data": [],
+                "count": 0,
+                "message": "Successful",
+                "status": "OK"
+            }
+        }';
+    }
+
     location ~ /apis/proxies/sunbirdigot/search {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
