@@ -785,7 +785,7 @@ proxyconfig: |-
         }';
     }
 
-    location = apis/proxies/v8/connections/v3/connections/recommended {
+    location = /apis/proxies/v8/connections/v3/connections/recommended {
         default_type application/json;
         return 200 '{
     "id": "api.user.recommendations.v2",
@@ -805,7 +805,7 @@ proxyconfig: |-
          }';
     }
 
-    location = api/connections/v3/connections/recommended {
+    location = /api/connections/v3/connections/recommended {
         default_type application/json;
         return 200 '{
     "id": "api.user.recommendations.v2",
@@ -825,7 +825,7 @@ proxyconfig: |-
          }';
     }
 
-    location = api/connections/profile/find/recommended {
+    location = /api/connections/profile/find/recommended {
         default_type application/json;
         return 200 '{
             "result": {
@@ -836,19 +836,7 @@ proxyconfig: |-
         }';
     }
 
-    location = apis/protected/v8/connections/v2/connections/requested {
-        default_type application/json;
-        return 200 '{
-            "result": {
-                "data": [],
-                "count": 0,
-                "message": "Successful",
-                "status": "OK"
-            }
-        }';
-    }
-
-    location = api/connections/profile/fetch/requested {
+    location = /apis/protected/v8/connections/v2/connections/requested {
         default_type application/json;
         return 200 '{
             "result": {
@@ -860,7 +848,19 @@ proxyconfig: |-
         }';
     }
 
-    location = api/connections/profile/find/suggests {
+    location = /api/connections/profile/fetch/requested {
+        default_type application/json;
+        return 200 '{
+            "result": {
+                "data": [],
+                "count": 0,
+                "message": "Successful",
+                "status": "OK"
+            }
+        }';
+    }
+
+    location = /api/connections/profile/find/suggests {
         default_type application/json;
         return 200 '{
             "result": {
