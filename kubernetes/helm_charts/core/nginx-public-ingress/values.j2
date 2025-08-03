@@ -773,6 +773,18 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
 
+    location = /apis/protected/v8/connections/v2/connections/requests/received {
+        default_type application/json;
+        return 200 '{
+            "result": {
+                "data": [],
+                "count": 0,
+                "message": "Successful",
+                "status": "OK"
+            }
+        }';
+    }
+
     location ~ /apis/public/v8/tenders/list {
       # Enabling caching
       proxy_cache_key "$request_uri";
