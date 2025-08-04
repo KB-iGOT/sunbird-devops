@@ -128,4 +128,3 @@ connections.outgoing.count.query='MATCH (u:userV3 {userId: $userId})-[r:connect]
 connections.incoming.count.query='MATCH (:userV3)-[r:connect]->(u:userV3 {userId: $userId}) WHERE r.status = $status RETURN count(r) AS count'
 
 connections.both.count.query='MATCH (:userV3 {userId: $userId})-[r:connect]-(:userV3) WHERE r.status = $status RETURN count(r) AS count'
-
