@@ -1,3 +1,24 @@
 ---
 # defaults file for deploy-ui-static
 sunbird_time_zone: "Asia/Kolkata"
+
+relationship_between_users_query: 'MATCH (a:userV3 {userId: $fromUser}), (b:userV3 {userId: $toUser}) OPTIONAL MATCH (a)-[r:connect]-(b) WHERE r.status IS NOT NULL  RETURN CASE WHEN r.status = ''Pending'' AND type(r) = ''connect'' AND startNode(r) = a THEN ''Pending'' WHEN r.status = ''Pending'' AND type(r) = ''connect'' AND endNode(r) = a THEN ''Received'' WHEN r.status = ''Blocked'' AND startNode(r) = a THEN ''Blocked Outgoing'' WHEN r.status = ''Blocked'' AND endNode(r) = a THEN ''Blocked Incoming'' ELSE r.status END AS status, r.createdAt AS createdAt, r.updatedAt AS updatedAt LIMIT 1'
+
+
+recommendation_users_designation_query: 'MATCH (u1:userV3 {userId: $userId}) WITH u1.userId AS uid, u1.organisationId AS orgId MATCH (u2:userV3) WHERE u2.userId <> uid AND u2.organisationId = orgId OPTIONAL MATCH (u2)-[c:connect]-(u:userV3 {userId: uid}) WHERE c.status IN [''Pending'', ''Approved'', ''Blocked''] WITH u2, c WHERE c IS NULL RETURN u2.userId AS userId, u2.organisationId AS organisationId, u2.designation AS designation, u2.role AS role SKIP $offset LIMIT $size'
+
+recommendation_mentors_query: 'MATCH (u1:userV3 {userId: $userId}) WITH u1.userId AS uid, u1.organisationId AS orgId MATCH (u2:userV3) WHERE u2.userId <> uid AND u2.isMentor = true OPTIONAL MATCH (u2)-[c:connect]-(u:userV3 {userId: uid}) WHERE c.status IN [''Pending'', ''Approved'', ''Blocked''] WITH u2, c, orgId WHERE c IS NULL RETURN u2.userId AS userId, u2.organisationId AS organisationId, u2.designation AS designation, u2.role AS role, CASE WHEN u2.organisationId = orgId THEN 0 ELSE 1 END AS orgPriority ORDER BY orgPriority ASC SKIP $offset LIMIT $size'
+
+blocked_users_query: 'MATCH (u:userV3 {userId: $userId}) MATCH (u)-[r:connect]->(blocked:userV3) WHERE toLower(r.status) = ''blocked'' RETURN u.userId AS userId, u.designation AS designation, u.organisationId AS organisationId, blocked.userId AS blockedUserId, blocked.designation AS blockedUserDesignation, blocked.organisationId AS blockedOrganisationId, r.status AS connectionStatus, r.createdAt AS createdAt, r.updatedAt AS updatedAt SKIP $offset LIMIT $size'
+
+recommended_users_count_query: 'MATCH (u1:userV3 {userId: $userId}) WITH u1.userId AS uid, u1.organisationId AS orgId MATCH (u2:userV3) WHERE u2.userId <> uid AND u2.organisationId = orgId OPTIONAL MATCH (u2)-[c:connect]-(:userV3 {userId: uid}) WHERE c.status IN [''Pending'', ''Approved'', ''Blocked''] WITH u2, c WHERE c IS NULL RETURN count(u2) AS totalCount'
+
+recommended_mentors_count_query: 'MATCH (u1:userV3 {userId: $userId}) WITH u1.userId AS uid MATCH (u2:userV3) WHERE u2.userId <> uid AND u2.isMentor = true OPTIONAL MATCH (u2)-[c:connect]-(u:userV3 {userId: uid}) WHERE c.status IN [''Pending'', ''Approved'', ''Blocked''] WITH u2, c WHERE c IS NULL RETURN count(u2) AS totalCount'
+
+connections_status_count_query: 'MATCH (u:userV3 {userId: $userId}) MATCH (u)-[r:connect]-(other:userV3) WHERE r.status IN $statusValue WITH u.userId AS userId, r.status AS rawStatus, CASE WHEN r.status = ''Pending'' AND startNode(r) = u THEN ''Requested'' WHEN r.status = ''Pending'' AND endNode(r) = u THEN ''Received'' WHEN r.status = ''Blocked'' AND startNode(r) = u THEN ''Blocked Outgoing'' ELSE r.status END AS status RETURN userId, status, count(*) AS count ORDER BY status'
+
+connections_outgoing_count_query: 'MATCH (u:userV3 {userId: $userId})-[r:connect]->(:userV3) WHERE r.status = $status RETURN count(r) AS count'
+
+connections_incoming_count_query: 'MATCH (:userV3)-[r:connect]->(u:userV3 {userId: $userId}) WHERE r.status = $status RETURN count(r) AS count'
+
+connections_both_count_query: 'MATCH (:userV3 {userId: $userId})-[r:connect]-(:userV3) WHERE r.status = $status RETURN count(r) AS count'
