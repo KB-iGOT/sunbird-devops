@@ -36,6 +36,9 @@ spec:
         - name: mentoring-service-environmentjs
           mountPath: /var/src/.env
           subPath: .env
+        - name: mentoring-service-configjson
+          mountPath: /var/src/config.json
+          subPath: config.json
 {{- $keys := .Files.Glob "keys/*" }}
 {{- if $keys }}
         - mountPath: {{ .Values.mentoring_basepath }}
@@ -56,6 +59,9 @@ spec:
        - name: mentoring-service-environmentjs
          configMap:
             name: mentoring-service-environmentjs
+       - name: mentoring-service-configjson
+         configMap:
+            name: mentoring-service-configjson
        - name: {{ .Chart.Name }}-xml-config
          configMap:
            name: {{ .Chart.Name }}-xml-config
