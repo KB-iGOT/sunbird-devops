@@ -111,22 +111,38 @@ environmentjs: |-
   DB_POOL_MAX_CONNECTIONS="50"
 
 configjson: |-
-  {{ {
+  {
     "search": {
       "session": {
         "fields": [
-          { "name": "title", "label": "Title", "sortPriority": 1 },
-          { "name": "description", "label": "Description", "sortPriority": 2 },
-          { "name": "mentor_name", "label": "Mentor name", "sortPriority": 3 }
+          {
+            "name": "title",
+            "label": "Title",
+            "sortPriority": 1
+          },
+          {
+            "name": "description",
+            "label": "Description",
+            "sortPriority": 2
+          },
+          {
+            "name": "mentor_name",
+            "label": "Mentor name",
+            "sortPriority": 3
+          }
         ]
       },
       "mentor": {
         "fields": [
-          { "name": "name", "label": "Mentor name", "sortPriority": 1 }
+          {
+            "name": "name",
+            "label": "Mentor name",
+            "sortPriority": 1
+          }
         ]
       }
     }
-  } | to_nice_json }}
+  }
 
 serviceMonitor:
   enabled: true
