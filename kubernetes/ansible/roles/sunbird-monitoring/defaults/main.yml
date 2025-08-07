@@ -169,16 +169,16 @@ alert_teams:
         alerts_mailing_list: "{{ blackbox_exporter_team_mailing_list_fatal }}"
 
 service_blackbox_checks:
-  - service_name: 'analytics-service'
-    probe_module: http_2xx
-    metricspath: /metrics
-    targets:
-      - "{{sunbird_analytics_api_base_url}}/health"
   - service_name: 'learning-service'
     probe_module: http_2xx
     metricspath: /metrics
     targets:
       - "{{sunbird_content_repo_api_base_url}}/health"
+  - service_name: 'cb-ext-service'
+    probe_module: http_2xx
+    metricspath: /metrics
+    targets:
+      - "{{sunbird_cb_ext_service_api_base_url}}/health"        
   - service_name: 'search-service'
     probe_module: http_2xx
     metricspath: /metrics
@@ -282,12 +282,8 @@ igonore_alert_list_custom: [] #### This var can be used for custom related. For 
   #- alertname3
 
 service_health_checks:
-  - service_name: 'analytics'
-    targets: "http://analytics-service.{{ namespace }}.svc.cluster.local:9000/health"
   - service_name: 'learning-service'
     targets: "http://{{ learningservice_ip }}:8080/learning-service/health"
-  - service_name: 'player'
-    targets: "http://player.{{ namespace }}.svc.cluster.local:3000/health"
   - service_name: 'search'
     targets: "http://search-service.{{ namespace }}.svc.cluster.local:9000/health"
   - service_name: 'knowledgemw'
