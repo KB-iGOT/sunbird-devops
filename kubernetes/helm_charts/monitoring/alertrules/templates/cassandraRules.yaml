@@ -10,16 +10,17 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   groups:
-  - name: alertrules.appes
-    - alert: cassandra RangeScan Latency alert
-      annotations:
-        message: Cassandra Range Latency has reached 500ms. Please investigate.
-        summary: cassandra Range scan latency is Critical
-      expr: cassandra_stats{name="org:apache:cassandra:metrics:table:rangelatency:99thpercentile"}
-        > 500000
-      for: 5m
-      labels:
-        severity: fatal
+    - name: alertrules.appes
+      rules:
+        - alert: cassandraRangeScanLatencyAlert
+          annotations:
+            message: Cassandra Range Latency has reached 500ms. Please investigate.
+            summary: Cassandra range scan latency is critical.
+          expr: cassandra_stats{name="org:apache:cassandra:metrics:table:rangelatency:99thpercentile"} > 500000
+          for: 5m
+          labels:
+            severity: fatal
+
 
 #     rules:
 #     - alert: cassandra_node_down_fatal_Core
