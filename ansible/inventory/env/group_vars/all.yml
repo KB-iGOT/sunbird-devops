@@ -202,6 +202,7 @@ sunbird_data_service_api_key: "{{ core_vault_sunbird_ekstep_api_key }}"
 sunbird_content_service_api_base_url: "http:///content-service.{{namespace}}.svc.cluster.local:9000"
 sunbird_user_service_api_base_url: "http:///learner-service.{{namespace}}.svc.cluster.local:9000"
 sunbird_group_service_api_base_url: "http://groups-service:9000"
+sunbird_cb_ext_service_api_base_url: "http:///sb-cb-ext-service.{{namespace}}.svc.cluster.local:7001"  
 
 #API Manager
 kong_postgres_port: 5432

@@ -1,16 +1,27 @@
-# apiVersion: monitoring.coreos.com/v1
-# kind: PrometheusRule
-# metadata:
-#   labels:
-#     role: alert-rules
-#     app: {{ .Values.prometheus_rule_selector_app }}
-#     release: {{ .Values.prometheus_rule_selector_release }}
-#     instance: {{ .Values.fullnameOverride }}-cassandra-rules
-#   name: {{ .Values.fullnameOverride }}-cassandra-rules
-#   namespace: {{ .Values.namespace }}
-# spec:
-#   groups:
-#   - name: alertrules.appes
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: alert-rules
+    app: {{ .Values.prometheus_rule_selector_app }}
+    release: {{ .Values.prometheus_rule_selector_release }}
+    instance: {{ .Values.fullnameOverride }}-cassandra-rules
+  name: {{ .Values.fullnameOverride }}-cassandra-rules
+  namespace: {{ .Values.namespace }}
+spec:
+  groups:
+    - name: alertrules.appes
+      rules:
+        - alert: cassandraRangeScanLatencyAlert
+          annotations:
+            message: Cassandra Range Latency has reached 500ms. Please investigate.
+            summary: Cassandra range scan latency is critical.
+          expr: cassandra_stats{name="org:apache:cassandra:metrics:table:rangelatency:99thpercentile"} > 500000
+          for: 5m
+          labels:
+            severity: fatal
+
+
 #     rules:
 #     - alert: cassandra_node_down_fatal_Core
 #       annotations:
