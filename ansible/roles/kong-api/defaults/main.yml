@@ -19333,7 +19333,7 @@ kong_apis:
 
   - name: listCourseEnrollmentDetails
     uris: "{{ course_service_prefix }}/v4/user/enrollment/details"
-    upstream_url: "{{ lms_service_url }}/v2/user/enrol/courses/details"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/courses/details"
     strip_uri: true
     plugins:
       - name: jwt
