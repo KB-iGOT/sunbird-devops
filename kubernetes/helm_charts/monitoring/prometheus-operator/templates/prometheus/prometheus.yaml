@@ -170,6 +170,7 @@ spec:
   serviceMonitorNamespaceSelector: {}
 {{- end }}
 {{- if .Values.prometheus.prometheusSpec.podMonitorSelector }}
+  podMonitorSelector:
   podMonitorSelector:{{- if not (.Values.defaultRules.disabled.KubeClientErrors | default false) }}
 #     - alert: KubeClientErrors
 #       annotations:
@@ -208,6 +209,7 @@ spec:
   podMonitorSelector:
     matchLabels:
       release: {{ $.Release.Name | quote }}
+{{ else }}        
 {{ else }}{{- if not (.Values.defaultRules.disabled.KubeClientErrors | default false) }}
 #     - alert: KubeClientErrors
 #       annotations:
