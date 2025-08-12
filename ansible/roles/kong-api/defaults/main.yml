@@ -11095,7 +11095,7 @@ kong_apis:
 
   - name: programAdminBulkEnrolment
     uris: "{{ program_prefix }}/v2/admin/bulkEnroll"
-    upstream_url: "{{ lms_service_url }}/v2/program/admin/bulkEnroll"
+    upstream_url: "{{ lms_service_url }}/v3/program/admin/bulkEnroll"
     strip_uri: true
     plugins:
       - name: jwt
