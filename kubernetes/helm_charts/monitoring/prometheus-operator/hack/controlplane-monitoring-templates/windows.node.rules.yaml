@@ -176,6 +176,7 @@ spec:
         {{- end }}
         {{- with .Values.defaultRules.additionalRuleGroupLabels.windows }}
           {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- end }}{{- if not (.Values.defaultRules.disabled.KubeClientErrors | default false) }}
 #     - alert: KubeClientErrors
 #       annotations:
