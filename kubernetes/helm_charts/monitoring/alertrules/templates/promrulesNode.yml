@@ -102,14 +102,14 @@ spec:
         ip: {{`'{{ $labels.instance }}'`}}
         message: {{`'{{ $labels.nodename }} ({{ $labels.instance }}) has a high load average. Load average is {{ $value }}%.'`}}
         summary: {{`'HIGH LOAD AVERAGE warning ON {{ $labels.nodename }}'`}}
-    - alert: node_exporter_down_warning
-      expr: up == 0
-      for: 5m
-      labels:
-        severity: warning
-      annotations:
-        message: {{`The node exporter '{{ $labels.job }}' is down.`}}
-        summary: {{`'NODE EXPORTER SERVICE critical: NODE ''{{ $labels.instance }}'''`}}
+    # - alert: node_exporter_down_warning
+    #   expr: up == 0
+    #   for: 5m
+    #   labels:
+    #     severity: warning
+    #   annotations:
+    #     message: {{`The node exporter '{{ $labels.job }}' is down.`}}
+    #     summary: {{`'NODE EXPORTER SERVICE critical: NODE ''{{ $labels.instance }}'''`}}
     - alert: node_running_out_of_disk_space_warning
       expr: sum by(nodename, instance) (((node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_free_bytes{mountpoint="/"}) * 100 / node_filesystem_size_bytes{mountpoint="/"} * on(instance) group_left(nodename) node_uname_info) >= {{ .Values.node_disk_usage_percentage_threshold_Warning }} and ((node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_free_bytes{mountpoint="/"}) * 100 / node_filesystem_size_bytes{mountpoint="/"} * on(instance) group_left(nodename) node_uname_info) < {{ .Values.node_disk_usage_percentage_threshold_Critical }} )
       for: 1m
