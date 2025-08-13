@@ -8029,7 +8029,7 @@ kong_apis:
 
   - name: courseAdminEnrolment
     uris: "{{ course_service_prefix }}/v1/admin/enrol"
-    upstream_url: "{{ lms_service_url }}/v1/course/admin/enroll"
+    upstream_url: "{{ lms_service_url }}/v2/course/admin/enroll"
     strip_uri: true
     plugins:
     - name: jwt
@@ -9396,7 +9396,7 @@ kong_apis:
 
   - name: MDOContentAddUserToBatch
     uris: "{{ mdo_content_prefix }}/v3/batch/addUser"
-    upstream_url: "{{ lms_service_url }}/v1/course/admin/enroll"
+    upstream_url: "{{ lms_service_url }}/v2/course/admin/enroll"
     strip_uri: true
     plugins:
     - name: jwt
@@ -10324,7 +10324,7 @@ kong_apis:
 
   - name: programAdminEnrolment
     uris: "{{ program_prefix }}/v1/admin/enrol"
-    upstream_url: "{{ lms_service_url }}/v1/program/admin/enroll"
+    upstream_url: "{{ lms_service_url }}/v2/program/admin/enroll"
     strip_uri: true
     plugins:
       - name: jwt
@@ -12600,7 +12600,7 @@ kong_apis:
 
   - name: moderatedOpenProgramEnroll
     uris: "{{ open_program_prefix }}/v1/enrol"
-    upstream_url: "{{ lms_service_url }}/v1/openprogram/enrol"
+    upstream_url: "{{ lms_service_url }}/v2/openprogram/enrol"
     strip_uri: true
     plugins:
       - name: jwt
