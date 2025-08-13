@@ -89,7 +89,7 @@ spec:
         quantile: '0.9'
       {{- if or .Values.defaultRules.additionalRuleLabels .Values.defaultRules.additionalRuleGroupLabels.kubeSchedulerRecording }}
         {{- with .Values.defaultRules.additionalRuleLabels }}
-          {{- toYaml . | nindent 8 }}
+          {{- toYaml . | nindent 8 }}additional node
         {{- end }}
         {{- with .Values.defaultRules.additionalRuleGroupLabels.kubeSchedulerRecording }}
           {{- toYaml . | nindent 8 }}
