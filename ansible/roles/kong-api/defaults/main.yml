@@ -163,7 +163,7 @@ customfield_prefix : /customFields
 supportAi_prefix : /support/ai
 cb_ext_content_prefix: /content/v2
 cb_notification_setting_data_prefix: /notificationSetting
-content_moderation_prefix: /v1/content
+content_moderation_prefix: /moderation
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -22378,7 +22378,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: contentModerationText
-    uris: "{{ content_moderation_prefix }}/moderation/text"
+    uris: "{{ content_moderation_prefix }}/v1/text"
     upstream_url: "{{ content_moderation_service_url }}/api/v1/moderation/text"
     strip_uri: true
     plugins:
@@ -22396,7 +22396,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: contentModerationLanguageDetection
-    uris: "{{ content_moderation_prefix }}/language/detect"
+    uris: "{{ moderation_prefix }}/v1/language/detect"
     upstream_url: "{{ content_moderation_service_url }}/api/v1/language/detect"
     strip_uri: true
     plugins:
