@@ -22396,7 +22396,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: contentModerationLanguageDetection
-    uris: "{{ moderation_prefix }}/v1/language/detect"
+    uris: "{{ content_moderation_prefix }}/v1/language/detect"
     upstream_url: "{{ content_moderation_service_url }}/api/v1/language/detect"
     strip_uri: true
     plugins:
