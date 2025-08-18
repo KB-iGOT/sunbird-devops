@@ -1,0 +1,104 @@
+name: Centralized PR Merge with SonarQube Scan
+
+on:
+  workflow_call:
+    inputs:
+      pr_number:
+        description: 'The pull request number'
+        required: true
+        type: string
+      repo:
+        description: 'The repository name'
+        required: true
+        type: string
+    secrets:
+      SONAR_TOKEN:
+        required: true
+      GITHUB_TOKEN:
+        required: true
+
+jobs:
+  sonar-scan-and-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up SonarQube Scanner
+        run: |
+          echo "Setting up SonarQube Scanner..."
+          wget -qO- https://raw.githubusercontent.com/SonarSource/sonar-scanner-cli/master/scripts/install.sh | bash
+          export SONAR_SCANNER_HOME="$HOME/sonar-scanner"
+          export PATH="$SONAR_SCANNER_HOME/bin:$PATH"
+
+      - name: Set up JDK and Maven
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+          maven-version: 3.8.8
+
+      - name: Determine Project Type (Java or Node.js)
+        id: detect_project_type
+        run: |
+          if [ -f "pom.xml" ] || [ -f "build.gradle" ]; then
+            echo "java" >> $GITHUB_ENV
+          elif [ -f "package.json" ]; then
+            echo "node" >> $GITHUB_ENV
+          else
+            echo "unknown" >> $GITHUB_ENV
+          fi
+          echo "Detected project type: ${{ env.java_or_node }}"
+
+      - name: Run SonarQube Scan (Java)
+        if: env.java_or_node == 'java'
+        run: |
+          echo "Running SonarQube scan for Java..."
+          mvn sonar:sonar \
+            -Dsonar.projectKey=${{ inputs.repo }} \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.qualitygate.wait=true \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+            -Dsonar.working.directory=.scannerwork
+
+      - name: Run SonarQube Scan (Node.js)
+        if: env.java_or_node == 'node'
+        run: |
+          echo "Running SonarQube scan for Node.js..."
+          sonar-scanner \
+            -Dsonar.projectKey=${{ inputs.repo }} \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}\
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.nodejs.exclusions=**/node_modules/**
+
+      - name: Fetch Pull Request Details
+        run: |
+          echo "Fetching PR #${{ inputs.pr_number }} from repo ${{ inputs.repo }}"
+          PR_DETAILS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ inputs.repo }}/pulls/${{ inputs.pr_number }}")
+          echo "PR Details: $PR_DETAILS"
+        id: fetch_pr
+
+      - name: Check if PR can be merged
+        run: |
+          PR_STATE=$(echo "${{ steps.fetch_pr.outputs.PR_DETAILS }}" | jq -r '.state')
+          if [[ "$PR_STATE" != "open" ]]; then
+            echo "PR is not open, skipping merge."
+            exit 1
+          fi
+
+          MERGEABLE=$(echo "${{ steps.fetch_pr.outputs.PR_DETAILS }}" | jq -r '.mergeable')
+          if [[ "$MERGEABLE" != "true" ]]; then
+            echo "PR is not mergeable, skipping merge."
+            exit 1
+          fi
+
+      - name: Merge the PR
+        run: |
+          curl -X PUT -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{"commit_title":"Merging PR #${{ inputs.pr_number }}","merge_method":"merge"}' \
+            "https://api.github.com/repos/${{ inputs.repo }}/pulls/${{ inputs.pr_number }}/merge"
+        if: success()  # Only runs if the SonarQube scan passes and PR is mergeable
