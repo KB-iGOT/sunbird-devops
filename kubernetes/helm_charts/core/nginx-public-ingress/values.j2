@@ -1047,7 +1047,10 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Proto $scheme;
 
       proxy_pass http://10.175.2.88:8080/;
+
+      # Rewrites Jenkins redirects
       proxy_redirect http://10.175.2.88:8080/ /igotbuild-deploy/;
+      proxy_redirect http://10.175.2.88:8080/login /igotbuild-deploy/login;
 
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
