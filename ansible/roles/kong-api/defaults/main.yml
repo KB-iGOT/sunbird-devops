@@ -228,6 +228,7 @@ custom_field_service_url : "http://custom-field-service:7003"
 chatBot_global_service_url : "{{chatBot_global_service_url}}"
 support_ai_service_url: "{{supportAIService_IP}}"
 content_moderation_service_url: "http://content-moderation-service:8000"
+content_transcode_service_url: "{{contentTranscodeService_IP}}"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -22728,3 +22729,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: contentTranscodeProcess
+    uris: "/pipeline/content/transcode/process"
+    upstream_url: "{{ content_transcode_service_url }}/api/kb-transcode-pipeline/v3/transcode/process"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
