@@ -1024,9 +1024,6 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
-    location /squash/ {
-        return 301 /testdashboard$srequest_uri;
-    }
     location /testdashboard/squash/ {
         proxy_pass http://10.175.2.49:8090/squash/;
 
