@@ -1024,7 +1024,7 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
-    location /testdashboard/squash/ {
+    location /squash/ {
         proxy_pass http://10.175.2.49:8090/squash/;
 
         proxy_set_header Host $host;
@@ -1032,11 +1032,14 @@ proxyconfig: |-
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
 
-        proxy_cookie_path /squash/ /testdashboard/squash/;
+        proxy_cookie_path /squash/ /squash/;
 
         proxy_connect_timeout 10;
         proxy_send_timeout 300;
         proxy_read_timeout 300;
+          # Allow CORS (optional, remove if not needed)
+        add_header Access-Control-Allow-Origin "*";
+        add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
     }
 
     location /kcr-feedback/ {
