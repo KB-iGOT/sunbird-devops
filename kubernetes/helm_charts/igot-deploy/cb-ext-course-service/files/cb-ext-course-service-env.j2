@@ -53,3 +53,10 @@ cb-plan.update.publish.authorized.roles=MDO_LEADER
 sb.env.chiper.password={{cipher_password}}
 
 user.basic.details.filtered=profileCompletionPercentage,karmaPoints,certificateCount,postCount
+
+learning_service_vm_base_url=http://{{ learningservice_ip }}:8080/learning-service
+system.content.update.url=/system/v3/content/update/
+spring.kafka.content.metadata.update.topic.name={{env}}.vod.content.meta.update
+spring.kafka.content.metadata.update.consumer.group.id=vodContentMetaUpdateConsumerGroup
+vod.bucket.prefix=gs://{{videostream_bucket}}/
+vod.stream.url.prefix={{domain_name}}/stream-store/
