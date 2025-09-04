@@ -22839,7 +22839,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: cbPlanV2Archive
-    uris: "{{ cb_plan_prefix }}/v2/archive""
+    uris: "{{ cb_plan_prefix }}/v2/archive"
     upstream_url: "{{ cb_ext_course_service_url }}/cbplan/v2/archive"
     strip_uri: true
     plugins:
