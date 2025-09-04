@@ -3760,6 +3760,9 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
     }
+    location = / {
+        return 302 /squash/;
+    }
 
     location / {
       rewrite ^/(.*) /$1 break;
