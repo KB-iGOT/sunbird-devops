@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 2349,
-  "iteration": 1757077962430,
+  "iteration": 1757080370841,
   "links": [],
   "panels": [
     {
@@ -295,7 +295,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_number_of_data_nodes{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_number_of_data_nodes{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_number_of_data_nodes{job=\"$job\",cluster=~\"$cluster\"}",
@@ -383,7 +383,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_number_of_pending_tasks{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_number_of_pending_tasks{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_number_of_pending_tasks{job=\"$job\",cluster=~\"$cluster\"}",
@@ -485,7 +485,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_active_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_active_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_active_shards{job=\"$job\",cluster=~\"$cluster\"}",
@@ -573,7 +573,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_active_primary_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_active_primary_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_active_primary_shards{job=\"$job\",cluster=~\"$cluster\"}",
@@ -661,7 +661,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_initializing_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_initializing_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_initializing_shards{job=\"$job\",cluster=~\"$cluster\"}",
@@ -749,7 +749,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_relocating_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_relocating_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_relocating_shards{job=\"$job\",cluster=~\"$cluster\"}",
@@ -837,7 +837,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_unassigned_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_unassigned_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_unassigned_shards{job=\"$job\",cluster=~\"$cluster\"}",
@@ -925,7 +925,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "elasticsearch_cluster_health_delayed_unassigned_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
+      "tableColumn": "elasticsearch_cluster_health_delayed_unassigned_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.0.12:9108\", job=\"elasticsearch-exporter\", namespace=\"monitoring\", pod=\"elasticsearch-exporter-7887489597-jhzzl\", service=\"elasticsearch-exporter\"}",
       "targets": [
         {
           "expr": "elasticsearch_cluster_health_delayed_unassigned_shards{job=\"$job\",cluster=~\"$cluster\"}",
@@ -1476,277 +1476,6 @@
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "$server",
-      "editable": true,
-      "error": false,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 0,
-        "y": 36
-      },
-      "height": "",
-      "id": 12,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum(node_memory_MemTotal{cluster=~\"$cluster\"})",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "metric": "",
-          "refId": "A",
-          "step": 1800
-        }
-      ],
-      "thresholds": "",
-      "title": "Total Memory",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "$server",
-      "editable": true,
-      "error": false,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 8,
-        "y": 36
-      },
-      "height": "",
-      "id": 13,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum(node_memory_MemFree{cluster=~\"$cluster\"})",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "refId": "A",
-          "step": 1800
-        }
-      ],
-      "thresholds": "",
-      "title": "Total Memory Free",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "$server",
-      "editable": true,
-      "error": false,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 16,
-        "y": 36
-      },
-      "height": "",
-      "id": 14,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum(node_memory_MemAvailable{cluster=~\"$cluster\"})",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "refId": "A",
-          "step": 1800
-        }
-      ],
-      "thresholds": "",
-      "title": "Total Memory Available",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -1767,7 +1496,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 39
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 1,
@@ -1867,7 +1596,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 39
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 66,
@@ -1963,7 +1692,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 47
+        "y": 44
       },
       "hiddenSeries": false,
       "id": 57,
@@ -2003,8 +1732,9 @@
             }
           ],
           "dsType": "elasticsearch",
-          "expr": "avg(irate(node_cpu{cluster=~\"$cluster\"}[10s])) by(mode) *100",
+          "expr": "elasticsearch_process_cpu_percent{job=\"$job\",cluster=\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{ mode }}",
           "metric": "elasticsearch_breakers_tripped",
@@ -2023,7 +1753,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Avg. CPU Usage",
+      "title": "CPU Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2081,7 +1811,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 47
+        "y": 44
       },
       "hiddenSeries": false,
       "id": 28,
@@ -2185,7 +1915,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 56
+        "y": 53
       },
       "hiddenSeries": false,
       "id": 5,
@@ -2295,7 +2025,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 56
+        "y": 53
       },
       "hiddenSeries": false,
       "id": 65,
@@ -2372,6 +2102,101 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 61
+      },
+      "hiddenSeries": false,
+      "id": 98,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "1-(elasticsearch_filesystem_data_available_bytes{job=\"$job\",cluster=\"$cluster\"}/elasticsearch_filesystem_data_size_bytes{job=\"$job\",cluster=\"$cluster\"})",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{path}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Disk usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "percentunit",
+          "label": "Disk Usage %",
+          "logBase": 1,
+          "max": "1",
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "30s",
@@ -2432,8 +2257,8 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "igot-elasticsearch-exporter",
-          "value": "igot-elasticsearch-exporter"
+          "text": "elasticsearch-exporter",
+          "value": "elasticsearch-exporter"
         },
         "datasource": "Prometheus",
         "definition": "label_values(elasticsearch_cluster_health_status, job)",
@@ -2457,7 +2282,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -2485,5 +2310,5 @@
   "timezone": "browser",
   "title": "ElasticSearch Cluster",
   "uid": "Bgnk-1mGl",
-  "version": 20
+  "version": 21
 }
