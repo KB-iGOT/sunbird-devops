@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 57,
-  "iteration": 1591944905209,
+  "id": 2349,
+  "iteration": 1757077962430,
   "links": [],
   "panels": [
     {
@@ -43,6 +43,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -94,7 +100,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "scalar(elasticsearch_cluster_health_status{color=\"green\",cluster=~\"$cluster\"}) + scalar(elasticsearch_cluster_health_status{color=\"yellow\",cluster=~\"$cluster\"}) * 2 + scalar(elasticsearch_cluster_health_status{color=\"red\",cluster=~\"$cluster\"}) * 3",
+          "expr": "scalar(elasticsearch_cluster_health_status{job=\"$job\",color=\"green\",cluster=~\"$cluster\"}) + scalar(elasticsearch_cluster_health_status{job=\"$job\",color=\"yellow\",cluster=~\"$cluster\"}) * 2 + scalar(elasticsearch_cluster_health_status{job=\"$job\",color=\"red\",cluster=~\"$cluster\"}) * 3",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -143,6 +149,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -229,6 +241,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -277,12 +295,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_number_of_data_nodes{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_number_of_data_nodes{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_number_of_data_nodes{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -309,6 +329,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -357,12 +383,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_number_of_pending_tasks{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_number_of_pending_tasks{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_number_of_pending_tasks{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -403,6 +431,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -451,12 +485,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_active_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_active_shards{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_active_shards{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -483,6 +519,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -531,12 +573,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_active_primary_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_active_primary_shards{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_active_primary_shards{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -563,6 +607,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -611,12 +661,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_initializing_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_initializing_shards{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_initializing_shards{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -643,6 +695,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -691,12 +749,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_relocating_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_relocating_shards{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_relocating_shards{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -723,6 +783,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -771,12 +837,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_unassigned_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_unassigned_shards{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_unassigned_shards{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -803,6 +871,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -851,12 +925,14 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "elasticsearch_cluster_health_delayed_unassigned_shards{cluster=\"prod\", container=\"elasticsearch-exporter\", endpoint=\"http\", instance=\"10.4.5.10:9108\", job=\"igot-elasticsearch-exporter\", namespace=\"monitoring\", pod=\"igot-elasticsearch-exporter-6bdfc49b49-vgx9k\", service=\"igot-elasticsearch-exporter\"}",
       "targets": [
         {
-          "expr": "elasticsearch_cluster_health_delayed_unassigned_shards{cluster=~\"$cluster\"}",
+          "expr": "elasticsearch_cluster_health_delayed_unassigned_shards{job=\"$job\",cluster=~\"$cluster\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -895,6 +971,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -933,8 +1015,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(elasticsearch_indices_docs{cluster=~\"$cluster\"})",
+          "expr": "sum(elasticsearch_indices_docs{job=\"$job\",cluster=~\"$cluster\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Documents",
           "refId": "A",
@@ -989,6 +1072,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1027,8 +1116,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(elasticsearch_indices_store_size_bytes{cluster=~\"$cluster\"})",
+          "expr": "sum(elasticsearch_indices_store_size_bytes{job=\"$job\",cluster=~\"$cluster\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Index Size",
           "refId": "A",
@@ -1081,6 +1171,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1118,8 +1214,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(elasticsearch_indices_indexing_index_total{cluster=~\"$cluster\"}[1h])",
+          "expr": "rate(elasticsearch_indices_indexing_index_total{job=\"$job\",cluster=~\"$cluster\"}[1h])",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
@@ -1172,6 +1269,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1209,8 +1312,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(elasticsearch_indices_search_fetch_total{cluster=~\"$cluster\"}[1h])",
+          "expr": "rate(elasticsearch_indices_search_fetch_total{job=\"$job\",cluster=~\"$cluster\"}[1h])",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
@@ -1265,6 +1369,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1303,7 +1413,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(elasticsearch_thread_pool_queue_count{cluster=~\"$cluster\", type!=\"management\"}) by (type)",
+          "expr": "sum(elasticsearch_thread_pool_queue_count{job=\"$job\",cluster=~\"$cluster\", type!=\"management\"}) by (type)",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Type: {{type}}",
@@ -1377,6 +1487,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -1462,6 +1578,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -1546,6 +1668,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -1626,6 +1754,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1663,7 +1797,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(elasticsearch_thread_pool_active_count{cluster=~\"$cluster\", type!=\"management\"}) by (type)",
+          "expr": "sum(elasticsearch_thread_pool_active_count{job=\"$job\",cluster=~\"$cluster\", type!=\"management\"}) by (type)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1720,6 +1854,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1757,7 +1897,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(elasticsearch_thread_pool_rejected_count{cluster=~\"$cluster\", type!=\"management\"}[5m])",
+          "expr": "rate(elasticsearch_thread_pool_rejected_count{job=\"$job\",cluster=~\"$cluster\", type!=\"management\"}[5m])",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{ name }} {{ type }}",
@@ -1811,6 +1951,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$server",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1922,6 +2068,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1961,7 +2113,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg_over_time(elasticsearch_jvm_memory_used_bytes{area=\"heap\",cluster=~\"$cluster\"}[15m]) / elasticsearch_jvm_memory_max_bytes{area=\"heap\",cluster=~\"$cluster\"}",
+          "expr": "avg_over_time(elasticsearch_jvm_memory_used_bytes{job=\"$job\",area=\"heap\",cluster=~\"$cluster\"}[15m]) / elasticsearch_jvm_memory_max_bytes{job=\"$job\",area=\"heap\",cluster=~\"$cluster\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2020,6 +2172,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2058,16 +2216,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(elasticsearch_transport_rx_packets_total{cluster=~\"$cluster\"}[5m]))",
+          "expr": "sum(rate(elasticsearch_transport_rx_packets_total{job=\"$job\",cluster=~\"$cluster\"}[5m]))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "RX",
           "refId": "A",
           "step": 240
         },
         {
-          "expr": "sum(rate(elasticsearch_transport_tx_packets_total{cluster=~\"$cluster\"}[5m])) * -1",
+          "expr": "sum(rate(elasticsearch_transport_tx_packets_total{job=\"$job\",cluster=~\"$cluster\"}[5m])) * -1",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "TX",
           "refId": "B",
@@ -2122,6 +2282,12 @@
       "datasource": "$server",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2209,7 +2375,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 22,
+  "schemaVersion": 25,
   "style": "dark",
   "tags": [
     "infra",
@@ -2239,14 +2405,14 @@
       {
         "allValue": null,
         "current": {
-          "text": "loadtest",
-          "value": "loadtest"
+          "selected": false,
+          "text": "prod",
+          "value": "prod"
         },
         "datasource": "$server",
         "definition": "",
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": null,
         "multi": false,
         "name": "cluster",
@@ -2261,18 +2427,41 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "igot-elasticsearch-exporter",
+          "value": "igot-elasticsearch-exporter"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(elasticsearch_cluster_health_status, job)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "job",
+        "options": [],
+        "query": "label_values(elasticsearch_cluster_health_status, job)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
       "1m",
       "5m",
       "15m",
@@ -2295,9 +2484,6 @@
   },
   "timezone": "browser",
   "title": "ElasticSearch Cluster",
-  "uid": "Bgnk-1mGk",
-  "variables": {
-    "list": []
-  },
-  "version": 6
+  "uid": "Bgnk-1mGl",
+  "version": 20
 }
