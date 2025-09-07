@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1739,
-  "iteration": 1740050107473,
+  "id": 2670,
+  "iteration": 1757191796470,
   "links": [],
   "panels": [
     {
@@ -156,7 +156,7 @@
         "y": 1
       },
       "hiddenSeries": false,
-      "id": 192,
+      "id": 213,
       "interval": null,
       "legend": {
         "avg": false,
@@ -185,7 +185,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-program-activity-aggregate-group\", job=\"ingestion-kafka-exporter\"})",
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-activity-aggregate-v2-group\", job=\"ingestion-kafka-exporter\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -196,7 +196,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "program activity agreegator",
+      "title": "activity aggregate Lag V2",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -350,10 +350,110 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 12,
         "x": 12,
         "y": 7
+      },
+      "hiddenSeries": false,
+      "id": 192,
+      "interval": null,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "maxDataPoints": 100,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-program-activity-aggregate-group\", job=\"ingestion-kafka-exporter\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "program activity agreegator",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Threshold: \nWarning: 1M\nCritical: 2M",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 13
       },
       "hiddenSeries": false,
       "id": 193,
@@ -553,7 +653,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 20
       },
       "hiddenSeries": false,
       "id": 186,
@@ -752,106 +852,6 @@
       "gridPos": {
         "h": 6,
         "w": 12,
-        "x": 12,
-        "y": 21
-      },
-      "hiddenSeries": false,
-      "id": 190,
-      "interval": null,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "maxDataPoints": 100,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-post-publish-processor-group\", job=\"ingestion-kafka-exporter\"})",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "post publish processor Lag",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "description": "Threshold: \nWarning: 1M\nCritical: 2M",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
         "x": 0,
         "y": 27
       },
@@ -956,7 +956,7 @@
         "y": 27
       },
       "hiddenSeries": false,
-      "id": 188,
+      "id": 190,
       "interval": null,
       "legend": {
         "avg": false,
@@ -985,7 +985,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-relation-cache-updater-group\", job=\"ingestion-kafka-exporter\"})",
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-post-publish-processor-group\", job=\"ingestion-kafka-exporter\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -996,7 +996,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "relation cache updater Lag",
+      "title": "post publish processor Lag",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1156,7 +1156,7 @@
         "y": 33
       },
       "hiddenSeries": false,
-      "id": 112,
+      "id": 188,
       "interval": null,
       "legend": {
         "avg": false,
@@ -1185,7 +1185,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-audit-history-indexer-group\", job=\"ingestion-kafka-exporter\"})",
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-relation-cache-updater-group\", job=\"ingestion-kafka-exporter\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -1196,7 +1196,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "audit history indexer Lag",
+      "title": "relation cache updater Lag",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1356,7 +1356,7 @@
         "y": 39
       },
       "hiddenSeries": false,
-      "id": 181,
+      "id": 112,
       "interval": null,
       "legend": {
         "avg": false,
@@ -1385,7 +1385,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-common-certificate-generator-group\", job=\"ingestion-kafka-exporter\"})",
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-audit-history-indexer-group\", job=\"ingestion-kafka-exporter\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -1396,7 +1396,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "common certificate generator Lag",
+      "title": "audit history indexer Lag",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1550,10 +1550,110 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 12,
         "x": 12,
         "y": 45
+      },
+      "hiddenSeries": false,
+      "id": 181,
+      "interval": null,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "maxDataPoints": 100,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-common-certificate-generator-group\", job=\"ingestion-kafka-exporter\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "common certificate generator Lag",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Threshold: \nWarning: 1M\nCritical: 2M",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 51
       },
       "hiddenSeries": false,
       "id": 209,
@@ -1753,7 +1853,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 52
+        "y": 58
       },
       "hiddenSeries": false,
       "id": 211,
@@ -6668,6 +6768,6 @@
   },
   "timezone": "",
   "title": "Flink Lag Dashboard",
-  "uid": "Vd8sTsjSk",
-  "version": 2
+  "uid": "E0wQMa9Nk",
+  "version": 3
 }
