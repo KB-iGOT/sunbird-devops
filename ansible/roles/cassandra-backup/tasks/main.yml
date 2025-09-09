@@ -28,7 +28,7 @@
   shell: "tar -czf {{ cassandra_backup_gzip_file_name }}.tar.gz {{ cassandra_backup_gzip_file_name }}"
   args:
     chdir: /var/lib/cassandra/cassandra_backup/backup
-  async: 18000
+  async: 36000
   poll: 30
 
 - name: Check doc_root path
