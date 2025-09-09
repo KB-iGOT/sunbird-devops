@@ -1018,3 +1018,4 @@ image_content_moderation_service: content-moderation-service
 
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload
+user_es_host: "{{ groups['es7'][0] }}"
