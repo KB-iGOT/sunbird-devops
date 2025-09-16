@@ -10825,7 +10825,7 @@ kong_apis:
 
   - name: cbPlanListByUser
     uris: "{{ user_service_prefix }}/v1/cbplan"
-    upstream_url: "{{ sb_cb_ext_service_url }}/cbplan/v1/user/list"
+    upstream_url: "{{ cb_ext_course_service_url }}/cbplan/v2/user/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22818,7 +22818,61 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: cbPlanV2Search
+    uris: "{{ cb_plan_prefix }}/v2/search"
+    upstream_url: "{{ cb_ext_course_service_url }}/cbplan/v2/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: cbPlanV2Archive
+    uris: "{{ cb_plan_prefix }}/v2/archive"
+    upstream_url: "{{ cb_ext_course_service_url }}/cbplan/v2/archive"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"        
+
+  - name: eventIssueCertificate
+    uris: "{{ course_service_prefix }}/event/batch/cert/v1/issue"
+    upstream_url: "{{ lms_service_url }}/v1/event/batch/cert/issue"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'certificateCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: deleteBatch
     uris: "{{ course_service_prefix }}/v1/batch/delete"

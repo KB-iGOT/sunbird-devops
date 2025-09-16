@@ -48,9 +48,16 @@ content-read-endpoint=content/v3/read
 content-read-endpoint-fields=?fields=identifier,courseCategory
 content.read.fields=identifier,courseCategory,contentType,posterImage,mediaType,reviewStatus,status,batches
 
-cbplan.allowed.fields.update=name,endDate,id
+cbplan.allowed.fields.update=name,endDate,id,isApar,contextData,status
 cb-plan.update.publish.authorized.roles=MDO_LEADER
 sb.env.chiper.password={{cipher_password}}
+
+elastic.required.field.cb.plan.json.path=/EsRequiredFields/EsRequiredFieldsCbPlan.json
+elasticsearch.host={{ elasticsearch_host }}
+elasticsearch.port={{ elasticsearch_http_port }}
+elasticsearch.username={{ elasticsearch_username }}
+elasticsearch.password={{ elasticsearch_password }}
+cb.plan.v2.index=cb_plan_v2
 
 user.basic.details.filtered=profileCompletionPercentage,karmaPoints,certificateCount,postCount
 
