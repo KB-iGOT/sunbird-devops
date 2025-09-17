@@ -9,7 +9,7 @@ env:
   javaoptions: {{multitenant_staticweb_java_mem_limit|default('-Xmx600m')}}
 
 replicaCount: {{multitenant_staticweb_replicacount|default(1)}}
-repository: {{ image_multitenant_staticweb_fusion }}
+repository: {{ image_multitenant_staticweb }}
 image_tag: {{image_tag}}
 resources:
   requests:

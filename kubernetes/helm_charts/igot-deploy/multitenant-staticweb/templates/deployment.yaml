@@ -27,7 +27,7 @@ spec:
       volumes:
         - name: env-js
           configMap:
-            name: karmayogi-env-js
+            name: multitenant-staticweb-env-js
 
       containers:
       - name: {{ .Chart.Name }}
