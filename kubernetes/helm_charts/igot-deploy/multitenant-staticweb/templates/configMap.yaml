@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: karmayogi-env-js
+  namespace: {{ .Values.namespace }}
+data:
+  env.json: |
+{{ .Values.envjson | indent 4 }}
+
+---
+
+
