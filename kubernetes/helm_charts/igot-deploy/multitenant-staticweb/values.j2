@@ -34,10 +34,11 @@ envjson: |-
     "production": false,
     "contentBucket": "assets/public",
     "contentHost": "https://{{ domain_name }}",
+    "baseUrl": "https://iiidm.{{static_domain_name }}",
     "portalURL": "https://{{ iiidm_domain_name }}",
     "learnerPortalURL": "https://{{ domain_name }}",
     "telmetryUrl": "https://{{ iiidm_domain_name }}"
-  }    
+  }
 
 serviceMonitor:
   enabled: true
