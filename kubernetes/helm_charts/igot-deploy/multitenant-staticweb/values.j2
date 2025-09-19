@@ -30,11 +30,13 @@ ui_proxies_bulk_upload: {{ host_bulk_upload }}
   
 envjson: |-
   {
-    "name": "envJson.name",
-    "production": "envJson.production",
-    "contentHost": "envJson.contentHost",
-    "contentBucket": "envJson.contentBucket",
-    "ordId": "envJson.ordId"
+    "name": "Multi-Tenant Portal",
+    "production": false,
+    "contentBucket": "assets/public",
+    "contentHost": "https://{{ domain_name }}",
+    "portalURL": "https://{{ iiidm_domain_name }}",
+    "learnerPortalURL": "https://{{ domain_name }}",
+    "telmetryUrl": "https://{{ iiidm_domain_name }}"
   }    
 
 serviceMonitor:

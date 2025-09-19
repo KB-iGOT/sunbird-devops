@@ -40,7 +40,7 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: env-js
-          mountPath: /app/dist/www/en/assets/env.json
+          mountPath: /app/dist/sunbird-cb-multitenant-staticweb/assets/env.json
           subPath: env.json
         ports:
         - containerPort: {{ .Values.network.port }}
