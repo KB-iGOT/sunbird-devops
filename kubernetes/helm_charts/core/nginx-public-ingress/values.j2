@@ -1086,7 +1086,7 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
-    location /cbp-tpc-ai/role-mapping/generate/stream {
+    location /cbp-tpc-ai/role-mapping/generate/ {
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
