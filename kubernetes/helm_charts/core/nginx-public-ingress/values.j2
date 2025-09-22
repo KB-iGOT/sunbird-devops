@@ -2086,6 +2086,11 @@ proxyconfig: |-
       proxy_pass http://192.168.3.215:8010;
     }
 
+    location /api/v1/search/competenciesByOrg {
+      return 200 'OK';
+      add_header Content-Type text/plain;
+    }
+
     location /v3/device/register {
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
