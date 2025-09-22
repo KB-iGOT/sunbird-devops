@@ -1129,11 +1129,6 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
-    location /api/v1/search/competenciesByOrg {
-      return 200 'OK';
-      add_header Content-Type text/plain;
-    }
-
     location ~ /api/trending/search {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
