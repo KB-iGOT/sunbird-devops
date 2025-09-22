@@ -1048,6 +1048,8 @@ proxyconfig: |-
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
+      proxy_cache_bypass $http_authorization $http_x_authenticated_user_token;
+      proxy_no_cache $http_authorization $http_x_authenticated_user_token;
       add_header X-Proxy-Cache-Date $upstream_http_date;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_cache_methods GET;
