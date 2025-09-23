@@ -8,7 +8,6 @@
         username: "{{keycloak_username}}"
         password: "{{keycloak_password}}"
         client_id: admin-cli
-        client_secret: "{{keycloak_client_secret}}"
         grant_type: password
       status_code: [200,201,308,302,401]
     register:  data
