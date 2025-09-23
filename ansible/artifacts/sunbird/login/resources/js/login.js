@@ -7,6 +7,7 @@ window.onload = function () {
 	var version = getValueFromSession('version');
 	var isForgetPasswordAllow = getValueFromSession('version');
 	var renderingType = 'queryParams';
+	sessionStorage.setItem('rootTenantLogo', "IIIDEM");
 	if (!mergeaccountprocess) {
 		mergeaccountprocess = localStorage.getItem('mergeaccountprocess');
 		if (mergeaccountprocess === '1') {

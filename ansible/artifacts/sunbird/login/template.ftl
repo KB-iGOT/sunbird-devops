@@ -36,6 +36,9 @@
             <script src="${script}" type="text/javascript"></script>
         </#list>
     </#if>
+    <script type="text/javascript">
+        sessionStorage.setItem('rootTenantLogo', "IIIDEM");
+    </script>
 </head>
 
 <body class="${properties.kcBodyClass!}">
