@@ -84,19 +84,19 @@
                     </div>
                     <script type="text/javascript">
                         var sessionTenant = sessionStorage.getItem("rootTenantLogo");
-                        
-                        if(sessionTenant){
+                        if(sessionTenant === "IIIDEM") {
+                                 var imgSrc = "${url.resourcesPath}/img/iiidem.png";
+                        } else if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
-                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.jpg";
+                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo_with_karmayogi_bharat.png";
                         }
-
                         var logoImg =  document.querySelector(".ui.header img");
                         if(logoImg){
                             logoImg.setAttribute('class','logo-image');
                             logoImg.setAttribute('alt',sessionTenant);
                             logoImg.src = imgSrc;
-                            logoImg.addEventListener("error", ()=>{ logoImg.onerror=null;logoImg.src='${url.resourcesPath}/img/iGOT_Karmayogi_logo.jpg'});
+                            logoImg.addEventListener("error", ()=>{ logoImg.onerror=null;logoImg.src='${url.resourcesPath}/img/iGOT_Karmayogi_logo_with_karmayogi_bharat.png'});
                         }
 
                     </script>
