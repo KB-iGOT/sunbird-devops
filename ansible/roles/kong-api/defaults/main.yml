@@ -22911,7 +22911,7 @@ kong_apis:
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: sampleFileDownloadForOrgBulkUserTransfer
-    uris: "{{ organisation_prefix }}/user/migration/v1/mapping-file/sample"
+    uris: "/user/v1/org-migration/sample-file"
     upstream_url: "{{ sb_cb_ext_service_url }}/user/migration/v1/getMappingFile/sample"
     strip_uri: true
     plugins:
