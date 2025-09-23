@@ -1,0 +1,55 @@
+### Default variable file for multitenant_staticweb-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+portalname: {{ karmayogi_portal_url }}
+
+env:
+  javaoptions: {{multitenant_staticweb_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{multitenant_staticweb_replicacount|default(1)}}
+repository: {{ image_multitenant_staticweb }}
+image_tag: {{image_tag}}
+resources:
+  requests:
+    cpu: {{multitenant_staticweb_cpu_req|default('100m')}}
+    memory: {{multitenant_staticweb_mem_req|default('100Mi')}}
+  limits:
+    cpu: {{multitenant_staticweb_cpu_limit|default('300m')}}
+    memory: {{multitenant_staticweb_mem_limit|default('512Mi')}}
+network:
+  port: {{ service_multitenant_staticweb_port }}
+  targetport: {{ service_multitenant_staticweb_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ multitenant_staticweb_maxsurge|default('25%') }}
+  maxunavailable: {{ multitenant_staticweb_maxunavailable|default('25%') }}
+
+ui_proxies_bulk_upload: {{ host_bulk_upload }}
+  
+envjson: |-
+  {
+    "name": "Multi-Tenant Portal",
+    "production": false,
+    "contentBucket": "assets/public",
+    "contentHost": "https://{{ domain_name }}",
+    "baseUrl": "https://iiidem.{{static_domain_name }}",
+    "portalURL": "https://iiidem-portal.{{static_domain_name }}",
+    "learnerPortalURL": "https://{{ domain_name }}",
+    "telmetryUrl": "https://iiidem.{{static_domain_name }}"
+  }
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ multitenant_staticweb_autoscaling_enabled | default('false') }}
+  minReplicas: {{ multitenant_staticweb_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ multitenant_staticweb_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ multitenant_staticweb_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ multitenant_staticweb_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
