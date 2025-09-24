@@ -37,7 +37,11 @@
         </#list>
     </#if>
     <script type="text/javascript">
-        sessionStorage.setItem('rootTenantLogo', "IIIDEM");
+        if (sessionUrlObj.host.indexOf("iiidem") !== -1) {
+            sessionStorage.setItem('rootTenantLogo', "IIIDEM");
+        } else {
+            sessionStorage.setItem('rootTenantLogo', "");
+        }
     </script>
 </head>
 
@@ -92,7 +96,7 @@
                         } else if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
-                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo_with_karmayogi_bharat.png";
+                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.png";
                         }
                         var logoImg =  document.querySelector(".ui.header img");
                         if(logoImg){
