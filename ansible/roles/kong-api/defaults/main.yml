@@ -22997,8 +22997,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: answerSubmitAsDraft
-    uris: "/assignment/v1/answer"
-    upstream_url: "{{ forms_service_url }}/forms/v2/answer"
+    uris: "/assignment/v1/submitDraft"
+    upstream_url: "{{ forms_service_url }}/forms/v2/submitDraft"
     strip_uri: true
     plugins:
       - name: jwt
