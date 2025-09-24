@@ -36,6 +36,13 @@
             <script src="${script}" type="text/javascript"></script>
         </#list>
     </#if>
+    <script type="text/javascript">
+        if (sessionUrlObj.host.indexOf("iiidem") !== -1) {
+            sessionStorage.setItem('rootTenantLogo', "IIIDEM");
+        } else {
+            sessionStorage.setItem('rootTenantLogo', "");
+        }
+    </script>
 </head>
 
 <body class="${properties.kcBodyClass!}">
@@ -84,13 +91,13 @@
                     </div>
                     <script type="text/javascript">
                         var sessionTenant = sessionStorage.getItem("rootTenantLogo");
-                        
-                        if(sessionTenant){
+                        if(sessionTenant === "IIIDEM") {
+                                 var imgSrc = "${url.resourcesPath}/img/iiidem.png";
+                        } else if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
-                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.jpg";
+                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.png";
                         }
-
                         var logoImg =  document.querySelector(".ui.header img");
                         if(logoImg){
                             logoImg.setAttribute('class','logo-image');

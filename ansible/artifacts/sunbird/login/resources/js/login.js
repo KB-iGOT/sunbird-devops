@@ -7,6 +7,11 @@ window.onload = function () {
 	var version = getValueFromSession('version');
 	var isForgetPasswordAllow = getValueFromSession('version');
 	var renderingType = 'queryParams';
+	if (sessionUrlObj.host.indexOf("iiidem") !== -1) {
+		sessionStorage.setItem('rootTenantLogo', "IIIDEM");
+	} else {
+		sessionStorage.setItem('rootTenantLogo', "");
+	}
 	if (!mergeaccountprocess) {
 		mergeaccountprocess = localStorage.getItem('mergeaccountprocess');
 		if (mergeaccountprocess === '1') {
