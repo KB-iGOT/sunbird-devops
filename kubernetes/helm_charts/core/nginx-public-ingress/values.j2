@@ -1128,7 +1128,7 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
-      rewrite ^/training-pla-ai/(.*) /$1 break;
+      rewrite ^/training-pla-ai-with-designation/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8030;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
