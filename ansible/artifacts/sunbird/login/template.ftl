@@ -37,7 +37,11 @@
         </#list>
     </#if>
     <script type="text/javascript">
-        sessionStorage.setItem('rootTenantLogo', "IIIDEM");
+        if (sessionUrlObj.host.indexOf("iiidem") !== -1) {
+            sessionStorage.setItem('rootTenantLogo', "IIIDEM");
+        } else {
+            sessionStorage.setItem('rootTenantLogo', "");
+        }
     </script>
 </head>
 
