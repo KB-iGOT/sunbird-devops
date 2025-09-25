@@ -164,6 +164,7 @@ supportAi_prefix : /support/ai
 cb_ext_content_prefix: /content/v2
 cb_notification_setting_data_prefix: /notificationSetting
 content_moderation_prefix: /moderation
+assignment_prefix: /assignment/v1
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -22943,7 +22944,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: createAssignment
-    uris: "/assignment/v1/create"
+    uris: "{{ assignment_prefix }}/create"
     upstream_url: "{{ forms_service_url }}/forms/v2/createForm"
     strip_uri: true
     plugins:
@@ -22961,7 +22962,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: assignmentSearch
-    uris: "/assignment/v1/search"
+    uris: "{{ assignment_prefix }}/search"
     upstream_url: "{{ forms_service_url }}/forms/v2/search"
     strip_uri: true
     plugins:
@@ -22979,7 +22980,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: getAnsweredById
-    uris: "/assignment/v1/getAnswerById"
+    uris: "{{ assignment_prefix }}/getAnswerById"
     upstream_url: "{{ forms_service_url }}/forms/v2/getApplicationsById"
     strip_uri: true
     plugins:
@@ -22997,7 +22998,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: answerSubmitAsDraft
-    uris: "/assignment/v1/submitDraft"
+    uris: "{{ assignment_prefix }}/submitDraft"
     upstream_url: "{{ forms_service_url }}/forms/v2/submitDraft"
     strip_uri: true
     plugins:
@@ -23015,7 +23016,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: answerFinalSubmit
-    uris: "/assignment/v1/submit"
+    uris: "{{ assignment_prefix }}/submit"
     upstream_url: "{{ forms_service_url }}/forms/v2/submit"
     strip_uri: true
     plugins:
@@ -23033,7 +23034,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: assignmentFeedbackSubmit
-    uris: "/assignment/v1/feedback"
+    uris: "{{ assignment_prefix }}/feedback"
     upstream_url: "{{ forms_service_url }}/forms/v2/feedback"
     strip_uri: true
     plugins:
