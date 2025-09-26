@@ -36,13 +36,6 @@
             <script src="${script}" type="text/javascript"></script>
         </#list>
     </#if>
-    <script type="text/javascript">
-        if (sessionUrlObj.host.indexOf("iiidem") !== -1) {
-            sessionStorage.setItem('rootTenantLogo', "IIIDEM");
-        } else {
-            sessionStorage.setItem('rootTenantLogo', "");
-        }
-    </script>
 </head>
 
 <body class="${properties.kcBodyClass!}">
