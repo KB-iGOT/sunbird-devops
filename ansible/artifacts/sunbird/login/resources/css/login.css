@@ -661,3 +661,37 @@ img {vertical-align: middle;}
     padding: 10px;
     color:red
   }
+  .iiidem-bg {
+    width: 100% !important;
+    height: 100% !important;
+    background: url('../img/login-image.jpg') no-repeat left center fixed !important;
+    background-size: 100% auto !important;
+    position: relative !important;
+  }
+  .iiidem-overly {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0,0,0,.2);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.92) 100%);
+  }
+  .iiidem-h2 {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 100%;
+  }
+  .iiidem-description {
+    font-family: 'Sans Poppins Regular';
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0px;
+  }
+  .iiidem-text-overly {
+    color: #fff;
+    bottom: 10%;
+    position: absolute;
+    padding: 24px;
+    margin: 0 auto;
+  }

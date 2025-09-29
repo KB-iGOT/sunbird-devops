@@ -7,10 +7,16 @@
     <#if realm.password>
     <div class="custom-wrapper">
         <div class="custom-grid">
-            <div class="ui raised shadow container segment fullpage-background-image left-box">
-                <div class="ui column" style="padding:0">
-                    <div class="img-container" style="width:100%; max-width:100%">
-                        <img alt="Slides" src="${url.resourcesPath}/img/login-image.jpg" style="width: 88%">
+            <div class="ui raised shadow container segment fullpage-background-image left-box iiidem-bg">
+                <div class="iiidem-overly">
+                    <div class="iiidem-text-overly">
+                        <h2 class="iiidem-h2">Indian International Institute of Democracy &amp; Election Management</h2>
+                        <p class="iiidem-description"> IIIDEM is the dedicated training, academic & resource arm of the Election Commission of India. 
+                        Established in 2011, the Institute was conceived to train, 
+                        prepare and equip election officials and other stakeholders for delivery of free, fair, 
+                        credible and error-free elections cutting across boundaries and ethnicities. 
+                        IIIDEM is one of the few institutions in the world which is not only involved in the Training & Capacity Building of its Electoral officials, 
+                        but also catering to the requirements of Election Management Bodies (EMBs) world over.</p>
                     </div>
                 </div>
             </div>
