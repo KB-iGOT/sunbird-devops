@@ -121,6 +121,20 @@ hostconfig: |-
         "poweredBy": "eagle eagle",
         "landingLogo": ""
     },
+    "domainList": {
+      "iiidem-portal": {
+        "logo": "/assets/instances/eagle/app_logos/IIIDEM-logo.png",
+        "redirectPath": "/page/custom-home/iiidem",
+        "cdnContentHost": "https://iiidem-portal.{{ static_domain_name }}",
+        "sitePath": "iiidem-portal.{{ static_domain_name }}"
+      },
+      "localhost": {
+        "logo": "/assets/instances/eagle/app_logos/KarmayogiBharat_Logo_Horizontal.svg",
+        "redirectPath": "/page/home",
+        "cdnContentHost": "{{ cdn_content_host }}",
+        "sitePath": "{{ domain_name }}"
+      }
+    },
     "sources": [
         {
             "sourceName": "Georgia Tech CEISMC",
@@ -13854,6 +13868,20 @@ siteconfig: |
     "defaultSourceLogo": "/assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg",
     "playListLogo": "/assets/instances/eagle/about-page/about-header.jpg"
   },
+  "domainList": {
+      "iiidem-portal": {
+        "logo": "/assets/instances/eagle/app_logos/IIIDEM-logo.png",
+        "redirectPath": "/page/custom-home/iiidem",
+        "cdnContentHost": "https://iiidem-portal.{{ static_domain_name }}",
+        "sitePath": "iiidem-portal.{{ static_domain_name }}"
+      },
+      "localhost": {
+        "logo": "/assets/instances/eagle/app_logos/KarmayogiBharat_Logo_Horizontal.svg",
+        "redirectPath": "/page/home",
+        "cdnContentHost": "{{ cdn_content_host }}",
+        "sitePath": "{{ domain_name }}"
+      }
+    },
   "sources": [
     {
       "sourceName": "Georgia Tech CEISMC",
