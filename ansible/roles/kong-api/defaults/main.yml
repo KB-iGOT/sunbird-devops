@@ -164,6 +164,7 @@ supportAi_prefix : /support/ai
 cb_ext_content_prefix: /content/v2
 cb_notification_setting_data_prefix: /notificationSetting
 content_moderation_prefix: /moderation
+consent_prefix: /consent
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -22873,6 +22874,43 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: contentConsentAcknowledgement
+    uris: "{{ consent_prefix }}/v1/acknowledge"
+    upstream_url: "{{ cb_ext_course_service_url }}/v1/consent/acknowledge"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: readContentConsentAcknowledged
+    uris: "{{ consent_prefix }}/v1/acknowledge/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/v1/consent/acknowledge/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
 
   - name: deleteBatch
     uris: "{{ course_service_prefix }}/v1/batch/delete"
