@@ -50,9 +50,6 @@ CONTAINER_NAME={{ sbworkflow_cloud_storage_content_bucketname }}
 GCP_STORAGE_SECRET={{ cloud_storage_secret | replace('\n', '\\n')}}
 GCP_STORAGE_ENDPOINT={{ cloud_storage_endpoint }}
 GCP_STORAGE_KEY={{ cloud_storage_key }}
-
-specialEventCertificateName=""
-specialCertificateEventMap={{ specialCertificateEventMap | to_json }}
  
 specialEventDetailsMap={}
 specialCertificateTemplateMap={{ specialCertificateTemplateMap | to_json }}
