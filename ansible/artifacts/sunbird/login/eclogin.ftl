@@ -11,12 +11,9 @@
                 <div class="iiidem-overly">
                     <div class="iiidem-text-overly">
                         <h2 class="iiidem-h2">Indian International Institute of Democracy &amp; Election Management</h2>
-                        <p class="iiidem-description"> IIIDEM is the dedicated training, academic & resource arm of the Election Commission of India. 
-                        Established in 2011, the Institute was conceived to train, 
-                        prepare and equip election officials and other stakeholders for delivery of free, fair, 
-                        credible and error-free elections cutting across boundaries and ethnicities. 
-                        IIIDEM is one of the few institutions in the world which is not only involved in the Training & Capacity Building of its Electoral officials, 
-                        but also catering to the requirements of Election Management Bodies (EMBs) world over.</p>
+                        <p class="iiidem-description"> Empowering India’s election officials through world-class learning.
+                        Access curated courses, strengthen democratic processes, and build competencies for free, fair, and inclusive elections.
+                        Log in to begin your learning journey!.</p>
                     </div>
                 </div>
             </div>
@@ -217,11 +214,6 @@
                                         </div>
                                         <div class="field">
                                             <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
-                                        </div>
-                                        <div id="kc-registration" class="field">
-                                            <div class="ui content mt-40 signUpMsg">
-                                                <span>${msg("noAccount")} <a class="signUpLink" href="${client.baseUrl}public/signup">${msg("registerHere")}</a></span>
-                                            </div>
                                         </div>
                                         <div id="selfSingUp" class="hide">
                                             <p class="or my-16 textCenter">OR</p>
