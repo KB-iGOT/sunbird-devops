@@ -132,11 +132,6 @@
                                     <div class="field">
                                         <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
                                     </div>
-                                    <div id="kc-registration" class="field">
-                                        <div class="ui content mt-40 signUpMsg">
-                                            <span>${msg("noAccount")} <a class="signUpLink" href="${client.baseUrl}public/signup">${msg("registerHere")}</a></span>
-                                        </div>
-                                    </div>
                                     <div id="selfSingUp" class="hide">
                                         <p class="or my-16 textCenter">OR</p>
                                         <div class="field">
@@ -158,12 +153,6 @@
                                             </button>
                                         </div>
                                         <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
-                                            <div id="kc-registration" class="field">
-                                                <div class="ui content mt-40 signUpMsg">
-                                                    ${msg("noAccount")} <span id="signup" tabindex="0" class="registerLink" onclick=navigate('self')>${msg("registerHere")}</span>
-                                                    <span>${msg("noAccount")} <a class="signUpLink" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
-                                                </div>
-                                            </div>
                                         </#if>
                                     </div>
                                 </form>
@@ -236,12 +225,6 @@
                                                 </button>
                                             </div>
                                             <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
-                                                <div id="kc-registration" class="field">
-                                                    <div class="ui content mt-40 signUpMsg">
-                                                        ${msg("noAccount")} <span id="signup" tabindex="0" class="registerLink" onclick=navigate('self')>${msg("registerHere")}</span>
-                                                        <span>${msg("noAccount")} <a class="signUpLink" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
-                                                    </div>
-                                                </div>
                                             </#if>
                                         </div>
                                     </div>
