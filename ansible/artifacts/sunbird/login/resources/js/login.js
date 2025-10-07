@@ -10,10 +10,6 @@ window.onload = function () {
 	var redirect_uri = this.sessionStorage.getItem('redirect_uri');
 	if(redirect_uri.indexOf('iiidem-portal') !== -1){
 		document.getElementsByClassName('logo-image')[0].src = "/auth/resources/7.0.1/login/sunbird/img/iiidem.png";
-	}
-
-	if (window.location.href.indexOf('iiidem-portal') !== -1) {
-		document.getElementsByClassName('logo-image')[0].src = "/auth/resources/7.0.1/login/sunbird/img/iiidem.png";
 	} else {
 		sessionStorage.setItem('rootTenantLogo', "");
 	}
