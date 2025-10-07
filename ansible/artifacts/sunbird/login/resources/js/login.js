@@ -8,7 +8,7 @@ window.onload = function () {
 	var isForgetPasswordAllow = getValueFromSession('version');
 	var renderingType = 'queryParams';
 	if (window.location.href.indexOf('iiidem-portal') !== -1) {
-		document.getElementsByClassName('logo-image')[0].src = '/auth/resources/7.0.1/login/sunbird/img/iiidem.png';
+		document.getElementsByClassName('logo-image')[0].src = '${url.resourcesPath}/img/iiidem.png';
 	} else {
 		sessionStorage.setItem('rootTenantLogo', "");
 	}
