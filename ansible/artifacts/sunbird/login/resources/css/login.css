@@ -1,5 +1,6 @@
 @import "./fonts/notosans/notosans.css";
 @import "./fonts/poppins/poppins.css";
+@import "./fonts/lato/stylesheet.css";
 body{
     font-family: "Poppins Regular";
     position: relative;
@@ -675,18 +676,19 @@ img {vertical-align: middle;}
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.92) 100%);
   }
   .iiidem-h2 {
-    font-family: Poppins;
+    font-family: 'Lato Poppins Regular';
     font-weight: 600;
     font-size: 24px;
     line-height: 100%;
   }
   .iiidem-description {
-    font-family: 'Sans Poppins Regular';
+    font-family: 'Lato Poppins Regular';
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
     line-height: 150%;
     letter-spacing: 0px;
+    white-space: pre-wrap;
   }
   .iiidem-text-overly {
     color: #fff;
