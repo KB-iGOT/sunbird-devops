@@ -60,13 +60,3 @@ elasticsearch.password={{ elasticsearch_password }}
 cb.plan.v2.index=cb_plan_alias
 
 user.basic.details.filtered=profileCompletionPercentage,karmaPoints,certificateCount,postCount
-
-learning_service_vm_base_url=http://{{ learningservice_ip }}:8080/learning-service
-system.content.update.url=/system/v3/content/update/
-spring.kafka.content.metadata.update.topic.name={{env}}.vod.content.meta.update
-spring.kafka.content.metadata.update.consumer.group.id=vodContentMetaUpdateConsumerGroup
-vod.bucket.prefix=gs://{{videostream_bucket}}/
-vod.stream.url.prefix=https://{{domain_name}}/stream-store/
-
-spring.kafka.bootstrap.servers={{ kafka_servers_list }}
-non.text.fields=isApar,createdAt,endDate
