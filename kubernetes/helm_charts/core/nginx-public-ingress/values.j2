@@ -4332,7 +4332,7 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
     }
-    location ~ /api/(framework/v1/read|data/v1/system/settings/get) {
+    location ~ /api/(data/v1/system/settings/get) {
       # Enabling caching
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
@@ -5251,7 +5251,7 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
     }
-    location ~ /api/(framework/v1/read|data/v1/system/settings/get) {
+    location ~ /api/(data/v1/system/settings/get) {
       # Enabling caching
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
