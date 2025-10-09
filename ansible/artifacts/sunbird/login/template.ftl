@@ -83,15 +83,18 @@
                         </div>
                     </div>
                     <script type="text/javascript">
+                        
                         var sessionTenant = sessionStorage.getItem("rootTenantLogo");
-                        if(sessionTenant === "IIIDEM") {
-                                 var imgSrc = "${url.resourcesPath}/img/iiidem.png";
-                        } else if(sessionTenant){
+                        if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
                             var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.png";
                         }
                         var logoImg =  document.querySelector(".ui.header img");
+                        var redirect_url = sessionStoreage.getItem("redirect_uri");
+                        if(redirect_uri.indexOf('iiidem-portal') !== -1){
+		                    imgSrc = "${url.resourcesPath}/img/iiidem.png";
+	                    }
                         if(logoImg){
                             logoImg.setAttribute('class','logo-image');
                             logoImg.setAttribute('alt',sessionTenant);
