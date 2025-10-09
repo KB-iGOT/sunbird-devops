@@ -83,17 +83,17 @@
                         </div>
                     </div>
                     <script type="text/javascript">
-                         var redirect_url = sessionStorage.getItem("redirect_uri");
-                        if(redirect_url.indexOf('iiidem-portal') !== -1){
-		                    var imgSrc = "${url.resourcesPath}/img/iiidem.png";
-	                    }
+                         
                         var sessionTenant = sessionStorage.getItem("rootTenantLogo");
                         if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
                             var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.png";
                         }
-                       
+                        var redirect_url = sessionStorage.getItem("redirect_uri");
+                        if(redirect_url.indexOf('iiidem-portal') !== -1){
+		                    var imgSrc = "${url.resourcesPath}/img/iiidem.png";
+	                    }
                         var logoImg =  document.querySelector(".ui.header img");
                         console.log('imagepath is ----->',imgSrc);
                         if(logoImg){
