@@ -11,6 +11,7 @@
                     <div class="logo" style="width: 320px; max-width:100%">
                         <img src="${url.resourcesPath}/img/dopt_logo.png" alt="Logo" style="width: inherit;">
                     </div>
+                    
                     <div class="img-container" style="width: 320px; max-width:100%">
                         <div class="slideshow-container">
 
