@@ -12,7 +12,9 @@
                     <div class="iiidem-text-overly">
                        <div class="border-img-wrapper ">
                         <img class="tricolor-img"  src="${url.resourcesPath}/img/tricolor-border.svg"/>         
-                         <h2 class="iiidem-h2">India International Institute of Democracy &amp; Election Management</h2>
+                         <h2 class="iiidem-h2" style="margin: 0 !important;line-height: 28px;">
+                            India International Institute of Democracy &amp;<br>Election Management
+                        </h2>
                        </div>
                         <p class="iiidem-description">Empowering India’s election officials through world-class learning.<br>Access curated courses, strengthen democratic processes, and build competencies for free, fair, and inclusive elections.<br>Log in to begin your learning journey!</p>
                     </div>
