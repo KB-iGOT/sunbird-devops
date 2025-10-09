@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <script type="text/javascript">
-                         var redirect_url = sessionStoreage.getItem("redirect_uri");
+                         var redirect_url = sessionStorage.getItem("redirect_uri");
                         if(redirect_url.indexOf('iiidem-portal') !== -1){
 		                    var imgSrc = "${url.resourcesPath}/img/iiidem.png";
 	                    }
