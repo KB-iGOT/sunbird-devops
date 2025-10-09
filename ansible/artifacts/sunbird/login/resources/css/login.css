@@ -702,10 +702,11 @@ img {vertical-align: middle;}
   }
   .border-img-wrapper {
     display: flex;
+    margin-bottom: 12px;
     align-items: center;
   }
   .tricolor-img {
-    height: 96px;
+    height: 70px;
     width: 12px;
     object-fit: cover;
     margin-right: 16px;
