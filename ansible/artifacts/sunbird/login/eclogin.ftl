@@ -10,7 +10,10 @@
             <div class="ui raised shadow container segment fullpage-background-image left-box iiidem-bg">
                 <div class="iiidem-overly">
                     <div class="iiidem-text-overly">
-                        <h2 class="iiidem-h2">India International Institute of Democracy &amp; Election Management</h2>
+                       <div class="border-img-wrapper ">
+                        <img class="tricolor-img"  src="${url.resourcesPath}/img/tricolor-border.svg"/>         
+                         <h2 class="iiidem-h2">India International Institute of Democracy &amp; Election Management</h2>
+                       </div>
                         <p class="iiidem-description">Empowering India’s election officials through world-class learning.<br>Access curated courses, strengthen democratic processes, and build competencies for free, fair, and inclusive elections.<br>Log in to begin your learning journey!</p>
                     </div>
                 </div>
