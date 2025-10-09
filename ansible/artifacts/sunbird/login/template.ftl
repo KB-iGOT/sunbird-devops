@@ -92,7 +92,7 @@
                         }
                         var logoImg =  document.querySelector(".ui.header img");
                         var redirect_url = sessionStoreage.getItem("redirect_uri");
-                        if(redirect_uri.indexOf('iiidem-portal') !== -1){
+                        if(redirect_url.indexOf('iiidem-portal') !== -1){
 		                    imgSrc = "${url.resourcesPath}/img/iiidem.png";
 	                    }
                         if(logoImg){
