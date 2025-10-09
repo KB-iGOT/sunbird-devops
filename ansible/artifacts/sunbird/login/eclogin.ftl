@@ -10,13 +10,13 @@
             <div class="ui raised shadow container segment fullpage-background-image left-box iiidem-bg">
                 <div class="iiidem-overly">
                     <div class="iiidem-text-overly">
-                        <h2 class="iiidem-h2">Indian International Institute of Democracy &amp; Election Management</h2>
-                        <p class="iiidem-description"> IIIDEM is the dedicated training, academic & resource arm of the Election Commission of India. 
-                        Established in 2011, the Institute was conceived to train, 
-                        prepare and equip election officials and other stakeholders for delivery of free, fair, 
-                        credible and error-free elections cutting across boundaries and ethnicities. 
-                        IIIDEM is one of the few institutions in the world which is not only involved in the Training & Capacity Building of its Electoral officials, 
-                        but also catering to the requirements of Election Management Bodies (EMBs) world over.</p>
+                       <div class="border-img-wrapper ">
+                        <img class="tricolor-img"  src="${url.resourcesPath}/img/tricolor-border.svg"/>         
+                         <h2 class="iiidem-h2" style="margin: 0 !important;line-height: 28px;">
+                            India International Institute of Democracy &amp;<br>Election Management
+                        </h2>
+                       </div>
+                        <p class="iiidem-description">Empowering India’s election officials through world-class learning.<br>Access curated courses, strengthen democratic processes, and build competencies for free, fair, and inclusive elections.<br>Log in to begin your learning journey!</p>
                     </div>
                 </div>
             </div>
@@ -135,11 +135,6 @@
                                     <div class="field">
                                         <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
                                     </div>
-                                    <div id="kc-registration" class="field">
-                                        <div class="ui content mt-40 signUpMsg">
-                                            <span>${msg("noAccount")} <a class="signUpLink" href="${client.baseUrl}public/signup">${msg("registerHere")}</a></span>
-                                        </div>
-                                    </div>
                                     <div id="selfSingUp" class="hide">
                                         <p class="or my-16 textCenter">OR</p>
                                         <div class="field">
@@ -161,12 +156,6 @@
                                             </button>
                                         </div>
                                         <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
-                                            <div id="kc-registration" class="field">
-                                                <div class="ui content mt-40 signUpMsg">
-                                                    ${msg("noAccount")} <span id="signup" tabindex="0" class="registerLink" onclick=navigate('self')>${msg("registerHere")}</span>
-                                                    <span>${msg("noAccount")} <a class="signUpLink" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
-                                                </div>
-                                            </div>
                                         </#if>
                                     </div>
                                 </form>
@@ -218,11 +207,6 @@
                                         <div class="field">
                                             <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
                                         </div>
-                                        <div id="kc-registration" class="field">
-                                            <div class="ui content mt-40 signUpMsg">
-                                                <span>${msg("noAccount")} <a class="signUpLink" href="${client.baseUrl}public/signup">${msg("registerHere")}</a></span>
-                                            </div>
-                                        </div>
                                         <div id="selfSingUp" class="hide">
                                             <p class="or my-16 textCenter">OR</p>
                                             <div class="field">
@@ -244,12 +228,6 @@
                                                 </button>
                                             </div>
                                             <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
-                                                <div id="kc-registration" class="field">
-                                                    <div class="ui content mt-40 signUpMsg">
-                                                        ${msg("noAccount")} <span id="signup" tabindex="0" class="registerLink" onclick=navigate('self')>${msg("registerHere")}</span>
-                                                        <span>${msg("noAccount")} <a class="signUpLink" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
-                                                    </div>
-                                                </div>
                                             </#if>
                                         </div>
                                     </div>
