@@ -73,6 +73,10 @@
     </div>
 
     <script>
+        var session_url = sessionStorage.getItem("session_url");
+        if(session_url.indexOf('iiidem-portal') !== -1){
+		      document.getElementById('backToApplication').setAttribute('href', session_url);
+	      }
         var interval
         function countdown() {
             document.getElementById("js-timeout").innerHTML = "3:00";

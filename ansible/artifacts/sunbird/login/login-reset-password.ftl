@@ -7,10 +7,11 @@
     <div class="custom-wrapper">
         <div class="custom-grid">
             <div class="ui raised shadow container segment fullpage-background-image left-box">
-                <div class="ui column height-fix" style="padding:0">
+                <div id="leftsideImage" class="ui column height-fix" style="padding:0">
                     <div class="logo" style="width: 320px; max-width:100%">
                         <img src="${url.resourcesPath}/img/dopt_logo.png" alt="Logo" style="width: inherit;">
                     </div>
+
                     <div class="img-container" style="width: 320px; max-width:100%">
                         <div class="slideshow-container">
 
@@ -104,6 +105,10 @@
     <script type="text/javascript">
         var slideIndex = 0;
         showSlides();
+        var session_url = sessionStorage.getItem("session_url");
+        if(session_url.indexOf('iiidem-portal') !== -1){
+		      document.getElementById('leftsideImage').setAttribute('style', "display:none !important");
+	      }
 
         function showSlides() {
         var i;

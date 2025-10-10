@@ -65,6 +65,10 @@
     </div>
 
      <script type="text/javascript">
+     var session_url = sessionStorage.getItem("session_url");
+        if(session_url.indexOf('iiidem-portal') !== -1){
+		      document.getElementById('backToLogin').setAttribute('href', session_url);
+	      }
      function validatePasswordChar() {
         let userPassVal = document.getElementById("password-new").value.trim()
         if (userPassVal && userPassVal.length < 4) {
