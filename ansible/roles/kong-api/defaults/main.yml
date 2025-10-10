@@ -23180,8 +23180,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: uploadBpAssignmentAnsFile
-    uris: "/storage/v1/bpAssignmentAnsFile"
-    upstream_url: "{{ sb_cb_ext_service_url }}/storage/v1/bpAssignmentAnsFile"
+    uris: "/storage/v1/bp/assignment/answer"
+    upstream_url: "{{ sb_cb_ext_service_url }}/storage/v1/bp/assignment/answer"
     strip_uri: true
     plugins:
       - name: jwt
