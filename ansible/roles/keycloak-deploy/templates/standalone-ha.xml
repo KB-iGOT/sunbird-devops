@@ -144,7 +144,8 @@
                     </security>
                 </datasource>
               <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true">
-                <connection-url>jdbc:postgresql://{{keycloak_postgres_host}}:5432/{{keycloak_postgres_database}}?sslmode=require</connection-url>
+                <connection-url>jdbc:postgresql://{{keycloak_postgres_host}}:6432/{{keycloak_postgres_database}}?sslmode=require</connection-url>
+                <!-- 6432 port using if you are configured the pgbouncer else use 5432 as port number -->
                 <driver>postgresql</driver>
                 <pool>
                   <max-pool-size>50</max-pool-size>
