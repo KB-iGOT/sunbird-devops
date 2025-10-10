@@ -119,3 +119,12 @@ connections.outgoing.count.query={{connections_outgoing_count_query}}
 connections.incoming.count.query={{connections_incoming_count_query}}
 connections.both.count.query={{connections_both_count_query}}
 
+http.pooling.client.cm.max.total.connections=2000
+http.pooling.client.cm.default.max.per.route=500
+spring.main.allow-circular-references=true
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name=sunbird
+spring.cassandra.username=sunbird
+spring.cassandra.password=""
+spring.cassandra.local-datacenter=DC1
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
