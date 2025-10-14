@@ -113,10 +113,9 @@
                                         </div>
                                     </#if>
                                     </div>
-                                    <div class="captcha" id="captchaBlock">
-                                        <div id="captcha"></div>
-                                        
-                                    </div>
+                                    <#--  <div class="captcha" id="captchaBlock">
+                                    <div id="captcha"></div>
+                                    </div> -->
                                     <div class="field">
                                         <button id="login" class="ui fluid button">${msg("doLogIn")}</button>
                                     </div>
@@ -270,7 +269,8 @@
                 document.getElementById('ivField').value = CryptoJS.enc.Base64.stringify(iv);
 
                 passwordField.value = encrypted;
-                return validateRecaptcha();
+           //     return validateRecaptcha();
+                return true;
         }
     </script>
     <script type="text/javascript">
@@ -387,9 +387,9 @@
             }
         }
     </script>
-     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+<#-- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
-    </script>
+</script> -->
     </#if>
 </#if>
 </@layout.registrationLayout>
