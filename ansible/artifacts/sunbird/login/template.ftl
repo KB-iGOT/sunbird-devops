@@ -88,7 +88,7 @@
                         if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
-                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.png";
+                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.jpg";
                         }
                         var redirect_url = sessionStorage.getItem("redirect_uri");
                         if(redirect_url.indexOf('iiidem-portal') !== -1){
