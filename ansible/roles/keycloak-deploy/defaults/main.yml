@@ -8,3 +8,6 @@ keycloak_metaspace_size: 256m
 keycloak_home: /opt/keycloak
 login_theme: artifacts/sunbird/login
 email_theme: artifacts/sunbird/email
+parichay_host: "{{ proto }}://{{ proxy_server_name }}"
+parichay_auth_endpoint: "/apis/public/v8/parichay/auth"
+parichay_auth_url: "{{ parichay_host }}{{ parichay_auth_endpoint }}"

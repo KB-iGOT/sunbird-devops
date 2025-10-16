@@ -133,7 +133,7 @@
                                         </div>
                                     </div>                                   
                                     <div class="field">
-                                        <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
+                                        <a id="loginp" href="${parichay_auth_url!'${parichay_host!''}/apis/public/v8/parichay/auth'}" class="ui fluid button">${msg("loginWithParichay")}</a>
                                     </div>
                                     <div id="selfSingUp" class="hide">
                                         <p class="or my-16 textCenter">OR</p>
@@ -205,7 +205,7 @@
                                             </div>
                                         </div>
                                         <div class="field">
-                                            <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
+                                            <a id="loginp" href="${parichay_auth_url!'${parichay_host!''}/apis/public/v8/parichay/auth'}" class="ui fluid button">${msg("loginWithParichay")}</a>
                                         </div>
                                         <div id="selfSingUp" class="hide">
                                             <p class="or my-16 textCenter">OR</p>
