@@ -4,7 +4,7 @@ metadata:
   name: itsmgeminicredentialsjson
   namespace: {{ .Values.namespace }}
 data:
-  gcp_gemini_credentials.json: |
+  gemini_api.json: |
 {{ .Values.itsmgeminicredentialsjson | indent 4 }}
 
 ---
@@ -14,5 +14,5 @@ metadata:
   name: itsmgcpcredentialsjson
   namespace: {{ .Values.namespace }}
 data:
-  gcp_gemini_credentials.json: |
+  gcp-sa.json: |
 {{ .Values.itsmgcpcredentialsjson | indent 4 }}
