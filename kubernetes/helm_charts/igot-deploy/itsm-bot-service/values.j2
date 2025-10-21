@@ -1,0 +1,49 @@
+### Default variable file for itsm_bot-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{itsm_bot_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{itsm_bot_replicacount|default(1)}}
+repository: {{ image_itsm_bot_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{itsm_bot_cpu_req|default('1')}}
+    memory: {{itsm_bot_mem_req|default('5Gi')}}
+  limits:
+    cpu: {{itsm_bot_cpu_limit|default('2')}}
+    memory: {{itsm_bot_mem_limit|default('6Gi')}}
+network:
+  port: {{ service_itsm_bot_port }}
+  targetport: {{ service_itsm_bot_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ itsm_bot_maxsurge|default('25%') }}
+  maxunavailable: {{ itsm_bot_maxunavailable|default('25%') }}
+
+
+itsmgeminicredentialsjson: |-
+ {{itsmgeminicredentialsjson_gemini_service_account}}
+
+itsmgcpcredentialsjson: |-
+ {{itsmgcpcredentialsjson_service_account}}
+
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ itsm_bot_autoscaling_enabled | default('false') }}
+  minReplicas: {{ itsm_bot_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ itsm_bot_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ itsm_bot_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ itsm_bot_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
