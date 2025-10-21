@@ -7,7 +7,7 @@ GOOGLE_APPLICATION_CREDENTIALS=/app/gemini_api.json
 # Karmayogi Platform Configuration
 KARMAYOGI_API_KEY={{ itsm_bearer_token }}
 
-LOCAL_LLM_URLS=http://{{ itsm_local_llm_urls }}
+LOCAL_LLM_URLS={{ itsm_local_llm_urls }}
 LOCAL_LLM_MODEL={{ itsm_local_llm_model }}
 
 
@@ -96,3 +96,5 @@ ZOHO_DEPARTMENT_ID={{ zoho_department_id }}
 # SUPPORT CONTACT
 SUPPORT_TEAMS_LINK={{ support_teams_link }}
 SUPPORT_EMAIL_ID={{ igot_cb_ext_mailsender }}
+
+USE_LOCAL_LLM=TRUE
