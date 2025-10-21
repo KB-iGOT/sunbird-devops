@@ -62,27 +62,27 @@ OPIK_PROJECT='ITSM Chatbot'
 OPIK_URL='http://{{ opik_api_host }}:5173/api'
 
 # IGOT Platform APIs
-lms_service_url = 'http://{{ private_ingressgateway_ip }}/lms'
-course_cert_issue_api = '/v1/course/batch/cert/issue'
-event_cert_issue_api = '/v1/event/batch/cert/issue'
-learning_service_url = 'http://{{ private_ingressgateway_ip }}/learner'
-email_notification_api = '/v1/notification/email'
-knowledge_mw_service_url = 'http://{{ private_ingressgateway_ip }}/knowledgemw'
-content_search_api = '/v1/content/search'
-private_course_enrol_list_api = '/private/v1/user/enrol/courses/list/'
-private_event_enrol_list_api = '/private/v1/user/events/list/'
-private_user_read_api = '/private/user/v1/read/'
-sb_cb_ext_service_url = 'http://{{ private_ingressgateway_ip }}/cbext'
-otp_generate_api = '/v1/otp/generate'
-otp_verify_api = '/v1/otp/verify'
-private_user_update_api = '/user/private/support/update'
-OTP_EXPIRY_IN_MINUTES = 15
+lms_service_url='http://{{ private_ingressgateway_ip }}/lms'
+course_cert_issue_api='/v1/course/batch/cert/issue'
+event_cert_issue_api='/v1/event/batch/cert/issue'
+learning_service_url='http://{{ private_ingressgateway_ip }}/learner'
+email_notification_api='/v1/notification/email'
+knowledge_mw_service_url='http://{{ private_ingressgateway_ip }}/knowledgemw'
+content_search_api='/v1/content/search'
+private_course_enrol_list_api='/private/v1/user/enrol/courses/list/'
+private_event_enrol_list_api='/private/v1/user/events/list/'
+private_user_read_api='/private/user/v1/read/'
+sb_cb_ext_service_url='http://{{ private_ingressgateway_ip }}/cbext'
+otp_generate_api='/v1/otp/generate'
+otp_verify_api='/v1/otp/verify'
+private_user_update_api='/user/private/support/update'
+OTP_EXPIRY_IN_MINUTES=15
 
 # keycloak system admin credentials
-portal_endpoint = 'https://{{ portal_domain_name }}'
-access_token_api = '/auth/realms/sunbird/protocol/openid-connect/token'
-system_admin_user = '{{ istm_system_admin_user }}'
-system_admin_password = '{{ istm_system_admin_password }}'
+portal_endpoint='https://{{ portal_domain_name }}'
+access_token_api='/auth/realms/sunbird/protocol/openid-connect/token'
+system_admin_user='{{ istm_system_admin_user }}'
+system_admin_password='{{ istm_system_admin_password }}'
 
 
 # Zoho Desk API Configuration
