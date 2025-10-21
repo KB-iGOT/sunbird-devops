@@ -13,11 +13,11 @@ repository: {{ image_itsm_bot_service }}
 image_tag: {{ image_tag }}
 resources:
   requests:
-    cpu: {{itsm_bot_cpu_req|default('200m')}}
-    memory: {{itsm_bot_mem_req|default('200Mi')}}
+    cpu: {{itsm_bot_cpu_req|default('1')}}
+    memory: {{itsm_bot_mem_req|default('5Gi')}}
   limits:
-    cpu: {{itsm_bot_cpu_limit|default('500m')}}
-    memory: {{itsm_bot_mem_limit|default('800Mi')}}
+    cpu: {{itsm_bot_cpu_limit|default('2')}}
+    memory: {{itsm_bot_mem_limit|default('6Gi')}}
 network:
   port: {{ service_itsm_bot_port }}
   targetport: {{ service_itsm_bot_port }}
