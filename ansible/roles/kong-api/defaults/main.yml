@@ -165,6 +165,7 @@ cb_ext_content_prefix: /content/v2
 cb_notification_setting_data_prefix: /notificationSetting
 content_moderation_prefix: /moderation
 consent_prefix: /consent
+assignment_prefix: /assignment/v1
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
