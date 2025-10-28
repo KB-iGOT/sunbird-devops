@@ -1,0 +1,104 @@
+replicaCount: 1
+
+image:
+  repository: louislam/uptime-kuma 
+  pullPolicy: IfNotPresent
+  tag: 2.0.2
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+namespace: monitoring
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+ports:
+  - containerPort: 3001
+    name: http
+    protocol: TCP
+
+service:
+  type: ClusterIP
+  portName: 'http'
+  port: 3001
+  targetPort: 3001
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    cpu: 0.5
+    memory: 1Gi
+  limits:
+    cpu: 1
+    memory: 2Gi
+
+# Persistent Volume Configuration
+persistence:
+  type: pvc  
+  enabled: true
+    #  storageClass: "standard-rwo"  # GKE default storage class
+  accessMode: ReadWriteOnce
+  size: 5Gi
+  finalizers:
+    - kubernetes.io/pvc-protection    
+    #  annotations: {}
+ 
+nodeSelector: {}
+
+tolerations: []
+
+
+affinity: {}
+
+# This section will create service monitor for prometheus operator
+serviceMonitor:
+  enabled: true
+  # Namespace where ServiceMonitor will be created (optional, defaults to Release namespace)
+  namespace: ""
+  # Path to scrape metrics from
+  path: /metrics
+  # Scrape interval
+  interval: 30s
+  # Scrape timeout
+  scrapeTimeout: 10s
+  # Honor labels from the target
+  honorLabels: true
+  # Additional labels to add to ServiceMonitor
+  # IMPORTANT: Add the label that Prometheus Operator looks for
+  labels: # labels with which the prometheus choose the serviceMonitor. This is critical !!
+    app: uptime-kuma
+    release: prometheus-operator
+  additionalLabels:
+    release: prometheus-operator  # This is critical!      
