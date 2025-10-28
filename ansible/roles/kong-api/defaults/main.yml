@@ -23087,23 +23087,6 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
-  - name: createSupportCbUser
-    uris: "{{ user_service_prefix }}/v5/support/create"
-    upstream_url: "{{ learning_service_url }}/v5/cb/support/user/create"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'userCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: createAssignment
     uris: "{{ assignment_prefix }}/create"
