@@ -23052,7 +23052,7 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: createSupportCbUser
+  - name: orgLevelHierarchy
     uris: "{{ org_service_prefix }}/level/hierarchy"
     upstream_url: "{{ sb_cb_ext_service_url }}/org/level/hierarchy"
     strip_uri: true
