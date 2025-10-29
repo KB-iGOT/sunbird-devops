@@ -767,6 +767,7 @@ service_content_moderation_service: content-moderation-service
 service_cb_ext_workallocation_tool_service: cb-ext-workallocation-tool-service
 service_multitenant_staticweb_service: multitenant-staticweb
 service_itsm_bot_service: itsm-bot-service
+service_zoho_desk_service: zoho-desk-service
 
 # Ports
 service_bulk_upload_port: 3009
@@ -866,6 +867,7 @@ service_content_moderation_port: 8000
 service_cb_ext_workallocation_tool_port: 7006
 service_multitenant_staticweb_port: 4200
 service_itsm_bot_port: 8000
+service_zoho_desk_port: 5000
 
 # Network alias names, so that one service can talk to another
 network_alias_content_service: private-content-service
@@ -948,6 +950,7 @@ network_alias_content_moderation_service: content-moderation-service
 network_alias_cb_ext_workallocation_tool_service: cb-ext-workallocation-tool-service
 network_alias_multitenant_staticweb_service: multitenant-staticweb
 network_alias_itsm_bot_service: itsm-bot-service
+network_alias_zoho_desk_service: zoho-desk-service
 
 # Image names, this is used by the service alone, but since we want to have all the images in one place, we are oncfiguring the images here
 image_ui_static: ui-static
@@ -1027,5 +1030,6 @@ image_content_moderation_service: content-moderation-service
 image_cb_ext_workallocation_tool_service: cb-ext-workallocation-tool-service
 image_multitenant_staticweb: multitenant-staticweb
 image_itsm_bot_service: itsm-bot-service
+image_zoho_desk_service: zoho-desk-service
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload

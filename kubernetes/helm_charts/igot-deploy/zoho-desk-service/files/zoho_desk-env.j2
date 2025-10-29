@@ -1,0 +1,32 @@
+# Zoho Configuration
+ZOHO_EMAIL={{zoho_email}}
+ZOHO_PASSWORD={{zoho_password}}
+BROWSER=chrome
+HEADLESS=false
+API_KEY={{zoho_api_key}}
+
+# Zoho API Credentials
+ZOHO_CLIENT_ID={{zoho_client_id}}
+ZOHO_CLIENT_SECRET={{zoho_client_secret}}
+ZOHO_REDIRECT_URI=http://localhost:8080/callback
+
+# API Configuration
+API_BASE_URL=https://{{domain_name}}/api/private/user/v1/search
+# Flask Configuration
+FLASK_DEBUG=true
+FLASK_HOST=0.0.0.0
+FLASK_PORT=5000
+
+# Database Configuration - LOCAL POSTGRESQL ONLY
+ENV_MODE=sqlite
+DB_HOST={{postgresql_host}}
+DB_PORT=5432
+DB_NAME=zoho_automation
+DB_USER={{postgresql_username_sunbird}}
+DB_PASSWORD={{postgresql_password_sunbird}}
+DATABASE_URL=postgresql://{{postgresql_username_sunbird}}:{{postgresql_password_sunbird}}@{{postgresql_host}}:5432/zoho_automation
+
+# Generated tokens on 2025-10-18 11:16:07.341360
+ZOHO_ACCESS_TOKEN={{zoho_access_token}}
+ZOHO_REFRESH_TOKEN={{zoho_refresh_token}}
+ 

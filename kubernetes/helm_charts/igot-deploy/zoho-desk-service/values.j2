@@ -1,0 +1,46 @@
+### Default variable file for zoho_desk-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{zoho_desk_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{zoho_desk_replicacount|default(1)}}
+repository: {{ image_zoho_desk_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{zoho_desk_cpu_req|default('200m')}}
+    memory: {{zoho_desk_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{zoho_desk_cpu_limit|default('500m')}}
+    memory: {{zoho_desk_mem_limit|default('800Mi')}}
+network:
+  port: {{ service_zoho_desk_port }}
+  targetport: {{ service_zoho_desk_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ zoho_desk_maxsurge|default('25%') }}
+  maxunavailable: {{ zoho_desk_maxunavailable|default('25%') }}
+
+
+courrecogcpgeminicredentialsjson: |-
+ {{zoho_desk_gcp_gemini_upload_service_account}}
+
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ zoho_desk_autoscaling_enabled | default('false') }}
+  minReplicas: {{ zoho_desk_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ zoho_desk_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ zoho_desk_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ zoho_desk_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
