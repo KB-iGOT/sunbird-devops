@@ -26,11 +26,6 @@ strategy:
   maxsurge: {{ zoho_desk_maxsurge|default('25%') }}
   maxunavailable: {{ zoho_desk_maxunavailable|default('25%') }}
 
-
-courrecogcpgeminicredentialsjson: |-
- {{zoho_desk_gcp_gemini_upload_service_account}}
-
-
 serviceMonitor:
   enabled: true
   labels: # labels with which the prometheus choose the serviceMonitor
