@@ -1,0 +1,31 @@
+---
+# vars file for deploy-vega-service
+# For script
+release_name: "{{ network_alias_zoho_desk_service }}"
+user_friendly_name: zoho_desk service
+#template_compose_file_name: ui-spv-igot.j2
+template_env_file_name: "zoho_desk-env.j2"
+compose_file_name: "{{ service_zoho_desk_service }}.yml"
+env_file_name: "{{ service_zoho_desk_service }}.env"
+helm_env_file_location: "../helm_charts/igot-deploy/templates/"
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_zoho_desk_service }}.env"
+
+
+env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
+compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
+
+# For service
+application_port: "{{ service_zoho_desk_port }}"
+image_name: "{{ image_zoho_desk_service }}"
+tag: "{{ tags_zoho_desk_service }}"
+host_port: "{{ application_port }}"
+docker_port: "{{ application_port }}"
+replicas: "{{ service_replicas_zoho_desk_service }}"
+reserved_memory: "{{ service_mem_reserved_zoho_desk_service }}"
+limited_memory: "{{ service_mem_limit_zoho_desk_service }}"
+health_check_endpoint: http://127.0.0.1:{{ docker_port }}/healthcheck
+network_alias_name: "{{ network_alias_zoho_desk_service }}"
+docker_service_stack_name: ui
+docker_service_name: "{{ service_zoho_desk_service }}"
+force_reload: "{{ force_reload_zoho_desk_service }}"
+
