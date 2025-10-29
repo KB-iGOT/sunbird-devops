@@ -523,7 +523,7 @@ bulk.upload.org.hierarchy.master.data.name=masterData
 org.hierarchy.headers.master.data=orgId,orgName,DisplayName
 org.hierarchy.headers.references=L1 - Districts,L2 - Tehsil,L3 - Offices,L4,L5,L6,L7,L8,L9,L10
 org.hierarchy.bulk.upload.file.name=orgHierarchyBulkMasterData.xlsx
-org.search.limit=784
+org.search.limit=5000
 org.search.url=v1/org/search
 org.hierarchy.column.width=9999
 validation.message.duplicate-levels=Avoid selecting duplicate values across levels (L1 to L10).
@@ -543,3 +543,21 @@ assessment.user.submit.data.table=user_assessment_data_v2
 multilingual.allowed.course.category=Multilingual Course
 minimum.rating.content.consumption.percentage=50
 rating.allowed.lang.content.status.primaryCategory=Course,Standalone Assessment
+org.type.field.name=ministryorstatetype
+
+logging.level.org.apache.kafka=ERROR
+logging.level.kafka=ERROR
+logging.level.org.springframework.kafka=ERROR
+kafka.topics.org.user.bulk.transfer.event={{env}}.org.user.bulk.transfer
+kafka.topics.org.user.bulk.transfer.event.group=user-bulk-transfer-group
+
+user_es_host={{ user_es_host_list }}
+
+org.level.hierarchy.cache.key.ttl=14400
+org.level.hierarchy.es.limit=0
+org.level.hierarchy.es.offset=2000
+
+bp.assignment.ans.folder.name=bp-assignment
+
+bp.assignment.answer.file.upload.max-size-kb=5000
+bp.assignment.answer.file.upload.allowed-extensions=pdf,doc,docx

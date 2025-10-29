@@ -36,13 +36,6 @@
             <script src="${script}" type="text/javascript"></script>
         </#list>
     </#if>
-    <script type="text/javascript">
-        if (sessionUrlObj.host.indexOf("iiidem") !== -1) {
-            sessionStorage.setItem('rootTenantLogo', "IIIDEM");
-        } else {
-            sessionStorage.setItem('rootTenantLogo', "");
-        }
-    </script>
 </head>
 
 <body class="${properties.kcBodyClass!}">
@@ -90,15 +83,19 @@
                         </div>
                     </div>
                     <script type="text/javascript">
+                         
                         var sessionTenant = sessionStorage.getItem("rootTenantLogo");
-                        if(sessionTenant === "IIIDEM") {
-                                 var imgSrc = "${url.resourcesPath}/img/iiidem.png";
-                        } else if(sessionTenant){
+                        if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
-                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.png";
+                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.jpg";
                         }
+                        var redirect_url = sessionStorage.getItem("redirect_uri");
+                        if(redirect_url.indexOf('iiidem-portal') !== -1){
+		                    var imgSrc = "${url.resourcesPath}/img/iiidem.png";
+	                    }
                         var logoImg =  document.querySelector(".ui.header img");
+                        console.log('imagepath is ----->',imgSrc);
                         if(logoImg){
                             logoImg.setAttribute('class','logo-image');
                             logoImg.setAttribute('alt',sessionTenant);
