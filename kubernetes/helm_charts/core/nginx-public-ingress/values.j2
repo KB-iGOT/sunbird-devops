@@ -1022,6 +1022,22 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
+    location /course-metadata-v2/ {
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/course-metadata-v2/(.*) /$1 break;
+      proxy_pass http://course-metadata-v2-service:80;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
+
     location /ai-pocs/ {
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
