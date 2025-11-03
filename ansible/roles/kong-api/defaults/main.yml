@@ -166,6 +166,7 @@ cb_notification_setting_data_prefix: /notificationSetting
 content_moderation_prefix: /moderation
 consent_prefix: /consent
 assignment_prefix: /assignment/v1
+notify_prefix: /v1/notifyAssignment
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -23285,3 +23286,57 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: nofiryAssignmentUpload
+    uris: "{{ notify_prefix }}/upload"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/notifyAssignment/upoad"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
+      
+  - name: nofiryAssignmentEvaluate
+    uris: "{{ notify_prefix }}/evaluate"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/notifyAssignment/evaluate"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
+      
+  - name: nofiryAssignmentSubmit
+    uris: "{{ notify_prefix }}/submit"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/notifyAssignment/submit"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
