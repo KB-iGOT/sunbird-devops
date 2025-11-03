@@ -5692,7 +5692,7 @@ kong_apis:
 
   - name: downloadRegCertificateV2
     uris: "{{ cert_registry_service_prefix }}/v2/certs/download"
-    upstream_url: "{{ cert_registry_service_url }}/certs/v2/registry/download"
+    upstream_url: "{{ certificate_generator_service_url }}/v1/certs/legacy/generate"
     strip_uri: true
     plugins:
     - name: jwt
