@@ -23289,7 +23289,7 @@ kong_apis:
 
   - name: nofiryAssignmentUpload
     uris: "{{ notify_prefix }}/upload"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/notifyAssignment/upoad"
+    upstream_url: "{{ cb_ext_course_service_url }}/v1/notifyAssignment/upoad"
     strip_uri: true
     plugins:
     - name: jwt
@@ -23307,7 +23307,7 @@ kong_apis:
       
   - name: nofiryAssignmentEvaluate
     uris: "{{ notify_prefix }}/evaluate"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/notifyAssignment/evaluate"
+    upstream_url: "{{ cb_ext_course_service_url }}/v1/notifyAssignment/evaluate"
     strip_uri: true
     plugins:
     - name: jwt
@@ -23325,7 +23325,7 @@ kong_apis:
       
   - name: nofiryAssignmentSubmit
     uris: "{{ notify_prefix }}/submit"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/notifyAssignment/submit"
+    upstream_url: "{{ cb_ext_course_service_url }}/v1/notifyAssignment/submit"
     strip_uri: true
     plugins:
     - name: jwt
