@@ -23289,7 +23289,7 @@ kong_apis:
 
   - name: nofiryAssignmentUpload
     uris: "{{ notify_prefix }}/upload"
-    upstream_url: "{{ cb_ext_course_service_url }}/v1/notifyAssignment/upoad"
+    upstream_url: "{{ cb_ext_course_service_url }}/v1/notifyAssignment/upload"
     strip_uri: true
     plugins:
     - name: jwt
