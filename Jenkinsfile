@@ -1,46 +1,43 @@
 pipeline {
     agent any
 
-    triggers {
-        pollSCM('* * * * *')  // poll GitHub every minute
-    }
-    
     environment {
-        // Extract Jira ID from PR title like "ABC-123 Fix login"
-        JIRA_ID = sh(
-            script: "echo ${ghprbPullTitle} | grep -oE '[A-Z]+-[0-9]+' || true",
-            returnStdout: true
-        ).trim()
-
-        // Gerrit vars should already come from your webhook or manual export
         GERRIT_USER = "jenkins"
-    } 
+        GERRIT_HOST = "10.175.2.49"
+        GERRIT_PORT = "29418"
+        TARGET_BRANCH = "gerrit-git-integration"
+    }
 
     stages {
-        stage('Build & Test') {
+
+        stage('Detect PR') {
+            when { changeRequest() }
             steps {
-                echo "Building PR: ${CHANGE_ID}"
-                echo "Jira Ticket: ${JIRA_ID}"
-                // your build steps here
+                script {
+                    echo "PR detected: ${env.CHANGE_ID}"
+                    echo "Branch: ${env.CHANGE_BRANCH}"
+                }
+            }
+        }
+
+        stage('Fetch PR Code') {
+            when { changeRequest() }
+            steps {
+                sh """
+                    git fetch origin pull/${CHANGE_ID}/head:pr-${CHANGE_ID}
+                    git checkout pr-${CHANGE_ID}
+                """
+            }
+        }
+
+        stage('Push to Gerrit for Review') {
+            when { changeRequest() }
+            steps {
+                sh """
+                    git push ssh://${GERRIT_USER}@${GERRIT_HOST}:${GERRIT_PORT}/your/repo.git \
+                        HEAD:refs/for/${TARGET_BRANCH}%topic=PR-${CHANGE_ID}
+                """
             }
         }
     }
-
-    post {
-        success {
-            sh """
-            ssh -i /var/lib/jenkins/.ssh/gerrit_jenkins jenkins@10.175.2.49 \
-            "gerrit review ${CHANGE_ID} --verified +1 --message 'CI Passed ✅ Jira: ${JIRA_ID}'"
-            """
-        }
-
-        failure {
-            sh """
-            ssh -i /var/lib/jenkins/.ssh/gerrit_jenkins jenkins@10.175.2.49 \
-            "gerrit review ${CHANGE_ID} --verified -1 --message 'CI Failed ❌ Jira: ${JIRA_ID}'"
-            """
-        }
-    }
 }
-
-
