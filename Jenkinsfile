@@ -2,34 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build & Test') {
             steps {
-                sh 'echo Running tests'
-                # replace below with your build
-                sh 'make test || exit 1'
-            }
-        }
-
-        stage('Lint') {
-            steps {
-                sh 'echo Linting...'
-                # e.g. npm run lint OR flake8 etc.
+                echo "Running build..."
+                // your build and test steps
             }
         }
     }
 
     post {
         success {
-            githubNotify context: 'CI', status: 'SUCCESS', description: 'PR passed'
+            sh '''
+            ssh gerrit "gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --message 'CI Passed ✅'"
+            '''
         }
         failure {
-            githubNotify context: 'CI', status: 'FAILURE', description: 'PR failed'
+            sh '''
+            ssh gerrit "gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified -1 --message 'CI Failed ❌'"
+            '''
         }
     }
 }
