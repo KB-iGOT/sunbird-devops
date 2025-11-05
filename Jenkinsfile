@@ -1,7 +1,10 @@
 pipeline {
     agent any
 
-
+    triggers {
+        pollSCM('* * * * *')  // poll GitHub every minute
+    }
+    
     environment {
         // Extract Jira ID from PR title like "ABC-123 Fix login"
         JIRA_ID = sh(
