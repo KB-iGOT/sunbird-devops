@@ -1038,6 +1038,38 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
+    location /course-metadata-scenario-v2/ {
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/course-metadata-scenario-v2/(.*) /$1 break;
+      proxy_pass http://s2-content-metadata-service:80;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
+
+    location /course-metadata-scenario-v3/ {
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/course-metadata-scenario-v3/(.*) /$1 break;
+      proxy_pass http://s3-content-metadata-service:80;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
+
     location /ai-pocs/ {
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
@@ -2028,12 +2060,12 @@ proxyconfig: |-
     }
 
   server {
-    if ($host = frac.{{ proxy_server_name }}) {
+    if ($host = frac.{{ nginx_proxy_server_name }}) {
         return 301 https://$host$request_uri;
         } # managed by Certbot
 
       listen       80;
-      server_name  frac.{{ proxy_server_name }};
+      server_name  frac.{{ nginx_proxy_server_name }};
       return 404; # managed by Certbot
     }
 
@@ -2043,7 +2075,7 @@ proxyconfig: |-
     ssl_certificate_key   /etc/secrets/site.key;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA HIGH !RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS";
-    server_name *.frac.{{ proxy_server_name }} frac.{{ proxy_server_name }};
+    server_name *.frac.{{ nginx_proxy_server_name }} frac.{{ nginx_proxy_server_name }};
     {#
     custom nginx server config section
     eg:
