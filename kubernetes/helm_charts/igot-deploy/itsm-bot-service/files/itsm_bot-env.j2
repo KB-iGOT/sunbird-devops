@@ -1,0 +1,100 @@
+# Google Cloud Configuration
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+GEMINI_API_URL={{ itsm_gemini_api_url }}
+GOOGLE_API_KEY={{ itsm_google_api_key }}
+GOOGLE_APPLICATION_CREDENTIALS=/app/gemini_api.json
+
+# Karmayogi Platform Configuration
+KARMAYOGI_API_KEY={{ itsm_bearer_token }}
+
+LOCAL_LLM_URLS={{ itsm_local_llm_urls }}
+LOCAL_LLM_MODEL={{ itsm_local_llm_model }}
+
+
+# Redis Configuration
+REDIS_HOST={{ igot_redis_host }}
+REDIS_PORT=6379
+REDIS_PASSWORD=
+REDIS_DB=15
+
+# Qdrant Vector Database Configuration
+QDRANT_URL=http://{{ qdrant_url }}
+QDRANT_HOST={{ qdrant_host }}
+QDRANT_PORT=6333
+QDRANT_API_KEY=
+QDRANT_COLLECTION_NAME=igot_docs
+FASTEMBED_MODEL=all-MiniLM-L6-v2
+
+# PostgreSQL Configuration
+POSTGRESQL_URL=postgresql://{{ itsm_postgres_user }}:{{ istm_postgres_password }}@{{ istm_postgres_host }}:5432/{{ istm_postgres_db }}
+
+# FastAPI Configuration
+API_HOST=0.0.0.0
+API_PORT=8000
+DEBUG=True
+
+# Logging Configuration
+ENVIRONMENT=development
+LOG_LEVEL=INFO
+
+# Log Directory Configuration
+LOG_DIR=logs
+LOG_RETENTION_DAYS=3
+LOG_MAX_SIZE_MB=50
+
+# Cache Configuration
+CACHE_TTL_MINUTES=60
+VERTEX_CACHE_TTL_SECONDS=7200
+
+# Security
+ALLOWED_ORIGINS={{ istm_allowed_origins }}
+
+# Optional: Monitoring and Observability
+ENABLE_TELEMETRY=False
+JAEGER_ENDPOINT={{ istm_jaeger_endpoint }}
+
+
+# OPIK configuration
+OPIK_WORKSPACE=
+OPIK_API_KEY=
+OPIK_API_URL=http://{{ opik_api_host }}:5173/api
+OPIK_PROJECT=ITSM Chatbot
+OPIK_URL=http://{{ opik_api_host }}:5173/api
+
+# IGOT Platform APIs
+lms_service_url=http://{{ private_ingressgateway_ip }}/lms
+course_cert_issue_api=/v1/course/batch/cert/issue
+event_cert_issue_api=/v1/event/batch/cert/issue
+learning_service_url=http://{{ private_ingressgateway_ip }}/learner
+email_notification_api=/v1/notification/email
+knowledge_mw_service_url=http://{{ private_ingressgateway_ip }}/knowledgemw
+content_search_api=/v1/content/search
+private_course_enrol_list_api=/private/v1/user/enrol/courses/list/
+private_event_enrol_list_api=/private/v1/user/events/list/
+private_user_read_api=/private/user/v1/read/
+sb_cb_ext_service_url=http://{{ private_ingressgateway_ip }}/cbext
+otp_generate_api=/v1/otp/generate
+otp_verify_api=/v1/otp/verify
+private_user_update_api=/user/private/support/update
+OTP_EXPIRY_IN_MINUTES=15
+
+# keycloak system admin credentials
+portal_endpoint=https://{{ portal_domain_name }}
+access_token_api=/auth/realms/sunbird/protocol/openid-connect/token
+system_admin_user={{ istm_system_admin_user }}
+system_admin_password={{ istm_system_admin_password }}
+
+
+# Zoho Desk API Configuration
+ZOHO_REFRESH_TOKEN={{ zoho_refresh_token }}
+ZOHO_CLIENT_ID={{ zoho_client_id }}
+ZOHO_CLIENT_SECRET={{ zoho_client_secret }}
+ZOHO_ORG_ID={{ zoho_org_id }}
+ZOHO_DEPARTMENT_ID={{ zoho_department_id }}
+
+
+# SUPPORT CONTACT
+SUPPORT_TEAMS_LINK={{ support_teams_link }}
+SUPPORT_EMAIL_ID={{ igot_cb_ext_mailsender }}
+
+USE_LOCAL_LLM=TRUE
