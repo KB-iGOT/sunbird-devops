@@ -27,6 +27,8 @@ strategy:
 
 {{ search_liveness_readiness | to_nice_yaml }}
 
+lms_access_basepath: {{ search_access_basepath | default('/keys/') }}
+
 autoscaling:
   enabled: {{ search_autoscaling_enabled | default('false') }}
   minReplicas: {{ search_autoscaling_minReplicas|default(1) }}
