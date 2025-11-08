@@ -351,6 +351,8 @@ dashboards:
        file: dashboards/api-manager.json
      dashboard2:
        file: dashboards/device-register-apimetrics.json
+     dashboard3:
+       file: dashboards/application-uptime.json         
      dashboard5:
        file: dashboards/druid.json
      dashboard6:
