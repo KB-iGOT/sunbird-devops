@@ -31,6 +31,12 @@ spec:
         - name: {{ .Chart.Name }}-xml-config
           configMap:
             name: {{ .Chart.Name }}-xml-config
+{{- $keys := .Files.Glob "keys/*" }}
+{{- if $keys }}
+        - name: access-keys
+          secret:
+            secretName: {{ .Chart.Name }}-access-keys
+{{- end }}            
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -60,6 +66,11 @@ spec:
           - name: {{ .Chart.Name }}-xml-config
             mountPath: /home/sunbird/search-service-1.0-SNAPSHOT/config/logback.xml
             subPath: search-service_logback.xml
+{{- $keys := .Files.Glob "keys/*" }}
+{{- if $keys }}
+          - mountPath: {{ .Values.search_access_basepath }}
+            name: access-keys
+{{- end }}            
           
 ---
 apiVersion: v1
