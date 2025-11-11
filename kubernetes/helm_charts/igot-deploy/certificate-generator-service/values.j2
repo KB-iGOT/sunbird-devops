@@ -28,6 +28,7 @@ strategy:
 
 certificate_generator_backend_basepath: {{ certificate_generator_backend_basepath | default('/keys/') }}
 
+{{ certificate_generator_liveness_readiness | to_nice_yaml }}
 
 serviceMonitor:
   enabled: true
