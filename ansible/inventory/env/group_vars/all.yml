@@ -1029,3 +1029,22 @@ image_multitenant_staticweb: multitenant-staticweb
 image_itsm_bot_service: itsm-bot-service
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload
+
+certificate_generator_liveness_readiness:
+  healthcheck: true
+  readinessProbe:
+    httpGet:
+      path: liveness
+      port: 9000
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 2
+  livenessProbe:
+    httpGet:
+      path: liveness
+      port: 9000
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 2
