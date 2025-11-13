@@ -377,6 +377,8 @@ dashboards:
        file: dashboards/redis.json
      dashboard19:
        file: dashboards/secor-consumarlag-kafka.json
+     dashboard20:
+       file: dashboards/dsr_metrics_dashboard.json
 
 dashboards1:
    data-pipeline:
