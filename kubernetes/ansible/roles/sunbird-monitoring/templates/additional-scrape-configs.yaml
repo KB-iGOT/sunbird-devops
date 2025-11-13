@@ -62,7 +62,7 @@ scrapeconfig:
   - job_name: 'dsr-report-exporter'
     metrics_path: /metrics
     static_configs:
-      - targets:  ["{{ pyspark_ip }}:8000"]
+      - targets:  ["{{ jenkins_ip }}:8000"]
     
 {% if 'report-cassandra' in groups and groups['report-cassandra'] %}
   - job_name: 'report-cassandra-exporter'
