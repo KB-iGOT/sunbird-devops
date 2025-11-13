@@ -23181,3 +23181,24 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: privateContentAuditHistory
+    uris: "{{ private_content_prefix }}/v3/history"
+    upstream_url: "{{ vm_learning_service_url }}/v2/audit/history"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+      - frameworkUpdate
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ small_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+    - name: opa-checks
+      config.required: false
+      config.enabled: false
