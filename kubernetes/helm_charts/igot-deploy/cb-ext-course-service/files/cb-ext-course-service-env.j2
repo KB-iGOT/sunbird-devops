@@ -72,12 +72,3 @@ vod.stream.url.prefix=https://{{domain_name}}/stream-store/
 
 spring.kafka.bootstrap.servers={{ kafka_servers_list }}
 non.text.fields=isApar,createdAt,endDate
-
-#notification Service
-notification.service.host=http://notification-service:9000/
-notification.async.path=v2/notification/send
-notification.support.mail={{sunbird_notification_sender_email}}
-sb.service.url=http://learner-service:9000/
-sunbird.user.search.endpoint=private/user/v1/search
-cb.wrapper.notification.host=http://cb-notification-wrapper-service:8081/
-cb.wrapper.notification.path=notifications/create
