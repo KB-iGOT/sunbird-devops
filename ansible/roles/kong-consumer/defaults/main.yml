@@ -197,6 +197,8 @@ kong_all_consumer_groups:
   - userSuperAdmin
   - userTempAdmin
   - userUpdate
+  - contentPartner
+  - illumineAccess
 
 kong_consumers:
   - username: api-admin
