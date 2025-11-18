@@ -46,7 +46,7 @@ redis.timeout=84600
 content-service-host=http://content-service:9000/
 content-read-endpoint=content/v4/admin/read
 content-read-endpoint-fields=?fields=identifier,courseCategory
-content.read.fields=identifier,courseCategory,contentType,posterImage,mediaType,reviewStatus,status,batches
+content.read.fields=identifier,courseCategory,contentType,posterImage,status,batches,startData,endDate,name,appIcon,resourceType,primaryCategory,languageMapV1,channel,organisation,creatorLogo,duration,avgRating
 
 cbplan.allowed.fields.update=name,endDate,id,isApar,contextData,status
 cb-plan.update.publish.authorized.roles=MDO_LEADER
@@ -72,3 +72,21 @@ vod.stream.url.prefix=https://{{domain_name}}/stream-store/
 
 spring.kafka.bootstrap.servers={{ kafka_servers_list }}
 non.text.fields=isApar,createdAt,endDate
+
+sb.search.service.host=http://search-service:9000
+sb.composite.v4.search=/v4/search
+cb.search.limit=100
+cb.search.offset=0
+cb.search.access.settings.enabled=true
+
+#notification Service
+notification.service.host=http://notification-service:9000/
+notification.async.path=v2/notification/send
+notification.support.mail={{sunbird_notification_sender_email}}
+sb.service.url=http://learner-service:9000/
+sunbird.user.search.endpoint=private/user/v1/search
+cb.wrapper.notification.host=http://cb-notification-wrapper-service:8081/
+cb.wrapper.notification.path=notifications/create
+
+cb.cache.course.ttl={{cb_cache_course_ttl|default('60000')}}
+cb.cache.ttl={{cache_course_ttl|default('60')}}
