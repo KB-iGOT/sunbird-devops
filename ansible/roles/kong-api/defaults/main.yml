@@ -167,6 +167,7 @@ content_moderation_prefix: /moderation
 consent_prefix: /consent
 assignment_prefix: /assignment/v1
 notify_prefix: /v1/notifyAssignment
+public_forms_service_prefix: /public/forms
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -23239,3 +23240,37 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: getPublicFormByIdV2
+    uris: "{{ public_forms_service_prefix }}/v2/getFormById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getFormById"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: savePublicFormSubmitV2
+    uris: "{{ public_forms_service_prefix }}/v2/saveFormSubmit"
+    upstream_url: "{{ forms_service_url }}/forms/v2/saveFormSubmit"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
