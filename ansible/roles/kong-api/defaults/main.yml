@@ -23248,9 +23248,6 @@ kong_apis:
     plugins:
       - name: cors
       - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'dataAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -23265,9 +23262,6 @@ kong_apis:
     plugins:
       - name: cors
       - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'dataAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
