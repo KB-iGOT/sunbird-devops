@@ -23257,7 +23257,7 @@ kong_apis:
 
   - name: savePublicFormSubmitV2
     uris: "{{ public_forms_service_prefix }}/v2/saveFormSubmit"
-    upstream_url: "{{ forms_service_url }}/forms/v2/saveFormSubmit"
+    upstream_url: "{{ forms_service_url }}/forms/v2/public/saveFormSubmit"
     strip_uri: true
     plugins:
       - name: cors
