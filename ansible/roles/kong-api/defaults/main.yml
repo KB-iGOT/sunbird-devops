@@ -168,6 +168,7 @@ consent_prefix: /consent
 assignment_prefix: /assignment/v1
 notify_prefix: /v1/notifyAssignment
 public_forms_service_prefix: /public/forms
+promotional_content_prefix: /promotionalcontent
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -23262,6 +23263,24 @@ kong_apis:
     plugins:
       - name: cors
       - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: promotionalContentAssignedToUsers
+    uris: "{{ promotional_content_prefix }}/v1/assignedto/users"
+    upstream_url: "{{ cb_ext_course_service_url }}/promotionalcontent/assignedto/users"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataCreate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
