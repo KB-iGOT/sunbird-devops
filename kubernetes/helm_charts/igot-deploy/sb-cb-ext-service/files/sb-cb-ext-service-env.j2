@@ -359,7 +359,7 @@ redis.data.port={{ redis_port }}
 
 hierarchy.store.keyspace.name={{ env }}_hierarchy_store
 
-default.content.properties=name,identifier,competencies_v5,avgRating,primaryCategory,contentType,channel,organisation,createdFor,duration,creatorLogo,appIcon,posterImage,additionalTags,description,status,secureSettings,contextLockingType,languageMapV1,leafNodesCount,courseCategory,language
+default.content.properties=name,identifier,competencies_v5,avgRating,primaryCategory,contentType,channel,organisation,createdFor,duration,creatorLogo,appIcon,posterImage,additionalTags,description,status,secureSettings,contextLockingType,languageMapV1,leafNodesCount,courseCategory,language,difficultyLevel
 cb-plan.update.publish.authorized.roles=MDO_LEADER
 
 spv_admin_channel_name=Karmayogi Bharat
@@ -515,7 +515,7 @@ custom.registration.user.endpoint.url=/v5/cb/user/custom/register
 state.mdo.leader.board.size.list=XS,S,M,L,XL,XXL
 mdo.leader.board.size.list=XS,S,M,L,XL
 
-content-read-endpoint-fields=?fields=primaryCategory,identifier,batches,versionKey,additionalTags,courseCategory
+content-read-endpoint-fields=?fields=primaryCategory,identifier,batches,versionKey,additionalTags,courseCategory,difficultyLevel
 maximum.allow.limit.bulk.designation.upload=300
 
 bulk.upload.org.hierarchy.reference.workspace.name=referenceSheet
