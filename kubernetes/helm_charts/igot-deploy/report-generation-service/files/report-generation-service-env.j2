@@ -1,5 +1,5 @@
 GCP_CREDENTIALS_PATH=/app/gcp_storage_credentials.json
-GCP_DB_NAME=cumulative_master_data
+GCP_DB_NAME=cumulative_master_data3
 GCP_ENROLMENT_TABLE_NAME=master_user_enrolments
 GCP_ORG_HIERARCHY_TABLE_NAME=master_org_hierarchy_data
 GCP_ORG_USER_TABLE_NAME=master_user_details
@@ -22,7 +22,7 @@ MAX_ORG_CACHE_AGE=86400
 MERGE_KEYS_MASTER_APAR_USER_ENROLMENTS=user_id, mdo_id
 GCP_APAR_TABLE_NAME=master_apar_user_enrolments
 
-DATASET=cumulative_master_data
+DATASET=cumulative_master_data3
 
 ENROLMENT_FILTER_CONFIG={"content_id":{"type":"list"},"mdo_id_list":{"type":"list"},"user_id":{"type":"list"},"content_progress_percentage":{"type":"comparison","valid_operators":[">","<",">=", "<=", "="]},"certificate_generated":{"type":"string"}}
 USER_FILTER_CONFIG={"mdo_id_list":{"type":"list"},"status":{"type":"string","values":{"Active":1,"Inactive":0}},"user_registration_date":{"type":"comparison","valid_operators":[">","<",">=", "<=", "="]},"is_verified_karmayogi":{"type":"boolean","values":{"True":true,"False":false}},"groups":{"type":"list"},"user_id":{"type":"list"},"designation":{"type":"list"}}
@@ -36,7 +36,9 @@ REDIS_TIMEOUT=5
 REDIS_KEY_MDO_PREFIX=igot_mdo_
 REDIS_DEFAULT_TTL=86400
 
-GCS_URI_MASTER_APAR_ASSIGNED_COURSES="gs://{{ druid_gcloud_bucket }}/airflowData/apar_acbp_enrolments.parquet"
-MERGE_KEYS_MASTER_APAR_ASSIGNED_COURSES="user_id, mdo_id, content_id"
-GCP_APAR_ASSIGNED_COURSES_TABLE_NAME="master_apar_assigned_courses"
-DOPT_EHRMS_EXTERNAL_SYSTEM_NAME="DoPT eHRMS"
+GCS_URI_MASTER_APAR_ASSIGNED_COURSES=gs://{{ druid_gcloud_bucket }}/airflowData/apar_acbp_enrolments.parquet
+MERGE_KEYS_MASTER_APAR_ASSIGNED_COURSES=user_id, mdo_id, content_id
+GCP_APAR_ASSIGNED_COURSES_TABLE_NAME=master_apar_assigned_courses
+DOPT_EHRMS_EXTERNAL_SYSTEM_NAME=DoPT eHRMS
+IS_APAR_DATE_VALIDATION=true
+
