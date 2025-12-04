@@ -5,7 +5,7 @@ imagepullsecrets: {{ imagepullsecrets }}
 dockerhub: {{ docker_hub_url }}
 
 replicaCount: {{cbp_ai_ui_replicacount|default(1)}}
-repository: {{ image_static_domian }}
+repository: {{ image_cbp_ai_ui }}
 image_tag: {{ image_tag }}
 resources:
   requests:
