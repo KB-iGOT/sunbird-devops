@@ -1,0 +1,48 @@
+### Default variable file for cbp_ai-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{cbp_ai_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{cbp_ai_replicacount|default(1)}}
+repository: {{ image_cbp_ai_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{cbp_ai_cpu_req|default('200m')}}
+    memory: {{cbp_ai_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{cbp_ai_cpu_limit|default('500m')}}
+    memory: {{cbp_ai_mem_limit|default('800Mi')}}
+network:
+  port: {{ service_cbp_ai_port }}
+  targetport: {{ service_cbp_ai_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ cbp_ai_maxsurge|default('25%') }}
+  maxunavailable: {{ cbp_ai_maxunavailable|default('25%') }}
+
+gcpstoragecredentialsjson: |-
+ {{gcp_artifcats_upload_service_account}}
+
+gcpapplicationcredentialsjson: |-
+ {{cbp_ai_gcp_application_service_account}}
+
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ cbp_ai_autoscaling_enabled | default('false') }}
+  minReplicas: {{ cbp_ai_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ cbp_ai_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ cbp_ai_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ cbp_ai_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
