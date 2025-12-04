@@ -1,12 +1,12 @@
 ---
 # vars file for deploy-static-domian
 # For script
-release_name: "{{ network_alias_static_domian_service }}"
+release_name: "{{ network_alias_cbp_ai_ui_service }}"
 user_friendly_name: Static Domain service
-template_compose_file_name: static-domain.j2
+template_compose_file_name: cbp-ai-ui.j2
 template_env_file_name: "configurations.json.j2"
-compose_file_name: "{{ service_static_domian_service }}.yml"
-env_file_name: "{{ service_static_domian_service }}.env"
+compose_file_name: "{{ service_cbp_ai_ui_service }}.yml"
+env_file_name: "{{ service_cbp_ai_ui_service }}.env"
 env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
 helm_env_file_location: "../helm_charts/igot-deploy/templates"
 helm_env_file_name: "{{ helm_env_file_location }}/configurations.json"
@@ -15,16 +15,16 @@ helm_env_file_name1: "{{ helm_env_file_location }}/content-list-data.json"
 compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
 
 # For service
-application_port: "{{ service_static_domian_port }}"
-image_name: "{{ image_static_domian }}"
-tag: "{{ tags_static_domian }}"
+application_port: "{{ service_cbp_ai_ui_port }}"
+image_name: "{{ image_cbp_ai_ui }}"
+tag: "{{ tags_cbp_ai_ui }}"
 host_port: "{{ application_port }}"
 docker_port: "{{ application_port }}"
-replicas: "{{ service_replicas_static_domian_service }}"
-reserved_memory: "{{ service_mem_reserved_static_domian_service }}"
-limited_memory: "{{ service_mem_limit_static_domian_service }}"
+replicas: "{{ service_replicas_cbp_ai_ui_service }}"
+reserved_memory: "{{ service_mem_reserved_cbp_ai_ui_service }}"
+limited_memory: "{{ service_mem_limit_cbp_ai_ui_service }}"
 health_check_endpoint: http://127.0.0.1:{{ docker_port }}/healthcheck
-network_alias_name: "{{ network_alias_static_domian_service }}"
+network_alias_name: "{{ network_alias_cbp_ai_ui_service }}"
 docker_service_stack_name: ui
-docker_service_name: "{{ service_static_domian_service }}"
-force_reload: "{{ force_reload_static_domian_service }}"
+docker_service_name: "{{ service_cbp_ai_ui_service }}"
+force_reload: "{{ force_reload_cbp_ai_ui_service }}"
