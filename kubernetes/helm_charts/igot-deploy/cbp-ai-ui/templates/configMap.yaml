@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cbp-ai-ui-configurations-json
+  namespace: {{ .Values.namespace }}
+data:
+  configurations.json: |
+{{ .Values.configurationsjson | indent 4 }}
+
+---
