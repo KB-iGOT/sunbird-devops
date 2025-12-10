@@ -23253,9 +23253,10 @@ kong_apis:
         config.limit_by: ip
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
-  - name: masterDataAddDegree
-    uris: "{{ master_data_prefix }}/v1/add/degree"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/add/degree"
+
+  - name: masterDataUpsertInstitute
+    uris: "{{ master_data_prefix }}/v1/upsert/institute"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/upsert/institute"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23271,9 +23272,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: masterDataAddInstitute
-    uris: "{{ master_data_prefix }}/v1/add/institute"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/add/institute"
+  - name: masterDataUpsertDegree
+    uris: "{{ master_data_prefix }}/v1/upsert/degree"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/upsert/degree"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23289,9 +23290,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: masterDataSearchDegree
-    uris: "{{ master_data_prefix }}/v1/search/degree"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/search/degree"
+  - name: masterDataSearch
+    uris: "{{ master_data_prefix }}/v1/search"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23300,60 +23301,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
-  - name: masterDataSearchInstitute
-    uris: "{{ master_data_prefix }}/v1/search/institute"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/search/institute"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'dataAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
-  - name: masterDataUpdateDegreeStatus
-    uris: "{{ master_data_prefix }}/v1/update/degree/status"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/update/degree/status"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'contentCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
-  - name: masterDataUpdateInstituteStatus
-    uris: "{{ master_data_prefix }}/v1/update/institute/status"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/update/degree"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'contentCreate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
