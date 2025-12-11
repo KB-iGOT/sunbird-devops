@@ -23406,7 +23406,7 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: copyContent
+  - name: contentVersioning
     uris: "{{ content_prefix }}/v4/copy"
     upstream_url: "{{ content_service_url }}/content/v5/copy"
     strip_uri: true
