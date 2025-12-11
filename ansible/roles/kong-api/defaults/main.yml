@@ -23242,6 +23242,20 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: searchOrgHierarchy
+    uris: "{{ org_service_prefix }}/hierarchy/search"
+    upstream_url: "{{ learning_service_url }}/v1/org/hierarchy/search"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x2_large_rate_limit_per_hour }}"
+        config.limit_by: ip
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
   - name: getPublicFormByIdV2
     uris: "{{ public_forms_service_prefix }}/v2/getFormById"
     upstream_url: "{{ forms_service_url }}/forms/v2/getFormById"
