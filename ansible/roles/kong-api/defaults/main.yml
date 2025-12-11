@@ -23376,7 +23376,7 @@ kong_apis:
 
   - name: contentRetireSchedule
     uris: "{{ content_prefix }}/v1/retirement/schedule"
-    upstream_url: "{{ knowledge_mw_service_url }}/content/v1/retirement/schedule"
+    upstream_url: "{{ vm_learning_service_url }}/content/v1/retirement/schedule"
     strip_uri: true
     plugins:
     - name: jwt
@@ -23394,7 +23394,7 @@ kong_apis:
 
   - name: retirementValidation
     uris: "{{ content_prefix }}/v1/retirement/validate"
-    upstream_url: "{{ knowledge_mw_service_url }}/content/v1/retirement/validate"
+    upstream_url: "{{ vm_learning_service_url }}/content/v1/retirement/validate"
     strip_uri: true
     plugins:
     - name: cors
@@ -23408,7 +23408,7 @@ kong_apis:
 
   - name: copyContent
     uris: "{{ content_prefix }}/v4/copy"
-    upstream_url: "{{ knowledge_mw_service_url }}/content/v5/copy"
+    upstream_url: "{{ content_service_url }}/content/v5/copy"
     strip_uri: true
     plugins:
     - name: jwt
