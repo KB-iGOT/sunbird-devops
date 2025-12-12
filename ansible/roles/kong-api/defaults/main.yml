@@ -169,6 +169,7 @@ assignment_prefix: /assignment/v1
 notify_prefix: /v1/notifyAssignment
 public_forms_service_prefix: /public/forms
 promotional_content_prefix: /promotionalcontent
+content_v1_prefix: /content/v1
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -23411,7 +23412,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: contentRetireSchedule
-    uris: "{{ content_prefix }}/v1/retirement/schedule"
+    uris: "{{ content_v1_prefix }}/retirement/schedule"
     upstream_url: "{{ content_service_url }}/content/v1/retirement/schedule"
     strip_uri: true
     plugins:
@@ -23429,7 +23430,7 @@ kong_apis:
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: retirementValidation
-    uris: "{{ content_prefix }}/v1/retirement/validate"
+    uris: "{{ content_v1_prefix }}/retirement/validate"
     upstream_url: "{{ content_service_url }}/content/v1/retirement/validate"
     strip_uri: true
     plugins:
