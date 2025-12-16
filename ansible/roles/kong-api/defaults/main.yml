@@ -23642,8 +23642,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: contentRetireDecide
-    uris: "{{ content_v1_prefix }}retirement/request/decide"
-    upstream_url: "{{ content_service_url }}/content/v1retirement/request/decide"
+    uris: "{{ content_v1_prefix }}/retirement/request/decide"
+    upstream_url: "{{ content_service_url }}/content/v1/retirement/request/decide"
     strip_uri: true
     plugins:
     - name: jwt
@@ -23660,8 +23660,8 @@ kong_apis:
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: contentRetirementStatus
-    uris: "{{ content_v1_prefix }}retirement/status"
-    upstream_url: "{{ content_service_url }}/contentretirement/status"
+    uris: "{{ content_v1_prefix }}/retirement/status"
+    upstream_url: "{{ content_service_url }}/content/v1/retirement/status"
     strip_uri: true
     plugins:
     - name: jwt
