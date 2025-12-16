@@ -101,3 +101,12 @@ cdac.api.key=W3Rtj41AoKSjtzreg22ifWcsQwW0IX26DV1S9xH70DI=
 cdac.partner.code=CDAC21
 cdac.scheduler.cron=0 */2 * * * *
 cdac.scheduler.enabled=false
+
+sso.url=https://{{ domain_name }}/auth/
+sso.realm={{ keycloak_sso_realm }}
+sso.username={{sunbird_sso_username}}
+sso.password={{sunbird_sso_password}}
+sso.admin.token.endpoint=/realms/master/protocol/openid-connect/token
+sso.config.create.api=/admin/realms/sunbird/clients
+sso.config.mapper.read.api=/admin/realms/sunbird/clients/{id}/protocol-mappers/models
+sso.config.mapper.update.api=/admin/realms/sunbird/clients/{id}/protocol-mappers/models/{mapperId}
