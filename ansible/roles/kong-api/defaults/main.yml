@@ -23393,7 +23393,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: cancelEvent
-    uris: "{{ event_prefix }}/v1/cancelled"
+    uris: "{{ event_prefix }}/v1/cancel"
     upstream_url: "{{ content_service_url }}/event/v4/system/update"
     strip_uri: true
     plugins:
@@ -23410,9 +23410,45 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: formReportDownloadDoc
-    uris: "/storage/v1/report/form"
-    upstream_url: "{{ sb_cb_ext_service_url }}/storage/v1/report/form"
+  - name: masterDataUpsertInstitute
+    uris: "{{ master_data_prefix }}/v1/upsert/institute"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/upsert/institute"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: masterDataUpsertDegree
+    uris: "{{ master_data_prefix }}/v1/upsert/degree"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/upsert/degree"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: masterDataSearch
+    uris: "{{ master_data_prefix }}/v1/search"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/v1/masterdata/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23421,10 +23457,9 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
-          - 'storageReportDownload'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
