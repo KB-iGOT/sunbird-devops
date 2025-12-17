@@ -41,4 +41,7 @@ MERGE_KEYS_MASTER_APAR_ASSIGNED_COURSES=user_id, mdo_id, content_id
 GCP_APAR_ASSIGNED_COURSES_TABLE_NAME=master_apar_assigned_courses
 DOPT_EHRMS_EXTERNAL_SYSTEM_NAME=DoPT eHRMS
 IS_APAR_DATE_VALIDATION=true
+APAR_FILTER_KEY=user_email,mobile_no,parichay_id,external_system_id
+APAR_FILTER_KEY_MAP={"user_email": "email","mobile_no": "phone","parichay_id": "parichay_id","external_system_id": "external_system_id"}
 
+USER_FILTER_CONFIG={"mdo_id_list": {"type": "list"},"status": {"type": "string", "values": {"Active": 1, "Inactive": 0}},"user_registration_date": {"type": "comparison", "valid_operators": [">", "<", ">=", "<=", "="]},"is_verified_karmayogi": {"type": "boolean", "values": {"True": true, "False": false}},"groups": {"type": "list"},"user_id": {"type": "list"},"designation": {"type": "list"},"email": {"type": "string"},"phone_number": {"type": "string"},"external_system_id": {"type": "string"},"external_system": {"type": "string"}}
