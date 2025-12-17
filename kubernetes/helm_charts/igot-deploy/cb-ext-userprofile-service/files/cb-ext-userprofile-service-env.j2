@@ -163,3 +163,15 @@ hub.graph.service=http://hub-graph-service:4013/
 connection.api=/connections/profile/relationship/
 profile.visible.allowed.fields=profileImageUrl,profileStatus,employmentDetails,profilePreference
 cb.certificate.count.redis.ttl=14400
+
+#igot elasticsearch cluster
+elasticsearch.igotESClient.host={{ elasticsearch_host }}
+elasticsearch.igotESClient.port={{ elasticsearch_http_port }}
+elasticsearch.igotESClient.username={{ elasticsearch_username }}
+elasticsearch.igotESClient.password={{ elasticsearch_password }}
+
+es.degree.index.name=degree
+es.institute.index.name=institute
+es.masterdata.index.doc.type=_doc
+master.data.search.string.regex=.*[a-zA-Z0-9].*
+master.data.allowed.type=degree,institute
