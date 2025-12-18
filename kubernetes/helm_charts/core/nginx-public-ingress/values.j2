@@ -962,6 +962,28 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
+    location /apis/proxies/v8/harward/ {
+
+      auth_request /_authz;
+      proxy_pass https://igottest.myhbp.org/hmm12/content/strategy_planning_and_execution/landingpage.html;
+
+      proxy_set_header Host igottest.myhbp.org;
+      proxy_ssl_server_name on;
+
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location = /_authz {
+      internal;
+      proxy_pass http://ui-proxy:3003/authz;
+      proxy_set_header X-Original-URI $request_uri;
+      proxy_set_header X-Original-Method $request_method;
+      proxy_set_header Cookie $http_cookie;
+    }
+
+
     location ~ /api/masterData/v1/getNationalities {
       # Enabling caching
       proxy_cache_key "$request_uri";
