@@ -977,7 +977,7 @@ proxyconfig: |-
 
     location = /_authz {
       internal;
-      proxy_pass http://ui-proxy:3003/authz;
+      proxy_pass http://ui-proxies:3003/authz;
       proxy_set_header X-Original-URI $request_uri;
       proxy_set_header X-Original-Method $request_method;
       proxy_set_header Cookie $http_cookie;
