@@ -23486,7 +23486,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"     
 
   - name: extEnrollmentValidationV1
-    uris: "{{ external_enrollment_prefix }}/validation"
+    uris: "{{ external_enrollment_prefix }}/v1/validation"
     upstream_url: "{{ cb_external_enrollment_service_url }}/cios-enroll/v1/validation"
     strip_uri: true
     plugins:
