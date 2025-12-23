@@ -23503,7 +23503,6 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
         
-        
   - name: contentRetireSchedule
     uris: "{{ content_v1_prefix }}/retirement/schedule"
     upstream_url: "{{ content_service_url }}/content/v1/retirement/schedule"
