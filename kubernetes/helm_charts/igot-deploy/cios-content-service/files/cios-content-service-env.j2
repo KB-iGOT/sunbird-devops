@@ -24,7 +24,7 @@ spring.kafka.consumer.group.id=enrollment-progress
 
 #kafka properties
 kakfa.offset.reset.value=latest
-kafka.max.poll.interval.ms=15000    
+kafka.max.poll.interval.ms=15000
 kafka.max.poll.records=100
 kafka.auto.commit.interval.ms=10000
 
@@ -88,10 +88,10 @@ spring.main.allow-circular-references=true
 
 coursera.enrollment.list.limit=1000
 coursera.enrollment.list.course_type=Course
-coursera.date.range="2"
+coursera.date.range={{cios_coursera_date_range | default('2')}}
 coursera.enrollment.service.code={{cios_coursera_enrollment_service_code}}
-coursera.scheduler.cron=0 0 */4 * * *
-coursera.scheduler.enabled="true"
+coursera.scheduler.cron={{cios_coursera_scheduler_cron}}
+coursera.scheduler.enabled={{cios_coursera_scheduler_enabled| default('true')}}
 
 coursera.date.before=completedAtBefore
 coursera.date.after=completedAtAfter
