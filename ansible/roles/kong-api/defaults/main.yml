@@ -171,6 +171,7 @@ public_forms_service_prefix: /public/forms
 promotional_content_prefix: /promotionalcontent
 content_v1_prefix: /content/v1
 sso_prefix: /sso
+learning_pathway_prefix: /learningpathway
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -23723,5 +23724,51 @@ kong_apis:
         config.policy: local
         config.hour: "{{ small_rate_limit_per_hour }}"
         config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: learningPathwayEnrol
+    uris: "{{ learning_pathway_prefix }}/v1/enrol"
+    upstream_url: "{{ lms_service_url }}/v1/learningpathway/enroll/"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"        
+
+  - name: searchMinistryOrgHierarchy
+    uris: "{{ org_service_prefix }}/hierarchy/ministry/search"
+    upstream_url: "{{ learning_service_url }}/v1/org/hierarchy/ministry/search"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x2_large_rate_limit_per_hour }}"
+        config.limit_by: ip
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: searchStateOrgHierarchy
+    uris: "{{ org_service_prefix }}/hierarchy/state/search"
+    upstream_url: "{{ learning_service_url }}/v1/org/hierarchy/state/search"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x2_large_rate_limit_per_hour }}"
+        config.limit_by: ip
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
