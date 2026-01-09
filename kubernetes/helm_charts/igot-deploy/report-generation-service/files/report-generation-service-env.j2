@@ -45,3 +45,4 @@ APAR_FILTER_KEY=user_email,mobile_no,parichay_id,external_system_id
 APAR_FILTER_KEY_MAP={"user_email": "email","mobile_no": "phone","parichay_id": "parichay_id","external_system_id": "external_system_id"}
 
 USER_FILTER_CONFIG={"mdo_id_list": {"type": "list"},"status": {"type": "string", "values": {"Active": 1, "Inactive": 0}},"user_registration_date": {"type": "comparison", "valid_operators": [">", "<", ">=", "<=", "="]},"is_verified_karmayogi": {"type": "boolean", "values": {"True": true, "False": false}},"groups": {"type": "list"},"user_id": {"type": "list"},"designation": {"type": "list"},"email": {"type": "string"},"phone_number": {"type": "string"},"external_system_id": {"type": "string"},"external_system": {"type": "string"}}
+EXCLUDE_FOR_MASKED_ENABLED={{ exclude_for_masked_enabled | default('01384948907599462455') }}
