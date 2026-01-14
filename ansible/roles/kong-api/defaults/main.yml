@@ -23730,7 +23730,7 @@ kong_apis:
 
   - name: learningPathwayEnrol
     uris: "{{ learning_pathway_prefix }}/v1/enrol"
-    upstream_url: "{{ lms_service_url }}/v1/learningpathway/enroll/"
+    upstream_url: "{{ lms_service_url }}/v1/learningpathway/enroll"
     strip_uri: true
     plugins:
       - name: jwt
