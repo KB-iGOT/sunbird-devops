@@ -102,15 +102,11 @@ cdac.partner.code=CDAC21
 cdac.scheduler.cron=0 */2 * * * *
 cdac.scheduler.enabled=false
 
-#sso.url={{keycloak_url}}/auth
-#sso.realm={{ keycloak_sso_realm }}
-#sso.username={{sunbird_sso_username}}
-#sso.password={{keycloak_admin_password}}
-###added uat props###
-sso.url={{uat_keycloak_url}}/auth
-sso.realm={{ uat_keycloak_sso_realm }}
-sso.username={{uat_sunbird_sso_username}}
-sso.password={{uat_keycloak_admin_password}}
+sso.url={{keycloak_url}}/auth
+sso.realm={{ keycloak_sso_realm }}
+sso.username={{sunbird_sso_username}}
+sso.password={{keycloak_admin_password}}
+
 
 sso.admin.token.endpoint=/realms/master/protocol/openid-connect/token
 sso.config.create.api=/admin/realms/sunbird/clients
