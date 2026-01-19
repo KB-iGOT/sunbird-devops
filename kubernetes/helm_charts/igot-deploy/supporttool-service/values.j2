@@ -1,0 +1,76 @@
+### Default variable file for supporttool-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{supporttool_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{supporttool_replicacount|default(1)}}
+repository: {{ image_supporttool_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{supporttool_cpu_req|default('100m')}}
+    memory: {{supporttool_mem_req|default('100Mi')}}
+  limits:
+    cpu: {{supporttool_cpu_limit|default('300m')}}
+    memory: {{supporttool_mem_limit|default('500Mi')}}
+network:
+  port: {{ service_supporttool_port }}
+  targetport: {{ service_supporttool_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ supporttool_maxsurge|default('25%') }}
+  maxunavailable: {{ supporttool_maxunavailable|default('25%') }}
+
+supporttoolserverenv: |-
+  DB_USER={{ supporttool_postgres_user }}
+  DB_HOST={{ supporttool_postgres_host }}
+  DB_NAME=supporttool
+  DB_PASSWORD={{ supporttool_postgres_password }}
+  DB_PORT=5432
+  PORT=5000
+  AUTHORIZATION="{{supporttool_bearer_token}}"
+  KONG_API_URL="{{ igot_portal_name }}/"
+  KEYCLOAK_CLIENT_ID={{ supporttool_keycloak_client_id }}
+  KEYCLOAK_CLIENT_SECRET={{ supporttool_keycloak_client_secret }}
+
+  CASSANDRA_HOST={{ core_cassandra_host }}
+  CASSANDRA_DATACENTER=datacenter1
+  CASSANDRA_KEYSPACE=sunbird
+  HOST=supporttool-service
+
+  POSTGRES_DB_USER={{ sunbird_postgres_username }}
+  POSTGRES_DB_HOST={{ postgresql_host }}
+  POSTGRES_DB_NAME=sunbird
+  POSTGRES_DB_PASSWORD={{ sunbird_postgres_password }}
+  POSTGRES_DB_PORT=5432
+
+  LEARNING_SERVICE_URL={{ learningservice_ip }}:8080
+
+  ADMIN_USERNAME= "{{ supporttool_admin_username }}"
+  ADMIN_PASSWORD= "{{ supporttool_admin_password }}"
+
+supporttoolreactenv: |-
+  REACT_APP_API_BASE_URL=https://support.{{ static_domain_name }}/routes/api
+  REACT_APP_ENV=development
+  REACT_APP_UPLOAD_BASE_URL_NON_LOGGED_IN_PAGE='https://{{ static_domain_name }}/'
+  REACT_APP_UPLOAD_CONTENT_STORE_NON_LOGGED_IN_PAGE='content-store'
+  REACT_APP_ROLES_LIST=DASHBOARD_ADMIN,SPV_ADMIN,SPV_PUBLISHER,PUBLIC,CBC_ADMIN,CBC_MEMBER,CBP_ADMIN,CONTENT_CREATOR,CONTENT_REVIEWER,PROGRAM_COORDINATOR,COMMUNITY_MODERATOR,MDO_ADMIN,MDO_LEADER,WAT_MEMBER,MDO_DASHBOARD_USER,MDO_REPORT_ACCESSOR,MENTOR,STATE_ADMIN
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ supporttool_autoscaling_enabled | default('false') }}
+  minReplicas: {{ supporttool_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ supporttool_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ supporttool_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ supporttool_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
