@@ -4238,7 +4238,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
       rewrite ^/routes/(.*) /$1 break;
-      proxy_pass http://{{support_tool_vm_ip}}:5000/api;
+      proxy_pass http://supporttool-service:5000/api;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
       proxy_read_timeout 300;
@@ -4304,7 +4304,7 @@ proxyconfig: |-
       proxy_set_header Connection "";
       proxy_http_version 1.1;
       proxy_set_header X-Request-ID $sb_request_id;
-      proxy_pass http://{{support_tool_vm_ip}}:5000;
+      proxy_pass http://supporttool-service:5000;
     }
 
     location /oauth2callback {
