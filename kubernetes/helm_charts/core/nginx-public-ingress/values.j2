@@ -2105,7 +2105,16 @@ proxyconfig: |-
     client_max_body_size 1226M;
     }
 
-    
+  server {
+    if ($host = auth.{{ nginx_proxy_server_name }}) {
+        return 301 https://$host$request_uri;
+        }
+
+      listen       80;
+      server_name  auth.{{ nginx_proxy_server_name }};
+      return 404;
+    }
+
    server {
     listen                443 ssl;
     ssl_certificate       /etc/secrets/site.crt;
