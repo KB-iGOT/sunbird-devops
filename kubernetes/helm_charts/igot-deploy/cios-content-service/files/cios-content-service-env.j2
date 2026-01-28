@@ -112,3 +112,12 @@ sso.admin.token.endpoint=/realms/master/protocol/openid-connect/token
 sso.config.create.api=/admin/realms/sunbird/clients
 sso.config.mapper.read.api=/admin/realms/sunbird/clients/{id}/protocol-mappers/models
 sso.config.mapper.update.api=/admin/realms/sunbird/clients/{id}/protocol-mappers/models/{mapperId}
+
+harvard.sftp.host={{harvard_sftp_host}}
+harvard.sftp.port=22
+harvard.sftp.username={{ harvard_sftp_username }}
+harvard.sftp.password={{ harvard_sftp_passowrd }}
+harvard.sftp.remote.directory=/{{ harvard_sftp_remote_directory }}
+harvard.sftp.completed.directory=/{{ harvard_sftp_remote_directory }}/completed
+harvard.partner.code={{ harvard_partner_code }}
+harvard.allowed.file.extensions=.xlsx,.xls,.csv
