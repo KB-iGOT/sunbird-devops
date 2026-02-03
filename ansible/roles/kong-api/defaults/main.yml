@@ -23845,11 +23845,11 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
+        config.allowed_payload_size: "{{ small_request_size_limit }}"      
 
-  - name: partnerActivate
-    uris: "{{ contentpartner_prefix }}/v1/activate"
-    upstream_url: "{{ cb_pores_service_url }}/contentpartner/v1/activate"
+  - name: OilIndiaUserCreate
+    uris: "{{ user_service_prefix }}/v5/oilindia/create"
+    upstream_url: "{{ learning_service_url }}/v5/cb/user/oilindia/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23857,10 +23857,11 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'contentUpdate'
+          - 'anonymousUserCreate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
