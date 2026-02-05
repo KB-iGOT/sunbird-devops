@@ -23922,7 +23922,7 @@ kong_apis:
 
   - name: achievementStatusUpdate
     uris: "{{ achievement_prefix }}/status/update"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/status/update"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/status/update"
     strip_uri: true
     plugins:
       - name: jwt
