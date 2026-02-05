@@ -174,6 +174,7 @@ sso_prefix: /sso
 learning_pathway_prefix: /learningpathway
 extended_content_prefix: /extended/content
 achievement_generate_prefix: /achievement
+achievement_prefix: /learner/achievement
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -23894,6 +23895,42 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: achievementSearch
+    uris: "{{ achievement_prefix }}/search"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: achievementStatusUpdate
+    uris: "{{ achievement_prefix }}/status/update"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/status/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
