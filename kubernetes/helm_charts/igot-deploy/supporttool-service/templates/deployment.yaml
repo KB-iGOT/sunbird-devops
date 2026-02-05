@@ -45,8 +45,8 @@ spec:
           mountPath: /support-tool-server/.env
           subPath: .env
         - name: supporttool-react-env
-          mountPath: /support-tool-react-client/.env
-          subPath: .env
+          mountPath: /support-tool-react-client/public/env-config.js
+          subPath: env-config.js
         ports:
         - containerPort: {{ .Values.network.port }}
 

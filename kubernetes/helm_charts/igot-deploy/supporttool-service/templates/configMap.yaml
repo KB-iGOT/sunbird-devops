@@ -14,5 +14,5 @@ metadata:
   name: supporttool-react-env
   namespace: {{ .Values.namespace }}
 data:
-  .env: |
+  env-config.js: |
 {{ .Values.supporttoolreactenv | indent 4 }}
