@@ -23938,7 +23938,7 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: achievementCreate
+  - name: createAchievement
     uris: "{{ achievement_prefix }}/create"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/create"
     strip_uri: true
@@ -23956,7 +23956,7 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: achievementUpdate
+  - name: updateAchievement
     uris: "{{ achievement_prefix }}/update"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/update"
     strip_uri: true
@@ -23974,7 +23974,7 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: achievementRead
+  - name: readAchievement
     uris: "{{ achievement_prefix }}/read"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/read"
     strip_uri: true
@@ -23992,7 +23992,7 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: achievementDelete
+  - name: deleteAchievement
     uris: "{{ achievement_prefix }}/delete"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/delete"
     strip_uri: true
