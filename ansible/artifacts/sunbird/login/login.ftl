@@ -224,7 +224,7 @@
                                             <option value="/apis/public/v8/ntpc/auth" style="background-color: rgb(0,116,182); color: white;">NTPC</option>
                                         </select> 
                                         <button class="ui fluid button" onclick="handleExternalLogin()">-></button>
-                                        </div
+                                        </div>
                                         <div id="kc-registration" class="field">
                                             <div class="ui content mt-40 signUpMsg">
                                                 <span>${msg("noAccount")} <a class="signUpLink" href="${client.baseUrl}public/signup">${msg("registerHere")}</a></span>
