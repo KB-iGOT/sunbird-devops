@@ -23866,6 +23866,20 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: validateRegAchievement
+    uris: "{{ cert_registry_service_prefix }}/v2/achievement/validate"
+    upstream_url: "{{ cert_registry_service_url }}/achievement/v2/registry/validate"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
   - name: partnerActivate
     uris: "{{ contentpartner_prefix }}/v1/activate"
     upstream_url: "{{ cb_pores_service_url }}/contentpartner/v1/activate"

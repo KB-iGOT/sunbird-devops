@@ -127,7 +127,14 @@
                                         </div>
                                     </div>                                   
                                     <div class="field">
-                                        <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
+                                        <label id="loginWithProviderPlaceholder" for="loginWithProvider" class="">
+                                            Login with Providers
+                                        </label>
+                                        <select class="ui fluid" onchange="if (this.value) window.location.href = this.value;" style="text-align-last: center; background-color: 
+rgb(0,116,182)">
+                                            <option value="/apis/public/v8/parichay/auth">Parichay</option>
+                                            <option value="/apis/public/v8/oil/auth">OIL India</option>
+                                        </select>
                                     </div>
                                     <div id="kc-registration" class="field">
                                         <div class="ui content mt-40 signUpMsg">
@@ -210,7 +217,14 @@
                                             </div>
                                         </div>
                                         <div class="field">
-                                            <a id="loginp" href="/apis/public/v8/parichay/auth" class="ui fluid button">${msg("loginWithParichay")}</a>
+                                            <label id="loginWithProviderPlaceholder" for="loginWithProvider" class="">
+                                            Login with Providers
+                                        </label>
+                                        <select class="ui fluid" onchange="if (this.value) window.location.href = this.value;" style="text-align-last: center; background-color: 
+rgb(0,116,182)">
+                                            <option value="/apis/public/v8/parichay/auth">Parichay</option>
+                                            <option value="/apis/public/v8/oil/auth">OIL India</option>
+                                        </select>
                                         </div>
                                         <div id="kc-registration" class="field">
                                             <div class="ui content mt-40 signUpMsg">
