@@ -180,14 +180,6 @@ var decoratePage = function (pageType) {
 	}
 };
 
-var handleExternalLogin = function () {
-	var selectElement = document.getElementById('externalLogin');
-	var selectedValue = selectElement.value;
-	if (selectedValue) {
-		window.location.href = selectedValue;
-	}
-}
-
 var handlePasswordFailure = function () {
 	var passwordFailCount = Number(sessionStorage.getItem('passwordFailCount') || 0);
 	passwordFailCount = passwordFailCount + 1;
