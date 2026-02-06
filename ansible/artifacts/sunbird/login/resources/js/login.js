@@ -8,7 +8,7 @@ window.onload = function () {
 	var isForgetPasswordAllow = getValueFromSession('version');
 	var renderingType = 'queryParams';
 	var redirect_uri = this.sessionStorage.getItem('redirect_uri');
-	if(redirect_uri.indexOf('iiidem-portal') !== -1){
+	if (redirect_uri.indexOf('iiidem-portal') !== -1) {
 		document.getElementsByClassName('logo-image')[0].src = "/auth/resources/7.0.1/login/sunbird/img/iiidem.png";
 	} else {
 		sessionStorage.setItem('rootTenantLogo', "");
@@ -180,6 +180,14 @@ var decoratePage = function (pageType) {
 	}
 };
 
+var handleExternalLogin = function () {
+	var selectElement = document.getElementById('externalLogin');
+	var selectedValue = selectElement.value;
+	if (selectedValue) {
+		window.location.href = selectedValue;
+	}
+}
+
 var handlePasswordFailure = function () {
 	var passwordFailCount = Number(sessionStorage.getItem('passwordFailCount') || 0);
 	passwordFailCount = passwordFailCount + 1;
@@ -233,15 +241,15 @@ var makeDivUnclickable = function () {
 var formSubmitted = false;
 var disableBtn = function () {
 	console.log("function called")
-	if( formSubmitted == true ) {
+	if (formSubmitted == true) {
 		document.getElementById('login').disabled = true;
-	setTimeout(function () {
-		document.getElementById("login").disabled = false;
-	}, 3000);
-     return false;
-  	}
-  formSubmitted = true;
-  return true;
+		setTimeout(function () {
+			document.getElementById("login").disabled = false;
+		}, 3000);
+		return false;
+	}
+	formSubmitted = true;
+	return true;
 }
 
 var inputBoxFocusIn = function (currentElement) {

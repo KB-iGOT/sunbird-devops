@@ -218,11 +218,13 @@
                                             <label id="loginWithProviderPlaceholder" for="loginWithProvider" class="">
                                             Login with Providers
                                         </label>
-                                        <select class="ui fluid" onchange="if (this.value) window.location.href = this.value;" style="text-align-last: center; background-color: rgb(0,116,182); color: white;">
+                                        <select class="ui fluid" id="externalLogin" style="text-align-last: center; background-color: rgb(0,116,182); color: white;">
                                             <option value="/apis/public/v8/parichay/auth" style="background-color: rgb(0,116,182); color: white;">Parichay</option>
                                             <option value="/apis/public/v8/oil/auth" style="background-color: rgb(0,116,182); color: white;">OIL India</option>
+                                            <option value="/apis/public/v8/ntpc/auth" style="background-color: rgb(0,116,182); color: white;">NTPC</option>
                                         </select> 
-                                        </div>
+                                        <button class="ui fluid button" onclick="handleExternalLogin()">-></button>
+                                        </div
                                         <div id="kc-registration" class="field">
                                             <div class="ui content mt-40 signUpMsg">
                                                 <span>${msg("noAccount")} <a class="signUpLink" href="${client.baseUrl}public/signup">${msg("registerHere")}</a></span>
