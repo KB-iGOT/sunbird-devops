@@ -1662,7 +1662,7 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
-    location /apis/public/v8/cert/download/ {
+    location /apis/public/v8/milestone/cert/download/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
