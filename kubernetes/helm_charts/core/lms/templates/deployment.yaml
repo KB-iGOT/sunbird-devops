@@ -32,6 +32,13 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
         imagePullPolicy: Always
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 10
         env:
         - name: JAVA_OPTIONS
           value: {{ .Values.env.javaoptions | quote }}
@@ -69,6 +76,13 @@ spec:
           value: "1111"
         image: envoyproxy/envoy:v1.20.0
         imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 10
         name: envoy
         {{- if .Values.envoy_healthcheck }}
         livenessProbe:
@@ -96,6 +110,13 @@ spec:
         - --ignore=.*
         image: sunbird/opa:0.34.2-envoy
         imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 10
         name: opa
         {{- if .Values.opa_healthcheck }}
         livenessProbe:
@@ -119,6 +140,13 @@ spec:
         - "8282,10000"
         image: openpolicyagent/proxy_init:v5
         imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 10
         name: proxy-init
         resources:
 {{ toYaml .Values.initcontainer_resources | indent 10 }}

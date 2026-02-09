@@ -36,6 +36,13 @@ spec:
       - name: {{ .Chart.Name }}
         image: {{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}
         imagePullPolicy: Always
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 10
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
