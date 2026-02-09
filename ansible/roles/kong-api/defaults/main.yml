@@ -23889,6 +23889,7 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
+          - 'dataAccess'
           - 'cbcDataAccess'
       - name: rate-limiting
         config.policy: local
