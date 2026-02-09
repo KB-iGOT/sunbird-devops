@@ -39,6 +39,13 @@ spec:
                 - /bin/sh
                 - -c
                 - sleep 10
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 10
         env:
         - name: JAVA_OPTIONS
           value: {{ .Values.env.javaoptions | quote }}
