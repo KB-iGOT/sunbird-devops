@@ -17,6 +17,12 @@ spec:
       app: {{ .Chart.Name }}
   template:
     metadata:
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
       labels:
         app: {{ .Chart.Name }}
     spec:
@@ -41,6 +47,12 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
         imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+              - ALL
         lifecycle:
           preStop:
             exec:
