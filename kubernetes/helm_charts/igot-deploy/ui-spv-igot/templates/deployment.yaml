@@ -26,7 +26,6 @@ spec:
         fsGroup: 1000
         runAsNonRoot: true
       
-    spec:
 {{- if .Values.imagepullsecrets }}
       imagePullSecrets:
       - name: {{ .Values.imagepullsecrets }}
