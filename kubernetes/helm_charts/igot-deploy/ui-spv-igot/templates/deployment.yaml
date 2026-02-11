@@ -20,12 +20,6 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
-      
 {{- if .Values.imagepullsecrets }}
       imagePullSecrets:
       - name: {{ .Values.imagepullsecrets }}
@@ -47,19 +41,6 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
         imagePullPolicy: Always
-        securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: false
-          capabilities:
-            drop:
-              - ALL
-        lifecycle:
-          preStop:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - sleep 10
         env:
         - name: JAVA_OPTIONS
           value: {{ .Values.env.javaoptions | quote }}
@@ -116,4 +97,3 @@ spec:
     port: {{ .Values.network.targetport }}
   selector:
     app: {{ .Chart.Name }}
-
