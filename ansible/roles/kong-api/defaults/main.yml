@@ -5707,6 +5707,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'certificateAccess'
+        - 'certficateDownloadAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
