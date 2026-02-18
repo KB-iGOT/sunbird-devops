@@ -17,7 +17,7 @@ resources:
 
 network:
   port: {{ service_static_domian_port }}
-  targetport: 80
+  targetport: 8080
 strategy:
   type: RollingUpdate
   maxsurge: {{ ui_static_domain_maxsurge|default('25%') }}
