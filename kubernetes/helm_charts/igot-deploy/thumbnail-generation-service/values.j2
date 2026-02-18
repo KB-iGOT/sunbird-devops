@@ -17,7 +17,7 @@ resources:
     memory: {{thumbnail_generation_mem_req|default('200Mi')}}
   limits:
     cpu: {{thumbnail_generation_cpu_limit|default('500m')}}
-    memory: {{thumbnail_generation_mem_limit|default('800Mi')}}
+    memory: {{thumbnail_generation_mem_limit|default('1000Mi')}}
 network:
   port: {{ service_thumbnail_generation_port }}
   targetport: {{ service_thumbnail_generation_port }}
