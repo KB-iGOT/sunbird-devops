@@ -23899,9 +23899,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: partnerActivate
-    uris: "{{ contentpartner_prefix }}/v1/activate"
-    upstream_url: "{{ cb_pores_service_url }}/contentpartner/v1/activate"
+  - name: accessRuleUpsert
+    uris: "{{ cb_ext_course_prefix }}/admin/v1/upsert"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/admin/v1/upsert"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23909,28 +23909,10 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'contentUpdate'
+          - 'contentCreate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
-  - name: ssoConfigValidateSaml
-    uris: "{{ sso_prefix }}/validateSaml"
-    upstream_url: "{{ cios_content_service_url }}/sso/validateSaml"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'contentAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"        
