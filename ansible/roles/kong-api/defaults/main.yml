@@ -23900,6 +23900,24 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: accessRuleUpsert
+    uris: "{{ cb_ext_course_prefix }}/admin/v1/upsert"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/admin/v1/upsert"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
   - name: partnerActivate
     uris: "{{ contentpartner_prefix }}/v1/activate"
     upstream_url: "{{ cb_pores_service_url }}/contentpartner/v1/activate"
@@ -23935,26 +23953,6 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
-  - name: landingPageInsights
-    uris: "/v1/landingpage/insights"
-    upstream_url: "{{ sb_cb_ext_service_url }}/v1/landingpage/insights"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'dataAccess'
-          - 'cbcDataAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ small_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
-  
 
   - name: achievementSearch
     uris: "{{ achievement_prefix }}/search"
