@@ -2013,7 +2013,7 @@ proxyconfig: |-
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header Connection "";
       proxy_set_header X-Request-ID $sb_request_id;
-      proxy_pass http://10.175.29.7:8080/;
+      proxy_pass http://10.175.29.3:8080/;
         # Keep alive for Gerrit streaming responses
       proxy_http_version 1.1;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
