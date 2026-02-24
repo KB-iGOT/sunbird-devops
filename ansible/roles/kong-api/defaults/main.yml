@@ -175,6 +175,7 @@ learning_pathway_prefix: /learningpathway
 extended_content_prefix: /extended/content
 achievement_generate_prefix: /achievement
 achievement_prefix: /learner/achievement
+knowledge_centre_prefix: /knowledge/centre
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -24083,6 +24084,115 @@ kong_apis:
   - name: achievementList
     uris: "{{ achievement_prefix }}/list"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: knowledgeCentreTypeCreate
+    uris: "{{ knowledge_centre_prefix }}/create"
+    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: knowledgeCentreTypeUpdate
+    uris: "{{ knowledge_centre_prefix }}/update"
+    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: knowledgeCentreTypePublish
+    uris: "{{ knowledge_centre_prefix }}/publish"
+    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/publish"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: knowledgeCentreTypeArchieve
+    uris: "{{ knowledge_centre_prefix }}/delete"
+    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/delete"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: knowledgeCentreTypeSearch
+    uris: "{{ knowledge_centre_prefix }}/search"
+    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/search"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: knowledgeCentreTypeSpvSearch
+    uris: "{{ knowledge_centre_prefix }}/spv/searh"
+    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/spv/searh"
     strip_uri: true
     plugins:
       - name: jwt
