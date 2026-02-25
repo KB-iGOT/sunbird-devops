@@ -1264,6 +1264,24 @@ proxyconfig: |-
     # Prevents timeouts during long agent responses
       proxy_read_timeout 86400;
     }
+    location /itsm-v2-langgraph-api/ {
+      proxy_pass http://<BACKEND_CONTAINER_IP>:8001;
+ 
+    # The trailing slash '/' here strips the '/itsm-v2-langgraph-api' prefix 
+    # before sending it to the FastAPI container.
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      
+    # Standard proxy headers
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      
+    # Increase timeout for complex agent logic
+      proxy_read_timeout 300;
+    }
 
     #location /igotbuild-deploy/ {
     #  proxy_set_header Host $host;
