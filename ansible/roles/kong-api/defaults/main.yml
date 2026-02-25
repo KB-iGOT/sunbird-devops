@@ -24191,8 +24191,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: knowledgeCentreTypeSpvSearch
-    uris: "{{ knowledge_centre_prefix }}/spv/searh"
-    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/spv/searh"
+    uris: "{{ knowledge_centre_prefix }}/spv/search"
+    upstream_url: "{{ cb_pores_service_url }}/knowledge/centre/spv/search"
     strip_uri: true
     plugins:
       - name: jwt
