@@ -118,3 +118,16 @@ form.contextType.supported=form,AGKPublicSurvey,completionSurvey
 form.contextType.hideCreatorFields=AGKPublicSurvey,completionSurvey
 anonymous.user.allowed.for.form.clientversion=""
 es.fs.public.formsdata.index.name=fs-forms-data-alias-v2
+
+accesstoken.publickey.basepath=/keys/
+sso.url=https://{{ domain_name }}/auth/
+sso.realm={{ keycloak_sso_realm }}
+sso.connection.pool.size=20
+sso.enabled=true
+
+organisation.fields=orgname
+security.input.allowedUrlRegex=^(https?:\\/\\/)[a-zA-Z0-9\\-._~:/?#\\[\\]@!$&'()*+,;=%]{1,500}$
+peer.survey.allowedAdditionalProperties=identifier,triggerAfter,completionLookBack,thumbnail,duration,publishedOn
+peer.survey.content.read.fields=status,courseCategory,appIcon,lastPublishedOn
+peer.survey.allowed.content.types=Course,Moderated Course,Multilingual Course,Curated Program,Moderated Program,Invite Only Program,Blended Program,Comprehensive Assessment Program
+content.base.url=http://content-service:9000/
