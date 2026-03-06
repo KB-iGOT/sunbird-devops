@@ -47,12 +47,6 @@ spec:
         volumeMounts:
         ports:
         - containerPort: {{ .Values.network.port }}
-        {{- if .Values.healthcheck }}
-        livenessProbe:
-{{ toYaml .Values.livenessProbe | indent 10 }}
-        readinessProbe:
-{{ toYaml .Values.readinessProbe | indent 10 }}
-        {{- end }}
 
 ---
 apiVersion: v1
@@ -71,4 +65,3 @@ spec:
 
   selector:
     app: {{ .Chart.Name }}
-
