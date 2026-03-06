@@ -26,6 +26,7 @@ strategy:
   maxsurge: {{ form_maxsurge|default('25%') }}
   maxunavailable: {{ form_maxunavailable|default('25%') }}
 
+form_service_device_basepath: {{ form_service_device_basepath | default('/keys/') }}
 
 serviceMonitor:
   enabled: true
