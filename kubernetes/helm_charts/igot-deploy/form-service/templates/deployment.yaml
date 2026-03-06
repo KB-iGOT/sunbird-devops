@@ -74,7 +74,7 @@ spec:
 {{- if $keys }}
       - name: access-keys
         secret:
-          secretName: lms-access-keys
+          secretName: from-service-access-keys
 {{- end }}
 
 ---
