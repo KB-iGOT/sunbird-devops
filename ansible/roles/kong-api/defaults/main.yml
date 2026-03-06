@@ -24299,7 +24299,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
         
   - name: peerSurveyUpdateMdo
-    uris: "{{ forms_service_prefix }}/mdo/peersurvey"
+    uris: "{{ forms_service_prefix }}/mdo/update/peersurvey"
     upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peersurvey"
     strip_uri: true
     plugins:
@@ -24317,7 +24317,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
         
   - name: peerSurveyUpdateSpv
-    uris: "{{ forms_service_prefix }}/spv/peersurvey"
+    uris: "{{ forms_service_prefix }}/spv/update/peersurvey"
     upstream_url: "{{ forms_service_url }}/forms/v2/spv/peersurvey"
     strip_uri: true
     plugins:
