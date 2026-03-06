@@ -24263,8 +24263,8 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: peerSurveyCreateMdo
-    uris: "{{ forms_service_prefix }}/mdo/peer-survey"
-    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peer-survey/create"
+    uris: "{{ forms_service_prefix }}/mdo/peersurvey"
+    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peersurvey/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24281,8 +24281,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: peerSurveyCreateSpv
-    uris: "{{ forms_service_prefix }}/spv/peer-survey"
-    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peer-survey/create"
+    uris: "{{ forms_service_prefix }}/spv/peersurvey"
+    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peersurvey/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24299,8 +24299,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
         
   - name: peerSurveyUpdateMdo
-    uris: "{{ forms_service_prefix }}/mdo/peer-survey"
-    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peer-survey"
+    uris: "{{ forms_service_prefix }}/mdo/peersurvey"
+    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peersurvey"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24317,8 +24317,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
         
   - name: peerSurveyUpdateSpv
-    uris: "{{ forms_service_prefix }}/spv/peer-survey"
-    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peer-survey"
+    uris: "{{ forms_service_prefix }}/spv/peersurvey"
+    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peersurvey"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24335,8 +24335,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: peerSurveySearchSpv
-    uris: "{{ forms_service_prefix }}/spv/peer-survey/search"
-    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peer-survey/search"
+    uris: "{{ forms_service_prefix }}/spv/peersurvey/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peersurvey/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24353,8 +24353,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: peerSurveySearchMdo
-    uris: "{{ forms_service_prefix }}/mdo/peer-survey/search"
-    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peer-survey/search"
+    uris: "{{ forms_service_prefix }}/mdo/peersurvey/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peersurvey/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24371,8 +24371,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: peerSurveyPublish
-    uris: "{{ forms_service_prefix }}/peer-survey/publish"
-    upstream_url: "{{ forms_service_url }}/forms/v2/peer-survey/publish"
+    uris: "{{ forms_service_prefix }}/peersurvey/publish"
+    upstream_url: "{{ forms_service_url }}/forms/v2/peersurvey/publish"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24389,8 +24389,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: peerSurveyArchive
-    uris: "{{ forms_service_prefix }}/peer-survey/archive"
-    upstream_url: "{{ forms_service_url }}/forms/v2/peer-survey/archive"
+    uris: "{{ forms_service_prefix }}/peersurvey/archive"
+    upstream_url: "{{ forms_service_url }}/forms/v2/peersurvey/archive"
     strip_uri: true
     plugins:
       - name: jwt
