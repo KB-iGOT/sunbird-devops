@@ -177,6 +177,7 @@ achievement_generate_prefix: /achievement
 achievement_prefix: /learner/achievement
 knowledge_centre_prefix: /knowledge/centre
 external_training_prefix: /externaltraining
+peersurvey_prefix: /peersurvey
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -24732,7 +24733,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: peersurveyUploadDoc
-    uris: "/peersurvey/upload"
+    uris: "{{ peersurvey_prefix }}/upload"
     upstream_url: "{{ sb_cb_ext_service_url }}/peersurvey/upload"
     strip_uri: true
     plugins:
