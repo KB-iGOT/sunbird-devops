@@ -24679,7 +24679,7 @@ kong_apis:
 
   - name: externalTrainingUserBulkUploadStatus
     uris: "{{ external_training_prefix }}/v1/bulkupload/status"
-    upstream_url: "{{  cb_ext_course_service_url }}/externaltraining/bulkupload/status"
+    upstream_url: "{{  cb_ext_course_service_url }}/externaltraining/v1/bulkupload/status"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24697,7 +24697,7 @@ kong_apis:
 
   - name: externalTrainingUserBulkUploadDownloadFile
     uris: "{{ external_training_prefix }}/v1/bulkupload/download"
-    upstream_url: "{{  cb_ext_course_service_url }}/externaltraining/bulkupload/download"
+    upstream_url: "{{  cb_ext_course_service_url }}/externaltraining/v1/bulkupload/download"
     strip_uri: true
     plugins:
       - name: jwt
