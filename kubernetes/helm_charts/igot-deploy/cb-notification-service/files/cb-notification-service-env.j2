@@ -62,3 +62,13 @@ kafka.max.poll.records=100
 kafka.auto.commit.interval.ms=10000
 
 mandatory.notification.max.fetch.limit=100
+
+#Peer Validation Notification Configuration
+peervalidation.bulk.user.notification.limit=100
+peervalidation.notification.setting.check.enabled=false
+peervalidation.use.testing.tables=true
+peervalidation.list.max.fetch=100
+kafka.topic.process.peer.validation={{env}}.peer.validation.status.update
+kafka.group.process.peer.validation={{env}}.peer.validation.status.consumer.group
+kafka.topic.process.peer.validation.error={{env}}.peer.validation.status.update.error
+kafka.topic.notification.read.event={{env}}.peer.survey.notification.read
