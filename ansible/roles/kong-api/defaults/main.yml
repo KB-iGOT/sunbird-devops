@@ -178,6 +178,7 @@ achievement_prefix: /learner/achievement
 knowledge_centre_prefix: /knowledge/centre
 external_training_prefix: /externaltraining
 storage_prefix: /storage
+peersurvey_prefix: /peersurvey
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -24767,10 +24768,10 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
-
-  - name: externalTrainingUserBulkUploadSampleFile
-    uris: "{{ external_training_prefix }}/v1/bulkupload/sample"
-    upstream_url: "{{  cb_ext_course_service_url }}/externaltraining/v1/bulkupload/sample"
+      
+  - name: peersurveyUploadDoc
+    uris: "{{ peersurvey_prefix }}/upload"
+    upstream_url: "{{ sb_cb_ext_service_url }}/peersurvey/upload"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24784,4 +24785,4 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
+        config.allowed_payload_size: "{{ x_large_request_size_limit }}"
