@@ -22,6 +22,13 @@ spec:
       containers:
       - name: nginx-private
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 10
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
