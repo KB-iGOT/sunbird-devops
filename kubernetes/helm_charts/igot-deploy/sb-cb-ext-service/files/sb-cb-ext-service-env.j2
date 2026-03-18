@@ -587,8 +587,8 @@ peer.validation.video.max.size=209715200
 peer.validation.submission.folder=peerValidationSubmissions
 peerValidation.cloud.folder.name=peer-validation
 
-kafka.topics.report.download.requests=report.download.requests
-kafka.topics.report.download.requests.group=report.download.requests.consumer
+kafka.topics.report.download.requests={{ env }}.report.download.requests
+kafka.topics.report.download.requests.group={{ env }}.report.download.requests.consumer
 igot.es.form.meta.data.index=fs-forms-alias-v2
 peer.validation.report.max.peers=3
 
