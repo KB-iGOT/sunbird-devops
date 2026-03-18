@@ -179,7 +179,7 @@ knowledge_centre_prefix: /knowledge/centre
 external_training_prefix: /externaltraining
 storage_prefix: /storage
 peersurvey_prefix: /peersurvey
-peer_validation_prefix: /peerValidation
+peer_validation_prefix: /peervalidation
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
