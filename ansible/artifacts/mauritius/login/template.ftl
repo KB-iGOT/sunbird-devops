@@ -39,7 +39,12 @@
 </head>
 
 <body class="${properties.kcBodyClass!}">
-    <div id="kc-logo"><a href="${properties.kcLogoLink!'#'}"><div id="kc-logo-wrapper"></div></a></div>
+    <div id="kc-logo">
+        <a href="${properties.kcLogoLink!'#'}">
+            <div id="kc-logo-wrapper">
+                <!-- <img src="${url.resourcesPath}/img/mauritius-KB-logo.png" alt="Mauritius Knowledge Base Logo" /> -->
+            </div>
+        </a></div>
 
     <div id="kc-container" class="${properties.kcContainerClass!}">
         <div id="kc-container-wrapper" class="${properties.kcContainerWrapperClass!}">
