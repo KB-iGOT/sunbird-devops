@@ -10,17 +10,31 @@
         <div class="logo-top-right">
             <img src="${url.resourcesPath}/img/mauritius-KB-logo.png" alt="Mauritius Knowledge Base Logo" />
         </div>
-        <div class="custom-grid">
-            <div class="ui raised shadow container segment fullpage-background-image left-box">
-                <div class="ui column" style="padding:0">
+        <div class="page mauritius">
+            <div class="ui raised shadow container hero">
+                <div class="hero__bg"></div>
+                <!-- <svg class="hero__wave" viewBox="0 0 130 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M130,0 C80,150 160,300 80,450 C0,600 100,750 130,900 L130,900 L130,0 Z" fill="#fff"></path>
+                </svg> -->
+                <div class="hero__wave">
+                    <img src="${url.resourcesPath}/img/Curve1.svg" class="" alt="Background Wave" />
+                </div>
+                <div class="ui column hero__content">
                     <div class="hero-text-container">
-                        <h1 class="hero-title">Empowering Mauritian Civil Servants</h1>
+                        <h1 class="hero-title large-screen">Empowering Mauritian <br>Civil Servants</h1>
+                        <h1 class="hero-title responsive-screen">Empowering Mauritian <br>Civil Servants</h1>
                         <p class="hero-subtitle">Access world-class governance training through the iGOT-Karmayogi platform &mdash; a collaboration to train 500 civil servants with role-based competency frameworks.</p>
                     </div>
                 </div>
+                <!-- <svg class="hero__arcs" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="0" cy="280" r="100" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" fill="none"></circle>
+                    <circle cx="0" cy="280" r="150" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"></circle>
+                    <circle cx="0" cy="280" r="200" stroke="rgba(255,255,255,0.07)" stroke-width="1.5" fill="none"></circle>
+                </svg> -->
+                <img src="${url.resourcesPath}/img/White-circle.svg" class="hero__arcs" alt="White Circles" />
             </div>
             
-                <div class="ui one column grid stackable">
+                <div class="ui one column grid stackable panel">
                     <#--  <div class="ui column tablet only computer only"></div>  -->
                     <div class="ui column height-fix">
                         <div class="max-container">
