@@ -24826,7 +24826,7 @@ kong_apis:
 
   - name: peerValidationInitiateReportDownload
     uris: "{{ peer_validation_prefix }}/v1/report/initiate"
-    upstream_url: "{{ sb_cb_ext_service_url }}/peerValidation/v1/report/init"
+    upstream_url: "{{ sb_cb_ext_service_url }}/peerValidation/v1/report/initiate"
     strip_uri: true
     plugins:
       - name: jwt
