@@ -84,3 +84,18 @@ kafka.topic.notification.bulk.create.error={{env}}.notification.bulk.create.erro
 
 notification.list.peer.evaluation.assigned.excluded.statuses=SUBMITTED,IGNORED
 notification.list.peer.review.assigned.excluded.statuses=APPROVED,REJECTED
+
+cleanup.peer.validation.kafka.topics={{env}}.peer.validation.status.update,dev.peer.evaluation.status.update
+cleanup.peer.validation.consumer.group.id=peer-validation-cleanup-job
+cleanup.peer.validation.batch.size=100
+cleanup.peer.validation.thread.pool.size=4
+cleanup.peer.validation.table.requests=peer_validation_requests
+cleanup.peer.validation.table.reviews=peer_validation_reviews
+cleanup.peer.validation.table.audit=peer_validation_cleanup_failures
+cleanup.peer.validation.window.start.time=00:01:00
+cleanup.peer.validation.window.end.time=23:59:59
+cleanup.peer.validation.day.offset=1
+cleanup.peer.validation.poll.timeout.seconds=5
+cleanup.peer.validation.executor.shutdown.timeout.minutes=10
+cleanup.peer.validation.audit.deletion.prefix="DELETED:"
+
