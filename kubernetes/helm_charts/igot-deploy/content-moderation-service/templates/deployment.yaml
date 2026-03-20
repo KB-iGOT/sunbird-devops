@@ -47,7 +47,6 @@ spec:
         volumeMounts:
         ports:
         - containerPort: {{ .Values.network.port }}
-
 ---
 apiVersion: v1
 kind: Service

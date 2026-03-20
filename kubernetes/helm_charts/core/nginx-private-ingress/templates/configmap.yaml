@@ -250,6 +250,12 @@ data:
           proxy_http_version 1.1;
           proxy_pass $target;
         }
+        location /cb-notification/ {
+          set $target http://cb-notification-service.{{ .Values.namespace }}.svc.cluster.local:7001;
+          rewrite ^/cb-notification/(.*) /$1 break;
+          proxy_http_version 1.1;
+          proxy_pass $target;
+        }
         location /kibana/ {
           set $target {{ .Values.kibana_url }};
           proxy_http_version 1.1;

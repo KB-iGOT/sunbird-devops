@@ -114,7 +114,7 @@ allowed.fields.contexttype.map={"heading":"heading","section":"section","separat
 allowed.form.contexttype.list=form,assignment,AGKPublicSurvey,completionSurvey,peerValidationSurvey
 max.allowed.filter.list.size=100
 userid.not.required.for.form.clientversion=0,1.0,1
-form.contextType.supported=form,AGKPublicSurvey,completionSurvey
+form.contextType.supported=form,AGKPublicSurvey,completionSurvey,peerValidationSurvey
 form.contextType.hideCreatorFields=AGKPublicSurvey,completionSurvey
 anonymous.user.allowed.for.form.clientversion=""
 es.fs.public.formsdata.index.name=fs-forms-data-alias-v2
@@ -125,7 +125,15 @@ sso.realm={{ keycloak_sso_realm }}
 
 organisation.fields=orgname
 security.input.allowedUrlRegex=^(https?:\/\/)[-a-zA-Z0-9._~:/?#\[\]@!$&'()*+,;=%]{1,500}$
-peer.survey.allowedAdditionalProperties=identifier,triggerAfter,completionLookBack,thumbnail,duration,publishedOn
+peer.survey.allowedAdditionalProperties=identifier,triggerAfter,completionLookBack,thumbnail,duration,publishedOn,isSpvCreated
 peer.survey.content.read.fields=status,courseCategory,appIcon,lastPublishedOn
 peer.survey.allowed.content.types=Course,Moderated Course,Multilingual Course,Curated Program,Moderated Program,Invite Only Program,Blended Program,Comprehensive Assessment Program
 content.base.url=http://content-service:9000/
+
+peer.survey.notification.read.topic={{env}}.peer.survey.notification.read
+peer.survey.notification.read.group={{env}}.form.service.peer.survey.consumer
+peer.survey.notification.sent.topic={{env}}.peer.survey.notification.sent
+
+kafka.topic.peer.validation.status.update={{env}}.peer.validation.status.update
+kafka.topic.peer.validation.notify={{env}}.notification.bulk.create
+kafka.topic.peer.validation.submission.action={{env}}.peer.evaluation.status.update

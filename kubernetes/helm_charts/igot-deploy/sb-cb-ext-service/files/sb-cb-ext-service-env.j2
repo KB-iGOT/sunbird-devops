@@ -413,8 +413,8 @@ insights.mapping.key={"PROVIDER_INSIGHT":"organisation","MDO_INSIGHT":"mdo"}
 mdo.insights.fields={{ mdo_insights_fields }}
 mdo.insights.property.fields={"valueColor": "#FFFFFF","labelColor": "#FFFFFF","linebreak":"false","background": "#1B4CA1","iconColor": "#FFFFFF"}
 mdo.insights.redis.key.mapping={"Total Users":"dashboard_rolled_up_user_count", "Daily Logins":"dashboard_rolled_up_login_percent_last_24_hrs", "Certificates":"dashboard_rolled_up_certificates_generated_count", "Enrolments":"dashboard_rolled_up_enrolment_content_count"}
-spring.servlet.multipart.max-file-size=100MB
-spring.servlet.multipart.max-request-size=100MB
+spring.servlet.multipart.max-file-size=200MB
+spring.servlet.multipart.max-request-size=200MB
 #SearchService
 sb.search.service.host=http://search-service:9000
 sb.composite.v4.search=/v4/search
@@ -580,3 +580,15 @@ org.updatable.fields=logo,orgName,orgId,description,parentPathId
 
 file.upload.allowed.extensions=jpg,jpeg,png
 profile.aboutme.max.length=2000
+designation.index.name=designation_entity_alias
+
+peer.validation.pdf.max.size=2097152
+peer.validation.video.max.size=209715200
+peer.validation.submission.folder=peerValidationSubmissions
+peerValidation.cloud.folder.name=peer-validation
+
+kafka.topics.report.download.requests={{ env }}.report.download.requests
+kafka.topics.report.download.requests.group={{ env }}.report.download.requests.consumer
+igot.es.form.meta.data.index=fs-forms-alias-v2
+peer.validation.report.max.peers=3
+
