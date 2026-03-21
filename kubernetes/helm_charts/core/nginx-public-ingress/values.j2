@@ -1458,7 +1458,7 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
 
-    location /aps/extended/content/v1/read {
+    location /api/extended/content/v1/read {
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
