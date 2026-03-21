@@ -114,7 +114,7 @@ org.search.list.batch.size=100
 content.service.retire.url=/content/v4/retire
 
 kafka.topic.competency-acquired={{env}}.user.competency.mapping.event
-user.competency.cache.ttl.seconds=60
+user.competency.cache.ttl.seconds=3600
 
 user.issue.certificate.for.event.topic={{env}}.event.generate.certificate.request
 user.competency.mapping.event.topic={{env}}.user.competency.mapping.event
@@ -135,3 +135,7 @@ cloud.profile.image.container.name={{ sbworkflow_cloud_storage_content_bucketnam
 cloud.storage.endpoint={{ cloud_storage_endpoint }}
 
 external.training.user.bulk.upload.sample.file.name=ExternalTrainingBulkUploadSampleFile.csv
+
+external.training.default.poster.image=https://portal.qa.karmayogibharat.net/content-store/content/do_114482328087511040164/artifact/do_114482328087511040164_1767862315726_coursethumbnail91767862315281.jpg
+event.read.endpoint=/event/v4/read
+domain.host=https://portal.qa.karmayogibharat.net/
