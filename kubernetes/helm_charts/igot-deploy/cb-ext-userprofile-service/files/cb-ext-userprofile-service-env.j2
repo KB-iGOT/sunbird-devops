@@ -196,3 +196,26 @@ achievement.bulk.list.response.fields=userId,orgId,contextType,id,createdOn,cont
 
 achievement.cache.ttl=14400
 
+user.competency.cache.ttl.seconds=3600
+kafka.topic.competency-acquired={{env}}.user.competency.mapping.event
+
+user.issue.certificate.for.event.topic={{env}}.event.generate.certificate.request
+user.competency.mapping.event.topic={{env}}.user.competency.mapping.event
+external.training.bulk.upload.table=external_training_bulk_upload
+external.training.enrolment.table.name=user_external_training_enrolments
+external.training.enrolment.batchlookup.table.name=external_training_enrolments_batch_lookup
+external.training.user.bulk.upload.topic={{env}}.external.training.bulk.upload
+external.training.user.bulk.upload.topic.group=externalTrainingBulkUpload
+external.training.user.bulk.upload.container.name=externaltrainingbulkupload
+external.training.user.bulk.upload.sample.file.name=ExternalTrainingBulkUploadSampleFile.csv
+bulk.upload.csv.delimiter=,
+external.training.default.poster.image=https://portal.dev.karmayogibharat.net/content-store/content/do_114482328087511040164/artifact/do_114482328087511040164_1767862315726_coursethumbnail91767862315281.jpg
+event.read.endpoint=/event/v4/read
+domain.host=https://portal.dev.karmayogibharat.net/
+
+cloud.storage.type.name=azure
+cloud.storage.key=igot
+cloud.storage.secret=cloudStorageKey
+cloud.container.name=sb-cb-ext
+cloud.profile.image.container.name=igot
+cloud.storage.endpoint=endpoint
