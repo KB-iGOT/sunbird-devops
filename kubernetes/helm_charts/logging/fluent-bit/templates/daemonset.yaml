@@ -29,7 +29,7 @@ spec:
 {{- include "fluent-bit.labels" . | nindent 8 }}
       annotations:
         fluent-bitRolloutID: {{ randAlphaNum 5 | quote }} # Restart fluent-bit after every deployment
-        fleuntbit.io/exlude: "true"
+        fluentbit.io/exclude: "true"
     spec:
 {{- if .Values.imagepullsecrets }}
       imagePullSecrets:
@@ -38,10 +38,31 @@ spec:
       containers:
       - name: fluent-bit
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 2020
           name: http-metrics
+        resources:
+          requests:
+            cpu: {{ .Values.resources.requests.cpu | default "200m" | quote }}
+            memory: {{ .Values.resources.requests.memory | default "256Mi" | quote }}
+          limits:
+            cpu: {{ .Values.resources.limits.cpu | default "1" | quote }}
+            memory: {{ .Values.resources.limits.memory | default "512Mi" | quote }}
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 2020
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 2020
+          initialDelaySeconds: 10
+          periodSeconds: 15
+          timeoutSeconds: 5
         env:
         - name: FLUENT_ELASTICSEARCH_HOST
           value: "{{ .Values.es_host }}"
@@ -57,7 +78,7 @@ spec:
           readOnly: true
         - name: fluent-bit-config
           mountPath: /fluent-bit/etc/
-      terminationGracePeriodSeconds: 10
+      terminationGracePeriodSeconds: 60
       volumes:
       - name: datapath
         hostPath:

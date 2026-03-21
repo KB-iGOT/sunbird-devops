@@ -33,10 +33,10 @@ data:
         K8S-Logging.Exclude On
 
     [FILTER]
-        # Discard all health debug and info logs
+        # Discard health check, debug, and info logs
         Name grep
         Match kube.*
-        exclude message /^.*(?:debug|info|GET (\/service)?\/health).*$
+        Exclude message (?:debug|info|GET (?:\/service)?\/health)
 
     [FILTER]
         Name          nest
@@ -61,7 +61,7 @@ data:
 
   fluent-bit.conf: |
     [SERVICE]
-        Flush         1
+        Flush         5
         Log_Level     WARNING
         Daemon        off
         Parsers_File  parsers.conf
@@ -71,9 +71,13 @@ data:
         storage.path              /mnt/log/flb-storage/
         storage.sync              normal
         storage.checksum          off
-        storage.backlog.mem_limit 120M
-        # How many chunks from file system, which is in que to flush to es, has to be in memory(warm)
-        storage.max_chunks_up 50
+        storage.backlog.mem_limit 256M
+        # Allow 128 warm chunks in memory (was 50 — caused 'no available chunk')
+        storage.max_chunks_up     128
+        # Expose chunk metrics to Prometheus
+        storage.metrics           on
+        # Auto-delete corrupt chunks that block the pipeline
+        storage.delete_irrecoverable_chunks on
 
     @INCLUDE input-kubernetes.conf
     @INCLUDE filter-kubernetes.conf
@@ -83,22 +87,20 @@ data:
         Name              tail
         Tag               kube.*
         Path              /var/log/containers/*.log
+        # Exclude fluent-bit own logs to avoid recursion
+        Exclude_Path      /var/log/containers/fluent-bit*
         Parser            cri
         DB                /mnt/log/flb_kube.db
-        Mem_Buf_Limit     120MB
-        # Set the initial buffer size to read files data.
-        # This value is used too to increase buffer size.
-        Buffer_Chunk_Size 256k
-        # Set the limit of the buffer size per monitored file.
-        # When a buffer needs to be increased (e.g: very long lines),
-        # this value is used to restrict how much the memory buffer can grow.
-        # If reading a file exceed this limit, the file is removed from the monitored file list
-        Buffer_Max_Size   512k
+        # Mem_Buf_Limit has no effect with storage.type filesystem
+        # Backpressure controlled by storage.max_chunks_up instead
+        Buffer_Chunk_Size 512k
+        Buffer_Max_Size   2M
         Skip_Long_Lines   On
-        Refresh_Interval  1
-        storage.type  filesystem
+        # Reduce scan frequency (was 1s — unnecessary CPU overhead)
+        Refresh_Interval  5
+        storage.type      filesystem
         # Ignore older logs of 30m
-        Ignore_Older       30m
+        Ignore_Older      30m
   output-elasticsearch.conf: |
     [OUTPUT]
         Name            es
@@ -107,20 +109,26 @@ data:
         Port            ${FLUENT_ELASTICSEARCH_PORT}
         Logstash_Format On
         Replace_Dots    On
-        Retry_Limit     10
         Type            _doc
-        # Networking Setup
+        # Parallel flush workers (was 1 — the main bottleneck)
+        Workers         4
+        # Compress bulk payloads — ~70% bandwidth reduction
+        Compress        gzip
+        # Prevent duplicate records on retry
+        Generate_ID     On
+        # Restore v1.6 write behavior for ES 7.x compatibility
+        Write_Operation index
+        # Unlimited retries — filesystem storage handles backpressure via LRU
+        Retry_Limit     False
+        # Log ES errors for debugging
+        Trace_Error     On
+        # Networking
         net.connect_timeout         10
-        # net.source_address          127.0.0.1
         net.keepalive               on
         net.keepalive_idle_timeout  100
-        net.keepalive_max_recycle 200
-        #
-        # Limit the maximum number of Chunks in the filesystem for the current output logical destination.
-        # After this LRU will kick in; that means LeastRecentlyUsed will get deleted
-        # 1 chunk =~ 2MB
-        # This config has some issues; see https://github.com/fluent/fluent-bit/issues/2688
-        storage.total_limit_size 20G
+        net.keepalive_max_recycle   2000
+        # Limit filesystem buffer per output (was 20G — risked filling node disk)
+        storage.total_limit_size    5G
   parsers.conf: |
     [PARSER]
         Name   apache
