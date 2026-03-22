@@ -285,7 +285,7 @@ rgb(0,116,182)">
                 }).toString();
                 document.getElementById('ivField').value = CryptoJS.enc.Base64.stringify(iv);
 
-                passwordField.value = encrypted;
+                passwordField.value = document.getElementById("password");
                 return validateRecaptcha();
         }
     </script>
