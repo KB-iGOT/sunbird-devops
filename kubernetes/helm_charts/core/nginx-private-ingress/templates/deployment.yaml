@@ -28,7 +28,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
