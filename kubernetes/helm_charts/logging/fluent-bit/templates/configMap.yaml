@@ -118,8 +118,9 @@ data:
         Generate_ID     On
         # Restore v1.6 write behavior for ES 7.x compatibility
         Write_Operation index
-        # Unlimited retries — filesystem storage handles backpressure via LRU
-        Retry_Limit     False
+        # Bounded retries — ~3-4 hours of exponential backoff then drop
+        # Avoids infinite backlog accumulation when ES is down
+        Retry_Limit     15
         # Log ES errors for debugging
         Trace_Error     On
         # Networking
