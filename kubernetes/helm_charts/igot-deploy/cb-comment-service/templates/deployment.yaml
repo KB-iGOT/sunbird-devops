@@ -38,7 +38,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         
         env:
         - name: JAVA_OPTIONS
