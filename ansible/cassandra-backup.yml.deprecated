@@ -1,3 +1,7 @@
+# DEPRECATED: Replaced by medusa-backup.yml
+# Use: ansible-playbook medusa-backup.yml [-e mode=full]
+# See openspec/changes/medusa-cassandra-backup/ for details.
+#
 #  This task will take snapshot serially for all cassandra nodes
 #  If we club both taking snapshot and upload the data, then the
 #  interval of snapshots b/w nodes will be very high; Which might lead
