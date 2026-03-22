@@ -14,7 +14,7 @@
   vars:
     mode: differential
     mode_prefix: "{{ 'full' if mode == 'full' else 'diff' }}"
-    backup_name: "{{ mode_prefix }}-{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}"
+    backup_name: "{{ mode_prefix }}-{{ lookup('pipe', 'date +%Y%m%d') }}"
     medusa_venv_path: /opt/medusa/venv
   tasks:
     - name: "Run medusa backup ({{ mode }}): {{ backup_name }}"
