@@ -39,7 +39,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config

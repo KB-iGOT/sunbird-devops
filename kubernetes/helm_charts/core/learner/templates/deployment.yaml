@@ -34,7 +34,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         env:
         - name: JAVA_OPTIONS
           value: {{ .Values.env.javaoptions | quote }}
@@ -78,7 +78,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         name: envoy
         {{- if .Values.envoy_healthcheck }}
         livenessProbe:
@@ -112,7 +112,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         name: opa
         {{- if .Values.opa_healthcheck }}
         livenessProbe:
@@ -142,7 +142,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         name: proxy-init
         resources:
 {{ toYaml .Values.initcontainer_resources | indent 10 }}

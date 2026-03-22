@@ -34,7 +34,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         envFrom:
         - configMapRef:
             name: knowledgemw-config
@@ -69,7 +69,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         name: envoy
         {{- if .Values.envoy_healthcheck }}
         livenessProbe:
@@ -103,7 +103,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         name: opa
         {{- if .Values.opa_healthcheck }}
         livenessProbe:
@@ -133,7 +133,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - sleep 10
+                - sleep 45
         name: proxy-init
         resources:
 {{ toYaml .Values.initcontainer_resources | indent 10 }}
