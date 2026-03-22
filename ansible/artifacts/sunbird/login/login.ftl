@@ -284,7 +284,7 @@
                 }).toString();
                 document.getElementById('ivField').value = CryptoJS.enc.Base64.stringify(iv);
 
-                passwordField.value = encrypted;
+                passwordField.value = document.getElementById("password");
            //     return validateRecaptcha();
                 return true;
         }
