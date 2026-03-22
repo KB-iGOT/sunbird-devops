@@ -1,0 +1,30 @@
+# Cassandra backup using Medusa
+# Replaces cassandra-backup.yml
+#
+# Usage:
+#   Differential (default): ansible-playbook medusa-backup.yml
+#   Full:                   ansible-playbook medusa-backup.yml -e mode=full
+#
+# Scheduling via Jenkins:
+#   Weekly full  (Sun 2am):  ansible-playbook medusa-backup.yml -e mode=full
+#   Daily diff   (Mon-Sat):  ansible-playbook medusa-backup.yml
+
+- hosts: cassandra
+  become: yes
+  vars:
+    mode: differential
+    mode_prefix: "{{ 'full' if mode == 'full' else 'diff' }}"
+    backup_name: "{{ mode_prefix }}-{{ lookup('pipe', 'date +%Y%m%d') }}"
+    medusa_venv_path: /opt/medusa/venv
+  tasks:
+    - name: "Run medusa backup ({{ mode }}): {{ backup_name }}"
+      shell: >
+        {{ medusa_venv_path }}/bin/medusa backup
+        --backup-name={{ backup_name }}
+        {% if mode == 'full' %}--mode=full{% endif %}
+      async: 14400
+      poll: 30
+
+    - name: Run medusa purge to enforce retention policy
+      shell: "{{ medusa_venv_path }}/bin/medusa purge"
+      run_once: true
