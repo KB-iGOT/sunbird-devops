@@ -1,0 +1,36 @@
+[cassandra]
+config_file = {{ medusa_cassandra_config_file }}
+{% if medusa_cql_username %}
+cql_username = {{ medusa_cql_username }}
+{% endif %}
+{% if medusa_cql_password %}
+cql_password = {{ medusa_cql_password }}
+{% endif %}
+{% if medusa_nodetool_username %}
+nodetool_username = {{ medusa_nodetool_username }}
+{% endif %}
+{% if medusa_nodetool_password %}
+nodetool_password = {{ medusa_nodetool_password }}
+{% endif %}
+use_sudo = {{ medusa_use_sudo }}
+resolve_ip_addresses = True
+
+[storage]
+storage_provider = {{ medusa_storage_provider }}
+bucket_name = {{ medusa_bucket_name }}
+key_file = {{ medusa_key_file }}
+prefix = {{ medusa_prefix }}
+max_backup_age = {{ medusa_max_backup_age }}
+max_backup_count = {{ medusa_max_backup_count }}
+concurrent_transfers = {{ medusa_concurrent_transfers }}
+multi_part_upload_threshold = {{ medusa_multi_part_upload_threshold }}
+backup_grace_period_in_days = {{ medusa_backup_grace_period_in_days }}
+
+[monitoring]
+
+[ssh]
+
+[checks]
+
+[logging]
+level = INFO
