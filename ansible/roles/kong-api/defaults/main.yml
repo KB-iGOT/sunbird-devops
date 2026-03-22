@@ -24224,10 +24224,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
@@ -24242,10 +24238,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
@@ -24260,10 +24252,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
@@ -24620,10 +24608,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
@@ -24638,10 +24622,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
@@ -24656,10 +24636,6 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
