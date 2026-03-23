@@ -50,8 +50,10 @@ spec:
           preStop:
             exec:
               command:
-              - kong
-              - quit
+              - /bin/sh
+              - -c
+              - |
+                kong quit && sleep 45
 
 ---
 apiVersion: v1
