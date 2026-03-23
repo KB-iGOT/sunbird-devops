@@ -24,13 +24,6 @@
   async: 14400
   poll: 30
 
-- name: Compress the backup file
-  shell: "tar -czf {{ cassandra_backup_gzip_file_name }}.tar.gz {{ cassandra_backup_gzip_file_name }}"
-  args:
-    chdir: /var/lib/cassandra/cassandra_backup/backup
-  async: 14400
-  poll: 30
-
 - name: Check doc_root path
   shell: ls -all /var/lib/cassandra/cassandra_backup/backup/
   register: doc_data
@@ -41,12 +34,12 @@
 
 - set_fact:
     cassandra_backup_name: "cassanra_backup_{{ lookup('pipe', 'date +%Z-%Y-%m-%d-%H-%M-%S') }}"
-- name: upload to gcs
+- name: upload snapshot to gcs
   include_role:
     name: artifacts-upload-gcp
   vars:
     artifacts_container: "{{ backup_bucket }}/{{ cassandra_backup_folder }}"
-    artifact_path: "/var/lib/cassandra/cassandra_backup/backup/{{ cassandra_backup_gzip_file_name }}.tar.gz"
+    artifact_path: "/var/lib/cassandra/cassandra_backup/backup/{{ cassandra_backup_gzip_file_name }}"
     artifact: "{{ cassandra_backup_name }}/"
     service_account: "{{ gcp_backups_service_account }}"
 
