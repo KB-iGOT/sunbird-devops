@@ -30,13 +30,6 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
         imagePullPolicy: Always
-        lifecycle:
-          preStop:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - sleep 10
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config
@@ -57,8 +50,12 @@ spec:
           preStop:
             exec:
               command:
-              - kong
-              - quit
+              - /bin/sh
+              - -c
+              - |
+                kong quit && sleep 45
+                
+                
 
 ---
 apiVersion: v1
