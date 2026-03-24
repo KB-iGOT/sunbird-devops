@@ -93,7 +93,7 @@
                         if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
-                            var imgSrc = "${url.resourcesPath}/img/iGOT_Karmayogi_logo.jpg";
+                            var imgSrc = "${url.resourcesPath}/img/mauritius-KB-logo.png";
                         }
                         var redirect_url = sessionStorage.getItem("redirect_uri");
                         if(redirect_url.indexOf('iiidem-portal') !== -1){
@@ -105,7 +105,7 @@
                             logoImg.setAttribute('class','logo-image');
                             logoImg.setAttribute('alt',sessionTenant);
                             logoImg.src = imgSrc;
-                            logoImg.addEventListener("error", ()=>{ logoImg.onerror=null;logoImg.src='${url.resourcesPath}/img/iGOT_Karmayogi_logo.jpg'});
+                            logoImg.addEventListener("error", ()=>{ logoImg.onerror=null;logoImg.src='${url.resourcesPath}/img/mauritius-KB-logo.png'});
                         }
 
                     </script>
