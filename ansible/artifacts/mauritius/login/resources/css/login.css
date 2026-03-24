@@ -5,7 +5,8 @@ body{
     font-family: "Poppins Regular";
     position: relative;
     letter-spacing: 0.2px; 
-    background: url(../img/Login.png) no-repeat center center fixed;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.42) 100%),
+        url(../img/background.jpg) center / cover no-repeat;
     background-size: cover;
 }
 .ui.container.fullpage-background-image{
