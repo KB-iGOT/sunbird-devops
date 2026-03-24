@@ -22,6 +22,9 @@ body{
 .fs-11 {
     font-size: 11px !important;
 }
+.white-bg {
+    background: #fff !important;
+}
 .custom-grid{
     display: grid;
     align-items: center;
