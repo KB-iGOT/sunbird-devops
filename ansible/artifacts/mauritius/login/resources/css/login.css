@@ -23,6 +23,9 @@ body{
 .fs-11 {
     font-size: 11px !important;
 }
+.mb-0{
+    margin-bottom: 0px !important;
+}
 .white-bg {
     background: #fff !important;
 }
