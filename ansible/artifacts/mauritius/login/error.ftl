@@ -328,7 +328,7 @@
         <div class="logo-section">
             <div class="container">
                 <div class="myloag">
-                    <img class="logo-img" src="https://igotkarmayogi.gov.in/assets/img/karmayogiLogo.svg" alt="karmayogiLogo">
+                    <img class="logo-img" src="https://igotkarmayogi.gov.in/assets/img/mauritius-KB-logo.png" alt="karmayogiLogo">
                 </div>
             </div>
         </div>

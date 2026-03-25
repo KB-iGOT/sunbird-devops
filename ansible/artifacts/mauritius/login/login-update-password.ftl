@@ -4,8 +4,8 @@
         ${msg("updatePasswordTitle")}
     <#elseif section = "form">
     <div class="custom-wrapper">
-        <div class="ui raised shadow container segment fullpage-background-image">
-            <div class="ui one column grid stackable">
+        <div class="ui raised shadow container segment fullpage-background-image white-bg">
+            <div class="ui one column grid stackable mb-0">
                 <div class="ui column height-fix">
                     <div class="max-container">
                         <div class="ui header mb-40 centered">
