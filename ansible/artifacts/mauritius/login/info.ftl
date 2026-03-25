@@ -5,7 +5,6 @@
     <#import "error.ftl" as layout>
     <#elseif section = "form">
     <div class="custom-wrapper">
-        <div class="custom-grid">
             <div class="ui raised shadow container segment fullpage-background-image login-section white-bg" >
                 <div class="ui one column grid stackable">
                     <#--  <div class="ui column tablet only computer only"></div>  -->
@@ -50,7 +49,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
     <script type="text/javascript">
         var slideIndex = 0;
