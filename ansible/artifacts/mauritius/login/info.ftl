@@ -5,11 +5,11 @@
     <#import "error.ftl" as layout>
     <#elseif section = "form">
     <div class="custom-wrapper">
-            <div class="ui raised shadow container segment fullpage-background-image login-section white-bg" >
+            <div class="ui raised shadow container segment fullpage-background-image white-bg" >
                 <div class="ui one column grid stackable">
                     <#--  <div class="ui column tablet only computer only"></div>  -->
                     <div class="ui column height-fix">
-                        <div class="max-container mw-100">
+                        <div class="max-container mw-100" style="text-align: center;">
                             <div id="kc-info-message">
                                 <!--<p class="instruction signUpMsg">${message.summary}</p>-->
                                 <#if skipLink??>
