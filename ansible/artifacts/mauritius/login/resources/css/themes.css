@@ -3,7 +3,7 @@
 @import "./fonts/lato/stylesheet.css";
 
 body {
-    background: #fff !important;
+    /* background: #fff !important; */
     height: 100%;
     font-family: "Poppins Regular";
 }
