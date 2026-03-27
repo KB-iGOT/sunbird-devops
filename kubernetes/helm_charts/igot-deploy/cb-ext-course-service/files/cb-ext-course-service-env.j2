@@ -115,3 +115,28 @@ content.service.retire.url=/content/v4/retire
 
 access.course.cache.ttl.seconds=7200
 cb.plan.caffine.cache.max.size=50000
+
+
+
+kafka.topic.competency-acquired={{env}}.user.competency.mapping.event
+user.competency.cache.ttl.seconds=60
+
+user.issue.certificate.for.event.topic={{env}}.event.generate.certificate.request
+user.competency.mapping.event.topic={{env}}.user.competency.mapping.event
+external.training.bulk.upload.table=external_training_bulk_upload
+external.training.enrolment.table.name=user_external_training_enrolments
+external.training.enrolment.batchlookup.table.name=external_training_enrolments_batch_lookup
+external.training.user.bulk.upload.topic={{env}}.external.training.bulk.upload
+external.training.user.bulk.upload.topic.group=externalTrainingBulkUpload
+external.training.user.bulk.upload.container.name=externaltrainingbulkupload
+bulk.upload.csv.delimiter=,
+
+#Cloud Storage Service properties
+cloud.storage.type.name={{ cloud_service_provider }}
+cloud.storage.key={{ cloud_storage_key }}
+cloud.storage.secret={{ cloud_storage_secret | replace('\n', '\\n')}}
+cloud.container.name={{sb_cb_ext_container}}
+cloud.profile.image.container.name={{ sbworkflow_cloud_storage_content_bucketname }}
+cloud.storage.endpoint={{ cloud_storage_endpoint }}
+
+external.training.user.bulk.upload.sample.file.name=ExternalTrainingBulkUploadSampleFile.csv
