@@ -247,12 +247,24 @@
                 <local-cache name="users">
                     <object-memory size="10000"/>
                 </local-cache>
-                <distributed-cache name="sessions" owners="2"/>
-                <distributed-cache name="authenticationSessions" owners="2"/>
-		<distributed-cache name="offlineSessions" owners="2"/>
-                <distributed-cache name="clientSessions" owners="2"/>
-		<distributed-cache name="offlineClientSessions" owners="2"/>
-                <distributed-cache name="loginFailures" owners="2"/>
+                <distributed-cache name="sessions" owners="2">
+                    {% if keycloak_sessions_cache_object_size is defined %}<object-memory size="{{ keycloak_sessions_cache_object_size }}"/>{% endif %}
+                </distributed-cache>
+                <distributed-cache name="authenticationSessions" owners="2">
+                    {% if keycloak_authentication_sessions_cache_object_size is defined %}<object-memory size="{{ keycloak_authentication_sessions_cache_object_size }}"/>{% endif %}
+                </distributed-cache>
+                <distributed-cache name="offlineSessions" owners="2">
+                    {% if keycloak_offline_sessions_cache_object_size is defined %}<object-memory size="{{ keycloak_offline_sessions_cache_object_size }}"/>{% endif %}
+                </distributed-cache>
+                <distributed-cache name="clientSessions" owners="2">
+                    {% if keycloak_client_sessions_cache_object_size is defined %}<object-memory size="{{ keycloak_client_sessions_cache_object_size }}"/>{% endif %}
+                </distributed-cache>
+                <distributed-cache name="offlineClientSessions" owners="2">
+                    {% if keycloak_offline_client_sessions_cache_object_size is defined %}<object-memory size="{{ keycloak_offline_client_sessions_cache_object_size }}"/>{% endif %}
+                </distributed-cache>
+                <distributed-cache name="loginFailures" owners="2">
+                    {% if keycloak_login_failures_cache_object_size is defined %}<object-memory size="{{ keycloak_login_failures_cache_object_size }}"/>{% endif %}
+                </distributed-cache>
                 <local-cache name="authorization">
                     <object-memory size="10000"/>
                 </local-cache>
