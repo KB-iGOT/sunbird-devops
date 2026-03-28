@@ -538,7 +538,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -565,7 +565,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -592,7 +592,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 3600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -619,7 +619,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -668,7 +668,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -695,7 +695,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -722,7 +722,34 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
+      # Increasing the proxy buffer size
+      proxy_buffer_size 16k;
+      proxy_busy_buffers_size 16k;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://ui-proxies:3003;
+    }
+
+    location ~ /apis/proxies/v8/ratings/v2/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache ratings_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 21600s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -749,7 +776,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -776,7 +803,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -803,7 +830,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -830,7 +857,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -857,7 +884,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -1357,6 +1384,16 @@ proxyconfig: |-
       proxy_read_timeout 70;
       proxy_http_version 1.1;
       proxy_pass http://ui-proxies:3003;
+    }
+
+    location = /api/v1/notifications/mandatory {
+      default_type application/json;
+      return 200 '{"id":"notification.v1.mandatory.current","ver":"1.0","params":{"err":null,"status":"success","errMsg":null},"responseCode":"OK","result":{"notification":{}},"response":{"notification":{}}}';
+    }
+
+    location = /apis/proxies/v8/v1/notifications/mandatory {
+      default_type application/json;
+      return 200 '{"id":"notification.v1.mandatory.current","ver":"1.0","params":{"err":null,"status":"success","errMsg":null},"responseCode":"OK","result":{"notification":{}},"response":{"notification":{}}}';
     }
 
     location /api/ {
@@ -4897,7 +4934,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -4951,7 +4988,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 300s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -4978,7 +5015,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -5005,7 +5042,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6315,7 +6352,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6369,7 +6406,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 300s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6396,7 +6433,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6423,7 +6460,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
