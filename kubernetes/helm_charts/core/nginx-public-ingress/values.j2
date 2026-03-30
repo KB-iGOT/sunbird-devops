@@ -1439,7 +1439,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      proxy_cache_valid 200 1800s;
       rewrite ^/apis/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
@@ -2710,7 +2710,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      proxy_cache_valid 200 1800s;
       rewrite ^/apis/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
@@ -3693,7 +3693,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      proxy_cache_valid 200 1800s;
       rewrite ^/apis/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
@@ -5287,7 +5287,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      proxy_cache_valid 200 1800s;
       rewrite ^/apis/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
@@ -6758,7 +6758,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      proxy_cache_valid 200 1800s;
       rewrite ^/apis/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
@@ -7787,7 +7787,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      proxy_cache_valid 200 1800s;
       rewrite ^/apis/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
@@ -8758,7 +8758,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      proxy_cache_valid 200 1800s;
       rewrite ^/apis/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
