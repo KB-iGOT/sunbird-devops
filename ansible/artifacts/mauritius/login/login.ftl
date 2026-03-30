@@ -8,7 +8,7 @@
     <div class="custom-wrapper">
         <!-- Logo positioned in top right corner -->
         <div class="logo-top-right">
-            <img src="${url.resourcesPath}/img/mauritius-KB-logo.png" alt="Mauritius Knowledge Base Logo" />
+            <img src="${url.resourcesPath}/img/mauritius-KB-logo-new.svg" alt="Mauritius Knowledge Base Logo" />
         </div>
         <div class="page mauritius">
             <div class="ui raised shadow container hero">
