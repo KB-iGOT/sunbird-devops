@@ -131,7 +131,7 @@
                                             Login with Providers
                                         </label>
                                         <select class="ui fluid" onchange="if (this.value) window.location.href = this.value;" style="text-align-last: center; background-color: 
-rgb(0,116,182)">
+rgb(0,116,182);color: white;">
                                             <option value="" style="background-color: rgb(0,116,182); color: white;" selected>Select Provider</option>
 											<option value="/apis/public/v8/parichay/auth" style="background-color: rgb(0,116,182); color: white;">Parichay</option>
                                             <option value="/apis/public/v8/oil/auth" style="background-color: rgb(0,116,182); color: white;">OIL India</option>
@@ -222,7 +222,7 @@ rgb(0,116,182)">
                                             Login with Providers
                                         </label>
                                         <select class="ui fluid" onchange="if (this.value) window.location.href = this.value;" style="text-align-last: center; background-color: 
-rgb(0,116,182)">
+rgb(0,116,182);color: white;">
                                             <option value="" style="background-color: rgb(0,116,182); color: white;" selected>Select Provider</option>
 											<option value="/apis/public/v8/parichay/auth" style="background-color: rgb(0,116,182); color: white;">Parichay</option>
                                             <option value="/apis/public/v8/oil/auth" style="background-color: rgb(0,116,182); color: white;">OIL India</option>
