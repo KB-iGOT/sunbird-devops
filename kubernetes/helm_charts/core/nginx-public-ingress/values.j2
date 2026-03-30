@@ -209,6 +209,30 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+    # Caching keycloak certs endpoint
+    location ~ ^/auth/realms/([^/]+)/protocol/openid-connect/certs$ {
+      # Enabling caching
+      proxy_cache_key $proxy_host$request_uri;
+      proxy_cache proxy_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200;
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header    X-Forwarded-For   {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+  }
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
       # Enabling caching
@@ -235,7 +259,7 @@ proxyconfig: |-
       proxy_pass http://ui-static;
     }
     # Caching for content consumption
-    location ~ /api/(content/v1/read|course/v1/hierarchy) {
+    location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -514,7 +538,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -541,7 +565,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -568,7 +592,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 3600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -595,7 +619,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -644,7 +668,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -662,7 +686,7 @@ proxyconfig: |-
 
     location ~ /api/ratings/v1/summary/ {
       # Enabling caching
-      proxy_cache_key "$request_uri";
+      proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
@@ -671,7 +695,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -689,7 +713,7 @@ proxyconfig: |-
 
     location ~ /apis/proxies/v8/ratings/v1/summary {
       # Enabling caching
-      proxy_cache_key "$request_uri";
+      proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
@@ -698,7 +722,34 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
+      # Increasing the proxy buffer size
+      proxy_buffer_size 16k;
+      proxy_busy_buffers_size 16k;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://ui-proxies:3003;
+    }
+
+    location ~ /apis/proxies/v8/ratings/v2/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache ratings_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 21600s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -725,7 +776,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -752,7 +803,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -779,7 +830,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -797,7 +848,7 @@ proxyconfig: |-
 
     location ~ /apis/proxies/sunbirdigot/read {
       # Enabling caching
-      proxy_cache_key "$request_uri";
+      proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
@@ -806,7 +857,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -833,7 +884,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -915,33 +966,6 @@ proxyconfig: |-
       proxy_cache_background_update on;
       proxy_cache_lock on;
       proxy_cache_valid 200 14400s;
-      # Increasing the proxy buffer size
-      proxy_buffer_size 16k;
-      proxy_busy_buffers_size 16k;
-      rewrite ^/api/(.*) /$1 break;
-      proxy_set_header Connection "";
-      proxy_set_header Host $host;
-      proxy_set_header X-Scheme $scheme;
-      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
-      proxy_connect_timeout 5;
-      proxy_send_timeout 60;
-      proxy_read_timeout 70;
-      proxy_http_version 1.1;
-      proxy_pass http://kong;
-    }
-
-    location ~ /api/faq/v1/assistant/configs/language {
-      # Enabling caching
-      proxy_cache_key "$request_uri";
-      proxy_cache sunbirdigot_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 43200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -1283,16 +1307,16 @@ proxyconfig: |-
 
     location ~ /api/faq/v1/assistant/configs/language {
       # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache_key "$request_method|$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods POST;
+      proxy_cache_methods GET HEAD POST;
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 86400s;
+      proxy_cache_valid 200 43200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -1416,6 +1440,16 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
+    location = /api/v1/notifications/mandatory {
+      default_type application/json;
+      return 200 '{"id":"notification.v1.mandatory.current","ver":"1.0","params":{"err":null,"status":"success","errMsg":null},"responseCode":"OK","result":{"notification":{}},"response":{"notification":{}}}';
+    }
+
+    location = /apis/proxies/v8/v1/notifications/mandatory {
+      default_type application/json;
+      return 200 '{"id":"notification.v1.mandatory.current","ver":"1.0","params":{"err":null,"status":"success","errMsg":null},"responseCode":"OK","result":{"notification":{}},"response":{"notification":{}}}';
+    }
+
     location /api/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
@@ -1446,6 +1480,32 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
       client_max_body_size 1126M;
+    }
+
+    location ~ /apis/v1/form/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache framework_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 1800s;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-proxies:3003;
     }
 
     location /apis/ {
@@ -2509,6 +2569,30 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+    # Caching keycloak certs endpoint
+    location ~ ^/auth/realms/([^/]+)/protocol/openid-connect/certs$ {
+      # Enabling caching
+      proxy_cache_key $proxy_host$request_uri;
+      proxy_cache proxy_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200;
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header    X-Forwarded-For   {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+  }
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
       # Enabling caching
@@ -2535,7 +2619,7 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     # Caching for content consumption
-    location ~ /api/(content/v1/read|course/v1/hierarchy) {
+    location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -2669,6 +2753,32 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
     }
+    location ~ /apis/v1/form/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache framework_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 1800s;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-proxies:3003;
+    }
+
     location /apis/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
@@ -3442,6 +3552,30 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+    # Caching keycloak certs endpoint
+    location ~ ^/auth/realms/([^/]+)/protocol/openid-connect/certs$ {
+      # Enabling caching
+      proxy_cache_key $proxy_host$request_uri;
+      proxy_cache proxy_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200;
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header    X-Forwarded-For   {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+  }
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
       # Enabling caching
@@ -3468,7 +3602,7 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     # Caching for content consumption
-    location ~ /api/(content/v1/read|course/v1/hierarchy) {
+    location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -3602,6 +3736,32 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
     }
+    location ~ /apis/v1/form/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache framework_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 1800s;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-proxies:3003;
+    }
+
     location /apis/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
@@ -4440,9 +4600,33 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+    # Caching keycloak certs endpoint
+    location ~ ^/auth/realms/([^/]+)/protocol/openid-connect/certs$ {
+      # Enabling caching
+      proxy_cache_key $proxy_host$request_uri;
+      proxy_cache proxy_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200;
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header    X-Forwarded-For   {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+  }
 
     # Caching for content consumption
-    location ~ /api/(content/v1/read|course/v1/hierarchy) {
+    location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -4882,7 +5066,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -4925,6 +5109,33 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
+    location ~ /apis/proxies/v8/(content/v2/read|course/v1/hierarchy) {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache content_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 14400s;
+      # Increasing the proxy buffer size
+      proxy_buffer_size 16k;
+      proxy_busy_buffers_size 16k;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://ui-proxies:3003;
+    }
+
     location ~ /apis/proxies/v8/sunbirdigot/search {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
@@ -4936,7 +5147,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 300s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -4963,7 +5174,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -4990,7 +5201,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -5117,6 +5328,32 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
       client_max_body_size 1226M;
+    }
+
+    location ~ /apis/v1/form/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache framework_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 1800s;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-proxies:3003;
     }
 
     location /apis/ {
@@ -5834,9 +6071,33 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+    # Caching keycloak certs endpoint
+    location ~ ^/auth/realms/([^/]+)/protocol/openid-connect/certs$ {
+      # Enabling caching
+      proxy_cache_key $proxy_host$request_uri;
+      proxy_cache proxy_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200;
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header    X-Forwarded-For   {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+  }
 
     # Caching for content consumption
-    location ~ /api/(content/v1/read|course/v1/hierarchy) {
+    location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -6276,7 +6537,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 1800s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6319,6 +6580,33 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
+    location ~ /apis/proxies/v8/(content/v2/read|course/v1/hierarchy) {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache content_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 14400s;
+      # Increasing the proxy buffer size
+      proxy_buffer_size 16k;
+      proxy_busy_buffers_size 16k;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://ui-proxies:3003;
+    }
+
     location ~ /apis/proxies/v8/sunbirdigot/search {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
@@ -6330,7 +6618,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 300s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6357,7 +6645,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6384,7 +6672,7 @@ proxyconfig: |-
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
       proxy_cache_lock on;
-      proxy_cache_valid 200 600s;
+      proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6511,6 +6799,32 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
       client_max_body_size 1226M;
+    }
+
+    location ~ /apis/v1/form/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache framework_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 1800s;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-proxies:3003;
     }
 
     location /apis/ {
@@ -7332,6 +7646,30 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+    # Caching keycloak certs endpoint
+    location ~ ^/auth/realms/([^/]+)/protocol/openid-connect/certs$ {
+      # Enabling caching
+      proxy_cache_key $proxy_host$request_uri;
+      proxy_cache proxy_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200;
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header    X-Forwarded-For   {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+  }
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
       # Enabling caching
@@ -7358,7 +7696,7 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     # Caching for content consumption
-    location ~ /api/(content/v1/read|course/v1/hierarchy) {
+    location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -7492,6 +7830,32 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
     }
+    location ~ /apis/v1/form/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache framework_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 1800s;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-proxies:3003;
+    }
+
     location /apis/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
@@ -8253,6 +8617,30 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+    # Caching keycloak certs endpoint
+    location ~ ^/auth/realms/([^/]+)/protocol/openid-connect/certs$ {
+      # Enabling caching
+      proxy_cache_key $proxy_host$request_uri;
+      proxy_cache proxy_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 43200;
+      rewrite ^/auth/(.*) /auth/$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header    X-Forwarded-For   {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://keycloak;
+  }
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
       # Enabling caching
@@ -8279,7 +8667,7 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     # Caching for content consumption
-    location ~ /api/(content/v1/read|course/v1/hierarchy) {
+    location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -8413,6 +8801,32 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://kong;
     }
+    location ~ /apis/v1/form/read {
+      # Enabling caching
+      proxy_cache_key "$request_uri|$request_body";
+      proxy_cache framework_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_methods GET HEAD POST;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 1800s;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-proxies:3003;
+    }
+
     location /apis/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
@@ -9229,16 +9643,12 @@ nginxconfig: |
       # inactive: specifies how long an item can remain in the cache without being accessed. This doesn't value expiry time of cache. So keep it more than the expiry.
       # use_temp_path: do we have to write the cache to a temp path first? This will reduce the performance.
       #
-      # caching for images and files
-      proxy_cache_path /tmp/proxy_cache levels=1:2 keys_zone=tmp_cache:5m max_size=10m inactive=300m use_temp_path=off;
       # caching for apis
       proxy_cache_path /tmp/api_cache levels=1:2 keys_zone=proxy_cache:5m max_size=600m inactive=1400m use_temp_path=off;
       # cache framework
       proxy_cache_path /tmp/framework_cache levels=1:2 keys_zone=framework_cache:5m max_size=700m inactive=300m use_temp_path=off;
       # cache content
       proxy_cache_path /tmp/content_cache levels=1:2 keys_zone=content_cache:100m max_size=3000m inactive=600m use_temp_path=off;
-      # cache content metadata
-      proxy_cache_path /tmp/content_metadata levels=1:2 keys_zone=content_metadata:100m max_size=1000m inactive=300m use_temp_path=off;
       proxy_cache_path /tmp/ratings_cache levels=1:2 keys_zone=ratings_cache:100m max_size=3000m inactive=600m use_temp_path=off;
       proxy_cache_path /tmp/sunbirdigot_cache levels=1:2 keys_zone=sunbirdigot_cache:100m max_size=3000m inactive=600m use_temp_path=off;
 

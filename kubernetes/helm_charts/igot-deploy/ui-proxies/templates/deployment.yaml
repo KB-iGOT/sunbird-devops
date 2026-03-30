@@ -36,8 +36,8 @@ spec:
                 - -c
                 - sleep 45
         env:
-        - name: JAVA_OPTIONS
-          value: {{ .Values.env.javaoptions | quote }}
+        - name: NODE_OPTIONS
+          value: {{ .Values.env.nodeoptions | quote }}
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config
