@@ -42,7 +42,7 @@
     <div id="kc-logo">
         <a href="${properties.kcLogoLink!'#'}">
             <div id="kc-logo-wrapper">
-                <!-- <img src="${url.resourcesPath}/img/mauritius-KB-logo.png" alt="Mauritius Knowledge Base Logo" /> -->
+                <!-- <img src="${url.resourcesPath}/img/mauritius-KB-logo-new.svg" alt="Mauritius Knowledge Base Logo" /> -->
             </div>
         </a></div>
 
@@ -93,7 +93,7 @@
                         if(sessionTenant){
                             var imgSrc = "${url.resourcesPath}/img/tenants/"+sessionTenant+".png";
                         }else{
-                            var imgSrc = "${url.resourcesPath}/img/mauritius-KB-logo.png";
+                            var imgSrc = "${url.resourcesPath}/img/mauritius-KB-logo-new.svg";
                         }
                         var redirect_url = sessionStorage.getItem("redirect_uri");
                         if(redirect_url.indexOf('iiidem-portal') !== -1){
@@ -105,7 +105,7 @@
                             logoImg.setAttribute('class','logo-image');
                             logoImg.setAttribute('alt',sessionTenant);
                             logoImg.src = imgSrc;
-                            logoImg.addEventListener("error", ()=>{ logoImg.onerror=null;logoImg.src='${url.resourcesPath}/img/mauritius-KB-logo.png'});
+                            logoImg.addEventListener("error", ()=>{ logoImg.onerror=null;logoImg.src='${url.resourcesPath}/img/mauritius-KB-logo-new.svg'});
                         }
 
                     </script>
