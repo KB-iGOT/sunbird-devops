@@ -1768,11 +1768,27 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
+
+      proxy_intercept_errors on;
+
+      # hack to cleanup the duplicate cookies
+      error_page 403 = @resource_slash_403;
+
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
       proxy_read_timeout 300;
     }
+
+    # ── 403 handler ──────────────────────────────────────────────────────────
+    # NOTE: defining add_header here means server-level add_header directives
+    # are NOT inherited. Repeat any security headers you need on this response.
+    location @resource_slash_403 {
+        add_header Set-Cookie "connect.sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure" always;
+        add_header Set-Cookie "connect.sid=; Domain=.{{nginx_proxy_server_name}}; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure" always;
+        return 302 /protected/v8/resource;
+    }
+
 
     location /apis/public/v8/course/batch/cert/download/mobile {
       if ($request_method = OPTIONS ) {
