@@ -213,8 +213,8 @@
 
 - name: SMS provider configuration file
   copy:
-    src: "sunbird_auth_{{ sunbird_auth_version }}.config/NetCoreSmsCreds.json"
-    dest: "{{ keycloak_home }}/bin/sms-provider/NetCoreSmsCreds.json"
+    src: "sunbird_auth_{{ sunbird_auth_version }}.config/SinchSmsCreds.json.j2"
+    dest: "{{ keycloak_home }}/bin/sms-provider/SinchSmsCreds.json.j2"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0755
