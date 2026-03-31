@@ -24,6 +24,14 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
+{{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+{{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -35,9 +43,6 @@ spec:
                 - /bin/sh
                 - -c
                 - sleep 45
-        env:
-        - name: JAVA_OPTIONS
-          value: {{ .Values.env.javaoptions | quote }}
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config
@@ -67,4 +72,3 @@ spec:
     port: {{ .Values.network.targetport }}
   selector:
     app: {{ .Chart.Name }}
-
