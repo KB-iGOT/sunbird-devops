@@ -35,6 +35,9 @@ spec:
                 - /bin/sh
                 - -c
                 - sleep 45
+        env:
+        - name: NODE_OPTIONS
+          value: {{ .Values.env.nodeoptions | quote }}
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config
