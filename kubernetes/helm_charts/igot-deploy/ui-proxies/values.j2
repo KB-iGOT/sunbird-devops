@@ -6,7 +6,7 @@ dockerhub: {{ docker_hub_url }}
 
 
 env:
-  nodeoptions: {{ui_proxies_node_mem_limit|default('-Xmx600m')}}
+  nodeoptions: {{ui_proxies_node_mem_limit|default('--max-old-space-size=512')}}
 
 replicaCount: {{ui_proxies_replicacount|default(1)}}
 repository: {{ image_ui_proxies }}
