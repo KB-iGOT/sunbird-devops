@@ -107,7 +107,8 @@ data:
         Tag               kube.*
         Path              /var/log/containers/*.log
         # Exclude fluent-bit own logs to avoid recursion
-        Exclude_Path      /var/log/containers/fluent-bit*
+        # Exclude kube-system namespace — path format: <pod>_<namespace>_<container>-<id>.log
+        Exclude_Path      /var/log/containers/fluent-bit*,/var/log/containers/*_kube-system_*
         Parser            cri
         DB                /mnt/log/flb_kube.db
         # Mem_Buf_Limit has no effect with storage.type filesystem
