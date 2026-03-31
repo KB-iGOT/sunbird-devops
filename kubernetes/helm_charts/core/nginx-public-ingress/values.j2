@@ -1508,6 +1508,19 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
+    location ~ /apis/protected/v8/user/telemetry {
+      rewrite ^/apis/protected/v8/user/telemetry /data/v1/public/telemetry break;
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+      proxy_pass http://kong;
+    }
+
     location /apis/ {
       # if ($request_method = OPTIONS ) {
        #       add_header Access-Control-Allow-Origin "*" ;
