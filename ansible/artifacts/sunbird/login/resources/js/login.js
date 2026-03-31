@@ -479,8 +479,9 @@ var callZohoForm = function () {
 			url = window.location.protocol + '//uat.karmayogibharat.net/#/helpcenter'
 		} else if ((host).includes('portal.igotkarmayogi.gov.in')) {
 			url = window.location.protocol + '//igotkarmayogi.gov.in/#/helpcenter'
-		} else if (url === '') {
-			//window.open(url, '_blank')
+		} 
+		if (url !== '')  {
+			window.open(url, '_blank')
 		}
 		
 	}
