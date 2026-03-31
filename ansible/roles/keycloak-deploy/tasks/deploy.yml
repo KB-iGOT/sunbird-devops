@@ -147,6 +147,14 @@
   when: "{{ sms_required|default(false) }}"
   ignore_errors: true
 
+- name: SinchSmsCreds SMS provider configuration file
+  template:
+    src: "roles/keycloak-deploy/templates/SinchSmsCreds.json.j2"
+    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/SinchSmsCreds.json"
+    mode: 0755
+  when: "{{ sms_required|default(false) }}"
+  ignore_errors: true
+
 - name: Keycloak configuration XML file
   copy:
     src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
