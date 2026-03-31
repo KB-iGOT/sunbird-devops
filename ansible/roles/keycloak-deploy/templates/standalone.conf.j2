@@ -72,5 +72,5 @@ fi
 # when you get "epoll_create function not implemented" message in dmesg output
 #JAVA_OPTS="$JAVA_OPTS -Djava.nio.channels.spi.SelectorProvider=sun.nio.ch.PollSelectorProvider"
 
-# Advertise node ip
-JAVA_OPTS="$JAVA_OPTS -Djboss.node.name={{ansible_host}}"
+# Advertise node name
+JAVA_OPTS="$JAVA_OPTS -Djboss.node.name=keycloak-{{ groups['keycloak'].index(inventory_hostname) + 1 }}"

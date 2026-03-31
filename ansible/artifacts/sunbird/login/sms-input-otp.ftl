@@ -79,7 +79,7 @@
 	      }
         var interval
         function countdown() {
-            document.getElementById("js-timeout").innerHTML = "3:00";
+            document.getElementById("js-timeout").innerHTML = "1:30";
         // Update the count down every 1 second
         interval = setInterval( function() {
             var timer = document.getElementById("js-timeout").innerHTML;

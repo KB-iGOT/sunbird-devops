@@ -5,9 +5,6 @@ imagepullsecrets: {{ imagepullsecrets }}
 dockerhub: {{ docker_hub_url }}
 
 
-env:
-  javaoptions: {{pdf_generator_java_mem_limit|default('-Xmx4096m')}}
-
 replicaCount: {{pdf_generator_replicacount|default(1)}}
 repository: {{ image_pdf_generator_service }}
 image_tag: {{ image_tag }}
@@ -26,6 +23,10 @@ strategy:
   maxsurge: {{ lms_maxsurge|default('25%') }}
   maxunavailable: {{ lms_maxunavailable|default('25%') }}
 
+{% if pdf_generator_scheduling is defined %}
+{{ pdf_generator_scheduling | to_nice_yaml }}
+{% endif %}
+
 {{ pdf_generator_liveness_readiness | to_nice_yaml }}
 
 serviceMonitor:
@@ -40,4 +41,3 @@ autoscaling:
   maxReplicas: {{ pdf_generator_service_autoscaling_maxReplicas|default(2) }}
   targetCPUUtilizationPercentage: {{ pdf_generator_service_autoscaling_targetCPUUtilizationPercentage|default(60) }}
   targetMemoryUtilizationPercentage: {{ pdf_generator_service_autoscaling_targetMemoryUtilizationPercentage|default('') }}
-
