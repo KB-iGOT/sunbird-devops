@@ -31,7 +31,6 @@ spec:
         - name: {{ .Chart.Name }}-content-list-data-json
           configMap:
             name: {{ .Chart.Name }}-content-list-data-json
-
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}
