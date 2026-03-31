@@ -480,7 +480,7 @@ var callZohoForm = function () {
 		} else if ((host).includes('portal.igotkarmayogi.gov.in')) {
 			url = window.location.protocol + '//igotkarmayogi.gov.in/#/helpcenter'
 		} else if (url === '') {
-			window.open(url, '_blank')
+			//window.open(url, '_blank')
 		}
 		
 	}
