@@ -73,4 +73,4 @@ fi
 #JAVA_OPTS="$JAVA_OPTS -Djava.nio.channels.spi.SelectorProvider=sun.nio.ch.PollSelectorProvider"
 
 # Advertise node name
-JAVA_OPTS="$JAVA_OPTS -Djboss.node.name={{ ansible_hostname }}"
+JAVA_OPTS="$JAVA_OPTS -Djboss.node.name=keycloak-{{ groups['keycloak'].index(inventory_hostname) + 1 }}"
