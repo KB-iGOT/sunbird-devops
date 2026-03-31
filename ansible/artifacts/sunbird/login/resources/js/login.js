@@ -477,10 +477,13 @@ var callZohoForm = function () {
 			url = window.location.protocol + '//qa.karmayogibharat.net/#/helpcenter'
 		} else if ((host).includes('portal.uat.karmayogibharat.net')) {
 			url = window.location.protocol + '//uat.karmayogibharat.net/#/helpcenter'
-		} else if ((host).includes('portal.igotkarmayogi.gov.in/')) {
+		} else if ((host).includes('portal.igotkarmayogi.gov.in')) {
 			url = window.location.protocol + '//igotkarmayogi.gov.in/#/helpcenter'
+		} 
+		if (url !== '')  {
+			window.open(url, '_blank')
 		}
-		window.open(url, '_blank')
+		
 	}
 
 	span.onclick = function () {
