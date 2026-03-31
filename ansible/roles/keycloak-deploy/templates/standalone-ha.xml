@@ -563,7 +563,7 @@
             </security-domains>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:transactions:5.0">
-	    <core-environment node-identifier="{{ansible_default_ipv4.address}}">
+	    <core-environment node-identifier="keycloak-{{ ansible_hostname | regex_replace('[^A-Za-z0-9_-]', '-') }}">
                 <process-id>
                     <uuid/>
                 </process-id>
