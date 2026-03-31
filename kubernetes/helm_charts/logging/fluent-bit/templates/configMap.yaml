@@ -3,6 +3,16 @@ apiVersion: v1
 data:
   filter-kubernetes.conf: |
     [FILTER]
+        # Drop health check requests before kubernetes enrichment.
+        # Field is 'log' (raw CRI text) at this stage — 'message' does not exist yet.
+        # Dropping early avoids API lookups + Merge_Log for discarded records.
+        # Note: removed 'debug' and 'info' substring drops — too broad, would silently
+        # discard lines like "Error: failed to fetch user info" or "could not debug conn".
+        Name grep
+        Match kube.*
+        Exclude log (?i)GET (?:\/service)?\/health
+
+    [FILTER]
         Name                kubernetes
         Match               kube.*
         Kube_URL            https://kubernetes.default.svc:443
@@ -33,12 +43,6 @@ data:
         K8S-Logging.Exclude On
 
     [FILTER]
-        # Discard health check, debug, and info logs
-        Name grep
-        Match kube.*
-        Exclude message (?:debug|info|GET (?:\/service)?\/health)
-
-    [FILTER]
         Name          nest
         Match         kube.*
         Operation     lift
@@ -53,15 +57,30 @@ data:
         Add_prefix    kubernetes_labels_
 
     [FILTER]
+        # Lift annotations to flat fields first so modify can target them by name.
         Name          nest
         Match         kube.*
         Operation     lift
         Nested_under  kubernetes_annotations
         Add_prefix    kubernetes_annotations_
 
+    [FILTER]
+        # Strip noisy/large annotations that add no value to log analysis.
+        # Fields exist as flat kubernetes_annotations_* after the lift above.
+        Name    modify
+        Match   kube.*
+        # Full serialised object YAML — can be 10-50 KB per record
+        Remove  kubernetes_annotations_kubectl.kubernetes.io/last-applied-configuration
+        # Helm config/secret checksums — only useful for Helm diffing, not logs
+        Remove  kubernetes_annotations_checksum/config
+        Remove  kubernetes_annotations_checksum/secret
+        # Deployment revision counter — already visible in kubernetes_labels
+        Remove  kubernetes_annotations_deployment.kubernetes.io/revision
+        # Rollout restart timestamp — not useful per log record
+        Remove  kubernetes_annotations_kubectl.kubernetes.io/restartedAt
   fluent-bit.conf: |
     [SERVICE]
-        Flush         5
+        Flush         10
         Log_Level     WARNING
         Daemon        off
         Parsers_File  parsers.conf
@@ -123,6 +142,8 @@ data:
         Retry_Limit     15
         # Log ES errors for debugging
         Trace_Error     On
+        # ES bulk response buffer (default 512k too small for large batches)
+        Buffer_Size     2M
         # Networking
         net.connect_timeout         10
         net.keepalive               on
