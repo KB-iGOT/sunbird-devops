@@ -39,6 +39,8 @@ supporttoolserverenv: |-
   KEYCLOAK_CLIENT_SECRET={{ supporttool_keycloak_client_secret }}
 
   CASSANDRA_HOST={{ core_cassandra_host }}
+  CASSANDRA_FORM_HOST={{cassandra_form_host_vm}}
+  CASSANDRA_FORM_DATACENTER=datacenter1
   CASSANDRA_DATACENTER=datacenter1
   CASSANDRA_KEYSPACE=sunbird
   HOST=supporttool-service
