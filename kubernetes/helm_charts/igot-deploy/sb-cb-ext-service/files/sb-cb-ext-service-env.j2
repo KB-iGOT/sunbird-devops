@@ -607,3 +607,18 @@ redis.user.insights.host.name={{ redis_user_insights_host_name }}
 redis.user.insights.port={{ redis_user_insights_port }}
 redis.user.insights.ttl=43200
 redis.user.insights.index=0
+
+redis.user.insights.leaderboard.ttl=3600
+redis.user.insights.leaderboard.index=2
+
+redis.pool.max.total=3000
+redis.pool.max.idle=128
+redis.pool.min.idle=100
+redis.pool.test.on.borrow=true
+redis.pool.test.on.return=true
+redis.pool.test.while.idle=true
+redis.pool.min.evictable.idle.time.ms=120000
+redis.pool.time.between.eviction.runs.ms=30000
+redis.pool.num.tests.per.eviction.run=3
+redis.pool.block.when.exhausted=true
+
