@@ -222,7 +222,7 @@ body {
 
     .page.mauritius {
   
-        padding-top: 60px;
+        padding-top: 0 !important;
     }
 
     .page.mauritius .hero {
