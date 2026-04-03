@@ -1295,19 +1295,13 @@ proxyconfig: |-
     }
 
     location /support-ui/ {
-      add_header Access-Control-Allow-Origin "*";
-      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
-      proxy_cookie_path ~*^/.* /;
-      proxy_set_header X-Real-IP  $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      proxy_set_header Host $host;
-      proxy_set_header X-Forwarded-Host $host;
-      proxy_set_header X-Forwarded-Server $host;
-      rewrite ^/support-ui/(.*) /$1 break;
-      proxy_pass http://10.175.2.49:8510;
-      proxy_connect_timeout 10;
-      proxy_send_timeout 300;
-      proxy_read_timeout 300;
+    add_header Access-Control-Allow-Origin "*";
+    add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+
+    proxy_cookie_path ~*^/.* /;
+    proxy_set_header Host $host;
+    rewrite ^/support-ui/(.*)$ /$1 last;
+    proxy_pass http://10.175.2.49:8510;
     }
     location /itsm-v2-langgraph/ {
       proxy_pass http://10.175.2.49:8520;
