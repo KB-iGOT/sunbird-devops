@@ -1295,7 +1295,7 @@ proxyconfig: |-
     }
 
     location /support-ui/ {
-      proxy_pass http://10.175.2.49:8510;
+      proxy_pass http://10.175.2.49:8510/;
  
     # CRITICAL: WebSocket support for Streamlit's _stcore/stream
       proxy_http_version 1.1;
