@@ -23,7 +23,7 @@
                     <div class="hero-text-container">
                         <h1 class="hero-title large-screen">Empowering Mauritian <br>Civil Servants</h1>
                         <h1 class="hero-title responsive-screen">Empowering Mauritian <br>Civil Servants</h1>
-                        <p class="hero-subtitle">Access world-class governance training through the iGOT-Karmayogi platform &mdash; a collaboration to train 500 civil servants with role-based competency frameworks.</p>
+                        <p class="hero-subtitle">Access world-class governance training through the iGOT-Karmayogi platform — a collaboration to build capacities of civil servants with role-based competency frameworks.</p>
                     </div>
                 </div>
                 <!-- <svg class="hero__arcs" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
