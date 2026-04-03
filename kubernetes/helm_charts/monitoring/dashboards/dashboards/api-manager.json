@@ -590,7 +590,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kong_latency_time_sum{api=~\"${api}\"}[1m]) / rate(kong_latency_time_count{api=~\"${api}\"}[1m])) by (api)",
+          "expr": "sum(rate(kong_latency_time_sum{api=~\"${api}\"}[1m])) by (api) / sum(rate(kong_latency_time_count{api=~\"${api}\"}[1m])) by (api)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1753,7 +1753,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kong_request_size_sum{api=~\"${api}\"}[1m]) / rate(kong_request_size_count{api=~\"${api}\"}[1m])) by (api)",
+          "expr": "sum(rate(kong_request_size_sum{api=~\"${api}\"}[1m])) by (api) / sum(rate(kong_request_size_count{api=~\"${api}\"}[1m])) by (api)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -1861,7 +1861,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kong_response_size_sum{api=~\"${api}\"}[1m]) / rate(kong_response_size_count{api=~\"${api}\"}[1m])) by (api)",
+          "expr": "sum(rate(kong_response_size_sum{api=~\"${api}\"}[1m])) by (api) / sum(rate(kong_response_size_count{api=~\"${api}\"}[1m])) by (api)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
