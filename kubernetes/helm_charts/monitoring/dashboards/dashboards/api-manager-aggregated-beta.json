@@ -305,7 +305,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kong_latency_time_sum{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m]) / rate(kong_latency_time_count{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster)",
+          "expr": "sum(rate(kong_latency_time_sum{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster) / sum(rate(kong_latency_time_count{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1020,7 +1020,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kong_request_size_sum{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m]) / rate(kong_request_size_count{api=~\"${api}\"}[1m])) by (api,sb_cluster)",
+          "expr": "sum(rate(kong_request_size_sum{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster) / sum(rate(kong_request_size_count{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1135,7 +1135,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kong_response_size_sum{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m]) / rate(kong_response_size_sum{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster)",
+          "expr": "sum(rate(kong_response_size_sum{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster) / sum(rate(kong_response_size_count{sb_cluster=~\"$cluster\",api=~\"${api}\"}[1m])) by (api,sb_cluster)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
