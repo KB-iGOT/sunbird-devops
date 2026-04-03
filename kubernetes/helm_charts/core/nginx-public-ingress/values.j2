@@ -1294,26 +1294,22 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
     location /itsm-v2-langgraph/ {
-      proxy_pass http://10.175.2.49:8510;
- 
-    # CRITICAL: WebSocket support for Streamlit's _stcore/stream
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection "upgrade";
- 
-    # Standard proxy headers
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto $scheme;
- 
-    # Prevents "Request entity too large" errors (useful if uploading files)
-      client_max_body_size 50M;
- 
-    # Prevents timeouts during long agent responses
-      proxy_read_timeout 86400;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/itsm-v2-langgraph/(.*) /$1 break;
+      proxy_pass http://10.175.2.49:8510;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
     }
-
+	
+	
     #location /igotbuild-deploy/ {
     #  proxy_set_header Host $host;
     #  proxy_set_header X-Real-IP $remote_addr;
