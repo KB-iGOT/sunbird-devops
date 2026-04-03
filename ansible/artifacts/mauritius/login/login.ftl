@@ -261,45 +261,42 @@
 
     
             function validateEmailChar() {                
-		const validRegex = "/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/"
-                let userEmail = document.getElementById("username").value.trim()
-                if (userEmail && userEmail.length > 0) {
-		if(userEmail.length > 5 && !userEmail.match(validRegex)) {
-                        document.getElementById("emailLengthErr").innerHTML = "email is not valid"
-                        if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                document.getElementById("login").disabled = false
-                        } else {
-                            document.getElementById("login").disabled = true
-                        }
-                    }
-                    const email = userEmail.split('@')
-                    if (email && email.length === 2) {
-                        if((email[0] && email[0].length > 64 ) || (email[1] && email[1].length >255)) {
-                            document.getElementById("emailLengthErr").innerHTML = "Max 64 characters before @ & 255 characters after @ are valid."
-                            if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                document.getElementById("login").disabled = false
-                            } else {
-                                document.getElementById("login").disabled = true
-                            }
-                            
-                        } else {
-                            document.getElementById("emailLengthErr").innerHTML = ""
-                                if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                    document.getElementById("login").disabled = false
-                                } else {
-                                    document.getElementById("login").disabled = true
-                                }
-                            }
-                        }
-                    }
-			else if (userEmail.replace(/\s+/g, '').length == 0 || userEmail === "") {
-                        	document.getElementById("emailLengthErr").innerHTML = "email field can not be blank"
-                        	if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                document.getElementById("login").disabled = false
-                            } else {
-                                document.getElementById("login").disabled = true
-                            }
-                    }
+		const validRegex = /^[a-z0-9._-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/i
+
+let userEmail = document.getElementById("username").value.trim()
+const errorEl = document.getElementById("emailLengthErr")
+const loginBtn = document.getElementById("login")
+
+function toggleLogin() {
+  if (grecaptcha && grecaptcha.getResponse().length > 0) {
+    loginBtn.disabled = false
+  } else {
+    loginBtn.disabled = true
+  }
+}
+
+if (!userEmail || userEmail.replace(/\s+/g, '').length === 0) {
+  errorEl.innerHTML = "email field can not be blank"
+  toggleLogin()
+} 
+else if (userEmail.length <= 5 || !validRegex.test(userEmail)) {
+  errorEl.innerHTML = "email is not valid"
+  toggleLogin()
+} 
+else {
+  const [localPart, domainPart] = userEmail.split('@')
+
+  if (
+    (localPart && localPart.length > 64) ||
+    (domainPart && domainPart.length > 255)
+  ) {
+    errorEl.innerHTML = "Max 64 characters before @ & 255 characters after @ are valid."
+    toggleLogin()
+  } else {
+    errorEl.innerHTML = ""
+    toggleLogin()
+  }
+}
                 } 
 
     
