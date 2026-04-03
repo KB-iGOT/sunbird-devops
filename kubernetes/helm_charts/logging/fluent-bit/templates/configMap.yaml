@@ -3,14 +3,13 @@ apiVersion: v1
 data:
   filter-kubernetes.conf: |
     [FILTER]
-        # Drop health check requests before kubernetes enrichment.
+        # Drop noisy records before kubernetes enrichment.
         # Field is 'log' (raw CRI text) at this stage — 'message' does not exist yet.
         # Dropping early avoids API lookups + Merge_Log for discarded records.
-        # Note: removed 'debug' and 'info' substring drops — too broad, would silently
-        # discard lines like "Error: failed to fetch user info" or "could not debug conn".
         Name grep
         Match kube.*
         Exclude log (?i)GET (?:\/service)?\/health
+        Exclude log (?i)"level"\s*:\s*"debug"
 
     [FILTER]
         Name                kubernetes
@@ -63,6 +62,40 @@ data:
         Operation     lift
         Nested_under  kubernetes_annotations
         Add_prefix    kubernetes_annotations_
+
+    # ===========================================================================
+    # NOISY APP FILTERING
+    # ---------------------------------------------------------------------------
+    # Some services produce excessive INFO/DEBUG logs that contribute the
+    # majority of daily index volume with no operational value.
+    #
+    # Strategy:
+    #   1. rewrite_tag isolates the service into a separate tag (course.noisy)
+    #   2. grep drops INFO / DEBUG / TRACE on that tag only
+    #   3. WARN and ERROR pass through unchanged to Elasticsearch
+    #
+    # To add more services, duplicate the rewrite_tag Rule and grep block.
+    # ===========================================================================
+
+    [FILTER]
+        # Route cb-ext-course-service logs to a separate tag so we can
+        # drop INFO/DEBUG/TRACE without affecting other services.
+        # course.noisy does not match kube.* — avoids re-processing loop.
+        Name                    rewrite_tag
+        Match                   kube.*
+        # Top log producers by volume (2026-04-03):
+        #   1. cb-ext-course-service                        ~3.6B docs/day (48%)
+        #   2. program-activity-aggregate-updater-taskmanager ~742M docs/day (10%)
+        Rule                    $kubernetes_container_name ^(cb-ext-course-service|program-activity-aggregate-updater-taskmanager)$ course.noisy false
+        Emitter_Storage.type    filesystem
+        Emitter_Mem_Buf_Limit   50M
+
+    [FILTER]
+        # Drop INFO/DEBUG/TRACE for cb-ext-course-service.
+        # Record re-enters here after rewrite_tag — all kube fields intact.
+        Name    grep
+        Match   course.noisy
+        Exclude message (?:INFO|DEBUG|TRACE)
 
     [FILTER]
         # Strip noisy/large annotations that add no value to log analysis.
