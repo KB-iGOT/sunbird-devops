@@ -1294,7 +1294,7 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
     location /itsm-v2-langgraph/ {
-      proxy_pass http://10.175.2.49:8510/itsm-v2-langgraph/;
+      proxy_pass http://10.175.2.49:8510;
  
     # CRITICAL: WebSocket support for Streamlit's _stcore/stream
       proxy_http_version 1.1;
