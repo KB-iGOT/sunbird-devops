@@ -24,7 +24,7 @@
 
 - name: Upload to Google Cloud Storage
   shell: gsutil cp -r {{ artifact_path }} gs://{{ artifacts_container }}/{{ artifact }}
-  async: 3600
+  async: 32400
   poll: 10
 
 - name: Remove temporary GCP service account file
