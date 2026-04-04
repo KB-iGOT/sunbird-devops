@@ -4,7 +4,8 @@ wildfly_dir: /opt/keycloak
 wildfly_user: keycloak
 wildfly_group: keycloak
 keycloak_heap_size: 8g
-keycloak_metaspace_size: 256m
+keycloak_metaspace_size: 512m
+keycloak_max_metaspace_size: 1536m
 keycloak_home: /opt/keycloak
 login_theme: artifacts/sunbird/login
 email_theme: artifacts/sunbird/email
