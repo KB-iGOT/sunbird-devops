@@ -10,6 +10,7 @@ data:
         Match kube.*
         Exclude log (?i)GET (?:\/service)?\/health
         Exclude log (?i)"level"\s*:\s*"debug"
+        Exclude log (?i)"level"\s*:\s*"info"
 
     [FILTER]
         Name                kubernetes
