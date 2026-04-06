@@ -2535,6 +2535,31 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://ui-static;
     }
+    location ~* ^/[^/]+\.js$ {
+      proxy_cache_key "$host$request_uri|$http_accept_encoding";
+      proxy_cache static_js_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_methods GET HEAD;
+      proxy_cache_valid 200 43200;
+      proxy_no_cache $skip_small_static_js_cache;
+      rewrite ^/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_set_header    X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-static;
+    }
     location / {
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
@@ -3544,6 +3569,31 @@ proxyconfig: |-
       add_header test hello;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Scheme $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_set_header    X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-cbp-igot;
+    }
+    location ~* ^/[^/]+\.js$ {
+      proxy_cache_key "$host$request_uri|$http_accept_encoding";
+      proxy_cache static_js_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_methods GET HEAD;
+      proxy_cache_valid 200 43200;
+      proxy_no_cache $skip_small_static_js_cache;
+      rewrite ^/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
       proxy_connect_timeout 5;
       proxy_send_timeout 60;
@@ -4868,6 +4918,32 @@ proxyconfig: |-
       proxy_http_version 1.1;
       proxy_pass http://keycloak;
   }
+
+    location ~* ^/[^/]+\.js$ {
+      proxy_cache_key "$host$request_uri|$http_accept_encoding";
+      proxy_cache static_js_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_methods GET HEAD;
+      proxy_cache_valid 200 43200;
+      proxy_no_cache $skip_small_static_js_cache;
+      rewrite ^/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_set_header    X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-static;
+    }
 
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
@@ -8663,6 +8739,31 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://ui-cbp-igot;
     }
+    location ~* ^/[^/]+\.js$ {
+      proxy_cache_key "$host$request_uri|$http_accept_encoding";
+      proxy_cache static_js_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_methods GET HEAD;
+      proxy_cache_valid 200 43200;
+      proxy_no_cache $skip_small_static_js_cache;
+      rewrite ^/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_set_header    X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-spv-igot;
+    }
     location / {
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
@@ -9663,6 +9764,31 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://ui-cbp-igot;
     }
+    location ~* ^/[^/]+\.js$ {
+      proxy_cache_key "$host$request_uri|$http_accept_encoding";
+      proxy_cache static_js_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_methods GET HEAD;
+      proxy_cache_valid 200 43200;
+      proxy_no_cache $skip_small_static_js_cache;
+      rewrite ^/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_set_header    X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_pass http://ui-mdo-igot;
+    }
     location / {
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
@@ -9844,6 +9970,11 @@ nginxconfig: |
         default  $upstream_cache_status;
         ''       "NONE";
       }
+      # Cache large static JS bundles only when upstream provides a 100 KB+ Content-Length.
+      map $upstream_http_content_length $skip_small_static_js_cache {
+        default 1;
+        ~^[1-9]\d{5,}$ 0;
+      }
       # Defining metrics
       init_worker_by_lua_block {
         prometheus = require("prometheus").init("prometheus_metrics")
@@ -9953,6 +10084,7 @@ nginxconfig: |
       proxy_cache_path /tmp/content_cache levels=1:2 keys_zone=content_cache:100m max_size=3000m inactive=600m use_temp_path=off;
       proxy_cache_path /tmp/ratings_cache levels=1:2 keys_zone=ratings_cache:100m max_size=3000m inactive=600m use_temp_path=off;
       proxy_cache_path /tmp/sunbirdigot_cache levels=1:2 keys_zone=sunbirdigot_cache:100m max_size=3000m inactive=600m use_temp_path=off;
+      proxy_cache_path /tmp/static_js_cache levels=1:2 keys_zone=static_js_cache:20m max_size=3000m inactive=600m use_temp_path=off;
 
      server {
        listen 9145;
@@ -10045,6 +10177,31 @@ keycloakconf: |
       proxy_set_header X-Scheme $scheme;
       proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    location ~* ^/[^/]+\.js$ {
+      proxy_cache_key "$host$request_uri|$http_accept_encoding";
+      proxy_cache static_js_cache;
+      add_header X-Proxy-Cache $upstream_cache_status;
+      add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_revalidate on;
+      proxy_cache_background_update on;
+      proxy_cache_lock on;
+      proxy_cache_methods GET HEAD;
+      proxy_cache_valid 200 43200;
+      proxy_no_cache $skip_small_static_js_cache;
+      rewrite ^/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Scheme $scheme;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_set_header    X-Forwarded-Proto $scheme;
+      proxy_set_header Connection "";
+      proxy_http_version 1.1;
+      proxy_set_header X-Request-ID $request_id;
+      proxy_pass http://ui-static;
     }
     location / {
       rewrite ^/(.*) /$1 break;
