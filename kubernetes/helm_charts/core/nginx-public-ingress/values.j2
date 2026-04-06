@@ -2540,6 +2540,7 @@ proxyconfig: |-
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_ignore_headers Cache-Control Expires;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
@@ -3584,6 +3585,7 @@ proxyconfig: |-
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_ignore_headers Cache-Control Expires;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
@@ -4924,6 +4926,7 @@ proxyconfig: |-
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_ignore_headers Cache-Control Expires;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
@@ -8744,6 +8747,7 @@ proxyconfig: |-
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_ignore_headers Cache-Control Expires;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
@@ -9769,6 +9773,7 @@ proxyconfig: |-
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_ignore_headers Cache-Control Expires;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
@@ -9973,7 +9978,7 @@ nginxconfig: |
       # Cache large static JS bundles only when upstream provides a 100 KB+ Content-Length.
       map $upstream_http_content_length $skip_small_static_js_cache {
         default 1;
-        ~^[1-9]\d{5,}$ 0;
+        ~^[1-9][0-9][0-9][0-9][0-9][0-9][0-9]*$ 0;
       }
       # Defining metrics
       init_worker_by_lua_block {
@@ -10183,6 +10188,7 @@ keycloakconf: |
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
       add_header X-Proxy-Cache-Date $upstream_http_date;
+      proxy_ignore_headers Cache-Control Expires;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_cache_revalidate on;
       proxy_cache_background_update on;
