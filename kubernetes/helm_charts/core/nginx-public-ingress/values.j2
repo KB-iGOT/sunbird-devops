@@ -3554,13 +3554,13 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://ui-cbp-igot;
     }
-    location ~* ^/[^/]+\.js$ {
+    location ~* ^/[^/]+\.(js|css|svg|png|jpe?g|webp|ico|woff2?|ttf|eot)$ {
       gzip on;
       gzip_comp_level    5;
       gzip_min_length    100000;
       gzip_proxied       any;
       gzip_vary          on;
-      gzip_types         application/javascript text/javascript;
+      gzip_types         application/javascript text/javascript text/css image/svg+xml;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -4900,13 +4900,13 @@ proxyconfig: |-
       proxy_pass http://keycloak;
   }
 
-    location ~* ^/[^/]+\.js$ {
+    location ~* ^/[^/]+\.(js|css|svg|png|jpe?g|webp|ico|woff2?|ttf|eot)$ {
       gzip on;
       gzip_comp_level    5;
       gzip_min_length    100000;
       gzip_proxied       any;
       gzip_vary          on;
-      gzip_types         application/javascript text/javascript;
+      gzip_types         application/javascript text/javascript text/css image/svg+xml;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -8726,13 +8726,13 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://ui-cbp-igot;
     }
-    location ~* ^/[^/]+\.js$ {
+    location ~* ^/[^/]+\.(js|css|svg|png|jpe?g|webp|ico|woff2?|ttf|eot)$ {
       gzip on;
       gzip_comp_level    5;
       gzip_min_length    100000;
       gzip_proxied       any;
       gzip_vary          on;
-      gzip_types         application/javascript text/javascript;
+      gzip_types         application/javascript text/javascript text/css image/svg+xml;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -9757,13 +9757,13 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://ui-cbp-igot;
     }
-    location ~* ^/[^/]+\.js$ {
+    location ~* ^/[^/]+\.(js|css|svg|png|jpe?g|webp|ico|woff2?|ttf|eot)$ {
       gzip on;
       gzip_comp_level    5;
       gzip_min_length    100000;
       gzip_proxied       any;
       gzip_vary          on;
-      gzip_types         application/javascript text/javascript;
+      gzip_types         application/javascript text/javascript text/css image/svg+xml;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -10171,37 +10171,6 @@ keycloakconf: |
       proxy_set_header X-Scheme $scheme;
       proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
-    }
-    location ~* ^/[^/]+\.js$ {
-      gzip on;
-      gzip_comp_level    5;
-      gzip_min_length    100000;
-      gzip_proxied       any;
-      gzip_vary          on;
-      gzip_types         application/javascript text/javascript;
-      proxy_cache_key "$host$request_uri|$http_accept_encoding";
-      proxy_cache static_js_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_ignore_headers Cache-Control Expires;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_methods GET HEAD;
-      proxy_cache_valid 200 43200;
-      rewrite ^/(.*) /$1 break;
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
-      proxy_set_header X-Scheme $scheme;
-      proxy_connect_timeout 5;
-      proxy_send_timeout 60;
-      proxy_read_timeout 70;
-      proxy_set_header    X-Forwarded-Proto $scheme;
-      proxy_set_header Connection "";
-      proxy_http_version 1.1;
-      proxy_set_header X-Request-ID $request_id;
-      proxy_pass http://ui-static;
     }
     location / {
       rewrite ^/(.*) /$1 break;
