@@ -3555,6 +3555,12 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     location ~* ^/[^/]+\.js$ {
+      gzip on;
+      gzip_comp_level    5;
+      gzip_min_length    100000;
+      gzip_proxied       any;
+      gzip_vary          on;
+      gzip_types         application/javascript text/javascript;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -3566,7 +3572,6 @@ proxyconfig: |-
       proxy_cache_lock on;
       proxy_cache_methods GET HEAD;
       proxy_cache_valid 200 43200;
-      proxy_no_cache $skip_small_static_js_cache;
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
@@ -4896,6 +4901,12 @@ proxyconfig: |-
   }
 
     location ~* ^/[^/]+\.js$ {
+      gzip on;
+      gzip_comp_level    5;
+      gzip_min_length    100000;
+      gzip_proxied       any;
+      gzip_vary          on;
+      gzip_types         application/javascript text/javascript;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -4907,7 +4918,6 @@ proxyconfig: |-
       proxy_cache_lock on;
       proxy_cache_methods GET HEAD;
       proxy_cache_valid 200 43200;
-      proxy_no_cache $skip_small_static_js_cache;
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
@@ -8717,6 +8727,12 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     location ~* ^/[^/]+\.js$ {
+      gzip on;
+      gzip_comp_level    5;
+      gzip_min_length    100000;
+      gzip_proxied       any;
+      gzip_vary          on;
+      gzip_types         application/javascript text/javascript;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -8728,7 +8744,6 @@ proxyconfig: |-
       proxy_cache_lock on;
       proxy_cache_methods GET HEAD;
       proxy_cache_valid 200 43200;
-      proxy_no_cache $skip_small_static_js_cache;
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
@@ -9743,6 +9758,12 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     location ~* ^/[^/]+\.js$ {
+      gzip on;
+      gzip_comp_level    5;
+      gzip_min_length    100000;
+      gzip_proxied       any;
+      gzip_vary          on;
+      gzip_types         application/javascript text/javascript;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -9754,7 +9775,6 @@ proxyconfig: |-
       proxy_cache_lock on;
       proxy_cache_methods GET HEAD;
       proxy_cache_valid 200 43200;
-      proxy_no_cache $skip_small_static_js_cache;
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
@@ -9948,11 +9968,6 @@ nginxconfig: |
       map $upstream_cache_status $cache_status {
         default  $upstream_cache_status;
         ''       "NONE";
-      }
-      # Cache large static JS bundles only when upstream provides a 100 KB+ Content-Length.
-      map $upstream_http_content_length $skip_small_static_js_cache {
-        default 1;
-        ~^[1-9][0-9][0-9][0-9][0-9][0-9][0-9]*$ 0;
       }
       # Defining metrics
       init_worker_by_lua_block {
@@ -10158,6 +10173,12 @@ keycloakconf: |
       proxy_set_header X-Forwarded-Proto $scheme;
     }
     location ~* ^/[^/]+\.js$ {
+      gzip on;
+      gzip_comp_level    5;
+      gzip_min_length    100000;
+      gzip_proxied       any;
+      gzip_vary          on;
+      gzip_types         application/javascript text/javascript;
       proxy_cache_key "$host$request_uri|$http_accept_encoding";
       proxy_cache static_js_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -10169,7 +10190,6 @@ keycloakconf: |
       proxy_cache_lock on;
       proxy_cache_methods GET HEAD;
       proxy_cache_valid 200 43200;
-      proxy_no_cache $skip_small_static_js_cache;
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
