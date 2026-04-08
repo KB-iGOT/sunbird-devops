@@ -1685,9 +1685,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{ mountpoint=\"/data\", job=~\".*node-exporter\"} - node_filesystem_free_bytes{ mountpoint=\"/data\"}) * 100 / node_filesystem_size_bytes{mountpoint=\"/data\"}  * on (instance) group_left(nodename) node_uname_info )  by (nodename)",
+          "expr": "sum((node_filesystem_size_bytes{ mountpoint=\"/var/kafka\", job=~\".*node-exporter\"} - node_filesystem_free_bytes{ mountpoint=\"/var/kafka\"}) * 100 / node_filesystem_size_bytes{mountpoint=\"/var/kafka\"}  * on (instance) group_left(nodename) node_uname_info )  by (nodename)",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{nodename}}",
           "refId": "B",
@@ -2384,5 +2385,5 @@
   "timezone": "",
   "title": "Dashboard-All",
   "uid": "hUllvUtDz",
-  "version": 2
+  "version": 4
 }
