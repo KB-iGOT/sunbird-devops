@@ -32,3 +32,10 @@ telemetry_redacter_threshold_fatal: "{{ telemetry_redacter_threshold_fatal | d(5
 telemetry_router_threshold_fatal: "{{ telemetry_router_threshold_fatal | d(500) }}"
 telemetry_validator_threshold_fatal: "{{ telemetry_validator_threshold_fatal | d(500) }}"
 user_cacheupdater_threshold_fatal: "{{ user_cacheupdater_threshold_fatal | d(500) }}"
+
+{% if monitoring_workload_node_selector %}
+nodeSelector: {{ monitoring_workload_node_selector | to_json }}
+{% endif %}
+{% if monitoring_workload_tolerations %}
+tolerations: {{ monitoring_workload_tolerations | to_json }}
+{% endif %}

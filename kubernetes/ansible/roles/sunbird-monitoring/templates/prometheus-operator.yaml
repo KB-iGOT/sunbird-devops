@@ -8,6 +8,14 @@
 #}
 fullnameOverride: sunbird-monitoring
 
+{% if monitoring_workload_node_selector %}
+x-monitoring-node-selector: &monitoring_node_selector {{ monitoring_workload_node_selector | to_json }}
+x-monitoring-linux-node-selector: &monitoring_linux_node_selector {{ monitoring_linux_workload_node_selector | to_json }}
+{% endif %}
+{% if monitoring_workload_tolerations %}
+x-monitoring-tolerations: &monitoring_tolerations {{ monitoring_workload_tolerations | to_json }}
+{% endif %}
+
 # This is to override/add configurations of prometheusSpec by user
 # you can add this variable in common.yaml and that will get merged / preferred
 # over the below variables.
@@ -49,6 +57,12 @@ alertmanager_spec_overrides: &alertmanager_spec_overrides
 # Enabling external prometheus scrape config
 prometheus:
   prometheusSpec:
+{% if monitoring_workload_node_selector %}
+    nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+    tolerations: *monitoring_tolerations
+{% endif %}
     thanos:
       version: {{ thanos_sidecar_version | d('v0.11.0') }}
     evaluationInterval: "30s"
@@ -75,6 +89,13 @@ prometheus:
 {% endif %}
 
 alertmanager:
+  alertmanagerSpec:
+{% if monitoring_workload_node_selector %}
+    nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+    tolerations: *monitoring_tolerations
+{% endif %}
   config:
     global:
       smtp_from: "{{ monitor_alerts_mail_from_email }}"
@@ -285,6 +306,21 @@ alertmanager:
 
 
 grafana:
+{% if monitoring_workload_node_selector %}
+  nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+  tolerations: *monitoring_tolerations
+{% endif %}
+{% if monitoring_workload_node_selector or monitoring_workload_tolerations %}
+  imageRenderer:
+{% if monitoring_workload_node_selector %}
+    nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+    tolerations: *monitoring_tolerations
+{% endif %}
+{% endif %}
   deploymentStrategy:
     type: Recreate
   image:
@@ -304,6 +340,55 @@ grafana:
 {% endif %}
 {% if grafana_service is defined and grafana_service %}
   service: {{ grafana_service|to_json}}
+{% endif %}
+
+{% if monitoring_workload_node_selector or monitoring_workload_tolerations %}
+prometheusOperator:
+{% if monitoring_workload_node_selector %}
+  nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+  tolerations: *monitoring_tolerations
+{% endif %}
+  admissionWebhooks:
+    patch:
+{% if monitoring_workload_node_selector %}
+      nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+      tolerations: *monitoring_tolerations
+{% endif %}
+{% endif %}
+
+{% if monitoring_workload_node_selector or monitoring_workload_tolerations %}
+kube-state-metrics:
+{% if monitoring_workload_node_selector %}
+  nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+  tolerations: *monitoring_tolerations
+{% endif %}
+{% endif %}
+
+{% if monitoring_workload_node_selector or monitoring_workload_tolerations %}
+prometheus-node-exporter:
+{% if monitoring_workload_node_selector %}
+  nodeSelector: *monitoring_linux_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+  tolerations: *monitoring_tolerations
+{% endif %}
+{% endif %}
+
+{% if monitoring_workload_node_selector or monitoring_workload_tolerations %}
+thanosRuler:
+  thanosRulerSpec:
+{% if monitoring_workload_node_selector %}
+    nodeSelector: *monitoring_node_selector
+{% endif %}
+{% if monitoring_workload_tolerations %}
+    tolerations: *monitoring_tolerations
+{% endif %}
 {% endif %}
 
 

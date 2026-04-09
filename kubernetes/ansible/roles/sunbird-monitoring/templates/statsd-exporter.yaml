@@ -1,5 +1,3 @@
-fullnameOverride: redis-exporter
-
 {% if monitoring_workload_node_selector %}
 nodeSelector: {{ monitoring_workload_node_selector | to_json }}
 {% endif %}

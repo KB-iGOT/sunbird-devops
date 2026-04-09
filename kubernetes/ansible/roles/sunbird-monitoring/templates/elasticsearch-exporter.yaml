@@ -9,3 +9,10 @@ serviceMonitor:
   interval: 60s
   scrapeTimeout: 30s
   scheme: http
+
+{% if monitoring_workload_node_selector %}
+nodeSelector: {{ monitoring_workload_node_selector | to_json }}
+{% endif %}
+{% if monitoring_workload_tolerations %}
+tolerations: {{ monitoring_workload_tolerations | to_json }}
+{% endif %}
