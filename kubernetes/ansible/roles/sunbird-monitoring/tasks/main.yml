@@ -4,7 +4,7 @@
   template:
     src: "{{ item }}.yaml"
     dest: "/tmp/{{item}}.yaml"
-  with_items: "{{ monitoring_stack + monitoring_stack_additional_charts }}"
+  with_items: "{{ monitoring_stack + monitoring_stack_additional_charts + ['statsd-exporter'] }}"
   tags:
     - always
 
@@ -24,6 +24,6 @@
     - dashboards
 
 - name: Install statsd-exporter
-  shell: "helm upgrade --install statsd-exporter {{chart_path}}/statsd-exporter --namespace {{ namespace }}"
+  shell: "helm upgrade --install statsd-exporter {{chart_path}}/statsd-exporter --namespace {{ namespace }} -f /tmp/statsd-exporter.yaml"
   tags:
     - statsd-exporter

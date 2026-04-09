@@ -20,4 +20,29 @@ authenticatedEmailsFile:
   #   user1@gmail.com
   #   user2@mycompany.com
   restricted_access: |-
-{{ grafana_login_whitelisted_emails | indent( width=4, first=True)  }}
+    {{ grafana_login_whitelisted_emails | indent( width=4, first=True) }}
+
+{% if monitoring_workload_node_selector %}
+nodeSelector: {{ monitoring_workload_node_selector | to_json }}
+{% endif %}
+{% if monitoring_workload_tolerations %}
+tolerations: {{ monitoring_workload_tolerations | to_json }}
+{% endif %}
+
+{% if monitoring_workload_node_selector or monitoring_workload_tolerations %}
+redis:
+  master:
+{% if monitoring_workload_node_selector %}
+    nodeSelector: {{ monitoring_workload_node_selector | to_json }}
+{% endif %}
+{% if monitoring_workload_tolerations %}
+    tolerations: {{ monitoring_workload_tolerations | to_json }}
+{% endif %}
+  slave:
+{% if monitoring_workload_node_selector %}
+    nodeSelector: {{ monitoring_workload_node_selector | to_json }}
+{% endif %}
+{% if monitoring_workload_tolerations %}
+    tolerations: {{ monitoring_workload_tolerations | to_json }}
+{% endif %}
+{% endif %}

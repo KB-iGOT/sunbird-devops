@@ -1,2 +1,9 @@
 cassandra_host: "{{ groups['cassandra'][0] }}"
 cassandra_port: "7199"
+
+{% if monitoring_workload_node_selector %}
+nodeSelector: {{ monitoring_workload_node_selector | to_json }}
+{% endif %}
+{% if monitoring_workload_tolerations %}
+tolerations: {{ monitoring_workload_tolerations | to_json }}
+{% endif %}
