@@ -1501,7 +1501,7 @@ proxyconfig: |-
     location @resource_slash_403 {
         add_header Set-Cookie "connect.sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure" always;
         add_header Set-Cookie "connect.sid=; Domain=.{{nginx_proxy_server_name}}; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure" always;
-        return 302 /page/home;
+        return 302 /protected/v8/resource;
     }
 
     location /apis/public/v8/course/batch/cert/download/mobile {
