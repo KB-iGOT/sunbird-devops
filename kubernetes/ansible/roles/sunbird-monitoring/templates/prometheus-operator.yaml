@@ -89,12 +89,14 @@ prometheus:
 {% endif %}
 
 alertmanager:
+{% if monitoring_workload_node_selector or monitoring_workload_tolerations %}
   alertmanagerSpec:
 {% if monitoring_workload_node_selector %}
     nodeSelector: *monitoring_node_selector
 {% endif %}
 {% if monitoring_workload_tolerations %}
     tolerations: *monitoring_tolerations
+{% endif %}
 {% endif %}
   config:
     global:
