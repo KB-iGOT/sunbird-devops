@@ -356,9 +356,9 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript">       
         function encryptPassword() {
-                var secretKey = CryptoJS.enc.Utf8.parse("testingSecretKey");
+                var secretKey = CryptoJS.enc.Utf8.parse("${secretKey}");
                 var passwordField = document.getElementById("password");
                 var iv = CryptoJS.lib.WordArray.random(16);
                 var encrypted = CryptoJS.AES.encrypt(passwordField.value, secretKey, {
