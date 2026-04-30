@@ -1,0 +1,25 @@
+### Default variable file for ai-assessment-service ###
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+replicaCount: {{ai_assessment_replicacount|default(1)}}
+repository: {{ image_ai_assessment_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{ai_assessment_cpu_req|default('100m')}}
+    memory: {{ai_assessment_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{ai_assessment_cpu_limit|default('1')}}
+    memory: {{ai_assessment_mem_limit|default('1024Mi')}}
+network:
+  port: {{ service_ai_assessment_port }}
+  targetport: {{ service_ai_assessment_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ ai_assessment_maxsurge|default('25%') }}
+  maxunavailable: {{ ai_assessment_maxunavailable|default('25%') }}
+aiassessmentconfig: |-
+  {
+    "PORT": "{{ service_ai_assessment_port }}"
+  }
