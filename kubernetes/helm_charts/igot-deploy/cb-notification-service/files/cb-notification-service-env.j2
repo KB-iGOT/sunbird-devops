@@ -98,17 +98,3 @@ cleanup.peer.validation.day.offset=1
 cleanup.peer.validation.poll.timeout.seconds=5
 cleanup.peer.validation.executor.shutdown.timeout.minutes=10
 cleanup.peer.validation.audit.deletion.prefix="DELETED:"
-
-elasticsearch.host={{ elasticsearch_host }}
-elasticsearch.port={{ elasticsearch_http_port }}
-elasticsearch.username={{ elasticsearch_username }}
-elasticsearch.password={{ elasticsearch_password }}
-
-forms.es.index.alias=fs-forms-alias-v2
-forms.es.context.type=peerValidationSurvey
-forms.es.fetch.fields=formId,additionalProperties
-forms.es.fetch.batch.size=10
-forms.cache.ttl.seconds=86400
-forms.cache.max.size=5000
-es.max.terms.count=65536
-es.query.timeout=5s
