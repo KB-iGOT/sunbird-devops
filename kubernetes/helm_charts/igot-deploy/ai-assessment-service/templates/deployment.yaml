@@ -24,6 +24,10 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
+      volumes:
+        - name: gcpaiassessmentcredentialsjson
+          configMap:
+            name: gcpaiassessmentcredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -33,6 +37,10 @@ spec:
             name: {{ .Chart.Name }}-config
         resources:
 {{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: gcpaiassessmentcredentialsjson
+          mountPath: /app/aswin-model-access-account.json
+          subPath: aswin-model-access-account.json
         ports:
         - containerPort: {{ .Values.network.port }}
 ---
