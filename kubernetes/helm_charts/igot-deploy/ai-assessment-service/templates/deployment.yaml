@@ -24,10 +24,6 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
-      volumes:
-        - name: gcpaiassessmentcredentialsjson
-          configMap:
-            name: gcpaiassessmentcredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
