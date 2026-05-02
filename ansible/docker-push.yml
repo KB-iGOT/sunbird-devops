@@ -25,11 +25,11 @@
     - name: Tag image for GCR
       shell: |
         docker tag keycloak24:{{ docker_image_tag }} \
-          {{ gcr_registry }}/{{ gcp_project_id }}/keycloak24:{{ docker_image_tag }}
+          {{ dockerhub }}/keycloak24:{{ docker_image_tag }}
 
     - name: Push image to GCR
       shell: |
-        docker push {{ gcr_registry }}/{{ gcp_project_id }}/keycloak24:{{ docker_image_tag }}
+        docker push {{ dockerhub }}/keycloak24:{{ docker_image_tag }}
 
     - name: Remove GCP service account file
       file:
@@ -39,4 +39,4 @@
     - name: Remove local docker images
       shell: |
         docker rmi keycloak24:{{ docker_image_tag }} || true
-        docker rmi {{ gcr_registry }}/{{ gcp_project_id }}/keycloak24:{{ docker_image_tag }} || true
+        docker rmi {{ dockerhub }}/keycloak24:{{ docker_image_tag }} || true
