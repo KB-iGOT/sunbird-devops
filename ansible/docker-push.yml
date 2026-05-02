@@ -1,34 +1,26 @@
 ---
 - name: Push Keycloak 24 Docker image to GCR
   hosts: localhost
+  become: yes
   gather_facts: false
+  vars_files:
+    - "{{ inventory_dir }}/secrets.yml"
   tags: gcp
 
   tasks:
-
-    - name: Check SA variable is defined
-      debug:
-        msg: "SA var length: {{ gcp_artifcats_upload_service_account | length }}"
 
     - name: Write GCP service account file
       copy:
         content: "{{ gcp_artifcats_upload_service_account }}"
         dest: "/tmp/gcp-sa-kc24.json"
         mode: '0600'
-
-    - name: Validate JSON file
-      shell: python3 -c "import json; json.load(open('/tmp/gcp-sa-kc24.json'))"
-      register: json_check
-      ignore_errors: true
-
-    - name: Show JSON validation result
-      debug:
-        var: json_check
+      no_log: true
 
     - name: Authenticate Docker to GCR
       shell: |
         cat /tmp/gcp-sa-kc24.json | docker login -u _json_key \
           --password-stdin https://{{ gcr_registry }}
+      no_log: true
 
     - name: Tag image for GCR
       shell: |
