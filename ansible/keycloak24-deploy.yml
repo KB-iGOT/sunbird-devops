@@ -3,7 +3,10 @@
   hosts: "{{ host }}"
   become: yes
   gather_facts: false
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   vars_files:
+    - "{{ inventory_dir }}/common.yml"
     - "{{ inventory_dir }}/secrets.yml"
 
   tasks:
