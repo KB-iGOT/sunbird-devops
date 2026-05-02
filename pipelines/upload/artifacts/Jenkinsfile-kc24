@@ -1,0 +1,58 @@
+@Library('deploy-conf') _
+node() {
+    try {
+        stage('checkout public repo') {
+            folder = new File("$WORKSPACE/.git")
+            if (folder.exists()) {
+                println "Found .git folder. Clearing it.."
+                sh 'git clean -fxd'
+            }
+            checkout scm
+        }
+
+        stage('Artifact Upload') {
+            values    = lp_dp_params()
+            currentWs = sh(returnStdout: true, script: 'pwd').trim()
+            artifact  = values.artifact_name + ":" + values.artifact_version
+
+            if (params.artifact_source == "ArtifactRepo") {
+                ansiblePlaybook = "${currentWs}/ansible/artifacts-upload.yml"
+                ansibleExtraArgs = "--tags gcp --extra-vars \"artifact=${artifact} artifact_path=${currentWs}/${artifact}\" --vault-password-file /var/lib/jenkins/secrets/vault-pass"
+                values.put('currentWs', currentWs)
+                values.put('ansiblePlaybook', ansiblePlaybook)
+                values.put('ansibleExtraArgs', ansibleExtraArgs)
+                ansible_playbook_run(values)
+                currentBuild.result = 'SUCCESS'
+            }
+            archiveArtifacts artifacts: "${artifact}", fingerprint: true, onlyIfSuccessful: true
+            archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
+            currentBuild.description = "Artifact: ${values.artifact_version}, Private: ${params.private_branch}, Public: ${params.branch_or_tag}"
+        }
+
+        stage('Docker Push') {
+            values    = lp_dp_params()
+            currentWs = sh(returnStdout: true, script: 'pwd').trim()
+            def imageTag = sh(
+                script: "jq -r .docker_image_tag ${currentWs}/metadata.json",
+                returnStdout: true
+            ).trim()
+
+            ansiblePlaybook = "${currentWs}/ansible/docker-push.yml"
+            ansibleExtraArgs = "--tags gcp --extra-vars \"docker_image_tag=${imageTag}\" --vault-password-file /var/lib/jenkins/secrets/vault-pass"
+            values.put('currentWs', currentWs)
+            values.put('ansiblePlaybook', ansiblePlaybook)
+            values.put('ansibleExtraArgs', ansibleExtraArgs)
+            ansible_playbook_run(values)
+
+            currentBuild.description = "Image: ${imageTag}, Private: ${params.private_branch}, Public: ${params.branch_or_tag}"
+        }
+    }
+    catch (err) {
+        currentBuild.result = "FAILURE"
+        throw err
+    }
+    finally {
+        slack_notify(currentBuild.result)
+        email_notify()
+    }
+}
