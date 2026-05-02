@@ -1,0 +1,39 @@
+---
+- name: Push Keycloak 24 Docker image to GCR
+  hosts: localhost
+  gather_facts: false
+  tags: gcp
+
+  tasks:
+
+    - name: Write GCP service account file
+      copy:
+        content: "{{ gcp_service_account_content }}"
+        dest: "/tmp/gcp-sa-kc24.json"
+        mode: '0600'
+      no_log: true
+
+    - name: Authenticate Docker to GCR
+      shell: |
+        cat /tmp/gcp-sa-kc24.json | docker login -u _json_key \
+          --password-stdin https://{{ gcr_registry }}
+      no_log: true
+
+    - name: Tag image for GCR
+      shell: |
+        docker tag keycloak24:{{ docker_image_tag }} \
+          {{ gcr_registry }}/{{ gcp_project_id }}/keycloak24:{{ docker_image_tag }}
+
+    - name: Push image to GCR
+      shell: |
+        docker push {{ gcr_registry }}/{{ gcp_project_id }}/keycloak24:{{ docker_image_tag }}
+
+    - name: Remove GCP service account file
+      file:
+        path: "/tmp/gcp-sa-kc24.json"
+        state: absent
+
+    - name: Remove local docker images
+      shell: |
+        docker rmi keycloak24:{{ docker_image_tag }} || true
+        docker rmi {{ gcr_registry }}/{{ gcp_project_id }}/keycloak24:{{ docker_image_tag }} || true
