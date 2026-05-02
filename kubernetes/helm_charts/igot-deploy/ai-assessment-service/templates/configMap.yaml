@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: gcpaiassessmentcredentialsjson
-  namespace: {{ .Values.namespace }}
-data:
-  aswin-model-access-account.json: |
-{{ .Values.gcpaiassessmentcredentialsjson | indent 4 }}
