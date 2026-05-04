@@ -1271,6 +1271,7 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
+      proxy_set_header X-Forwarded-Prefix /ai-assessment-generation;
       rewrite ^/ai-assessment-generation/(.*) /$1 break;
       proxy_pass http://ai-assessment-service:8000;
       proxy_connect_timeout 10;
