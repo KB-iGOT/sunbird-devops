@@ -1,0 +1,21 @@
+### Default variable file for ai-cbp-mdo-service ###
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+replicaCount: {{ai_cbp_mdo_replicacount|default(1)}}
+repository: {{ image_ai_cbp_mdo_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{ai_cbp_mdo_cpu_req|default('100m')}}
+    memory: {{ai_cbp_mdo_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{ai_cbp_mdo_cpu_limit|default('1')}}
+    memory: {{ai_cbp_mdo_mem_limit|default('1024Mi')}}
+network:
+  port: {{ service_ai_cbp_mdo_port }}
+  targetport: {{ service_ai_cbp_mdo_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ ai_cbp_mdo_maxsurge|default('25%') }}
+  maxunavailable: {{ ai_cbp_mdo_maxunavailable|default('25%') }}
