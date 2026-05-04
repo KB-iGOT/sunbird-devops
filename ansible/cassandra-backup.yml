@@ -1,26 +1,29 @@
-#  This task will take snapshot serially for all cassandra nodes
-#  If we club both taking snapshot and upload the data, then the
-#  interval of snapshots b/w nodes will be very high; Which might lead
-#  to data discrepancies
-- hosts: cassandra
-  become: yes
-  serial: true
-  tasks:
-    - name: taking cassandra snapshots
-      shell: |
-        nodetool clearsnapshot
-        nodetool snapshot -t "cassandra-backup-{{ lookup('pipe', 'date +%Y%m%d') }}-{{ ansible_hostname }}-new"
+# Cassandra backup using Medusa
+#
+# Usage:
+#   Differential (default): ansible-playbook cassandra-backup.yml
+#   Full:                   ansible-playbook cassandra-backup.yml -e mode=full
+#
+# Scheduling via Jenkins:
+#   Weekly full  (Sun 2am):  ansible-playbook cassandra-backup.yml -e mode=full
+#   Daily diff   (Mon-Sat):  ansible-playbook cassandra-backup.yml
 
-# Once snaphot is done,
-# We can take the snapshot and compress it and upload it
-# This will take some cpu and memory in the nodes
-# Because of that we're running it serially, so that it won't affect the perfomance
 - hosts: cassandra
   become: yes
-  vars_files:
-    - ["{{ inventory_dir }}/secrets.yml"]
-  roles:
-    - {
-        name: cassandra-backup,
-        vars: [additional_arguments: "--disablesnapshot"],
-      }
+  vars:
+    mode: differential
+    mode_prefix: "{{ 'full' if mode == 'full' else 'diff' }}"
+    backup_name: "{{ mode_prefix }}-{{ lookup('pipe', 'date +%Y%m%d') }}"
+    medusa_venv_path: /opt/medusa/venv
+  tasks:
+    - name: "Run medusa backup ({{ mode }}): {{ backup_name }}"
+      shell: >
+        {{ medusa_venv_path }}/bin/medusa backup
+        --backup-name={{ backup_name }}
+        {% if mode == 'full' %}--mode=full{% endif %}
+      async: 14400
+      poll: 30
+
+    - name: Run medusa purge to enforce retention policy
+      shell: "{{ medusa_venv_path }}/bin/medusa purge"
+      run_once: true

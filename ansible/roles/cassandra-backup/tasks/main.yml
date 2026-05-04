@@ -1,3 +1,7 @@
+# DEPRECATED: This role is replaced by medusa-install + medusa-backup.yml
+# Use: ansible-playbook medusa-backup.yml [-e mode=full]
+# See openspec/changes/medusa-cassandra-backup/ for details.
+
 - name: Make sure backup dir is empty
   file: path="{{ cassandra_backup_dir }}" state=absent
   ignore_errors: true

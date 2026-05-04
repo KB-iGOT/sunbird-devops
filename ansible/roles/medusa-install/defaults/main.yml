@@ -1,0 +1,28 @@
+# Medusa installation
+medusa_venv_path: /opt/medusa/venv
+medusa_config_dir: /etc/medusa
+medusa_config_file: "{{ medusa_config_dir }}/medusa.ini"
+medusa_credentials_file: "{{ medusa_config_dir }}/credentials.json"
+
+# GCS storage
+medusa_storage_provider: google_storage
+medusa_bucket_name: "{{ backup_bucket | default('backup-bucket') }}"
+medusa_prefix: "cassandra-medusa"
+medusa_key_file: "{{ medusa_credentials_file }}"
+
+# Cassandra
+medusa_cassandra_config_file: "{{ cassandra_root_dir }}/cassandra.yaml"
+medusa_cql_username: ""
+medusa_cql_password: ""
+medusa_nodetool_username: ""
+medusa_nodetool_password: ""
+medusa_use_sudo: "True"
+
+# Retention
+medusa_max_backup_age: 30
+medusa_max_backup_count: 10
+medusa_backup_grace_period_in_days: 10
+
+# Performance
+medusa_concurrent_transfers: 1
+medusa_multi_part_upload_threshold: 20971520

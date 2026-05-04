@@ -1,6 +1,10 @@
 
 #!/usr/bin/env python3
 
+# DEPRECATED: Replaced by Medusa (cassandra-medusa).
+# Use: ansible-playbook ansible/medusa-backup.yml [-e mode=full]
+# See openspec/changes/medusa-cassandra-backup/ for details.
+
 # Author: Rajesh Rajendran <rjshrjndrn@gmail.com>
 
 '''
