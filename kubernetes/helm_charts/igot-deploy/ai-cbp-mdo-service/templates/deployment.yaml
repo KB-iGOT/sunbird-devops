@@ -24,14 +24,13 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
-      volumes:
-        - name: ai-assessment-config
-          configMap:
-            name: ai-assessment-config
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
         imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: {{ .Chart.Name }}-config
         resources:
           requests:
             cpu: {{ .Values.resources.requests.cpu }}
@@ -39,10 +38,6 @@ spec:
           limits:
             cpu: {{ .Values.resources.limits.cpu }}
             memory: {{ .Values.resources.limits.memory }}
-        volumeMounts:
-        - name: ai-assessment-config
-          mountPath: /app/config/config.json
-          subPath: config.json
         ports:
         - containerPort: {{ .Values.network.port }}
 ---
