@@ -1,0 +1,89 @@
+# Cassandra restore using Medusa
+# Replaces cassandra-restore.yml
+#
+# Usage:
+#   List backups:    ansible-playbook medusa-restore.yml -e action=list
+#   Verify backup:   ansible-playbook medusa-restore.yml -e action=verify -e backup_name=diff-20260322
+#   Restore cluster: ansible-playbook medusa-restore.yml -e action=restore -e backup_name=diff-20260322 -e confirm=yes
+#   Restore keyspace: ansible-playbook medusa-restore.yml -e action=restore -e backup_name=diff-20260322 -e keyspace=sunbird -e confirm=yes
+#   Restore one node: ansible-playbook medusa-restore.yml -e action=restore -e backup_name=diff-20260322 -e confirm=yes --limit node1
+#
+# WARNING: restore stops Cassandra, wipes data, and downloads from GCS.
+#          Cluster will be unavailable during restore.
+
+# List available backups
+- hosts: cassandra
+  become: yes
+  vars:
+    action: ""
+    medusa_venv_path: /opt/medusa/venv
+  tasks:
+    - name: List available backups
+      shell: "{{ medusa_venv_path }}/bin/medusa list-backups"
+      register: list_output
+      run_once: true
+      when: action == "list"
+
+    - name: Show available backups
+      debug:
+        var: list_output.stdout_lines
+      run_once: true
+      when: action == "list"
+
+# Verify a backup
+- hosts: cassandra
+  become: yes
+  vars:
+    action: ""
+    backup_name: ""
+    medusa_venv_path: /opt/medusa/venv
+  tasks:
+    - name: Fail if backup_name not provided
+      fail:
+        msg: "backup_name is required. Use -e backup_name=<name>"
+      when: action == "verify" and backup_name == ""
+
+    - name: Verify backup integrity
+      shell: "{{ medusa_venv_path }}/bin/medusa verify --backup-name={{ backup_name }}"
+      register: verify_output
+      run_once: true
+      when: action == "verify" and backup_name != ""
+
+    - name: Show verification result
+      debug:
+        var: verify_output.stdout_lines
+      run_once: true
+      when: action == "verify" and backup_name != ""
+
+# Restore from backup
+- hosts: cassandra
+  become: yes
+  vars:
+    action: ""
+    backup_name: ""
+    keyspace: ""
+    confirm: "no"
+    medusa_venv_path: /opt/medusa/venv
+  tasks:
+    - name: Safety check — require explicit confirmation
+      fail:
+        msg: |
+          RESTORE ABORTED — explicit confirmation required.
+          This will STOP Cassandra, WIPE data, and restore from backup.
+          Re-run with: -e confirm=yes
+      when: action == "restore" and confirm != "yes"
+
+    - name: Fail if backup_name not provided
+      fail:
+        msg: "backup_name is required. Use -e backup_name=<name>"
+      when: action == "restore" and backup_name == ""
+
+    - name: "Restore from backup: {{ backup_name }}"
+      shell: >
+        sudo {{ medusa_venv_path }}/bin/medusa restore-node
+        --in-place
+        --backup-name={{ backup_name }}
+        {% if keyspace %}--keyspace {{ keyspace }}{% endif %}
+      async: 14400
+      poll: 30
+      when: action == "restore" and confirm == "yes" and backup_name != ""
