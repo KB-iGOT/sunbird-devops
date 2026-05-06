@@ -15,10 +15,10 @@ REQUIRED_ROLE="AI_ASSESSMENT_CREATOR"
 KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
 KAFKA_TOPIC={{env}}.assessment.lifecycle.events
 
-KARMAYOGI_BASE_URL={{ karmayogi_base_url }}
+KARMAYOGI_BASE_URL=https://{{domain_name}}
 LEARNING_AI_BASE_URL={{ learning_ai_base_url }}
 DATABASE_URL={{ ai_assessment_db_dsn }}
 GOOGLE_PROJECT_ID={{ ai_assessment_google_project_id }}
-KARMAYOGI_API_KEY={{ ai_assessment_karmayogi_api_key }}
+KARMAYOGI_API_KEY={{ bearer_token }}
 SUNBIRD_SSO_URL={{ ai_assessment_sso_url }}
 SUNBIRD_SSO_REALM={{ ai_assessment_sso_realm }}
