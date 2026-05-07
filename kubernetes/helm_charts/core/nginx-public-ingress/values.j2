@@ -1627,16 +1627,6 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
-    location = /api/v1/notifications/mandatory {
-      default_type application/json;
-      return 200 '{"id":"notification.v1.mandatory.current","ver":"1.0","params":{"err":null,"status":"success","errMsg":null},"responseCode":"OK","result":{"notification":{}},"response":{"notification":{}}}';
-    }
-
-    location = /apis/proxies/v8/v1/notifications/mandatory {
-      default_type application/json;
-      return 200 '{"id":"notification.v1.mandatory.current","ver":"1.0","params":{"err":null,"status":"success","errMsg":null},"responseCode":"OK","result":{"notification":{}},"response":{"notification":{}}}';
-    }
-
     location /api/ {
       if ($request_method = OPTIONS ) {
               add_header Access-Control-Allow-Origin "*" ;
