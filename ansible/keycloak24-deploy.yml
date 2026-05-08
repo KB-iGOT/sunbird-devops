@@ -5,7 +5,7 @@
   gather_facts: false
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    kubeconfig_path: "/var/lib/jenkins/secrets/k8s.yaml"
+    kubeconfig: "/var/lib/jenkins/secrets/k8s.yaml"
   vars_files:
     - "{{ inventory_dir }}/secrets.yml"
 
@@ -18,114 +18,106 @@
 
     - name: Apply KC24 Secret
       tags: deploy
-      k8s:
-        state: present
-        kubeconfig: "{{ kubeconfig_path }}"
-        definition:
-          apiVersion: v1
-          kind: Secret
-          metadata:
-            name: keycloak24-secret
-            namespace: "{{ kc24_namespace }}"
-          type: Opaque
-          stringData:
-            KC_DB_PASSWORD:              "{{ kc24_db_password }}"
-            KC_BOOTSTRAP_ADMIN_USERNAME: "{{ kc24_admin_user }}"
-            KC_BOOTSTRAP_ADMIN_PASSWORD: "{{ kc24_admin_password }}"
+      shell: |
+        kubectl --kubeconfig={{ kubeconfig }} apply -f - <<EOF
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: keycloak24-secret
+          namespace: {{ kc24_namespace }}
+        type: Opaque
+        stringData:
+          KC_DB_PASSWORD: "{{ kc24_db_password }}"
+          KC_BOOTSTRAP_ADMIN_USERNAME: "{{ kc24_admin_user }}"
+          KC_BOOTSTRAP_ADMIN_PASSWORD: "{{ kc24_admin_password }}"
+        EOF
 
     - name: Apply KC24 ConfigMap
       tags: deploy
-      k8s:
-        state: present
-        kubeconfig: "{{ kubeconfig_path }}"
-        definition:
-          apiVersion: v1
-          kind: ConfigMap
-          metadata:
-            name: keycloak24-config
-            namespace: "{{ kc24_namespace }}"
-          data:
-            KC_DB:                 "postgres"
-            KC_DB_URL:             "{{ kc24_db_url }}"
-            KC_DB_USERNAME:        "{{ kc24_db_username }}"
-            KC_HOSTNAME:           "{{ kc24_hostname }}"
-            KC_HTTP_ENABLED:       "true"
-            KEYCLOAK_REALM:        "sunbird"
-            MULTI_TENANT_KEYCLOAK: "igot,{{ kc24_hostname }},sunbird"
+      shell: |
+        kubectl --kubeconfig={{ kubeconfig }} apply -f - <<EOF
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: keycloak24-config
+          namespace: {{ kc24_namespace }}
+        data:
+          KC_DB: "postgres"
+          KC_DB_URL: "{{ kc24_db_url }}"
+          KC_DB_USERNAME: "{{ kc24_db_username }}"
+          KC_HOSTNAME: "{{ kc24_hostname }}"
+          KC_HTTP_ENABLED: "true"
+          KEYCLOAK_REALM: "sunbird"
+          MULTI_TENANT_KEYCLOAK: "igot,{{ kc24_hostname }},sunbird"
+        EOF
 
     - name: Apply KC24 Deployment
       tags: deploy
-      k8s:
-        state: present
-        kubeconfig: "{{ kubeconfig_path }}"
-        definition:
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: keycloak24
-            namespace: "{{ kc24_namespace }}"
-            labels:
+      shell: |
+        kubectl --kubeconfig={{ kubeconfig }} apply -f - <<EOF
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: keycloak24
+          namespace: {{ kc24_namespace }}
+          labels:
+            app: keycloak24
+        spec:
+          replicas: {{ kc24_replicas | default(1) | int }}
+          selector:
+            matchLabels:
               app: keycloak24
-          spec:
-            replicas: "{{ kc24_replicas | default(1) | int }}"
-            selector:
-              matchLabels:
+          template:
+            metadata:
+              labels:
                 app: keycloak24
-            template:
-              metadata:
-                labels:
-                  app: keycloak24
-              spec:
-                containers:
-                  - name: keycloak24
-                    image: "{{ kc24_image_full }}"
-                    args: ["start"]
-                    envFrom:
-                      - configMapRef:
-                          name: keycloak24-config
-                      - secretRef:
-                          name: keycloak24-secret
-                    ports:
-                      - containerPort: 8080
-                    readinessProbe:
-                      httpGet:
-                        path: /health/ready
-                        port: 8080
-                      initialDelaySeconds: 60
-                      periodSeconds: 10
-                      failureThreshold: 6
-                    livenessProbe:
-                      httpGet:
-                        path: /health/live
-                        port: 8080
-                      initialDelaySeconds: 90
-                      periodSeconds: 15
-                      failureThreshold: 4
+            spec:
+              containers:
+              - name: keycloak24
+                image: "{{ kc24_image_full }}"
+                args: ["start"]
+                envFrom:
+                - configMapRef:
+                    name: keycloak24-config
+                - secretRef:
+                    name: keycloak24-secret
+                ports:
+                - containerPort: 8080
+                readinessProbe:
+                  httpGet:
+                    path: /health/ready
+                    port: 8080
+                  initialDelaySeconds: 60
+                  periodSeconds: 10
+                  failureThreshold: 6
+                livenessProbe:
+                  httpGet:
+                    path: /health/live
+                    port: 8080
+                  initialDelaySeconds: 90
+                  periodSeconds: 15
+                  failureThreshold: 4
+        EOF
 
     - name: Apply KC24 Service
       tags: deploy
-      k8s:
-        state: present
-        kubeconfig: "{{ kubeconfig_path }}"
-        definition:
-          apiVersion: v1
-          kind: Service
-          metadata:
-            name: keycloak24
-            namespace: "{{ kc24_namespace }}"
-          spec:
-            selector:
-              app: keycloak24
-            ports:
-              - port: 8080
-                targetPort: 8080
+      shell: |
+        kubectl --kubeconfig={{ kubeconfig }} apply -f - <<EOF
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: keycloak24
+          namespace: {{ kc24_namespace }}
+        spec:
+          selector:
+            app: keycloak24
+          ports:
+          - port: 8080
+            targetPort: 8080
+        EOF
 
     - name: Wait for KC24 rollout
       tags: deploy
-      command: >
-        kubectl rollout status deployment/keycloak24
-        -n {{ kc24_namespace }}
-        --timeout=300s
-      environment:
-        KUBECONFIG: "{{ kubeconfig_path }}"
-      delegate_to: localhost
+      shell: |
+        kubectl --kubeconfig={{ kubeconfig }} rollout status deployment/keycloak24 \
+          -n {{ kc24_namespace }} --timeout=300s
