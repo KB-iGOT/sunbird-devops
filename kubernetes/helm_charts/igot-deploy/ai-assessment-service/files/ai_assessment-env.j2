@@ -12,9 +12,6 @@ CLEANUP_SCHEDULE_MINUTE=0
 DISABLE_AUTH_VERIFICATION=false
 REQUIRED_ROLE=AI_ASSESSMENT_CREATOR
 
-KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
-KAFKA_TOPIC={{env}}.assessment.lifecycle.events
-
 KARMAYOGI_BASE_URL=https://{{domain_name}}
 LEARNING_AI_BASE_URL={{ learning_ai_base_url }}
 #DATABASE_URL={{ ai_assessment_db_dsn }}
@@ -23,3 +20,7 @@ GOOGLE_PROJECT_ID={{ ai_assessment_google_project_id }}
 KARMAYOGI_API_KEY={{ bearer_token }}
 SUNBIRD_SSO_URL=https://{{ domain_name }}/auth/
 SUNBIRD_SSO_REALM={{ keycloak_sso_realm }}
+
+KAFKA_REQUEST_TOPIC={{env}}.assessment.request
+KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
+KAFKA_TOPIC={{env}}.assessment.lifecycle.events
