@@ -40,6 +40,7 @@
         kind: ConfigMap
         metadata:
           name: keycloak24-config
+          namespace: {{ kc24_namespace }}
         data:
           KC_DB: "postgres"
           KC_DB_URL: "{{ kc24_db_url }}"
