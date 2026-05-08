@@ -72,6 +72,8 @@
               labels:
                 app: keycloak24
             spec:
+              imagePullSecrets:
+              - name: {{ imagepullsecrets }}
               containers:
               - name: keycloak24
                 image: "{{ kc24_image_full }}"
