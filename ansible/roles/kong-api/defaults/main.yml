@@ -181,6 +181,7 @@ storage_prefix: /storage
 peersurvey_prefix: /peersurvey
 peer_validation_prefix: /peervalidation
 badge_generate_prefix: /badge
+support_portal_prefix: /supportportal
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -24898,7 +24899,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: myAssignedCoursesAdmin
-    uris: "{{ user_service_prefix }}/admin/user/v2/assignedcourses"
+    uris: "{{ support_portal_prefix }}/admin/user/v2/assignedcourses"
     upstream_url: "{{ cb_ext_course_service_url }}/admin/user/v2/assignedcourses"
     strip_uri: true
     plugins:
@@ -24916,7 +24917,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: cbPlanListAdmin
-    uris: "{{ user_service_prefix }}/cbplan/v2/admin/user/list"
+    uris: "{{ support_portal_prefix }}/cbplan/v2/admin/user/list"
     upstream_url: "{{ cb_ext_course_service_url }}/cbplan/v2/admin/user/list"
     strip_uri: true
     plugins:
