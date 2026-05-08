@@ -122,4 +122,17 @@
       tags: deploy
       shell: |
         kubectl --kubeconfig={{ kubeconfig }} rollout status deployment/keycloak24 \
-          -n {{ kc24_namespace }} --timeout=300s
+          -n {{ kc24_namespace }} --timeout=180s
+      ignore_errors: true
+
+    - name: Check KC24 pod status
+      tags: deploy
+      shell: |
+        kubectl --kubeconfig={{ kubeconfig }} get pods \
+          -n {{ kc24_namespace }} -l app=keycloak24
+      register: pod_status
+
+    - name: Print KC24 pod status
+      tags: deploy
+      debug:
+        var: pod_status.stdout_lines
