@@ -1288,8 +1288,9 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
+      proxy_set_header X-Forwarded-Prefix /ai-assment-generation;
       rewrite ^/ai-assment-generation/(.*) /$1 break;
-      proxy_pass http://10.175.2.49:8800;
+      proxy_pass http://ai-assessment-service:8000;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
       proxy_read_timeout 300;
@@ -1304,6 +1305,7 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
+      proxy_set_header X-Forwarded-Prefix /ai-assment-generation;
       rewrite ^/ai-assment-generation-ui/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8501;
       proxy_connect_timeout 10;
