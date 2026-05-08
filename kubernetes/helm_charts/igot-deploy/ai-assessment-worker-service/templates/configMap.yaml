@@ -5,4 +5,4 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   aswin-model-access-account.json: |
-{{ .Values.gcpaiassessmentcredentialsjson | indent 4 }}
+{{ .Values.gcpservicecredentialsjson | indent 4 }}
