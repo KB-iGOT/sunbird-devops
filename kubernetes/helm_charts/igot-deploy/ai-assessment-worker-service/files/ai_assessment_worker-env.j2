@@ -9,8 +9,7 @@ SUNBIRD_SSO_URL=https://{{ domain_name }}/auth/
 SUNBIRD_SSO_REALM={{ keycloak_sso_realm }}
 SSO_URL=https://{{ domain_name }}/auth/
 SSO_REALM={{ keycloak_sso_realm }}
-KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
-KAFKA_TOPIC={{env}}.assessment.lifecycle.events
+
 GOOGLE_LOCATION=us-central1
 GENAI_MODEL_NAME=gemini-2.5-pro
 MAX_CONCURRENCY=50
@@ -22,3 +21,7 @@ CLEANUP_SCHEDULE_HOUR=3
 CLEANUP_SCHEDULE_MINUTE=0
 DISABLE_AUTH_VERIFICATION=false
 REQUIRED_ROLE=AI_ASSESSMENT_CREATOR
+
+KAFKA_REQUEST_TOPIC={{env}}.assessment.request
+KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
+KAFKA_TOPIC={{env}}.assessment.lifecycle.events
