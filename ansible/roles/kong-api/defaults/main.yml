@@ -24919,7 +24919,7 @@ kong_apis:
 
   - name: AiAssessmentGenerate
     uris: "{{ ai_assessment_prefix }}/v2/generate"
-    upstream_url: "{{ ai_assessment_service_url }}/ai-assessment-generation/api/v2/ai-assessments/generate"
+    upstream_url: "{{ ai_assessment_service_url }}/api/v2/ai-assessments/generate"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24937,7 +24937,7 @@ kong_apis:
 
   - name: AiAssessmentJobStatus
     uris: "{{ ai_assessment_prefix }}/v2/status"
-    upstream_url: "{{ ai_assessment_service_url }}/ai-assessment-generation/api/v2/ai-assessments/status"
+    upstream_url: "{{ ai_assessment_service_url }}/api/v2/ai-assessments/status"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24955,7 +24955,7 @@ kong_apis:
 
   - name: AiAssessmentDownload
     uris: "{{ ai_assessment_prefix }}/v2/download"
-    upstream_url: "{{ ai_assessment_service_url }}/ai-assessment-generation/api/v2/ai-assessments/download"
+    upstream_url: "{{ ai_assessment_service_url }}/api/v2/ai-assessments/download"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24973,7 +24973,7 @@ kong_apis:
 
   - name: AiAssessmentHistory
     uris: "{{ ai_assessment_prefix }}/v2/history"
-    upstream_url: "{{ ai_assessment_service_url }}/ai-assessment-generation/api/v2/ai-assessments/history"
+    upstream_url: "{{ ai_assessment_service_url }}/api/v2/ai-assessments/history"
     strip_uri: true
     plugins:
       - name: jwt
