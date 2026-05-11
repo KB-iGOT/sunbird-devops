@@ -167,7 +167,7 @@ content_moderation_prefix: /moderation
 consent_prefix: /consent
 assignment_prefix: /assignment/v1
 notify_prefix: /v1/notifyAssignment
-ai_assessment_prefix: /ai-assessment
+ai_assessment_prefix: /aiAssessment
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
