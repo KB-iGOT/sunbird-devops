@@ -182,6 +182,7 @@ peersurvey_prefix: /peersurvey
 peer_validation_prefix: /peervalidation
 badge_generate_prefix: /badge
 support_portal_prefix: /supportportal
+ai_assessment_prefix: /aiAssessment
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -245,6 +246,7 @@ chatBot_global_service_url : "{{chatBot_global_service_url}}"
 support_ai_service_url: "{{supportAIService_IP}}"
 content_moderation_service_url: "http://content-moderation-service:8000"
 content_transcode_service_url: "{{contentTranscodeService_IP}}"
+ai_assessment_service_url: "http://ai-assessment-service:8000"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -24945,6 +24947,78 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiAssessmentGenerate
+    uris: "{{ ai_assessment_prefix }}/v1/generate"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/generate"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiAssessmentJobStatus
+    uris: "{{ ai_assessment_prefix }}/v1/status"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/status"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiAssessmentDownload
+    uris: "{{ ai_assessment_prefix }}/v1/download"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/download"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiAssessmentHistory
+    uris: "{{ ai_assessment_prefix }}/v1/history"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/history"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
