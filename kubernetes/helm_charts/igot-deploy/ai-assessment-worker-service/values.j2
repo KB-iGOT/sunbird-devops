@@ -1,0 +1,23 @@
+### Default variable file for ai-assessment-worker-service ###
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+replicaCount: {{ai_assessment_worker_replicacount|default(1)}}
+repository: {{ image_ai_assessment_worker_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{ai_assessment_worker_cpu_req|default('100m')}}
+    memory: {{ai_assessment_worker_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{ai_assessment_worker_cpu_limit|default('1')}}
+    memory: {{ai_assessment_worker_mem_limit|default('1024Mi')}}
+network:
+  port: {{ service_ai_assessment_worker_port }}
+  targetport: {{ service_ai_assessment_worker_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ ai_assessment_worker_maxsurge|default('25%') }}
+  maxunavailable: {{ ai_assessment_worker_maxunavailable|default('25%') }}
+gcpservicecredentialsjson: |-
+ {{ai_assessment_worker_gcp_service_account_json}}
