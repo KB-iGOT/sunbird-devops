@@ -1053,7 +1053,7 @@ image_cbp_ai_ui: cbp-ai-ui
 image_cbp_ai_service: cbp-ai-service
 image_supporttool_service: supporttool-service
 image_ai_assessment_service: ai-assessment-service
-image_ai_cbp_mdo_service: cbp-ai-service
+image_ai_cbp_mdo_service: ai-cbp-mdo-service
 image_ai_assessment_worker_service: ai-assessment-worker-service
 
 #####################bulk-upload-spv#########
