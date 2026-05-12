@@ -182,7 +182,7 @@ peersurvey_prefix: /peersurvey
 peer_validation_prefix: /peervalidation
 badge_generate_prefix: /badge
 support_portal_prefix: /supportportal
-ai_assessment_prefix: /aiAssessment
+ai_assessment_prefix: /ai/assessment
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
