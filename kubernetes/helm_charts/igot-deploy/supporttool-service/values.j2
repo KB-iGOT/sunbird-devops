@@ -56,6 +56,10 @@ supporttoolserverenv: |-
   ADMIN_USERNAME= "{{ supporttool_admin_username }}"
   ADMIN_PASSWORD= "{{ supporttool_admin_password }}"
 
+  ADMIN_CLIENT_ID= "{{admin_client_id}}"
+  ADMIN_CLIENT_SECRET= "{{admin_client_secret}}"
+  ADMIN_GRANT_TYPE= "client_credentials"
+
 supporttoolreactenv: |-
   {
     "REACT_APP_API_BASE_URL": "https://support.{{ static_domain_name }}/routes/api",
