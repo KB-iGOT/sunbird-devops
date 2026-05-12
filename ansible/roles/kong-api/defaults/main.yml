@@ -184,6 +184,7 @@ badge_generate_prefix: /badge
 support_portal_prefix: /supportportal
 ai_assessment_prefix: /ai/assessments
 ai_cbp_mdo_prefix: /ai/cbp
+content_health_prefix: /contenthealth
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -25172,4 +25173,38 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-
+  - name: contentHealthReport
+    uris: "{{ content_health_prefix }}/v1/report"
+    upstream_url: "{{ cb_ext_course_service_url }}/contenthealth/v1/report"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+        
+  - name: contentHealthSummary
+    uris: "{{ content_health_prefix }}/v1/summary"
+    upstream_url: "{{ cb_ext_course_service_url }}/contenthealth/v1/summary"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
