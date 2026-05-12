@@ -53,12 +53,12 @@ supporttoolserverenv: |-
 
   LEARNING_SERVICE_URL={{ learningservice_ip }}:8080
 
-  ADMIN_USERNAME= "{{ supporttool_admin_username }}"
-  ADMIN_PASSWORD= "{{ supporttool_admin_password }}"
+  ADMIN_USERNAME="{{ supporttool_admin_username }}"
+  ADMIN_PASSWORD="{{ supporttool_admin_password }}"
 
-  ADMIN_CLIENT_ID= "{{admin_client_id}}"
-  ADMIN_CLIENT_SECRET= "{{admin_client_secret}}"
-  ADMIN_GRANT_TYPE= "client_credentials"
+  ADMIN_CLIENT_ID="{{admin_client_id}}"
+  ADMIN_CLIENT_SECRET="{{admin_client_secret}}"
+  ADMIN_GRANT_TYPE="client_credentials"
 
 supporttoolreactenv: |-
   {
