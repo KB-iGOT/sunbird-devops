@@ -774,7 +774,7 @@ service_supporttool_service: supporttool-service
 service_ai_assessment_service: ai-assessment-service
 service_ai_cbp_mdo_service: ai-cbp-mdo-service
 service_ai_assessment_worker_service: ai-assessment-worker-service
-service_ai_ui_assessment_service: ai-ui-assessment
+service_ai_ui_assessment_service: ai-ui-assessment-service
 # Ports
 service_bulk_upload_port: 3009
 service_content_service_port: 80
@@ -970,7 +970,7 @@ network_alias_supporttool_service: supporttool-service
 network_alias_ai_assessment_service: ai-assessment-service
 network_alias_ai_cbp_mdo_service: ai-cbp-mdo-service
 network_alias_ai_assessment_worker_service: ai-assessment-worker-service
-network_alias_ai_ui_assessment_service: ai-ui-assessment
+network_alias_ai_ui_assessment_service: ai-ui-assessment-service
 
 # Image names, this is used by the service alone, but since we want to have all the images in one place, we are oncfiguring the images here
 image_ui_static: ui-static
@@ -1057,7 +1057,7 @@ image_supporttool_service: supporttool-service
 image_ai_assessment_service: ai-assessment-service
 image_ai_cbp_mdo_service: ai-cbp-mdo-service
 image_ai_assessment_worker_service: ai-assessment-worker-service
-image_ai_ui_assessment_service: ai-ui-assessment
+image_ai_ui_assessment_service: ai-ui-assessment-service
 
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload
