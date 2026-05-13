@@ -1866,6 +1866,23 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
+    location /ai-assessment/ {
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      proxy_set_header X-Forwarded-Prefix /ai-assment-generation;
+      rewrite ^/ai-assessment/(.*) /$1 break;
+      proxy_pass http://ai-ui-assessment-service;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
+
     location /ai-assment-generation-ui/ {
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
