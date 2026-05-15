@@ -7,9 +7,9 @@
       body:
         username: "{{keycloak_username}}"
         password: "{{keycloak_password}}"
-        client_id: admin-cli
-        client_secret: "{{ keycloak_client_secret | default('') }}"
-        grant_type: password
+        client_id: deploy-admin
+        client_secret: "{{ keycloak_client_secret_deploy_admin | default('') }}"
+        grant_type: client_credentials
       status_code: [200,201,308,302,401]
     register:  data
     until: data is not failed
