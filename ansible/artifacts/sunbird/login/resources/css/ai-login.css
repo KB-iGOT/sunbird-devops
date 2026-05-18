@@ -389,11 +389,11 @@ input[type='password']::placeholder {
     font-size: 14px;	
     line-height: 19px;
     height: 40px;
-    background-color:#1f3c85 !important;
+    background-color:rgb(0,116,182) !important;
     border-radius: 8px;
     transition: all .25s ease-in;
 }
-.button:hover{
+.blue-button:hover{
     background-color:rgba(4, 15, 96, 0.8) !important;
 }
 
@@ -637,6 +637,7 @@ img {vertical-align: middle;}
     padding-right: 30px;
     position: fixed;
     right: 0;
+    top:2%;
 }
 .tooltiptext {
     visibility: hidden;
@@ -1055,8 +1056,15 @@ h1,
     width: 100%;
 }
 
-.blue-button {
-    background-color: #1f3c85 !important;
+.ui.blue-button {
+      font-family: 'Poppins SemiBold', 'Noto Sans', sans-serif !important;
+    color: #F9F9F9 !important;
+    font-size: 14px;	
+    line-height: 19px;
+    height: 40px;
+    background-color:#1f3c85 !important;
+    border-radius: 8px;
+    transition: all .25s ease-in;
 }
 
 .vertical-middle {

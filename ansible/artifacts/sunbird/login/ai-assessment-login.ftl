@@ -8,11 +8,8 @@
     <div class="custom-wrapper">
         <div class="custom-grid">
             <div class="ui raised shadow container segment fullpage-background-image left-box">
-                <div class="ui column left-panel" style="padding:0">
-                <div>
-                <img src='${url.resourcesPath}/img/iGOT_Karmayogi_logo_with_karmayogi_bharat.svg' class="kb-logo-3"/>
-                </div>
-                     <div class="hero-content margin-top-60">
+                <div class="ui column left-panel" style="padding:0">               
+                     <div class="hero-content">
 
                 <span class="badge">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
