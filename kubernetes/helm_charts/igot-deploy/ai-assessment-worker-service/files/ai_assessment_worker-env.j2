@@ -17,3 +17,14 @@ KAFKA_TOPIC={{env}}.assessment.lifecycle.events
 KAFKA_GROUP_ID=assessment_worker_group
 
 GOOGLE_APPLICATION_CREDENTIALS=/app/gcp/gcpaiassessmentworkercredentials.json
+SUNBIRD_SSO_URL=https://{{ domain_name }}/auth/
+SUNBIRD_SSO_REALM={{ keycloak_sso_realm }}
+SSO_URL=https://{{ domain_name }}/auth/
+SSO_REALM={{ keycloak_sso_realm }}
+
+SCORM_FLAG=false
+CLEANUP_RETENTION_DAYS=7
+CLEANUP_SCHEDULE_HOUR=3
+CLEANUP_SCHEDULE_MINUTE=0
+DISABLE_AUTH_VERIFICATION=false
+REQUIRED_ROLE=AI_ASSESSMENT_CREATOR
