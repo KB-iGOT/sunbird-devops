@@ -1,27 +1,19 @@
 LOG_LEVEL=INFO
-DB_DSN={{ ai_assessment_db_dsn }}
 DATABASE_URL={{ ai_assessment_db_dsn }}
 GOOGLE_PROJECT_ID={{ ai_assessment_google_project_id }}
 KARMAYOGI_API_KEY={{ bearer_token }}
 KARMAYOGI_BASE_URL=https://{{domain_name}}
 LEARNING_AI_BASE_URL={{ learning_ai_base_url }}
-SUNBIRD_SSO_URL=https://{{ domain_name }}/auth/
-SUNBIRD_SSO_REALM={{ keycloak_sso_realm }}
-SSO_URL=https://{{ domain_name }}/auth/
-SSO_REALM={{ keycloak_sso_realm }}
 
 GOOGLE_LOCATION=us-central1
 GENAI_MODEL_NAME=gemini-2.5-pro
 MAX_CONCURRENCY=50
 WORKER_BATCH_SIZE=50
 MAX_ATTEMPTS=3
-SCORM_FLAG=false
-CLEANUP_RETENTION_DAYS=7
-CLEANUP_SCHEDULE_HOUR=3
-CLEANUP_SCHEDULE_MINUTE=0
-DISABLE_AUTH_VERIFICATION=false
-REQUIRED_ROLE=AI_ASSESSMENT_CREATOR
 
 KAFKA_REQUEST_TOPIC={{env}}.assessment.request
 KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
 KAFKA_TOPIC={{env}}.assessment.lifecycle.events
+KAFKA_GROUP_ID=assessment_worker_group
+
+GOOGLE_APPLICATION_CREDENTIALS=/app/gcp/gcpaiassessmentworkercredentials.json

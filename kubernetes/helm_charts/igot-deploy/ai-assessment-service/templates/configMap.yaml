@@ -4,5 +4,5 @@ metadata:
   name: gcpaiassessmentcredentialsjson
   namespace: {{ .Values.namespace }}
 data:
-  aswin-model-access-account.json: |
+  gcpaiassessmentcredentials.json: |
 {{ .Values.gcpaiassessmentcredentialsjson | indent 4 }}

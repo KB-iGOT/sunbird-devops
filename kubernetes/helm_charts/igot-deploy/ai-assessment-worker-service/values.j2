@@ -19,5 +19,5 @@ strategy:
   type: RollingUpdate
   maxsurge: {{ ai_assessment_worker_maxsurge|default('25%') }}
   maxunavailable: {{ ai_assessment_worker_maxunavailable|default('25%') }}
-gcpservicecredentialsjson: |-
+gcpaiassessmentworkercredentialsjson: |-
  {{ai_assessment_worker_gcp_service_account_json}}
