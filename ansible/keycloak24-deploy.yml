@@ -52,6 +52,7 @@
           KC_HTTP_ENABLED: "true"
           KC_LOG_LEVEL: "INFO"
           KC_TRANSACTION_XA_ENABLED: "false"
+          KC_FEATURES: "scripts"
         EOF
 
     - name: Apply KC24 Deployment
