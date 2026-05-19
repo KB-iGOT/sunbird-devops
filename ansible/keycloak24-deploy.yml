@@ -27,9 +27,9 @@
           namespace: {{ kc24_namespace }}
         type: Opaque
         stringData:
+          KEYCLOAK_ADMIN: "{{ kc24_admin_user }}"
+          KEYCLOAK_ADMIN_PASSWORD: "{{ kc24_admin_password }}"
           KC_DB_PASSWORD: "{{ kc24_db_password }}"
-          KC_BOOTSTRAP_ADMIN_USERNAME: "{{ kc24_admin_user }}"
-          KC_BOOTSTRAP_ADMIN_PASSWORD: "{{ kc24_admin_password }}"
         EOF
 
     - name: Apply KC24 ConfigMap
@@ -46,11 +46,12 @@
           KC_DB_URL: "{{ kc24_db_url }}"
           KC_DB_USERNAME: "{{ kc24_db_username }}"
           KC_HOSTNAME: "{{ kc24_hostname }}"
-          KC_HOSTNAME_ADMIN: "localhost"
           KC_PROXY: "edge"
           KC_HOSTNAME_STRICT: "false"
           KC_HOSTNAME_STRICT_HTTPS: "false"
           KC_HTTP_ENABLED: "true"
+          KC_LOG_LEVEL: "INFO"
+          KC_TRANSACTION_XA_ENABLED: "false"
         EOF
 
     - name: Apply KC24 Deployment
