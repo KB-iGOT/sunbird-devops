@@ -46,9 +46,11 @@
           KC_DB_URL: "{{ kc24_db_url }}"
           KC_DB_USERNAME: "{{ kc24_db_username }}"
           KC_HOSTNAME: "{{ kc24_hostname }}"
+          KC_HOSTNAME_ADMIN: "localhost"
+          KC_PROXY: "edge"
+          KC_HOSTNAME_STRICT: "false"
+          KC_HOSTNAME_STRICT_HTTPS: "false"
           KC_HTTP_ENABLED: "true"
-          KEYCLOAK_REALM: "sunbird"
-          MULTI_TENANT_KEYCLOAK: "igot,{{ kc24_hostname }},sunbird"
         EOF
 
     - name: Apply KC24 Deployment
@@ -85,20 +87,6 @@
                     name: keycloak24-secret
                 ports:
                 - containerPort: 8080
-                readinessProbe:
-                  httpGet:
-                    path: /health/ready
-                    port: 8080
-                  initialDelaySeconds: 60
-                  periodSeconds: 10
-                  failureThreshold: 6
-                livenessProbe:
-                  httpGet:
-                    path: /health/live
-                    port: 8080
-                  initialDelaySeconds: 90
-                  periodSeconds: 15
-                  failureThreshold: 4
         EOF
 
     - name: Apply KC24 Service
