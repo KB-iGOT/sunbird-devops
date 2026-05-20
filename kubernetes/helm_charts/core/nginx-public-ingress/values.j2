@@ -185,11 +185,20 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
-      proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
       proxy_set_header Connection "";
       proxy_http_version 1.1;
-      proxy_pass http://keycloak;
+
+      # KC24 hostname
+      if ($host = auth.dev.karmayogibharat.net) {
+          proxy_pass http://keycloak24:8080;
+      }
+
+      # Old KC hostname
+      if ($host = auth.devkc.karmayogibharat.net) {
+          proxy_pass http://keycloak;
+      }
     }
 
     location /realms/ {
@@ -198,13 +207,19 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
-      proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
       proxy_set_header Connection "";
       proxy_http_version 1.1;
-      proxy_pass http://10.175.2.78:8080;
-    }
 
+      if ($host = auth.dev.karmayogibharat.net) {
+          proxy_pass http://keycloak24:8080;
+      }
+
+      if ($host = auth.devkc.karmayogibharat.net) {
+          proxy_pass http://keycloak;
+      }
+    }
     # Caching keycloak static assets
     location ~ /auth/resources/(.+\.(png|svg|ico|js|eot|ttf|woff|woff2|css)) {
       # Enabling caching
