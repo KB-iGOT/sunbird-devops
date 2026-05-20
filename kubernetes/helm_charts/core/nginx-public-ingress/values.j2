@@ -2303,7 +2303,7 @@ proxyconfig: |-
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header Connection "";
       proxy_set_header X-Request-ID $sb_request_id;
-      proxy_pass http://10.175.29.3:8080/;
+      proxy_pass http://keycloak24;
         # Keep alive for Gerrit streaming responses
       proxy_http_version 1.1;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -2345,59 +2345,6 @@ proxyconfig: |-
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
     ignore_invalid_headers off;
-    resolver {{ kube_dns_ip }} valid=30s;
-
-    location / {
-      proxy_pass http://keycloak24;
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_set_header Connection "";
-      proxy_http_version 1.1;
-      proxy_connect_timeout 10;
-      proxy_send_timeout 60;
-      proxy_read_timeout 70;
-    }
-
-    client_max_body_size 200M;
-  }
-
-  server {
-    if ($host = frac.{{ nginx_proxy_server_name }}) {
-        return 301 https://$host$request_uri;
-        } # managed by Certbot
-
-      listen       80;
-      server_name  frac.{{ nginx_proxy_server_name }};
-      return 404; # managed by Certbot
-    }
-
-  server {
-    listen                443 ssl;
-    ssl_certificate       /etc/secrets/site.crt;
-    ssl_certificate_key   /etc/secrets/site.key;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA HIGH !RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS";
-    server_name *.frac.{{ nginx_proxy_server_name }} frac.{{ nginx_proxy_server_name }};
-    {#
-    custom nginx server config section
-    eg:
-    nginx_server_config: |
-      if ($allowed_country = no) {
-          return 444;
-      }
-    #}
-{% if nginx_server_config is defined and nginx_server_config %}
-  {{ nginx_server_config | indent( width=6, indentfirst=True)  }}
-{% endif %}
-    # Limitting open connection per ip
-    limit_conn limitbyaddr {{ nginx_per_ip_connection_limit }};
-    proxy_set_header    Host              $host;
-    proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
-    proxy_set_header    X-Forwarded-SSL   on;
-    proxy_set_header    X-Forwarded-Proto $scheme;
-    ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
 
 
