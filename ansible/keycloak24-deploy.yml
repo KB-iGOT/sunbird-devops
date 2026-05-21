@@ -85,6 +85,8 @@
                 args:
                   - start
                   - --http-port={{ kc24_http_port }}
+                  - --http-relative-path=/auth
+                  - --proxy-headers=xforwarded
                 envFrom:
                 - configMapRef:
                     name: keycloak24-config
