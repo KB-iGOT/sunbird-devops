@@ -89,7 +89,7 @@
                 - secretRef:
                     name: keycloak24-secret
                 ports:
-                - containerPort: 8080
+                - containerPort: {{ kc24_http_port }}
         EOF
 
     - name: Apply KC24 Service
@@ -106,8 +106,8 @@
             app: keycloak24
           ports:
           - name: http
-            port: 8080
-            targetPort: 8080
+            port: {{ kc24_http_port }}
+            targetPort: {{ kc24_http_port }}
         EOF
 
     - name: Wait for KC24 rollout
