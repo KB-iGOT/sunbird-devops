@@ -53,7 +53,7 @@
           KC_LOG_LEVEL: "INFO"
           KC_TRANSACTION_XA_ENABLED: "false"
           KC_FEATURES: "scripts"
-          KC_HTTP_RELATIVE_PATH: "{{ kc24_http_relative_path }}"
+#          KC_HTTP_RELATIVE_PATH: "{{ kc24_http_relative_path }}"
         EOF
 
     - name: Apply KC24 Deployment
