@@ -93,68 +93,6 @@ proxyconfig: |-
    #  }
    #}
 
-   # ------------------------------------------------------------
-# KC24 Dedicated Auth Server
-# ------------------------------------------------------------
-
-server {
-
-    listen 443 ssl;
-
-    ssl_certificate       /etc/secrets/site.crt;
-    ssl_certificate_key   /etc/secrets/site.key;
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-
-    server_name auth.{{ env }}.karmayogibharat.net;
-
-    client_max_body_size 100m;
-
-    proxy_set_header X-Request-ID $request_id;
-
-    location /auth/ {
-
-        rewrite ^/auth/(.*) /auth/$1 break;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
-        proxy_set_header X-Scheme $scheme;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        proxy_set_header Connection "";
-
-        proxy_http_version 1.1;
-
-        proxy_connect_timeout 5;
-        proxy_send_timeout 60;
-        proxy_read_timeout 70;
-
-        proxy_pass http://keycloak24:8080;
-    }
-
-    location /realms/ {
-
-        rewrite ^/realms/(.*) /realms/$1 break;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
-        proxy_set_header X-Scheme $scheme;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        proxy_set_header Connection "";
-
-        proxy_http_version 1.1;
-
-        proxy_connect_timeout 5;
-        proxy_send_timeout 60;
-        proxy_read_timeout 70;
-
-        proxy_pass http://keycloak24:8080;
-    }
-}
-
   server {
   {% if proto=='http' %}
     listen                80;
@@ -2365,7 +2303,7 @@ server {
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header Connection "";
       proxy_set_header X-Request-ID $sb_request_id;
-      proxy_pass http://10.175.29.3:8080/;
+      proxy_pass http://keycloak24;
         # Keep alive for Gerrit streaming responses
       proxy_http_version 1.1;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -9310,6 +9248,11 @@ nginxconfig: |
       }
       upstream ui-mdo-igot {
           server ui-mdo-igot:3002;
+          keepalive 1000;
+      }
+
+      upstream keycloak24 {
+          server keycloak24:8080;
           keepalive 1000;
       }
 
