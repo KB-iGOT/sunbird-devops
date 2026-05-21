@@ -82,7 +82,9 @@
               containers:
               - name: keycloak24
                 image: "{{ kc24_image_full }}"
-                args: ["start"]
+                args:
+                  - start
+                  - --http-port={{ kc24_http_port }}
                 envFrom:
                 - configMapRef:
                     name: keycloak24-config
