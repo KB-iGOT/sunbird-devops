@@ -1,0 +1,11 @@
+#- name: installing repo for open jdk in Ubuntu
+#  apt_repository: repo='ppa:openjdk-r/ppa'
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install OpenJDK 17
+  apt:
+    name: openjdk-17-jdk-headless
+    state: present

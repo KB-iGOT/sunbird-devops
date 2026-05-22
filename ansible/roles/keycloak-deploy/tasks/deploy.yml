@@ -112,6 +112,13 @@
     group: "{{ wildfly_group }}" 
     recurse: yes
 
+- name: Save keycloak vars to json
+  template:
+    src: "keycloak.conf.j2"
+    dest: "/opt/keycloak/conf/keycloak.conf"
+    mode: "0644"
+  run_once: true
+      
 - name: Create directory for sunbird auth package config
   file:
     path: sunbird_auth_{{ sunbird_auth_version }}.config
