@@ -7,7 +7,7 @@
         <div class="ui raised shadow container fullpage-background-image">
             <div class="ui one column grid stackable">
                 <div class="ui column height-fix">
-                    <div class="max-container">
+                    <div class="update-max-container">
                         <div class="ui header mb-40 centered">
                             <img onerror="" alt="">
                             <#--  <div class="signInHead mt-27">${msg("newPasswordTitle")}</div>  -->

@@ -518,8 +518,16 @@ h1, h2, h3, h4, h5,
     justify-content: center;
     align-items: center;
     width: inherit;
+}
+
+.update-max-container {
+    max-width: 320px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
     background: #fff;
-    padding: 0 24px;
 }
 
 
