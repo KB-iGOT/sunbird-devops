@@ -9246,10 +9246,6 @@ nginxconfig: |
       #    server enc-service:8013;
       #    keepalive 1000;
       #}
-      upstream keycloak {
-          server {{ keycloak_url.split('//')[-1] }};
-          keepalive 1000;
-      }
       
       upstream ui-static {
           server ui-static:3002;
