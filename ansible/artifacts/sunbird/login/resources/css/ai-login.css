@@ -518,7 +518,11 @@ h1, h2, h3, h4, h5,
     justify-content: center;
     align-items: center;
     width: inherit;
+    background: #fff;
+    padding: 0 24px;
 }
+
+
 
 .mw-100{
     max-width: 100% !important;
