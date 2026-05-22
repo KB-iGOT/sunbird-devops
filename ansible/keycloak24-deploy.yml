@@ -45,7 +45,7 @@
           KC_DB: "postgres"
           KC_DB_URL: "{{ kc24_db_url }}"
           KC_DB_USERNAME: "{{ kc24_db_username }}"
-#          KC_HOSTNAME: "{{ kc24_hostname }}"
+          KC_HOSTNAME: "{{ kc24_hostname }}"
           KC_PROXY: "edge"
           KC_HOSTNAME_STRICT: "false"
           KC_HOSTNAME_STRICT_HTTPS: "false"
