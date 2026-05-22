@@ -2307,7 +2307,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto https;
       proxy_buffering off;
-      proxy_pass http://keycloak24;
+      proxy_pass http://keycloak;
     }
 
     location /realms/ {
@@ -2326,7 +2326,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto https;
       proxy_buffering off;
-      proxy_pass http://keycloak24;
+      proxy_pass http://keycloak;
     }
 
     location /oauth2callback {
