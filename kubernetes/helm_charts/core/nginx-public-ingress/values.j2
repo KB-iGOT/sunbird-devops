@@ -2308,8 +2308,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Proto https;
       proxy_buffering off;
       proxy_pass http://keycloak24;
-    
-}
+    }
 
     location /realms/ {
 
@@ -2328,7 +2327,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Proto https;
       proxy_buffering off;
       proxy_pass http://keycloak24;
-}
+    }
 
     location /oauth2callback {
       return 200 'OK';
