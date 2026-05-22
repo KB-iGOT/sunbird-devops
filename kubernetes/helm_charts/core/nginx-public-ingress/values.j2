@@ -2322,15 +2322,6 @@ proxyconfig: |-
 
     }
 
-    server {
-    if ($host = kc24.{{ nginx_proxy_server_name }}) {
-        return 301 https://$host$request_uri;
-    }
-    listen 80;
-    server_name kc24.{{ nginx_proxy_server_name }};
-    return 404;
-  }
-
   server {
     if ($host = frac.{{ nginx_proxy_server_name }}) {
         return 301 https://$host$request_uri;
