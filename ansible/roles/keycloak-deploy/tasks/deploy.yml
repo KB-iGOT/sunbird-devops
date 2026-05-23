@@ -114,7 +114,7 @@
 
 - name: Save keycloak vars to json
   template:
-    src: "keycloak.conf.j2"
+    src: "roles/keycloak-deploy/templates/keycloak.conf.j2"
     dest: "/opt/keycloak/conf/keycloak.conf"
     mode: "0644"
   run_once: true
@@ -162,31 +162,31 @@
   when: "{{ sms_required|default(false) }}"
   ignore_errors: true
 
-- name: Keycloak configuration XML file
-  copy:
-    src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
-    dest: "{{ keycloak_home }}/standalone/configuration/standalone-ha.xml"
-    mode: 0750
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    remote_src: true
+# - name: Keycloak configuration XML file
+#   copy:
+#     src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
+#     dest: "{{ keycloak_home }}/standalone/configuration/standalone-ha.xml"
+#     mode: 0750
+#     owner: "{{ wildfly_user }}"
+#     group: "{{ wildfly_group }}"
+#     remote_src: true
 
-- name: Keycloak standalone.conf file
-  template:
-    src: templates/standalone.conf.j2
-    dest: "{{ keycloak_home }}/bin/standalone.conf"
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    mode: 0755
+# - name: Keycloak standalone.conf file
+#   template:
+#     src: templates/standalone.conf.j2
+#     dest: "{{ keycloak_home }}/bin/standalone.conf"
+#     owner: "{{ wildfly_user }}"
+#     group: "{{ wildfly_group }}"
+#     mode: 0755
 
-- name: Postgresql Configuration- module.xml
-  copy:
-    src: "sunbird_auth_{{ sunbird_auth_version }}.config/module.xml"
-    dest: "{{ keycloak_home }}/modules/system/layers/keycloak/org/postgresql/main/module.xml"
-    mode: 0750
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    remote_src: true
+# - name: Postgresql Configuration- module.xml
+#   copy:
+#     src: "sunbird_auth_{{ sunbird_auth_version }}.config/module.xml"
+#     dest: "{{ keycloak_home }}/modules/system/layers/keycloak/org/postgresql/main/module.xml"
+#     mode: 0750
+#     owner: "{{ wildfly_user }}"
+#     group: "{{ wildfly_group }}"
+#     remote_src: true
 
 - name: Create a directory for SMS provider configuration
   file:
@@ -236,26 +236,27 @@
     state: absent
     force: true
 
-- name: Overriding JAVA_HOME
-  become: true
-  lineinfile:
-    regexp: '^SERVER_OPTS=""'
-    insertafter: '^SERVER_OPTS=""'
-    line: 'JAVA_HOME=""'
-    path: "{{ keycloak_home }}/bin/standalone.sh"
+# - name: Overriding JAVA_HOME
+#   become: true
+#   lineinfile:
+#     regexp: '^SERVER_OPTS=""'
+#     insertafter: '^SERVER_OPTS=""'
+#     line: 'JAVA_HOME=""'
+#     path: "{{ keycloak_home }}/bin/standalone.sh"
     
-- name: Add trustStore Path
-  become: true
-  lineinfile:
-    path: "{{ keycloak_home }}/bin/standalone.sh"
-    insertafter: "DEFAULT_MODULAR_JVM_OPTIONS"
-    line: '    JAVA_OPTS="-Djavax.net.ssl.trustStore=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit $JAVA_OPTS"'
+# - name: Add trustStore Path
+#   become: true
+#   lineinfile:
+#     path: "{{ keycloak_home }}/bin/standalone.sh"
+#     insertafter: "DEFAULT_MODULAR_JVM_OPTIONS"
+#     line: '    JAVA_OPTS="-Djavax.net.ssl.trustStore=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit $JAVA_OPTS"'
 
-- name: start keycloak service
-  debug: msg="starting keycloak"
-  notify:
-    - start service
-    - wait for keycloak to start
+- name: Start Keycloak service
+  systemd:
+    name: keycloak
+    state: started
+    enabled: yes
+    daemon_reload: yes
   changed_when: true
 
 - meta: flush_handlers
