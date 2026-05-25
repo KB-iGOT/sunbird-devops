@@ -270,7 +270,5 @@
     name: keycloak
     state: started
     enabled: yes
-    daemon_reload: yes
-  changed_when: true
 
 - meta: flush_handlers
