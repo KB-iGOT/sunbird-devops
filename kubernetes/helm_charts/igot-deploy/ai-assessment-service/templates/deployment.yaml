@@ -28,6 +28,9 @@ spec:
         - name: gcpaiassessmentcredentialsjson
           configMap:
             name: gcpaiassessmentcredentialsjson
+        - name: gcpaiassessmentstoragecredentialsjson
+          configMap:
+            name: gcpaiassessmentstoragecredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -41,6 +44,9 @@ spec:
         - name: gcpaiassessmentcredentialsjson
           mountPath: /app/gcp/gcpaiassessmentcredentials.json
           subPath: gcpaiassessmentcredentials.json
+        - name: gcpaiassessmentstoragecredentialsjson
+          mountPath: /app/gcp/gcp_storage_credentials.json
+          subPath: gcp_storage_credentials.json
         ports:
         - containerPort: {{ .Values.network.port }}
 ---
