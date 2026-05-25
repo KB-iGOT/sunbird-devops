@@ -1,8 +1,8 @@
 # Database configuration - PostgreSQL
 db=postgres
-db-url="{{ kc24_db_url }}"
-db-username="{{ kc24_db_username }}"
-db-password="{{ kc24_db_password }}"
+db-url={{ kc24_db_url }}
+db-username={{ kc24_db_username }}
+db-password={{ kc24_db_password }}
 
 # Basic HTTP configuration
 http-enabled=true
@@ -35,5 +35,5 @@ quarkus.log.file.rotation.max-backup-index=10
 proxy=edge
 proxy-headers=xforwarded
 #proxy=none
-hostname="{{ kc24_hostname }}"
-http-relative-path="{{ kc24_http_relative_path }}"
+hostname={{ kc24_hostname }}
+http-relative-path={{ kc24_http_relative_path }}
