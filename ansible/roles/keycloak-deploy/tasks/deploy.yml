@@ -251,6 +251,20 @@
 #     insertafter: "DEFAULT_MODULAR_JVM_OPTIONS"
 #     line: '    JAVA_OPTS="-Djavax.net.ssl.trustStore=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit $JAVA_OPTS"'
 
+- name: Stop Keycloak service
+  systemd:
+    name: keycloak
+    state: stopped
+  ignore_errors: yes
+
+- name: Run Keycloak build
+  command: /opt/keycloak/bin/kc.sh build --verbose
+  args:
+    chdir: /opt/keycloak
+  become: yes
+  become_user: "{{ wildfly_user }}"
+  register: keycloak_build
+
 - name: Start Keycloak service
   systemd:
     name: keycloak
