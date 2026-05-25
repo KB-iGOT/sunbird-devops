@@ -56,7 +56,7 @@
     group: "{{ wildfly_group }}"
     force: true
 
-- name: Extarct the folder
+- name: Extract the folder
   unarchive:
     src: "/opt/{{ artifact }}"
     dest: /opt/
@@ -126,11 +126,11 @@
     mode: 0755
     force: true
 
-- name: Keycloak configuration XML file
-  template:
-    src: "roles/keycloak-deploy/templates/standalone-ha.xml"
-    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
-    mode: 0750
+# - name: Keycloak configuration XML file
+#   template:
+#     src: "roles/keycloak-deploy/templates/standalone-ha.xml"
+#     dest: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
+#     mode: 0750
 
 - name: Postgresql Configuration- module.xml
   template:
