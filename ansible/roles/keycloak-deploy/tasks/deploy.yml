@@ -179,14 +179,14 @@
 #     group: "{{ wildfly_group }}"
 #     mode: 0755
 
-# - name: Postgresql Configuration- module.xml
-#   copy:
-#     src: "sunbird_auth_{{ sunbird_auth_version }}.config/module.xml"
-#     dest: "{{ keycloak_home }}/modules/system/layers/keycloak/org/postgresql/main/module.xml"
-#     mode: 0750
-#     owner: "{{ wildfly_user }}"
-#     group: "{{ wildfly_group }}"
-#     remote_src: true
+- name: Postgresql Configuration- module.xml
+  copy:
+    src: "sunbird_auth_{{ sunbird_auth_version }}.config/module.xml"
+    dest: "{{ keycloak_home }}/modules/system/layers/keycloak/org/postgresql/main/module.xml"
+    mode: 0750
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    remote_src: true
 
 - name: Create a directory for SMS provider configuration
   file:
