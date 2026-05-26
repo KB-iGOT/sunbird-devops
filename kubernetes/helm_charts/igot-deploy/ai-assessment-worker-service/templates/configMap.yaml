@@ -16,5 +16,4 @@ metadata:
 data:
   gcp_storage_credentials.json: |
 {{ .Values.gcpaiassessmentstoragecredentialsjson | indent 4 }}
-
 ---
