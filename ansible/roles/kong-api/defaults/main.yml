@@ -24943,6 +24943,9 @@ kong_apis:
     uris: "/operationalreports/v3/download"
     upstream_url: "{{ sb_cb_ext_service_url }}/operational/reports/v3/download"
     strip_uri: true
+    upstream_connect_timeout: 5000
+    upstream_send_timeout: 30000
+    upstream_read_timeout: 30000
     plugins:
       - name: jwt
       - name: cors
