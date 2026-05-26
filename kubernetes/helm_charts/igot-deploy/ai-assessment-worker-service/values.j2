@@ -21,3 +21,6 @@ strategy:
   maxunavailable: {{ ai_assessment_worker_maxunavailable|default('25%') }}
 gcpaiassessmentworkercredentialsjson: |-
  {{ai_assessment_worker_gcp_service_account_json}}
+
+gcpaiassessmentstoragecredentialsjson: |-
+ {{gcp_artifcats_upload_service_account}}
