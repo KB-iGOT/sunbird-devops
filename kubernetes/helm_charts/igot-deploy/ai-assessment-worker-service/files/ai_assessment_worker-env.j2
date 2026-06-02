@@ -10,8 +10,8 @@ SUNBIRD_SSO_REALM={{ keycloak_sso_realm }}
 SSO_URL=https://{{ domain_name }}/auth/
 SSO_REALM={{ keycloak_sso_realm }}
 
-GOOGLE_LOCATION=us-central1
-GENAI_MODEL_NAME=gemini-2.5-pro
+GOOGLE_LOCATION=global
+GENAI_MODEL_NAME=gemini-3.1-flash-lite
 MAX_CONCURRENCY=50
 WORKER_BATCH_SIZE=50
 MAX_ATTEMPTS=3
@@ -25,3 +25,11 @@ REQUIRED_ROLE=AI_ASSESSMENT_CREATOR
 KAFKA_REQUEST_TOPIC={{env}}.assessment.request
 KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
 KAFKA_TOPIC={{env}}.assessment.lifecycle.events
+KAFKA_GROUP_ID=assessment_worker_group
+
+GOOGLE_APPLICATION_CREDENTIALS=/app/gcp/gcpaiassessmentworkercredentials.json
+
+GCS_CREDENTIALS=/app/gcp/gcp_storage_credentials.json
+GCS_BUCKET_NAME=igotai
+GCS_UPLOAD_PREFIX=ai-assessments/uploads
+DOCUMENT_STORAGE_TYPE=gcs
