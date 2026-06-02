@@ -1,5 +1,5 @@
-GOOGLE_LOCATION=us-central1
-GENAI_MODEL_NAME=gemini-2.5-pro
+GOOGLE_LOCATION=global
+GENAI_MODEL_NAME=gemini-3.1-flash-lite
 LOG_LEVEL=INFO
 MAX_CONCURRENCY=50
 WORKER_BATCH_SIZE=50
@@ -14,7 +14,6 @@ REQUIRED_ROLE=AI_ASSESSMENT_CREATOR
 
 KARMAYOGI_BASE_URL=https://{{domain_name}}
 LEARNING_AI_BASE_URL={{ learning_ai_base_url }}
-#DATABASE_URL={{ ai_assessment_db_dsn }}
 DATABASE_URL={{ ai_assessment_db_dsn }}
 GOOGLE_PROJECT_ID={{ ai_assessment_google_project_id }}
 KARMAYOGI_API_KEY={{ bearer_token }}
@@ -24,3 +23,10 @@ SUNBIRD_SSO_REALM={{ keycloak_sso_realm }}
 KAFKA_REQUEST_TOPIC={{env}}.assessment.request
 KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
 KAFKA_TOPIC={{env}}.assessment.lifecycle.events
+
+GOOGLE_APPLICATION_CREDENTIALS=/app/gcp/gcpaiassessmentcredentials.json
+
+GCS_CREDENTIALS=/app/gcp/gcp_storage_credentials.json
+GCS_BUCKET_NAME=igotai
+GCS_UPLOAD_PREFIX=ai-assessments/uploads
+DOCUMENT_STORAGE_TYPE=gcs

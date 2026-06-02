@@ -4,5 +4,17 @@ metadata:
   name: gcpaiassessmentcredentialsjson
   namespace: {{ .Values.namespace }}
 data:
-  aswin-model-access-account.json: |
+  gcpaiassessmentcredentials.json: |
 {{ .Values.gcpaiassessmentcredentialsjson | indent 4 }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gcpaiassessmentstoragecredentialsjson
+  namespace: {{ .Values.namespace }}
+data:
+  gcp_storage_credentials.json: |
+{{ .Values.gcpaiassessmentstoragecredentialsjson | indent 4 }}
+
+---
