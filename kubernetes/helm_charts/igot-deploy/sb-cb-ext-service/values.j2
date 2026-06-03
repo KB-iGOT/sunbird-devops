@@ -31,7 +31,7 @@ strategy:
 frac_backend_basepath: {{ frac_backend_basepath | default('/keys/') }}
 
 cbdownloadprivkeypem: |-
-  {{cb_download_private_key}}
+  {{cb_download_private_key | indent(2, true)}}
 
 serviceMonitor:
   enabled: true
