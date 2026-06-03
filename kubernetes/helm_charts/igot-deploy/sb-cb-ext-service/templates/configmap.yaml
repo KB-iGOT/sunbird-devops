@@ -17,5 +17,5 @@ metadata:
   name: cbdownloadprivkeypem
   namespace: {{ .Values.namespace }}
 data:
-  gcp_gemini_credentials.json: |
+  report-download-private-key.pem: |
 {{ .Values.cbdownloadprivkeypem | indent 4 }}
