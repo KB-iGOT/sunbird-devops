@@ -30,6 +30,9 @@ strategy:
 
 frac_backend_basepath: {{ frac_backend_basepath | default('/keys/') }}
 
+cbdownloadprivkeypem: |-
+ {{cb_download_private_key}}
+
 serviceMonitor:
   enabled: true
   labels: # labels with which the prometheus choose the serviceMonitor
