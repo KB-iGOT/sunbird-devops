@@ -18,4 +18,4 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   report-download-private-key.pem: |
-{{ .Values.cbdownloadprivkeypem | indent 2 }}
+{{ .Values.cbdownloadprivkeypem | indent 4 }}
