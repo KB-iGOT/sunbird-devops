@@ -14,10 +14,10 @@ image_tag: {{ image_tag }}
 resources:
   requests:
     cpu: {{cbp_ai_cpu_req|default('200m')}}
-    memory: {{cbp_ai_mem_req|default('200Mi')}}
+    memory: {{cbp_ai_mem_req|default('600Mi')}}
   limits:
     cpu: {{cbp_ai_cpu_limit|default('500m')}}
-    memory: {{cbp_ai_mem_limit|default('800Mi')}}
+    memory: {{cbp_ai_mem_limit|default('2000Mi')}}
 network:
   port: {{ service_cbp_ai_port }}
   targetport: {{ service_cbp_ai_port }}
