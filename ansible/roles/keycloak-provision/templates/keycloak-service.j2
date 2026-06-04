@@ -12,6 +12,13 @@ WorkingDirectory=/opt/keycloak
 
 # External environment file
 EnvironmentFile=/opt/keycloak/conf/keycloak.conf
+Environment="KEYCLOAK_ADMIN= {{ kc24_admin_user }}"
+Environment="KEYCLOAK_ADMIN_PASSWORD={{ kc24_admin_password }}"
+Environment="sunbird_user_service_base_url={{ sunbird_user_service_base_url }}"
+Environment="sunbird_authorization={{ core_vault_sunbird_ekstep_api_key }}"
+Environment="sunbird_lms_base_url=https://{{ nginx_proxy_server_name }}/api"
+Environment="sunbird_login_otp_template=loginWithOTP"
+Environment="sunbird_login_otp_email_subject="OTP Details for Login""
 
 # Logging
 StandardOutput=append:/var/log/keycloak.out.log
