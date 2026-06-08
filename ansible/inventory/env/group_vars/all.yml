@@ -1061,7 +1061,7 @@ image_ai_assessment_service: ai-assessment-service
 image_ai_cbp_mdo_service: ai-cbp-mdo-service
 image_ai_assessment_worker_service: ai-assessment-worker-service
 image_ai_ui_assessment_service: ai-ui-assessment-service
-image_cb_download_proxy_service: cb-download-proxy
+image_cb_download_proxy_service: cb-download-proxy-service
 
 #####################bulk-upload-spv#########
 host_bulk_upload: /mydata/bulk_upload
