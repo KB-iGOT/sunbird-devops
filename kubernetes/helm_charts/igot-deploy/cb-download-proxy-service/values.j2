@@ -27,10 +27,10 @@ strategy:
   maxunavailable: {{ cb_download_proxy_maxunavailable|default('25%') }}
 
 cbdownloadproxypubkey: |-
- {{cb_download_public_key}}
+{{cb_download_public_key | indent(2, true)}}
 
 cbdownloadproxyprivkey: |-
- {{cb_download_private_key}}
+{{cb_download_private_key | indent(2, true)}}
 
 cb_download_proxy_service_account: {{ cb_download_proxy_signer_sa_email }}
 serviceAccount:
