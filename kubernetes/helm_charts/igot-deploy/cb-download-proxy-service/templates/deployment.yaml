@@ -75,7 +75,6 @@ spec:
     targetPort: 8080
 ---
 
-{{- if .Values.serviceAccount.create -}}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -85,4 +84,3 @@ metadata:
     iam.gke.io/gcp-service-account: {{ .Values.cb_download_proxy_service_account }}
   labels:
 {{ include "cb-download-proxy.labels" . | nindent 4 }}
-{{- end -}}

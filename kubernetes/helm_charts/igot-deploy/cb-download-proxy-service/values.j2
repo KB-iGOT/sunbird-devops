@@ -10,8 +10,7 @@ service:
   cb_download_proxy_ip: {{ cb_download_proxy_ip }}
   {% endif %}
   {% if cb_download_proxy_annotations is defined %}
-  annotations:
-    {{ cb_download_proxy_annotations | to_json }}
+  annotations: {{cb_download_proxy_annotations|to_json}}
   {% endif %}
 
 env:
@@ -44,7 +43,7 @@ cbdownloadproxyprivkey: |-
 cb_download_proxy_service_account: {{ cb_download_proxy_signer_sa_email }}
 serviceAccount:
   enabled: true
-  name:cb-download-proxy-sa
+  name: cb-download-proxy-sa
 
 serviceMonitor:
   enabled: true
