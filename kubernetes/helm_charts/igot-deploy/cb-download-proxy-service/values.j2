@@ -4,6 +4,19 @@ namespace: {{ namespace }}
 imagepullsecrets: {{ imagepullsecrets }}
 dockerhub: {{ docker_hub_url }}
 
+service:
+  type: {{ cb_download_proxy_type | default('LoadBalancer') }}
+  {% if cb_download_proxy_ip is defined %}
+  cb_download_proxy_ip: {{ cb_download_proxy_ip }}
+  {% endif %}
+  {% if cb_download_proxy_annotations is defined %}
+  annotations:
+    {{ cb_download_proxy_annotations | to_json }}
+  {% endif %}
+  ports:
+  - port: 8080
+    name: http
+    targetPort: 8080
 
 env:
   javaoptions: {{cb_download_proxy_java_mem_limit|default('-Xmx600m')}}

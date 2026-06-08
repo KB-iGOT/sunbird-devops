@@ -56,17 +56,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Chart.Name }}
+  name: cb-download-proxy-service
   namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Chart.Name }}
+{{- if .Values.service.annotations }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+{{- end }}
 spec:
-  ports:
-  - name: http-{{ .Chart.Name }}
-    protocol: TCP
-    port: {{ .Values.network.port }}
-    targetPort: {{ .Values.network.targetport }}
-
   selector:
-    app: {{ .Chart.Name }}
+    app: cb-download-proxy-service
+  type: {{ .Values.service.type }}
+{{- if and .Values.service.cb-download-proxy-service_ip (ne .Values.service.type "NodePort") }}
+  loadBalancerIP: {{ .Values.service.cb-download-proxy-service_ip }}
+{{- end }}
+  ports:
+{{ toYaml .Values.service.ports | indent 4 }}
+
 
