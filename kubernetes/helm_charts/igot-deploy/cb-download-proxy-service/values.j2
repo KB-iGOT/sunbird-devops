@@ -13,10 +13,6 @@ service:
   annotations:
     {{ cb_download_proxy_annotations | to_json }}
   {% endif %}
-  ports:
-  - port: 8080
-    name: http
-    targetPort: 8080
 
 env:
   javaoptions: {{cb_download_proxy_java_mem_limit|default('-Xmx600m')}}

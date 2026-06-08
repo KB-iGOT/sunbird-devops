@@ -70,6 +70,7 @@ spec:
   loadBalancerIP: {{ .Values.service.cb_download_proxy_service_ip }}
 {{- end }}
   ports:
-{{ toYaml .Values.service.ports | indent 4 }}
-
+  - port: 8080
+    name: http
+    targetPort: 8080
 
