@@ -66,8 +66,8 @@ spec:
   selector:
     app: cb-download-proxy-service
   type: {{ .Values.service.type }}
-{{- if and .Values.service.cb-download-proxy-service_ip (ne .Values.service.type "NodePort") }}
-  loadBalancerIP: {{ .Values.service.cb-download-proxy-service_ip }}
+{{- if and .Values.service.cb_download_proxy_service_ip ( .Values.service.type "NodePort") }}
+  loadBalancerIP: {{ .Values.service.cb_download_proxy_service_ip }}
 {{- end }}
   ports:
 {{ toYaml .Values.service.ports | indent 4 }}
