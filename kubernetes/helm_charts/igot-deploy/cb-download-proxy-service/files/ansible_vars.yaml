@@ -1,0 +1,30 @@
+---
+# vars file for deploy-mdo-download-proxy-service
+# For script
+release_name: "{{ network_alias_cb_download_proxy_service }}"
+user_friendly_name: cb_download_proxy service
+template_env_file_name: "cb_download_proxy.j2"
+compose_file_name: "{{ service_cb_download_proxy_service }}.yml"
+env_file_name: "{{ service_cb_download_proxy_service }}.env"
+helm_env_file_location: "../helm_charts/igot-deploy/templates/"
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_cb_download_proxy_service }}.env"
+
+
+env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
+compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
+
+# For service
+application_port: "{{ service_cb_download_proxy_port }}"
+image_name: "{{ image_cb_download_proxy_service }}"
+tag: "{{ tags_cb_download_proxy_service }}"
+host_port: "{{ application_port }}"
+docker_port: "{{ application_port }}"
+replicas: "{{ service_replicas_cb_download_proxy_service }}"
+reserved_memory: "{{ service_mem_reserved_cb_download_proxy_service }}"
+limited_memory: "{{ service_mem_limit_cb_download_proxy_service }}"
+health_check_endpoint: http://127.0.0.1:{{ docker_port }}/healthcheck
+network_alias_name: "{{ network_alias_cb_download_proxy_service }}"
+docker_service_stack_name: lms
+docker_service_name: "{{ service_cb_download_proxy_service }}"
+force_reload: "{{ force_reload_cb_download_proxy_service }}"
+

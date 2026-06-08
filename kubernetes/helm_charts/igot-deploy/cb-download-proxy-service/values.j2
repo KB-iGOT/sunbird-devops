@@ -1,0 +1,49 @@
+### Default variable file for thumbnail_generation-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{cb_download_proxy_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{cb_download_proxy_replicacount|default(1)}}
+repository: {{ image_cb_download_proxy_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{cb_download_proxy_cpu_req|default('200m')}}
+    memory: {{cb_download_proxy_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{cb_download_proxy_cpu_limit|default('500m')}}
+    memory: {{cb_download_proxy_mem_limit|default('800Mi')}}
+network:
+  port: {{ service_cb_download_proxy_port }}
+  targetport: {{ service_cb_download_proxy_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ cb_download_proxy_maxsurge|default('25%') }}
+  maxunavailable: {{ cb_download_proxy_maxunavailable|default('25%') }}
+
+cbdownloadproxypubkey: |-
+ {{cb_download_public_key}}
+
+cbdownloadproxyprivkey: |-
+ {{cb_download_private_key}}
+
+cb_download_proxy_service_account: {{ cb_download_proxy_signer_sa_email }}
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ cb_download_proxy_autoscaling_enabled | default('false') }}
+  minReplicas: {{ cb_download_proxy_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ cb_download_proxy_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ cb_download_proxy_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ cb_download_proxy_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+
