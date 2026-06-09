@@ -2746,6 +2746,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'userSuperAccess'
+        - 'itsmAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -3912,6 +3913,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'userTempAdmin'
+        - 'itsmAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -15904,6 +15906,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -16394,6 +16397,7 @@ kong_apis:
       - name: acl
         config.whitelist:
            - 'contentAccess'
+           - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -16448,6 +16452,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -21007,6 +21012,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'courseAccess'
+        - 'itsmAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -22087,6 +22093,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'courseAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
