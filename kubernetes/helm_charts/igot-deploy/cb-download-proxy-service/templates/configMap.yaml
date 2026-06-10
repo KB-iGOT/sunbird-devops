@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cb-download-proxy-access-keys
+  namespace: {{ .Values.namespace }}
+data:
+  report-download-key.pem: |
+{{ .Values.cbdownloadproxypubkey | indent 4 }}
+
+  report-download-private-key.pem: |
+{{ .Values.cbdownloadproxyprivkey | indent 4 }}
+

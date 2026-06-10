@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+     rollingUpdate:
+        maxSurge: {{ .Values.strategy.maxsurge }}
+        maxUnavailable: {{ .Values.strategy.maxunavailable }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+{{- if .Values.imagepullsecrets }}
+      imagePullSecrets:
+      - name: {{ .Values.imagepullsecrets }}
+{{- end }}
+      volumes:
+        - name: cbdownloadproxyprivkey
+          configMap:
+            name: cb-download-proxy-access-keys
+      serviceAccountName: cb-download-proxy-sa
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
+        imagePullPolicy: Always
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - sleep 45
+        envFrom:
+        - configMapRef:
+            name: {{ .Chart.Name }}-config
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: cbdownloadproxyprivkey
+          mountPath: /usr/local/openresty/keys/
+          readOnly: true
+        ports:
+        - containerPort: {{ .Values.network.port }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cb-download-proxy-service
+  namespace: {{ .Values.namespace }}
+{{- if .Values.service.annotations }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+{{- end }}
+spec:
+  selector:
+    app: cb-download-proxy-service
+  type: {{ .Values.service.type }}
+{{- if and .Values.service.cb_download_proxy_service_ip (ne .Values.service.type "NodePort") }}
+  loadBalancerIP: {{ .Values.service.cb_download_proxy_service_ip }}
+{{- end }}
+  ports:
+  - port: 8080
+    name: http
+    targetPort: 8080
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cb-download-proxy-sa
+  namespace: {{ default .Values.namespace .Release.Namespace  }}
+  annotations:
+    iam.gke.io/gcp-service-account: {{ .Values.cb_download_proxy_service_account }}
+  labels:
+{{ include "cb-download-proxy.labels" . | nindent 4 }}
