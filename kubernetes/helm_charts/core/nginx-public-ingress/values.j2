@@ -122,7 +122,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     #add_header Content-Security-Policy "frame-ancestors 'self'; frame-src *.youtube.com *.igot-stage.in *.{{ nginx_proxy_server_name }};";
     if ($block_bad_uri) {                                                                                                                               
@@ -2799,7 +2799,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     if ($block_bad_uri) {                                                                                                                               
        return 400;                                                                                                                                             
@@ -3826,7 +3826,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     if ($block_bad_uri) {                                                                                                                               
        return 400;                                                                                                                                             
@@ -4743,7 +4743,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     if ($block_bad_uri) {                                                                                                                               
        return 400;                                                                                                                                             
@@ -4889,7 +4889,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     if ($block_bad_uri) {                                                                                                                               
        return 400;                                                                                                                                             
@@ -6426,7 +6426,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     if ($block_bad_uri) {                                                                                                                               
        return 400;                                                                                                                                             
@@ -7931,7 +7931,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     if ($block_bad_uri) {                                                                                                                               
        return 400;                                                                                                                                             
@@ -8026,7 +8026,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;    
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
@@ -9042,7 +9042,7 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
