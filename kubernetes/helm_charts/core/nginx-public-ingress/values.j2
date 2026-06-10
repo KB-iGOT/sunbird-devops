@@ -1899,7 +1899,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
       rewrite ^/cbp-tpc-ai/(.*) /$1 break;
-      proxy_pass http://{{ ai_cbp_plan_vm }}:8030;
+      proxy_pass http://cbp-ai-service:8000;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
       proxy_read_timeout 300;
@@ -1964,7 +1964,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
       rewrite ^/training-pla-ai/(.*) /$1 break;
-      proxy_pass http://{{ ai_cbp_plan_vm }}:8040;
+      proxy_pass http://cbp-ai-ui;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
       proxy_read_timeout 300;
