@@ -8029,6 +8029,9 @@ proxyconfig: |-
     add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;    
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }    
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
       return 301 {{proto}}://spv.{{ nginx_proxy_server_name }};
@@ -9046,6 +9049,9 @@ proxyconfig: |-
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }    
     location ~* ^/auth/(.*)/impersonation {
       return 301 {{proto}}://mdo.{{ nginx_proxy_server_name }};
     }
