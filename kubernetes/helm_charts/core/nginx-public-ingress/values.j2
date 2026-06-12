@@ -4605,7 +4605,7 @@ proxyconfig: |-
       add_header X-Frame-Options "SAMEORIGIN";
       add_header X-Content-Type-Options nosniff;
       add_header Referrer-Policy 'strict-origin';
-      add_header X-XSS-Protection "1; mode=block" always;
+      proxy_hide_header X-XSS-Protection;
       add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains; preload';
       add_header 'Access-Control-Allow-Headers'  'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-channel-id, x-app-id, Authorization, auth-token, x-user-id';
       proxy_set_header X-Scheme $scheme;
@@ -10066,6 +10066,7 @@ nginxconfig: |
       add_header Referrer-Policy "strict-origin";
       add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
       add_header Cache-Control "max-age=0";
+      proxy_hide_header X-XSS-Protection;
       map $request_uri $block_bad_uri {
         default 0;
         ~*%5c                1;
