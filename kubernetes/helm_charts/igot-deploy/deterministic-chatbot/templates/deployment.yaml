@@ -25,12 +25,12 @@ spec:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
       volumes:
-        - name: gcpdeterministicchatbotcredentialsjson
+        - name: gcpaiassessmentcredentialsjson
           configMap:
-            name: gcpdeterministicchatbotcredentialsjson
-        - name: gcpdeterministicchatbotstoragecredentialsjson
+            name: gcpaiassessmentcredentialsjson
+        - name: gcpaiassessmentcredentialsjson
           configMap:
-            name: gcpdeterministicchatbotstoragecredentialsjson
+            name: gcpaiassessmentcredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -41,10 +41,10 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
-        - name: gcpdeterministicchatbotcredentialsjson
-          mountPath: /app/gcp/gcpdeterministicchatbotcredentials.json
-          subPath: gcpdeterministicchatbotcredentials.json
-        - name: gcpdeterministicchatbotstoragecredentialsjson
+        - name: gcpaiassessmentcredentialsjson
+          mountPath: /app/gcp/gcpaiassessmentcredentials.json
+          subPath: gcpaiassessmentcredentials.json
+        - name: gcpaiassessmentcredentialsjson
           mountPath: /app/gcp/gcp_storage_credentials.json
           subPath: gcp_storage_credentials.json
         ports:
