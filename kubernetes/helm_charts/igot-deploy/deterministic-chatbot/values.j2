@@ -20,7 +20,7 @@ strategy:
   maxsurge: {{ deterministic_chatbot_maxsurge|default('25%') }}
   maxunavailable: {{ deterministic_chatbot_maxunavailable|default('25%') }}
 gcpdeterministicchatbotcredentialsjson: |-
- {{deterministic-chatbot_gcp_service_account_json}}
+ {{deterministic_chatbot_gcp_service_account_json}}
 
 gcpdeterministicchatbotcredentialsjson: |-
  {{gcp_artifcats_upload_service_account}}
