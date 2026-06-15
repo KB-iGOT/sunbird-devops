@@ -19,8 +19,8 @@ strategy:
   type: RollingUpdate
   maxsurge: {{ deterministic_chatbot_maxsurge|default('25%') }}
   maxunavailable: {{ deterministic_chatbot_maxunavailable|default('25%') }}
-gcpaiassessmentcredentialsjson: |-
- {{ai_assessment_gcp_service_account_json}}
+gcpdeterministicchatbotcredentialsjson: |-
+ {{deterministic-chatbot_gcp_service_account_json}}
 
-gcpaiassessmentcredentialsjson: |-
+gcpdeterministicchatbotcredentialsjson: |-
  {{gcp_artifcats_upload_service_account}}
