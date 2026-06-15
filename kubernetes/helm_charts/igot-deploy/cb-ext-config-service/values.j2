@@ -26,10 +26,24 @@ strategy:
   maxsurge: {{ cb_ext_config_maxsurge|default('25%') }}
   maxunavailable: {{ cb_ext_config_maxunavailable|default('25%') }}
 
-{{ cb_ext_config_liveness_readiness | to_nice_yaml }}
-
-ccb_ext_config_backend_basepath: {{ cb_ext_config_backend_basepath | default('/keys/') }}
-
+healthcheck: true
+livenessProbe:
+  httpGet:
+    path: /cbextconfig/actuator/health
+    port: {{ service_cb_ext_config_port }}
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 15
+  failureThreshold: 2
+readinessProbe:
+  httpGet:
+    path: /cbextconfig/actuator/health
+    port: {{ service_cb_ext_config_port }}
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 15
+  failureThreshold: 2
+cb_ext_config_backend_basepath: {{ cb_ext_config_backend_basepath | default('/keys/') }}
 
 serviceMonitor:
   enabled: true
