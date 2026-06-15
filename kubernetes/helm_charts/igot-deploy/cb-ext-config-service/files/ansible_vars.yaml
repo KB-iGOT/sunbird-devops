@@ -36,7 +36,7 @@ cb_ext_config_liveness_readiness:
   readinessProbe:
     httpGet:
       path: /liveness
-      port: 8099
+      port: "{{ service_cb_ext_config_port }}"
     initialDelaySeconds: 30
     periodSeconds: 30
     timeoutSeconds: 15
@@ -44,7 +44,7 @@ cb_ext_config_liveness_readiness:
   livenessProbe:
     httpGet:
       path: /liveness
-      port: 8099
+      port: "{{ service_cb_ext_config_port }}"
     initialDelaySeconds: 30
     periodSeconds: 30
     timeoutSeconds: 15
