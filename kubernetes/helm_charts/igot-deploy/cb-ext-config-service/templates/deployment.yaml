@@ -61,7 +61,7 @@ spec:
         volumeMounts:
 {{- $keys := .Files.Glob "keys/*" }}
 {{- if $keys }}
-        - mountPath: {{ .Values.cb_comment_backend_basepath }}
+        - mountPath: {{ .Values.cb_ext_config_backend_basepath }}
           name: access-keys
 {{- end }}
       volumes:
@@ -69,7 +69,7 @@ spec:
 {{- if $keys }}
       - name: access-keys
         secret:
-          secretName: cb-comment-access-keys
+          secretName: cb-ext-config-access-keys
 {{- end }}
 
 ---
