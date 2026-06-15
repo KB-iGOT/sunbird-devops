@@ -185,6 +185,7 @@ support_portal_prefix: /supportportal
 ai_assessment_prefix: /ai/assessments
 ai_cbp_mdo_prefix: /ai/cbp
 content_health_prefix: /contenthealth
+volunteer_prefix: /volunteer
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -25425,3 +25426,94 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateNgoContentState
+    uris: "{{ course_service_prefix }}/v1/content/state/update/ngo"
+    upstream_url: "{{ lms_service_url }}/v2/ngo/content/state/update"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"     
+     
+  - name: readNgoContentState
+    uris: "{{ course_service_prefix }}/v1/content/state/read/ngo"
+    upstream_url: "{{ lms_service_url }}/v2/ngo/content/state/read"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: addFirstCommentNgo
+    uris: "{{ comment_prefix }}/v1/ngo/addFirst"
+    upstream_url: "{{ cb_comment_service_url }}/comment/v1/ngo/addFirst"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}" 
+
+  - name: ratingAndReviewsNgo
+    uris: "{{ volunteer_prefix }}/ratings/v1/read"
+    upstream_url: "{{ sb_cb_ext_service_url }}/volunteer/ratings/v1/read"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+          - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: userInsightsNgo
+    uris: "{{ volunteer_prefix }}/user/v2/insights"
+    upstream_url: "{{ sb_cb_ext_service_url }}/volunteer/user/v2/insights"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"      
+
