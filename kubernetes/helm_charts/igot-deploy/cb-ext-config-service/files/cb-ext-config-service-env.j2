@@ -3,7 +3,10 @@ server.tomcat.max-threads=2048
 server.tomcat.min-spare-threads=20
 server.tomcat.max-connections=15000
 server.tomcat.accept-count=500
-server.port=7010
+
+spring.application.name=cb-ext-config-service
+server.port={{ application_port }}
+management.endpoints.web.exposure.include=health
 
 # spring data jpa for postgres
 spring.datasource.url=jdbc:postgresql://{{ postgresql_host }}:{{ postgresql_port }}/sunbird
