@@ -28,10 +28,16 @@ spec:
         - name: gcpdeterministicchatbotcredentialsjson
           configMap:
             name: gcpdeterministicchatbotcredentialsjson
+        - name: gcpdeterministicchatbotstoragecredentialsjson
+          configMap:
+            name: gcpdeterministicchatbotstoragecredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
         imagePullPolicy: Always
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /app/gcp/gcpdeterministicchatbotcredentials.json
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config
@@ -41,7 +47,7 @@ spec:
         - name: gcpdeterministicchatbotcredentialsjson
           mountPath: /app/gcp/gcpdeterministicchatbotcredentials.json
           subPath: gcpdeterministicchatbotcredentials.json
-        - name: gcpdeterministicchatbotcredentialsjson
+        - name: gcpdeterministicchatbotstoragecredentialsjson
           mountPath: /app/gcp/gcp_storage_credentials.json
           subPath: gcp_storage_credentials.json
         ports:
