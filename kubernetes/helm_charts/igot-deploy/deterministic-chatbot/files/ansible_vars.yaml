@@ -1,26 +1,26 @@
 ---
-# vars file for ai-assessment-service
+# vars file for deterministic-chatbot
 # For script
-release_name: "{{ network_alias_ai_assessment_service }}"
-user_friendly_name: ai assessment service
-template_env_file_name: "ai_assessment-env.j2"
-compose_file_name: "{{ service_ai_assessment_service }}.yml"
-env_file_name: "{{ service_ai_assessment_service }}.env"
+release_name: "{{ network_alias_deterministic-chatbot }}"
+user_friendly_name: deterministic chatbot
+template_env_file_name: "deterministic-chatbot-env.j2"
+compose_file_name: "{{ service_deterministic-chatbot }}.yml"
+env_file_name: "{{ service_deterministic-chatbot }}.env"
 helm_env_file_location: "../helm_charts/igot-deploy/templates/"
-helm_env_file_name: "{{ helm_env_file_location }}/{{ service_ai_assessment_service }}.env"
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_deterministic-chatbot }}.env"
 env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
 compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
 # For service
-application_port: "{{ service_ai_assessment_port }}"
-image_name: "{{ image_ai_assessment_service }}"
-tag: "{{ tags_ai_assessment_service }}"
+application_port: "{{ service_deterministic-chatbot_port }}"
+image_name: "{{ image_deterministic-chatbot }}"
+tag: "{{ tags_deterministic-chatbot }}"
 host_port: "{{ application_port }}"
 docker_port: "{{ application_port }}"
-replicas: "{{ service_replicas_ai_assessment_service }}"
-reserved_memory: "{{ service_mem_reserved_ai_assessment_service }}"
-limited_memory: "{{ service_mem_limit_ai_assessment_service }}"
+replicas: "{{ service_replicas_deterministic-chatbot }}"
+reserved_memory: "{{ service_mem_reserved_deterministic-chatbot }}"
+limited_memory: "{{ service_mem_limit_deterministic-chatbot }}"
 health_check_endpoint: http://127.0.0.1:{{ docker_port }}/health
-network_alias_name: "{{ network_alias_ai_assessment_service }}"
+network_alias_name: "{{ network_alias_deterministic-chatbot }}"
 docker_service_stack_name: ui
-docker_service_name: "{{ service_ai_assessment_service }}"
-force_reload: "{{ force_reload_ai_assessment_service }}"
+docker_service_name: "{{ service_deterministic-chatbot }}"
+force_reload: "{{ force_reload_deterministic-chatbot }}"
