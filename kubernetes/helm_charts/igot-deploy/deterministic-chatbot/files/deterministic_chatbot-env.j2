@@ -41,7 +41,7 @@ LOG_FILE=
 # Uses the existing local Postgres (same instance as legacy app — no new container needed).
 # saathi_db was created with: psql -c "CREATE DATABASE saathi_db OWNER myuser;"
 # LangGraph checkpoint tables auto-created on first startup via AsyncPostgresSaver.setup().
-POSTGRES_URL={{ deterministic-chatbot_db_dsn }}
+POSTGRES_URL={{ deterministic_chatbot_db_dsn }}
 
 # ── Redis (run: docker compose up redis) ─────────────────────────────────────
 REDIS_URL=redis://localhost:6379/3
