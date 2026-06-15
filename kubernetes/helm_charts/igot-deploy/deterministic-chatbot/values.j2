@@ -1,26 +1,26 @@
-### Default variable file for ai-assessment-service ###
+### Default variable file for deterministic-chatbot ###
 namespace: {{ namespace }}
 imagepullsecrets: {{ imagepullsecrets }}
 dockerhub: {{ docker_hub_url }}
-replicaCount: {{ai_assessment_replicacount|default(1)}}
-repository: {{ image_ai_assessment_service }}
+replicaCount: {{deterministic-chatbot|default(1)}}
+repository: {{ image_deterministic-chatbot_service }}
 image_tag: {{ image_tag }}
 resources:
   requests:
-    cpu: {{ai_assessment_cpu_req|default('100m')}}
-    memory: {{ai_assessment_mem_req|default('200Mi')}}
+    cpu: {{deterministic-chatbot_cpu_req|default('100m')}}
+    memory: {{deterministic-chatbot_mem_req|default('200Mi')}}
   limits:
-    cpu: {{ai_assessment_cpu_limit|default('1')}}
-    memory: {{ai_assessment_mem_limit|default('1024Mi')}}
+    cpu: {{deterministic-chatbot_cpu_limit|default('1')}}
+    memory: {{deterministic-chatbot_mem_limit|default('1024Mi')}}
 network:
-  port: {{ service_ai_assessment_port }}
-  targetport: {{ service_ai_assessment_port }}
+  port: {{ service_deterministic-chatbot_port }}
+  targetport: {{ service_deterministic-chatbot_port }}
 strategy:
   type: RollingUpdate
-  maxsurge: {{ ai_assessment_maxsurge|default('25%') }}
-  maxunavailable: {{ ai_assessment_maxunavailable|default('25%') }}
-gcpaiassessmentcredentialsjson: |-
- {{ai_assessment_gcp_service_account_json}}
+  maxsurge: {{ deterministic-chatbot_maxsurge|default('25%') }}
+  maxunavailable: {{ deterministic-chatbot_maxunavailable|default('25%') }}
+gcpaideterministicchatbotcredentialsjson: |-
+ {{deterministic-chatbot_gcp_service_account_json}}
 
-gcpaiassessmentstoragecredentialsjson: |-
+gcpaideterministicchatbotstoragecredentialsjson: |-
  {{gcp_artifcats_upload_service_account}}
