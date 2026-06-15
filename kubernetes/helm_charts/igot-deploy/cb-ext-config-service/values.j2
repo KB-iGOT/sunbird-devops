@@ -26,7 +26,7 @@ strategy:
   maxsurge: {{ cb_ext_config_maxsurge|default('25%') }}
   maxunavailable: {{ cb_ext_config_maxunavailable|default('25%') }}
 
-healthcheck: false
+healthcheck: true
 livenessProbe:
   httpGet:
     path: /cbextconfig/actuator/health
