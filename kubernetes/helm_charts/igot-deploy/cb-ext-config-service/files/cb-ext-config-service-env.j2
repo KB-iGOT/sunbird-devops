@@ -6,7 +6,7 @@ server.tomcat.accept-count=500
 
 spring.application.name=cb-ext-config-service
 server.port={{ application_port }}
-management.endpoints.web.exposure.include=health
+MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health
 
 # spring data jpa for postgres
 spring.datasource.url=jdbc:postgresql://{{ postgresql_host }}:{{ postgresql_port }}/sunbird
