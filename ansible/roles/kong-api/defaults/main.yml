@@ -185,6 +185,7 @@ support_portal_prefix: /supportportal
 ai_assessment_prefix: /ai/assessments
 ai_cbp_mdo_prefix: /ai/cbp
 content_health_prefix: /contenthealth
+volunteer_prefix: /volunteer
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -25481,7 +25482,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}" 
 
   - name: ratingAndReviewsNgo
-    uris: "volunteer/ratings/v1/read"
+    uris: "{{ volunteer_prefix }}/ratings/v1/read"
     upstream_url: "{{ sb_cb_ext_service_url }}/volunteer/ratings/v1/read"
     strip_uri: true
     plugins:
@@ -25499,7 +25500,7 @@ kong_apis:
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: userInsightsNgo
-    uris: "/volunteer/user/v2/insights"
+    uris: "{{ volunteer_prefix }}/user/v2/insights"
     upstream_url: "{{ sb_cb_ext_service_url }}/volunteer/user/v2/insights"
     strip_uri: true
     plugins:
