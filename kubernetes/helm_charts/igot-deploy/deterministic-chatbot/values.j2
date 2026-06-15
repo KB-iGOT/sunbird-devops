@@ -2,7 +2,7 @@
 namespace: {{ namespace }}
 imagepullsecrets: {{ imagepullsecrets }}
 dockerhub: {{ docker_hub_url }}
-replicaCount: {{deterministic_chatbot|default(1)}}
+replicaCount: {{deterministic_chatbot_replicacount|default(1)}}
 repository: {{ image_deterministic_chatbot_service }}
 image_tag: {{ image_tag }}
 resources:
@@ -21,3 +21,5 @@ strategy:
   maxunavailable: {{ deterministic_chatbot_maxunavailable|default('25%') }}
 gcpdeterministicchatbotcredentialsjson: |-
  {{ai_assessment_gcp_service_account_json}}
+gcpdeterministicchatbotstoragecredentialsjson: |-
+ {{gcp_artifcats_upload_service_account}}
