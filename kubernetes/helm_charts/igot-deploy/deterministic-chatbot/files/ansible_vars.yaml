@@ -12,7 +12,7 @@ env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
 compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
 # For service
 application_port: "{{ service_deterministic_chatbot_port }}"
-image_name: "{{ image_deterministic_chatbot }}"
+image_name: "{{ image_deterministic_chatbot_service }}"
 tag: "{{ tags_deterministic_chatbot }}"
 host_port: "{{ application_port }}"
 docker_port: "{{ application_port }}"
