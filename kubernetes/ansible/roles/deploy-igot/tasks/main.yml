@@ -80,7 +80,8 @@
     "id-mapping-service",
     "frac-backend-service",
     "cb-ext-workallocation-tool-service",
-    "form-service"
+    "form-service",
+    "cb-ext-config-service"
     ]
 
 - name: helm upgrade
