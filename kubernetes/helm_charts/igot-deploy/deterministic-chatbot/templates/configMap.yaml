@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: gcpdeterministicchatbotcredentialsjson
+  name: gcpaiassessmentcredentialsjson
   namespace: {{ .Values.namespace }}
 data:
   gcpdeterministicchatbotcredentials.json: |
-{{ .Values.gcpdeterministicchatbotcredentialsjson | indent 4 }}
+{{ .Values.gcpaiassessmentcredentialsjson | indent 4 }}
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: gcpdeterministicchatbotstoragecredentialsjson
+  name: gcpaiassessmentcredentialsjson
   namespace: {{ .Values.namespace }}
 data:
   gcp_storage_credentials.json: |
-{{ .Values.gcpdeterministicchatbotstoragecredentialsjson | indent 4 }}
+{{ .Values.gcpaiassessmentcredentialsjson | indent 4 }}
 
 ---
