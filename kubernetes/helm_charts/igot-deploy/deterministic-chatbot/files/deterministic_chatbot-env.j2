@@ -44,8 +44,8 @@ LOG_FILE=
 POSTGRES_URL={{ deterministic_chatbot_db_dsn }}
 
 # ── Redis (run: docker compose up redis) ─────────────────────────────────────
-#REDIS_URL=redis://localhost:6379/3
-#IGOT_REDIS_NAMESPACE=saathi
+REDIS_URL=redis://{{redis_host}}:6379/3
+IGOT_REDIS_NAMESPACE=saathi
 
 # ── Auth ──────────────────────────────────────────────────────────────────────
 KEYCLOAK_HOST=https://{{ auth_domain_name }}
