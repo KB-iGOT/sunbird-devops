@@ -186,6 +186,7 @@ ai_assessment_prefix: /ai/assessments
 ai_cbp_mdo_prefix: /ai/cbp
 content_health_prefix: /contenthealth
 volunteer_prefix: /volunteer
+formsConfig_service_prefix: /formsConfig
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -251,6 +252,7 @@ content_moderation_service_url: "http://content-moderation-service:8000"
 content_transcode_service_url: "{{contentTranscodeService_IP}}"
 ai_assessment_service_url: "http://ai-assessment-service:8000"
 ai_cbp_mdo_service_url: "http://ai-cbp-mdo-service:8000"
+cb_ext_config_service_url: "http://cb-ext-config-service:7010"
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -25654,6 +25656,60 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: getFormConfig
+    uris: "{{ formsConfig_service_prefix }}/v1/read"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: createFormConfig
+    uris: "{{ formsConfig_service_prefix }}/v1/create"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateFormConfig
+    uris: "{{ formsConfig_service_prefix }}/v1/update"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
