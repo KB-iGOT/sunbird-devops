@@ -25831,8 +25831,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: AiItsmChatbotSessionHistory
-    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/history/(?<session_id>[^/]+)"
-    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/history/${session_id}"
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/history"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/history"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25849,8 +25849,8 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: AiItsmChatbotSessionTurn
-    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/turn/(?<session_id>[^/]+)"
-    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/turn/${session_id}"
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/turn"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/turn"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25865,3 +25865,4 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
