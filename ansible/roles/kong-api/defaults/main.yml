@@ -189,7 +189,7 @@ user_volunteer_prefix: /user/volunteer
 formsConfig_service_prefix: /formsConfig
 cb_ext_ngouserprofile_prefix: /user/ngo/profile
 ngo_achievement_prefix: /learner/ngo/achievement
-ai_det_chatbot_prefix: /ai/detchatbot
+ai_det_chatbot_prefix: /ai/chatbot
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -25793,11 +25793,10 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
-  
 
-  - name: AiDetChatbotCheckSession
-    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions/mine"
-    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions/mine"
+  - name: AiItsmChatbotList
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/list"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25813,9 +25812,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: AiDetChatbotStartSession
-    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions"
-    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions"
+  - name: AiItsmChatbotCreate
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/create"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25831,9 +25830,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: AiDetChatbotHistory
-    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions/(?<session_id>[^/]+)/history"
-    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions/${session_id}/history"
+  - name: AiItsmChatbotHistory
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/history/(?<session_id>[^/]+)"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/history/${session_id}"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25849,9 +25848,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: AiDetChatbotTurn
-    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions/(?<session_id>[^/]+)/turn"
-    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions/${session_id}/turn"
+  - name: AiItsmChatbotTurn
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/turn/(?<session_id>[^/]+)"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/turn/${session_id}"
     strip_uri: true
     plugins:
       - name: jwt
