@@ -189,6 +189,7 @@ user_volunteer_prefix: /user/volunteer
 formsConfig_service_prefix: /formsConfig
 cb_ext_ngouserprofile_prefix: /user/ngo/profile
 ngo_achievement_prefix: /learner/ngo/achievement
+ai_det_chatbot_prefix: /ai/detchatbot
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -255,6 +256,8 @@ content_transcode_service_url: "{{contentTranscodeService_IP}}"
 ai_assessment_service_url: "http://ai-assessment-service:8000"
 ai_cbp_mdo_service_url: "http://ai-cbp-mdo-service:8000"
 cb_ext_config_service_url: "http://cb-ext-config-service:7010"
+ai_det_chatbot_service_url: "http://deterministic-chatbot:8000"
+
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -25784,6 +25787,79 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'reportsAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+  
+
+  - name: AiDetChatbotCheckSession
+    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions/mine"
+    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions/mine"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ high_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: AiDetChatbotStartSession
+    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions"
+    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: AiDetChatbotHistory
+    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions/(?<session_id>[^/]+)/history"
+    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions/${session_id}/history"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ high_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: AiDetChatbotTurn
+    uris: "{{ ai_det_chatbot_prefix }}/v1/sessions/(?<session_id>[^/]+)/turn"
+    upstream_url: "{{ ai_det_chatbot_service_url }}/ai-chatbot/v1/sessions/${session_id}/turn"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
