@@ -1,4 +1,4 @@
-### Default variable file for form_service ###
+### Default variable file for cb-ext-form-service ###
 
 namespace: {{ namespace }}
 imagepullsecrets: {{ imagepullsecrets }}
@@ -6,27 +6,27 @@ dockerhub: {{ docker_hub_url }}
 
 
 env:
-  javaoptions: {{form_java_mem_limit|default('-Xmx600m')}}
+  javaoptions: {{cb_ext_form_java_mem_limit|default('-Xmx600m')}}
 
-replicaCount: {{form_replicacount|default(1)}}
-repository: {{ image_form_service }}
+replicaCount: {{cb_ext_form_replicacount|default(1)}}
+repository: {{ image_cb_ext_form_service }}
 image_tag: {{ image_tag }}
 resources:
   requests:
-    cpu: {{form_cpu_req|default('100m')}}
-    memory: {{form_mem_req|default('100Mi')}}
+    cpu: {{cb_ext_form_cpu_req|default('100m')}}
+    memory: {{cb_ext_form_mem_req|default('100Mi')}}
   limits:
-    cpu: {{form_cpu_limit|default('1')}}
-    memory: {{form_mem_limit|default('1024Mi')}}
+    cpu: {{cb_ext_form_cpu_limit|default('1')}}
+    memory: {{cb_ext_form_mem_limit|default('1024Mi')}}
 network:
-  port: {{ service_form_port }}
-  targetport: {{ service_form_port }}
+  port: {{ service_cb_ext_form_port }}
+  targetport: {{ service_cb_ext_form_port }}
 strategy:
   type: RollingUpdate
-  maxsurge: {{ form_maxsurge|default('25%') }}
-  maxunavailable: {{ form_maxunavailable|default('25%') }}
+  maxsurge: {{ cb_ext_form_maxsurge|default('25%') }}
+  maxunavailable: {{ cb_ext_form_maxunavailable|default('25%') }}
 
-form_service_device_basepath: {{ form_service_device_basepath | default('/keys/') }}
+cb_ext_form_service_device_basepath: {{ cb_ext_form_service_device_basepath | default('/keys/') }}
 
 serviceMonitor:
   enabled: true
@@ -35,7 +35,7 @@ serviceMonitor:
     release: prometheus-operator
 
 autoscaling:
-  enabled: {{ form_service_autoscaling_enabled | default('false') }}
+  enabled: {{ cb_ext_form_service_autoscaling_enabled | default('false') }}
   minReplicas: {{ form_service_autoscaling_minReplicas|default(1) }}
   maxReplicas: {{ form_service_autoscaling_maxReplicas|default(2) }}
   targetCPUUtilizationPercentage: {{ form_service_autoscaling_targetCPUUtilizationPercentage|default(60) }}
