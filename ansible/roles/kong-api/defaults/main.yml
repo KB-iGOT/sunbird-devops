@@ -187,6 +187,8 @@ ai_cbp_mdo_prefix: /ai/cbp
 content_health_prefix: /contenthealth
 user_volunteer_prefix: /user/volunteer
 formsConfig_service_prefix: /formsConfig
+cb_ext_ngouserprofile_prefix: /user/ngo/profile
+ngo_achievement_prefix: /learner/ngo/achievement
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
