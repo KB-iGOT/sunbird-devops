@@ -1,34 +1,34 @@
 ---
-# vars file for deploy-lex-core-service
+# vars file for cb_ext_form-service
 
 # For script
-release_name: "{{ network_alias_pm_analytics_service }}"
-template_compose_file_name: pm_analytics-service.j2
-template_env_file_name: form-service-env.j2
-compose_file_name: "{{ service_form_service }}.yml"
-env_file_name: "{{ service_form_service }}.env"
+release_name: "{{ network_alias_cb_ext_form_service }}"
+template_compose_file_name: cb_ext_form-service.j2
+template_env_file_name: cb_ext_form_service-env.j2
+compose_file_name: "{{ service_cb_ext_form_service }}.yml"
+env_file_name: "{{ service_cb_ext_form_service }}.env"
 helm_env_file_location: "../helm_charts/igot-deploy/templates/"
-helm_env_file_name: "{{ helm_env_file_location }}/{{ service_pm_analytics_service }}.env"
-#chart_path: "../kubernetes-deploy/form-service" 
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_cb_ext_form_service }}.env"
+#chart_path: "../kubernetes-deploy/cb_ext_form-service" 
 env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
 compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
-user_friendly_name: pm_analytics-service
+user_friendly_name: cb_ext_form_service
 
 # For service
-application_port: "{{ service_form_port }}"
-image_name: "{{ image_form_service }}"
-tag: "{{ tags_form_service }}"
+application_port: "{{ service_cb_ext_form_port }}"
+image_name: "{{ image_cb_ext_form_service }}"
+tag: "{{ tags_cb_ext_form_service }}"
 host_port: "{{ application_port }}"
 docker_port: "{{ application_port }}"
-replicas: "{{ service_replicas_form_service }}"
-reserved_memory: "{{ service_mem_reserved_form_service }}"
-limited_memory: "{{ service_mem_limit_form_service }}"
+replicas: "{{ service_replicas_cb_ext_form_service }}"
+reserved_memory: "{{ service_mem_reserved_cb_ext_form_service }}"
+limited_memory: "{{ service_mem_limit_cb_ext_form_service }}"
 #limited_memory: 2048M
 health_check_endpoint: http://127.0.0.1:{{ docker_port }}/actuator/health
-network_alias_name: "{{ network_alias_form_service }}"
-docker_service_stack_name: lms
-docker_service_name: "{{ service_form_service }}"
-force_reload: "{{ force_reload_form_service }}"
+network_alias_name: "{{ network_alias_cb_ext_form_service }}"
+docker_service_stack_name: cb_ext_form_service
+docker_service_name: "{{ service_cb_ext_form_service }}"
+force_reload: "{{ force_reload_cb_ext_form_service }}"
 
 # For application
 server_connection_timeout: 5000
@@ -41,11 +41,11 @@ spring_data_mongodb_database: telemetry
 spring_data_cassandra_bodhi_startupTimeoutInSeconds: 100
 
 
-lhub_url: "{{ var_pm_analytics_learning_hub_url }}"
-lhub_certifaction_url: "{{ var_pm_analytics_learning_hub_certification_url }}"
+lhub_url: "{{ var_cb_ext_form_learning_hub_url }}"
+lhub_certifaction_url: "{{ var_cb_ext_form_learning_hub_certification_url }}"
 spring_datasource_jdbc_url: jdbc:postgresql://{{ postgresql_host }}:{{ postgresql_port }}/{{ postgresql_wingspan_database }}
 
-enable_realtime_progress: "{{ var_pm_analytics_enable_realtime_progress }}"
+enable_realtime_progress: "{{ var_cb_ext_form_enable_realtime_progress }}"
 
 root_org: Infosys
 instance_org: infy01
