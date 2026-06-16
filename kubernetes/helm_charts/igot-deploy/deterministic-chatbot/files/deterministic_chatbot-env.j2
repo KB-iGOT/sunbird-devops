@@ -53,7 +53,7 @@ KEYCLOAK_REALM={{ keycloak_realm_name }}
 # KEYCLOAK_AUDIENCE=saathi
 # Auth behaviour flags
 AUTH_DISABLED=false
-AUTH_HEADER_NAME=x-authenticated-user-token  # header the client sends the JWT in
+AUTH_HEADER_NAME=x-authenticated-user-token
 # AUTH_REQUIRED_ROLE: role that must be in user_roles claim; empty = skip check
 AUTH_REQUIRED_ROLE=
 
@@ -100,7 +100,7 @@ CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000
 # ── Observability (Langfuse) ──────────────────────────────────────────────────
 # Set LANGFUSE_ENABLED=true to activate tracing. Keys from cloud.langfuse.com.
 LANGFUSE_ENABLED=false
-LANGFUSE_PUBLIC_KEY={{ langfuse_public_key: }}
+LANGFUSE_PUBLIC_KEY={{ langfuse_public_key }}
 LANGFUSE_SECRET_KEY={{ langfuse_secret_key }}
 LANGFUSE_HOST={{ langfuse_host }}
 # 1.0 = trace every request; 0.1 = 10% sampling (use lower in prod to save quota)
