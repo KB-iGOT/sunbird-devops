@@ -910,7 +910,7 @@ proxyconfig: |-
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
-      rewrite ^/aps/(.*) /$1 break;
+      rewrite ^/api/(.*) /$1 break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
       proxy_set_header X-Scheme $scheme;
