@@ -9123,6 +9123,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'userAccess'
+        - 'itsmAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ small_rate_limit_per_hour }}"
@@ -9393,6 +9394,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -10688,6 +10690,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -10724,6 +10727,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -10851,6 +10855,7 @@ kong_apis:
       config.whitelist: 
         - 'contentAdmin'
         - 'contentTempAccess'
+        - 'itsmAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
@@ -15824,6 +15829,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'courseAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ large_rate_limit_per_hour }}"
@@ -21562,6 +21568,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -24925,6 +24932,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
