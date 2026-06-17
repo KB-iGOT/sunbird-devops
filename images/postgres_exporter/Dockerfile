@@ -2,10 +2,17 @@ FROM alpine:3.6
 
 ARG POSTGRES_EXPORTER_VERSION=v0.2.2
 
-RUN apk --no-cache add openssl
+RUN apk --no-cache add openssl wget
 
-RUN wget -O /usr/local/bin/postgres_exporter https://github.com/wrouesnel/postgres_exporter/releases/download/$POSTGRES_EXPORTER_VERSION/postgres_exporter && \
+# Create non-root user
+RUN addgroup -S sunbird && \
+    adduser -S -G sunbird -h /home/sunbird sunbird
+
+RUN wget -O /usr/local/bin/postgres_exporter \
+    https://github.com/wrouesnel/postgres_exporter/releases/download/${POSTGRES_EXPORTER_VERSION}/postgres_exporter && \
     chmod +x /usr/local/bin/postgres_exporter
+
+USER sunbird
 
 EXPOSE 9187
 
