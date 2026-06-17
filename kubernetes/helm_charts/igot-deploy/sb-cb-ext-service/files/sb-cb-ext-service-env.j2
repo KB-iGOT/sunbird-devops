@@ -627,6 +627,11 @@ operational.report.jwt.ttl=300
 cb.download.proxy.base.url={{ cb_download_proxy_url }}
 jwt.private.key.path=/mnt/report-download-private-key.pem
 
+insights.week.range={w4:'w1,w2,w3,w4', w12:'w0,w1,w2,w3,w4,wn1,wn2,wn3,wn4,wn5,wn6,wn7'}
+insights.week.range.cache.prefix={w4:'user_insights_', w12:'chatbot_user_insights_'}
+insights.week.range.count={w4:'4', w12:'12'}
+
+
 bp.report.cassandra.in.chunk.size=100
 bp.report.wf.page.size=100
 bp.report.sheet.name=Enrollment Report

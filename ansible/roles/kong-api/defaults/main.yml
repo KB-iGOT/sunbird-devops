@@ -2730,24 +2730,6 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: privateUserAssignRole
-    uris: "{{ user_service_prefix }}/private/v1/assign/role"
-    upstream_url: "{{ learning_service_url }}/private/user/v1/assign/role"
-    strip_uri: true
-    plugins:
-    - name: jwt
-    - name: cors
-    - "{{ statsd_pulgin }}"
-    - name: acl
-      config.whitelist:
-        - 'userSuperAdmin'
-    - name: rate-limiting
-      config.policy: local
-      config.hour: "{{ medium_rate_limit_per_hour }}"
-      config.limit_by: credential
-    - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"
-
   - name: privateUserRead
     uris: "{{ user_service_prefix }}/private/v1/read"
     upstream_url: "{{ learning_service_url }}/private/user/v1/read"
@@ -9144,6 +9126,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'userAccess'
+        - 'itsmAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ small_rate_limit_per_hour }}"
@@ -9414,6 +9397,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -10709,6 +10693,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -10745,6 +10730,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -10872,6 +10858,7 @@ kong_apis:
       config.whitelist: 
         - 'contentAdmin'
         - 'contentTempAccess'
+        - 'itsmAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
@@ -15845,6 +15832,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'courseAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ large_rate_limit_per_hour }}"
@@ -21583,6 +21571,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -24946,6 +24935,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -25415,6 +25405,24 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: chatbotInsights
+    uris: "/chatbot/v2/insights"
+    upstream_url: "{{ sb_cb_ext_service_url }}/chatbot/v2/insights"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: bpUserEnrollmentReportGenerateV2
     uris: "{{ blended_program_prefix }}/v2/generate/report"
