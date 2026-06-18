@@ -83,7 +83,7 @@
     "form-service"
     ]
 
-    - name: Create the token pubic key file
+- name: Create the token pubic key file
       copy:
         dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid_kc24 }}"
         content: "{{ core_vault_sunbird_sso_publickey_kc24 }}"
