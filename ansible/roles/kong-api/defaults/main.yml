@@ -25435,7 +25435,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: adminContentStateRead
-    uris: "admin/content/state/read"
+    uris: "/admin/content/state/read"
     upstream_url: "{{ cb_ext_course_service_url }}/chatbot/consumption/v2/read"
     strip_uri: true
     plugins:
@@ -25453,7 +25453,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: adminAssessmentRetakeCount
-    uris: "admin/assesment/retake/count"
+    uris: "/admin/assesment/retake/count"
     upstream_url: "{{ cb_ext_assessment_service_url }}/chatbot/assessment/retake/count"
     strip_uri: true
     plugins:
