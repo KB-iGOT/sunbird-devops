@@ -25804,7 +25804,7 @@ kong_apis:
 
   - name: listCourseEnrollmentListVolunteer
     uris: "{{ course_service_prefix }}/v4/user/ngo/enrollment/list"
-    upstream_url: "{{ lms_service_url }}/v4/user/courses/list"
+    upstream_url: "{{ lms_service_url }}/v4/user/ngo/enrol/courses/list"
     strip_uri: true
     plugins:
       - name: jwt
