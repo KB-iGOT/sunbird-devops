@@ -25444,7 +25444,7 @@ kong_apis:
 
   - name: adminContentStateRead
     uris: "/admin/content/state/read"
-    upstream_url: "{{ cb_ext_course_service_url }}/chatbot/consumption/v2/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/content/v2/chatbot/consumption/v2/read"
     strip_uri: true
     plugins:
       - name: jwt
