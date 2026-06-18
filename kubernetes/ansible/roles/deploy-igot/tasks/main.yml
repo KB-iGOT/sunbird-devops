@@ -53,6 +53,12 @@
       copy:
         dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid }}"
         content: "{{ core_vault_sunbird_sso_publickey }}"
+
+    - name: Create KC24 token public key file
+      copy:
+        dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid_kc24 }}"
+        content: "{{ core_vault_sunbird_sso_publickey_kc24 }}"
+
   when: release_name in [
     "cb-pores-service",
     "content-partner-provider",
@@ -83,39 +89,6 @@
     "form-service"
     ]
 
-- name: Create the token pubic key file
-      copy:
-        dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid_kc24 }}"
-        content: "{{ core_vault_sunbird_sso_publickey_kc24 }}"
-  when: release_name in [
-    "cb-pores-service",
-    "content-partner-provider",
-    "fracentity-service",
-    "pdf-generator-service",
-    "profanity-filter-service",
-    "sb-cb-ext-service",
-    "workflow-handler-service",
-    "cb-enrollment-service",
-    "mentoring-service",
-    "cb-comment-service",
-    "cb-discussion-service",
-    "cb-community-service",
-    "certificate-generator-service",
-    "report-generation-service",
-    "cb-ext-assessment-service",
-    "comment-tree-service",
-    "cb-search-service",
-    "cb-ext-userprofile-service",
-    "cb-notification-service",
-    "cb-notification-wrapper-service",
-    "cb-ext-course-service",
-    "custom-field-service",
-    "hub-graph-service",
-    "id-mapping-service",
-    "frac-backend-service",
-    "cb-ext-workallocation-tool-service",
-    "form-service"
-    ]
 - name: helm upgrade
   shell: helm upgrade --install --atomic --timeout 10m {{ release_name }} {{ chart_path }} -n {{namespace}}
 
