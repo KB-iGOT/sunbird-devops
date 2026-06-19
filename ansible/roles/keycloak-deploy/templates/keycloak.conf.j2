@@ -37,3 +37,16 @@ proxy-headers=xforwarded
 #proxy=none
 hostname={{ kc24_hostname }}
 http-relative-path={{ kc24_http_relative_path }}
+
+features=admin-fine-grained-authz,scripts
+
+health-enabled=true
+metrics-enabled=true
+
+{% if keycloak_cluster_enabled | default(false) | bool %}
+cache=ispn
+cache-config-file=cache-ispn.xml
+spi-sticky-session-encoder-infinispan-should-attach-route=true
+{% else %}
+cache=local
+{% endif %}

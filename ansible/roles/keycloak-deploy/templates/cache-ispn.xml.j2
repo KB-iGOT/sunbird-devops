@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<infinispan xmlns="urn:infinispan:config:14.0">
+
+```
+<jgroups>
+    <stack name="tcp-stack" extends="tcp">
+
+        <TCPPING
+            initial_hosts="{% for host in groups['keycloak'] %}{{ hostvars[host]['ansible_host'] }}[7800]{% if not loop.last %},{% endif %}{% endfor %}"
+            port_range="0"
+            stack.combine="REPLACE"
+            stack.position="MPING"/>
+
+    </stack>
+</jgroups>
+
+<cache-container name="keycloak">
+    <transport stack="tcp-stack"/>
+
+    <distributed-cache name="sessions" owners="2"/>
+    <distributed-cache name="authenticationSessions" owners="2"/>
+    <distributed-cache name="clientSessions" owners="2"/>
+    <distributed-cache name="offlineSessions" owners="2"/>
+    <distributed-cache name="offlineClientSessions" owners="2"/>
+    <distributed-cache name="loginFailures" owners="2"/>
+</cache-container>
+```
+
+</infinispan>
