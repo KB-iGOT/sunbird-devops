@@ -124,13 +124,13 @@
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_user }}"
     mode: '0644'
-  when: keycloak_cluster_enabled|default(false)|bool
+  when: kc24_cluster_enabled|default(false)|bool
 
 - name: Remove cache config when standalone
   file:
     path: "{{ keycloak_home }}/conf/cache-ispn.xml"
     state: absent
-  when: not (keycloak_cluster_enabled|default(false)|bool)
+  when: not (kc24_cluster_enabled|default(false)|bool)
     
 - name: Create directory for sunbird auth package config
   file:
