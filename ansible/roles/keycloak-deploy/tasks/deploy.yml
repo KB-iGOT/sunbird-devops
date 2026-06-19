@@ -113,10 +113,25 @@
 - name: Save keycloak vars to json
   template:
     src: "roles/keycloak-deploy/templates/keycloak.conf.j2"
-    dest: "/opt/keycloak/conf/keycloak.conf"
+    dest: "{{ keycloak_home }}/conf/keycloak.conf"
     mode: "0644"
   run_once: true
-      
+
+- name: Deploy cache config
+  template:
+    src: cache-ispn.xml.j2
+    dest: "{{ keycloak_home }}//conf/cache-ispn.xml"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_user }}"
+    mode: '0644'
+  when: {{ keycloak_cluster_enabled }} | default(false) | bool
+
+- name: Remove cache config when standalone
+  file:
+    path: /opt/keycloak/conf/cache-ispn.xml
+    state: absent
+  when: not ({{ keycloak_cluster_enabled }} | default(false) | bool)
+
 - name: Create directory for sunbird auth package config
   file:
     path: sunbird_auth_{{ sunbird_auth_version }}.config
