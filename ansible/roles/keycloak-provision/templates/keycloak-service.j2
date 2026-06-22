@@ -12,7 +12,7 @@ WorkingDirectory=/opt/keycloak
 
 # External environment file
 EnvironmentFile=/opt/keycloak/conf/keycloak.conf
-Environment="KEYCLOAK_ADMIN= {{ kc24_admin_user }}"
+Environment="KEYCLOAK_ADMIN={{ kc24_admin_user }}"
 Environment="KEYCLOAK_ADMIN_PASSWORD={{ kc24_admin_password }}"
 Environment="sunbird_user_service_base_url={{ sunbird_user_service_base_url }}"
 Environment="sunbird_authorization={{ core_vault_sunbird_ekstep_api_key }}"
