@@ -43,7 +43,7 @@ features=admin-fine-grained-authz,scripts
 health-enabled=true
 metrics-enabled=true
 
-{% if keycloak_cluster_enabled | default(false) | bool %}
+{% if kc24_cluster_enabled | default(false) | bool %}
 cache=ispn
 cache-config-file=cache-ispn.xml
 spi-sticky-session-encoder-infinispan-should-attach-route=true
