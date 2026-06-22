@@ -2,29 +2,73 @@
 
 <infinispan xmlns="urn:infinispan:config:14.0">
 
-```
-<jgroups>
-    <stack name="tcp-stack" extends="tcp">
+    <jgroups>
 
-        <TCPPING
-            initial_hosts="{% for host in groups['keycloak'] %}{{ host }}[7800]{% if not loop.last %},{% endif %}{% endfor %}"
-            port_range="0"
-            stack.combine="REPLACE"
-            stack.position="MPING"/>
+        <stack name="jdbc-ping-tcp" extends="tcp">
 
-    </stack>
-</jgroups>
+            <JDBC_PING
+                connection_driver="org.postgresql.Driver"
+                connection_username={{ kc24_db_username }}
+                connection_password="{{ kc24_db_password }}"
+                connection_url="{{ kc24_db_url }}"
+                initialize_sql="
+                CREATE TABLE IF NOT EXISTS JGROUPSPING (
+                    own_addr VARCHAR(200) NOT NULL,
+                    cluster_name VARCHAR(200) NOT NULL,
+                    ping_data BYTEA,
+                    PRIMARY KEY (own_addr, cluster_name)
+                )"
+                stack.combine="REPLACE"
+                stack.position="MPING"/>
 
-<cache-container name="keycloak">
-    <transport stack="tcp-stack"/>
+        </stack>
 
-    <distributed-cache name="sessions" owners="2"/>
-    <distributed-cache name="authenticationSessions" owners="2"/>
-    <distributed-cache name="clientSessions" owners="2"/>
-    <distributed-cache name="offlineSessions" owners="2"/>
-    <distributed-cache name="offlineClientSessions" owners="2"/>
-    <distributed-cache name="loginFailures" owners="2"/>
-</cache-container>
-```
+    </jgroups>
+
+    <cache-container name="keycloak">
+
+        <transport
+            cluster="{{ keycloak_cluster_name | default('keycloak-cluster') }}"
+            stack="jdbc-ping-tcp"
+            lock-timeout="60000"/>
+
+        <!-- Local caches -->
+        <local-cache name="realms"/>
+        <local-cache name="users"/>
+        <local-cache name="authorization"/>
+
+        <!-- Cluster caches -->
+        <distributed-cache name="sessions" owners="2">
+            <state-transfer timeout="600000"/>
+            <expiration lifespan="-1"/>
+        </distributed-cache>
+
+        <distributed-cache name="authenticationSessions" owners="2">
+            <expiration lifespan="-1"/>
+        </distributed-cache>
+
+        <distributed-cache name="offlineSessions" owners="2">
+            <expiration lifespan="-1"/>
+        </distributed-cache>
+
+        <distributed-cache name="clientSessions" owners="2">
+            <expiration lifespan="-1"/>
+        </distributed-cache>
+
+        <distributed-cache name="offlineClientSessions" owners="2">
+            <expiration lifespan="-1"/>
+        </distributed-cache>
+
+        <distributed-cache name="loginFailures" owners="2">
+            <expiration lifespan="-1"/>
+        </distributed-cache>
+
+        <replicated-cache name="work"/>
+
+        <local-cache name="keys">
+            <expiration max-idle="86400000"/>
+        </local-cache>
+
+    </cache-container>
 
 </infinispan>
