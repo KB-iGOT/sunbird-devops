@@ -39,3 +39,11 @@ form.cache.ttl.hours=1
 
 form.kafka.topic.form-events={{env}}.form.events.create
 form.kafka.consumer.group-id={{env}}.form-es-sync-group
+
+form.search-max-page=1000
+form.search-max-page-size=200
+form.search-default-page-size=10
+form.es-timeout-seconds=30
+form.search-index=fs-forms-v3
+form.search-supported-context-types=form,completionSurvey,peerValidationSurvey,assignment
+form.search-allowed-filter-keys=formId,status,contextType,createdBy,orgId,startDateFrom,startDateTo,endDateFrom,endDateTo
