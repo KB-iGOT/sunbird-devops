@@ -1774,7 +1774,7 @@ proxyconfig: |-
     }
 
     location /testpdf/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1894,7 +1894,7 @@ proxyconfig: |-
     }
 
     location /cbp-tpc-ai/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1910,7 +1910,7 @@ proxyconfig: |-
     }
 
     location /ai-assment-generation/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1926,7 +1926,7 @@ proxyconfig: |-
     }
 
     location /ai-assessment/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1943,7 +1943,7 @@ proxyconfig: |-
     }
 
     location /ai-assment-generation-ui/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1959,7 +1959,7 @@ proxyconfig: |-
     }
     
     location /training-pla-ai/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1975,7 +1975,7 @@ proxyconfig: |-
     }
 
     location /ai-cbp-admin-panel/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -3108,7 +3108,7 @@ proxyconfig: |-
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -4143,7 +4143,7 @@ proxyconfig: |-
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -4821,7 +4821,7 @@ proxyconfig: |-
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -8337,7 +8337,7 @@ proxyconfig: |-
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
@@ -9357,7 +9357,7 @@ proxyconfig: |-
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -10116,6 +10116,11 @@ nginxconfig: |
       map $upstream_cache_status $cache_status {
         default  $upstream_cache_status;
         ''       "NONE";
+      # CORS Origin Mapping - MDO only
+      map $http_origin $cors_origin {
+        default "";
+        "https://mdo.qa.karmayogibharat.net" $http_origin;
+      }
       }
       # Defining metrics
       init_worker_by_lua_block {
