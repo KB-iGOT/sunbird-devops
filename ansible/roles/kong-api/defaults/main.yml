@@ -26059,7 +26059,7 @@ kong_apis:
 
   - name: listCourseEnrollmentSummaryV5
     uris: "{{ course_service_prefix }}/v5/user/enrollment/summary"
-    upstream_url: "{{ lms_service_url }}/v3/user/enrol/courses/details"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/summary"
     strip_uri: true
     plugins:
       - name: jwt
@@ -26073,4 +26073,7 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"                     
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+    
+    
+    
