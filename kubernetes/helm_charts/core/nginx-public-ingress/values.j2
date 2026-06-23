@@ -10119,7 +10119,7 @@ nginxconfig: |
       # CORS Origin Mapping - MDO only
       map $http_origin $cors_origin {
         default "";
-        "https://mdo.qa.karmayogibharat.net" $http_origin;
+        "~^https://([a-zA-Z0-9-]+\.)?karmayogibharat\.net$" $http_origin;
       }
       }
       # Defining metrics
