@@ -2471,7 +2471,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -2544,7 +2544,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
@@ -3496,7 +3496,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -3569,7 +3569,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
@@ -4496,7 +4496,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -6231,7 +6231,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -7721,7 +7721,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -8701,7 +8701,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -8774,7 +8774,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
@@ -9735,7 +9735,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -9808,7 +9808,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
