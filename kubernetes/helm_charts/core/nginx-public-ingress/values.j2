@@ -10116,12 +10116,13 @@ nginxconfig: |
       map $upstream_cache_status $cache_status {
         default  $upstream_cache_status;
         ''       "NONE";
+      }
       # CORS Origin Mapping - MDO only
       map $http_origin $cors_origin {
         default "";
         "~^https://([a-zA-Z0-9-]+\.)?karmayogibharat\.net$" $http_origin;
       }
-      }
+      
       # Defining metrics
       init_worker_by_lua_block {
         prometheus = require("prometheus").init("prometheus_metrics")
