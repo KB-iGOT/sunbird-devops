@@ -19179,7 +19179,7 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: listCourseEnrollmentSummary
+  - name: listCourseEnrollmentSummaryV4
     uris: "{{ course_service_prefix }}/v4/user/enrollment/summary"
     upstream_url: "{{ lms_service_url }}/v4/user/enrol/summary"
     strip_uri: true
@@ -25984,3 +25984,93 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateV5ContentState
+    uris: "{{ course_service_prefix }}/v5/content/state/update"
+    upstream_url: "{{ lms_service_url }}/v3/content/state/update"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"     
+     
+  - name: readV5ContentState
+    uris: "{{ course_service_prefix }}/v5/content/state/read"
+    upstream_url: "{{ lms_service_url }}/v3/content/state/read"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: listCourseEnrollmentListV5
+    uris: "{{ course_service_prefix }}/v5/user/enrollment/list"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/courses/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}" 
+
+  - name: listCourseEnrollmentDetailsV5
+    uris: "{{ course_service_prefix }}/v5/user/enrollment/details"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/courses/details"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: listCourseEnrollmentSummaryV5
+    uris: "{{ course_service_prefix }}/v5/user/enrollment/summary"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/courses/details"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"                     
