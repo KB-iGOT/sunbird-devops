@@ -25897,7 +25897,7 @@ kong_apis:
 
   - name: fetchBasicProfileForPublicUser
     uris: "{{ cb_ext_userprofile_prefix }}/v2/basic"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/basic"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v2/basic"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25916,7 +25916,7 @@ kong_apis:
 
   - name: extendedProfileSummaryForPublicUser
     uris: "{{ cb_ext_userprofile_prefix }}/v2/extended/all"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/extended/all"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v2/extended/all"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25934,7 +25934,7 @@ kong_apis:
 
 
   - name: getPublicUserAdditionalFields
-    uris: "{{ cb_ext_ngouserprofile_prefix }}/v2/getAdditionalFields"
+    uris: "{{ cb_ext_userprofile_prefix }}/v2/getAdditionalFields"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v2/getAdditionalFields"
     strip_uri: true
     plugins:
@@ -25952,7 +25952,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: achievementListPublic
-    uris: "{{ ngo_achievement_prefix }}/v1/list"
+    uris: "{{ achievement_prefix }}/v1/list"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/v1/list"
     strip_uri: true
     plugins:
