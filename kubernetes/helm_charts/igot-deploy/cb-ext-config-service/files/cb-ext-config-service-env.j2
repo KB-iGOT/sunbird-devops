@@ -1,0 +1,47 @@
+server.connection-timeout=5000
+server.tomcat.max-threads=2048
+server.tomcat.min-spare-threads=20
+server.tomcat.max-connections=15000
+server.tomcat.accept-count=500
+
+spring.application.name=cb-ext-config-service
+server.port={{ application_port }}
+MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health
+
+# spring data jpa for postgres
+spring.datasource.url=jdbc:postgresql://{{ postgresql_host }}:{{ postgresql_port }}/sunbird
+spring.datasource.username={{postgresql_username_sunbird }}
+spring.datasource.password={{ postgresql_password_sunbird }}
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
+# Hibernate ddl auto (create, create-drop, validate, update)
+spring.jpa.hibernate.ddl-auto=update
+
+
+#-----------Cassandra Configuration-----------------
+spring.cassandra.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
+spring.cassandra.local-datacenter=DC1
+cassandra.config.host={{ sunbird_cassandra_db_host }}
+# Property needed by common-util cassandra implementation (if not excluded)
+sunbird_cassandra_consistency_level=ONE
+
+
+#-----------------Authentication configuration-----------
+accesstoken.publickey.basepath=/keys/
+sso.url=https://{{ domain_name }}/auth/
+sso.realm={{ keycloak_sso_realm }}
+
+logging.level.org.hibernate.SQL=DEBUG
+
+logging.level.org.hibernate.orm.jdbc.bind=TRACE
+
+logging.level.org.springframework.orm.jpa.JpaTransactionManager=DEBUG
+logging.level.org.springframework.transaction=TRACE
+
+spring.redis.cacheTtl= 60000

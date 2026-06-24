@@ -1,0 +1,26 @@
+---
+# vars file for deterministic-chatbot
+# For script
+release_name: "{{ network_alias_deterministic_chatbot }}"
+user_friendly_name: deterministic chatbot
+template_env_file_name: "deterministic_chatbot-env.j2"
+compose_file_name: "{{ service_deterministic_chatbot }}.yml"
+env_file_name: "{{ service_deterministic_chatbot }}.env"
+helm_env_file_location: "../helm_charts/igot-deploy/templates/"
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_deterministic_chatbot }}.env"
+env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
+compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
+# For service
+application_port: "{{ service_deterministic_chatbot_port }}"
+image_name: "{{ image_deterministic_chatbot_service }}"
+tag: "{{ tags_deterministic_chatbot }}"
+host_port: "{{ application_port }}"
+docker_port: "{{ application_port }}"
+replicas: "{{ service_replicas_deterministic_chatbot }}"
+reserved_memory: "{{ service_mem_reserved_deterministic_chatbot }}"
+limited_memory: "{{ service_mem_limit_deterministic_chatbot }}"
+health_check_endpoint: http://127.0.0.1:{{ docker_port }}/health
+network_alias_name: "{{ network_alias_deterministic_chatbot }}"
+docker_service_stack_name: ui
+docker_service_name: "{{ service_deterministic_chatbot }}"
+force_reload: "{{ force_reload_deterministic_chatbot }}"

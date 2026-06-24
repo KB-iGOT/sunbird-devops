@@ -185,6 +185,11 @@ support_portal_prefix: /supportportal
 ai_assessment_prefix: /ai/assessments
 ai_cbp_mdo_prefix: /ai/cbp
 content_health_prefix: /contenthealth
+user_volunteer_prefix: /user/volunteer
+formsConfig_service_prefix: /formsConfig
+cb_ext_ngouserprofile_prefix: /user/ngo/profile
+ngo_achievement_prefix: /learner/ngo/achievement
+ai_itsm_chatbot_prefix: /ai/chatbot
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -250,6 +255,9 @@ content_moderation_service_url: "http://content-moderation-service:8000"
 content_transcode_service_url: "{{contentTranscodeService_IP}}"
 ai_assessment_service_url: "http://ai-assessment-service:8000"
 ai_cbp_mdo_service_url: "http://ai-cbp-mdo-service:8000"
+cb_ext_config_service_url: "http://cb-ext-config-service:7010"
+ai_itsm_chatbot_service_url: "http://deterministic-chatbot:8000"
+
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -2738,7 +2746,7 @@ kong_apis:
       config.hour: "{{ medium_rate_limit_per_hour }}"
       config.limit_by: credential
     - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"
+      config.allowed_payload_size: "{{ small_request_size_limit }}"      
 
   - name: privateUserRead
     uris: "{{ user_service_prefix }}/private/v1/read"
@@ -19171,9 +19179,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: listCourseEnrollmentSummary
+  - name: listCourseEnrollmentSummaryV4
     uris: "{{ course_service_prefix }}/v4/user/enrollment/summary"
-    upstream_url: "{{ lms_service_url }}/v2/user/enrol/summary"
+    upstream_url: "{{ lms_service_url }}/v4/user/enrol/summary"
     strip_uri: true
     plugins:
       - name: jwt
@@ -25469,3 +25477,603 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: bpUserEnrollmentReportGenerateV2
+    uris: "{{ blended_program_prefix }}/v2/generate/report"
+    upstream_url: "{{ sb_cb_ext_service_url }}/bp/v2/generate/report"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'reportsCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateNgoContentState
+    uris: "{{ course_service_prefix }}/v1/content/state/update/ngo"
+    upstream_url: "{{ lms_service_url }}/v2/ngo/content/state/update"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"     
+     
+  - name: readNgoContentState
+    uris: "{{ course_service_prefix }}/v1/content/state/read/ngo"
+    upstream_url: "{{ lms_service_url }}/v2/ngo/content/state/read"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: ratingAndReviewsNgo
+    uris: "/ratings/volunteer/v1/read"
+    upstream_url: "{{ sb_cb_ext_service_url }}/volunteer/ratings/v1/read"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+          - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: userInsightsNgo
+    uris: "{{ user_volunteer_prefix }}/insights"
+    upstream_url: "{{ sb_cb_ext_service_url }}/volunteer/user/v2/insights"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"      
+
+  - name: bpUserEnrollmentReportStatusV2
+    uris: "{{ blended_program_prefix }}/v2/bpreport/status"
+    upstream_url: "{{ sb_cb_ext_service_url }}/bp/v2/bpreport/status"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'reportsAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: contentDictionaryAPI
+    uris: "{{ content_prefix }}/v5/dictionary"
+    upstream_url: "{{ cb_ext_course_service_url }}/content/dictionary/v1/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ x2_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: volunteerOrgRead
+    uris: "{{ org_service_prefix }}/ngo/v1/read"
+    upstream_url: "{{ learning_service_url }}/v1/ngo/org/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: volunteerUserRead
+    uris: "{{ user_volunteer_prefix }}/v1/read"
+    upstream_url: "{{ learning_service_url }}/v1/cb/user/volunteer/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'userAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: fetchBasicVolunteerProfile
+    uris: "{{ cb_ext_ngouserprofile_prefix }}/v1/basic"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v1/basic"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: volunteerExtendedProfileSummary
+    uris: "{{ cb_ext_ngouserprofile_prefix }}/v1/extended/all"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v1/extended/all"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: achievementListNgo
+    uris: "{{ ngo_achievement_prefix }}/ngo/list"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/ngo/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: getNgoUserAdditionalFields
+    uris: "{{ cb_ext_ngouserprofile_prefix }}/v1/getAdditionalFields"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v1/getAdditionalFields"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: getFormConfig
+    uris: "{{ formsConfig_service_prefix }}/v1/read"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: createFormConfig
+    uris: "{{ formsConfig_service_prefix }}/v1/create"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateFormConfig
+    uris: "{{ formsConfig_service_prefix }}/v1/update"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: listCourseEnrollmentSummaryVolunteer
+    uris: "{{ course_service_prefix }}/v4/user/ngo/enrollment/summary"
+    upstream_url: "{{ lms_service_url }}/v4/user/enrollment/summary"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: listCourseEnrollmentDetailsVolunteer
+    uris: "{{ course_service_prefix }}/v4/user/ngo/enrollment/details"
+    upstream_url: "{{ lms_service_url }}/v4/user/enrol/courses/details"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: listCourseEnrollmentListVolunteer
+    uris: "{{ course_service_prefix }}/v4/user/ngo/enrollment/list"
+    upstream_url: "{{ lms_service_url }}/v4/user/ngo/enrol/courses/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"                
+
+  - name: bpUserEnrollmentReportListV2
+    uris: "{{ blended_program_prefix }}/v2/bpreport/list"
+    upstream_url: "{{ sb_cb_ext_service_url }}/bp/v2/bpreport/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'reportsAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiItsmChatbotSessionList
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/list"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: AiItsmChatbotSessionCreate
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/create"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: AiItsmChatbotSessionHistory
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/history"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/history"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: AiItsmChatbotSessionTurn
+    uris: "{{ ai_itsm_chatbot_prefix }}/v1/sessions/turn"
+    upstream_url: "{{ ai_itsm_chatbot_service_url }}/ai-chatbot/v1/sessions/turn"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: fetchBasicProfileForPublicUser
+    uris: "{{ cb_ext_userprofile_prefix }}/v2/basic"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/basic"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: extendedProfileSummaryForPublicUser
+    uris: "{{ cb_ext_userprofile_prefix }}/v2/extended/all"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/extended/all"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: getPublicUserAdditionalFields
+    uris: "{{ cb_ext_ngouserprofile_prefix }}/v2/getAdditionalFields"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v2/getAdditionalFields"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: achievementListPublic
+    uris: "{{ ngo_achievement_prefix }}/v1/list"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/v1/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: updateV5ContentState
+    uris: "{{ course_service_prefix }}/v5/content/state/update"
+    upstream_url: "{{ lms_service_url }}/v3/content/state/update"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"     
+     
+  - name: readV5ContentState
+    uris: "{{ course_service_prefix }}/v5/content/state/read"
+    upstream_url: "{{ lms_service_url }}/v3/content/state/read"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: listCourseEnrollmentListV5
+    uris: "{{ course_service_prefix }}/v5/user/enrollment/list"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/courses/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}" 
+
+  - name: listCourseEnrollmentDetailsV5
+    uris: "{{ course_service_prefix }}/v5/user/enrollment/details"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/courses/details"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: listCourseEnrollmentSummaryV5
+    uris: "{{ course_service_prefix }}/v5/user/enrollment/summary"
+    upstream_url: "{{ lms_service_url }}/v3/user/enrol/summary"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+    
+    
+    
