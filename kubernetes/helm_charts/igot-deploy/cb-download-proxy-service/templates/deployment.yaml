@@ -28,6 +28,9 @@ spec:
         - name: cbdownloadproxyprivkey
           configMap:
             name: cb-download-proxy-access-keys
+        - name: dl-nginx-conf
+          configMap:
+            name: dl-nginx-conf
       serviceAccountName: cb-download-proxy-sa
       containers:
       - name: {{ .Chart.Name }}
@@ -49,6 +52,10 @@ spec:
         - name: cbdownloadproxyprivkey
           mountPath: /usr/local/openresty/keys/
           readOnly: true
+        - name: dl-nginx-conf
+          mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+          subPath: nginx.conf
+          readOnly: true            
         ports:
         - containerPort: {{ .Values.network.port }}
 

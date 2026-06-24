@@ -1,4 +1,12 @@
 ---
+- name: getting kube dns ip
+  shell: kubectl get service --namespace kube-system kube-dns -o jsonpath="{.spec.clusterIP}"
+  register: kube_dns_ip
+
+- name: setting variable
+  set_fact:
+    kube_dns_ip: "{{ kube_dns_ip.stdout }}"
+
 - name: Including shared vars
   block:
     - name: Including shared vars
@@ -53,6 +61,12 @@
       copy:
         dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid }}"
         content: "{{ core_vault_sunbird_sso_publickey }}"
+
+    - name: Create KC24 token public key file
+      copy:
+        dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid_kc24 }}"
+        content: "{{ core_vault_sunbird_sso_publickey_kc24 }}"
+
   when: release_name in [
     "cb-pores-service",
     "content-partner-provider",
