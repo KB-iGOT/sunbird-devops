@@ -1,4 +1,12 @@
 ---
+- name: getting kube dns ip
+  shell: kubectl get service --namespace kube-system kube-dns -o jsonpath="{.spec.clusterIP}"
+  register: kube_dns_ip
+
+- name: setting variable
+  set_fact:
+    kube_dns_ip: "{{ kube_dns_ip.stdout }}"
+
 - name: Including shared vars
   block:
     - name: Including shared vars
