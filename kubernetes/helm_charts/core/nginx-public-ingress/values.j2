@@ -1924,6 +1924,39 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
+    location /ai-assessment-generation/ {
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      proxy_set_header X-Forwarded-Prefix /ai-assessment-generation;
+      rewrite ^/ai-assessment-generation/(.*) /$1 break;
+      proxy_pass http://ai-assessment-service:8000;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
+
+    location /ai-assment-generation/ {
+      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/ai-assment-generation/(.*) /$1 break;
+      proxy_pass http://ai-assessment-service:8000;
+      proxy_connect_timeout 10;
+      proxy_send_timeout 300;
+      proxy_read_timeout 300;
+    }
+
     location ~ /apis/public/v8/playlist/landingpage {
       # Enabling caching
       proxy_cache_key "$request_uri";
