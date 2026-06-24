@@ -21220,7 +21220,7 @@ kong_apis:
 
   - name: fetchBasicProfile
     uris: "{{ cb_ext_userprofile_prefix }}/v1/basic"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/basic"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v1/basic"
     strip_uri: true
     plugins:
       - name: jwt
@@ -26074,6 +26074,3 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
-    
-    
-    
