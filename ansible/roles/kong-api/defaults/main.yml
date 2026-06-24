@@ -25897,7 +25897,7 @@ kong_apis:
 
   - name: fetchBasicProfileForPublicUser
     uris: "{{ cb_ext_userprofile_prefix }}/v2/basic"
-    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/basic"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/user/profile/v2/basic"
     strip_uri: true
     plugins:
       - name: jwt
