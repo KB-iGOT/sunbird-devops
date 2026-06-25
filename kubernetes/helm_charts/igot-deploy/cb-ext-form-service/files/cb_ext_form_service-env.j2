@@ -37,6 +37,7 @@ spring.data.redis.host={{ kp_redis_ip }}
 spring.data.redis.port=6379
 form.cache.ttl.hours=1
 
+form.kafka.bootstrap-servers={{ kafka_servers_list }}
 form.kafka.topic.form-events={{env}}.form.events.create
 form.kafka.consumer.group-id={{env}}.form-es-sync-group
 
