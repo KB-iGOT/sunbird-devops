@@ -95,7 +95,8 @@
     "frac-backend-service",
     "cb-ext-workallocation-tool-service",
     "form-service",
-    "cb-ext-config-service"
+    "cb-ext-config-service",
+    "cb-ext-form-service"
     ]
 
 - name: helm upgrade
