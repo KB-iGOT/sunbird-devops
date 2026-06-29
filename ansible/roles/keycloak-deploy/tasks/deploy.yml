@@ -115,7 +115,7 @@
     src: "roles/keycloak-deploy/templates/keycloak.conf.j2"
     dest: "{{ keycloak_home }}/conf/keycloak.conf"
     mode: "0644"
-  run_once: true
+#  run_once: true
 
 - name: Deploy cache config
   template:
