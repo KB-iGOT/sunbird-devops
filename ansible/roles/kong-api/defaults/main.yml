@@ -26094,12 +26094,10 @@ kong_apis:
           - 'courseAccess'
       - name: rate-limiting
         config.policy: local
-        config.hour: "{{ large_rate_limit_per_hour }}"
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: adminCommunityJoin
     uris: "{{ community_prefix }}/admin/join"
