@@ -322,9 +322,6 @@
     - name: Redis Update Live Course Duration
       command: "redis-cli -h {{ redis_host }} -p {{ redis_port }} -n {{ redis_db }} SET {{ redis_key_lp_es_agg_course_duration }} {{ aggregated_course_duration }}"
 
-    - name: Redis Update Live Course ID List
-      command: "redis-cli -h {{ redis_host }} -p {{ redis_port }} -n {{ redis_db }} SET {{ redis_key_lp_es_live_course_id_list }} {{ course_id_list }}"
-
     - name: Redis Update Live Course Publisher Count
       command: "redis-cli -h {{ redis_host }} -p {{ redis_port }} -n {{ redis_db }} SET {{ redis_key_lp_es_live_course_publisher_count }} {{ unique_course_publisher_count }}"
 
