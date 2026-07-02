@@ -56,7 +56,7 @@ form.validation-url-allowed-keys=assignmentUrl,thumbnailUrl,submitUrl,thumbnail
 form.validation-url-allowed-domains=portal.dev.karmayogibharat.net,igot.gov.in
 
 sso.realm={{ keycloak_realm_name }}
-sso.url={{ keycloak_domain }}
+sso.url={{ keycloak_domain }}/
 accesstoken.publickey.basepath=/keys/
 
 #Cassandra
@@ -70,7 +70,7 @@ spring.cassandra.local-datacenter=DC1
 sunbird_cassandra_consistency_level=ONE
 form.organisation-fields=orgname
 form.peer-survey-max-custom-questions=2
-form.peer-survey-allowed-additional-properties=isSpvCreated
+form.peer-survey-allowed-additional-properties=identifier,triggerAfter,completionLookBack,thumbnail,duration,publishedOn,isSpvCreated
 form.form-index-v2=fs-forms-alias-v2
 
 form.peer-validation-notify-topic={{env}}.notification.bulk.create
@@ -81,3 +81,11 @@ peer.survey.notification.sent.topic={{env}}.peer.survey.notification.sent
 peer.survey.notification.read.group={{env}}.form.service.peer.survey.consumer
 
 form.attachment-allowed-domains=storage.googleapis.com,portal.dev.karmayogibharat.net
+
+form.elasticsearch.host={{ elasticsearch_host }}
+form.elasticsearch.port={{ elasticsearch_http_port }}
+form.elasticsearch.scheme=http
+form.elasticsearch.index=fs-forms-alias-v2
+
+form.sb-url=http://learner-service:9000
+form.user-search-end-point=/private/user/v1/search
