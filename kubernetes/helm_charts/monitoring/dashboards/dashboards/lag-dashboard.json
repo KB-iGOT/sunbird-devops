@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3376,
-  "iteration": 1778039093845,
+  "id": 3573,
+  "iteration": 1782979046667,
   "links": [],
   "panels": [
     {
@@ -2434,13 +2434,113 @@
       }
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Threshold: \nWarning: 1M\nCritical: 2M",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 81
+      },
+      "hiddenSeries": false,
+      "id": 219,
+      "interval": null,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "maxDataPoints": 100,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod.form-es-sync-group\", job=\"ingestion-kafka-exporter\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Form ES Sync",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 81
+        "y": 88
       },
       "id": 46,
       "panels": [],
@@ -2467,7 +2567,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 82
+        "y": 89
       },
       "hiddenSeries": false,
       "id": 200,
@@ -2567,7 +2667,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 82
+        "y": 89
       },
       "hiddenSeries": false,
       "id": 197,
@@ -2667,7 +2767,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 89
+        "y": 96
       },
       "hiddenSeries": false,
       "id": 203,
@@ -2767,7 +2867,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 89
+        "y": 96
       },
       "hiddenSeries": false,
       "id": 198,
@@ -2867,7 +2967,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 95
+        "y": 102
       },
       "hiddenSeries": false,
       "id": 205,
@@ -2967,7 +3067,7 @@
         "h": 8,
         "w": 11,
         "x": 12,
-        "y": 95
+        "y": 102
       },
       "hiddenSeries": false,
       "id": 196,
@@ -3067,7 +3167,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 103
+        "y": 110
       },
       "hiddenSeries": false,
       "id": 194,
@@ -3167,7 +3267,7 @@
         "h": 7,
         "w": 11,
         "x": 12,
-        "y": 103
+        "y": 110
       },
       "hiddenSeries": false,
       "id": 201,
@@ -3267,7 +3367,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 110
+        "y": 117
       },
       "hiddenSeries": false,
       "id": 199,
@@ -3367,7 +3467,7 @@
         "h": 7,
         "w": 11,
         "x": 12,
-        "y": 110
+        "y": 117
       },
       "hiddenSeries": false,
       "id": 204,
@@ -3467,7 +3567,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 117
+        "y": 124
       },
       "hiddenSeries": false,
       "id": 202,
@@ -3554,7 +3654,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 124
+        "y": 131
       },
       "id": 23,
       "panels": [],
@@ -3581,7 +3681,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 125
+        "y": 132
       },
       "hiddenSeries": false,
       "id": 24,
@@ -3695,7 +3795,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 125
+        "y": 132
       },
       "hiddenSeries": false,
       "id": 28,
@@ -3796,7 +3896,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 131
+        "y": 138
       },
       "hiddenSeries": false,
       "id": 26,
@@ -3896,7 +3996,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 131
+        "y": 138
       },
       "hiddenSeries": false,
       "id": 38,
@@ -3996,7 +4096,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 138
+        "y": 145
       },
       "hiddenSeries": false,
       "id": 57,
@@ -4105,7 +4205,7 @@
         "h": 3,
         "w": 12,
         "x": 12,
-        "y": 138
+        "y": 145
       },
       "id": 167,
       "interval": null,
@@ -4197,7 +4297,7 @@
         "h": 5,
         "w": 12,
         "x": 12,
-        "y": 141
+        "y": 148
       },
       "id": 32,
       "interval": null,
@@ -4267,7 +4367,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 146
+        "y": 153
       },
       "id": 59,
       "panels": [
@@ -4600,7 +4700,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 147
+        "y": 154
       },
       "id": 67,
       "panels": [
@@ -4891,7 +4991,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 148
+        "y": 155
       },
       "id": 102,
       "panels": [
@@ -5642,7 +5742,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 149
+        "y": 156
       },
       "id": 116,
       "panels": [
