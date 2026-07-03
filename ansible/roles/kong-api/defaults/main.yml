@@ -258,7 +258,6 @@ ai_assessment_service_url: "http://ai-assessment-service:8000"
 ai_cbp_mdo_service_url: "http://ai-cbp-mdo-service:8000"
 cb_ext_config_service_url: "http://cb-ext-config-service:7010"
 ai_itsm_chatbot_service_url: "http://deterministic-chatbot:8000"
-cb_ext_form_service_url: "http://cb-ext-form-service:8099"
 
 premium_consumer_rate_limits:
   - api: createContent
