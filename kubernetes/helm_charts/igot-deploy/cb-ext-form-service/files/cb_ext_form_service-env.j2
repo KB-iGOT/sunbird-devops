@@ -62,6 +62,7 @@ accesstoken.publickey.basepath=/keys/
 #Cassandra
 spring.cassandra.startupTimeoutInSeconds=100000
 cassandra.config.host={{ sunbird_cassandra_db_host }}
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
 spring.cassandra.port=9042
 spring.cassandra.keyspace-name={{ keyspace_sunbird }}
 spring.cassandra.username={{ cassandra_username }}
@@ -89,3 +90,7 @@ form.elasticsearch.index=fs-forms-alias-v2
 
 form.sb-url=http://learner-service:9000
 form.user-search-end-point=/private/user/v1/search
+
+form.allowed-field-property-keys=refApi,logicalGroupCode,name,notApplicable,fieldType,values,width,isRequired,order,parentId,identifier,select,selected,field,displayName,optional,disabled
+form.allowed-form-property-keys=title,meta,fields,clientVersion,contextType,additionalProperties,version
+  
