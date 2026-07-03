@@ -16,6 +16,7 @@ statsd_pulgin:
   config.port: "{{ statsd_port }}"
 
 # Default Rate limits
+x_small_rate_limit_per_hour: 100
 small_rate_limit_per_hour: 1000
 medium_rate_limit_per_hour: 5000
 x_medium_rate_limit_per_hour: 5000
@@ -257,8 +258,6 @@ ai_assessment_service_url: "http://ai-assessment-service:8000"
 ai_cbp_mdo_service_url: "http://ai-cbp-mdo-service:8000"
 cb_ext_config_service_url: "http://cb-ext-config-service:7010"
 ai_itsm_chatbot_service_url: "http://deterministic-chatbot:8000"
-cb_ext_form_service_url: "http://cb-ext-form-service:8099"
-
 
 premium_consumer_rate_limits:
   - api: createContent
@@ -2725,6 +2724,24 @@ kong_apis:
       config.whitelist:
         - 'contentAccess'
         - 'itsmAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: privateUserAssignRole
+    uris: "{{ user_service_prefix }}/private/v1/assign/role"
+    upstream_url: "{{ learning_service_url }}/private/user/v1/assign/role"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'userSuperAdmin'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -22368,7 +22385,7 @@ kong_apis:
 
   - name: createFormV2
     uris: "{{ forms_service_prefix }}/v2/createForm"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/createForm"
+    upstream_url: "{{ forms_service_url }}/forms/v2/createForm"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22379,14 +22396,14 @@ kong_apis:
           - 'dataAccess'
       - name: rate-limiting
         config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.hour: "{{ x_small_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: updateFormV2
     uris: "{{ forms_service_prefix }}/v2/updateForm"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/updateForm"
+    upstream_url: "{{ forms_service_url }}/forms/v2/updateForm"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22404,7 +22421,7 @@ kong_apis:
 
   - name: getFormByIdV2
     uris: "{{ forms_service_prefix }}/v2/getFormById"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/getFormById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getFormById"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22422,7 +22439,7 @@ kong_apis:
 
   - name: saveFormSubmitV2
     uris: "{{ forms_service_prefix }}/v2/saveFormSubmit"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/saveFormSubmit"
+    upstream_url: "{{ forms_service_url }}/forms/v2/saveFormSubmit"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22440,7 +22457,7 @@ kong_apis:
 
   - name: formSearchV2
     uris: "{{ forms_service_prefix }}/v2/search"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22458,7 +22475,7 @@ kong_apis:
 
   - name: getAllApplicationsV2
     uris: "{{ forms_service_prefix }}/v2/getAllApplications"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/getAllApplications"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getAllApplications"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22476,7 +22493,7 @@ kong_apis:
 
   - name: getApplicationsByIdV2
     uris: "{{ forms_service_prefix }}/v2/getApplicationsById"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/getApplicationsById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getApplicationsById"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22494,7 +22511,7 @@ kong_apis:
 
   - name: formSubmissionsSearchV2
     uris: "{{ forms_service_prefix }}/v2/submissions/search"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/submissions/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/submissions/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22959,7 +22976,7 @@ kong_apis:
 
   - name: createAssignment
     uris: "{{ assignment_prefix }}/create"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/createForm"
+    upstream_url: "{{ forms_service_url }}/forms/v2/createForm"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22977,7 +22994,7 @@ kong_apis:
 
   - name: assignmentSearch
     uris: "{{ assignment_prefix }}/search"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22995,7 +23012,7 @@ kong_apis:
 
   - name: getAnsweredById
     uris: "{{ assignment_prefix }}/getAnswerById"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/getApplicationsById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getApplicationsById"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23013,7 +23030,7 @@ kong_apis:
 
   - name: answerSubmitAsDraft
     uris: "{{ assignment_prefix }}/submitDraft"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/submitDraft"
+    upstream_url: "{{ forms_service_url }}/forms/v2/submitDraft"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23031,7 +23048,7 @@ kong_apis:
 
   - name: answerFinalSubmit
     uris: "{{ assignment_prefix }}/submit"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/submit"
+    upstream_url: "{{ forms_service_url }}/forms/v2/submit"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23049,7 +23066,7 @@ kong_apis:
 
   - name: assignmentFeedbackSubmit
     uris: "{{ assignment_prefix }}/feedback"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/feedback"
+    upstream_url: "{{ forms_service_url }}/forms/v2/feedback"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23139,7 +23156,7 @@ kong_apis:
 
   - name: getFormSubmissionStatusBulkV2
     uris: "{{ forms_service_prefix }}/v2/bulkGetApplicationsById"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/bulkGetApplicationsById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/bulkGetApplicationsById"
     strip_uri: true
     plugins:
       - name: jwt
@@ -23282,7 +23299,7 @@ kong_apis:
 
   - name: getPublicFormByIdV2
     uris: "{{ public_forms_service_prefix }}/v2/getFormById"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/getFormById"
+    upstream_url: "{{ forms_service_url }}/forms/v2/getFormById"
     strip_uri: true
     plugins:
       - name: cors
@@ -23296,7 +23313,7 @@ kong_apis:
 
   - name: savePublicFormSubmitV2
     uris: "{{ public_forms_service_prefix }}/v2/saveFormSubmit"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/public/saveFormSubmit"
+    upstream_url: "{{ forms_service_url }}/forms/v2/public/saveFormSubmit"
     strip_uri: true
     plugins:
       - name: cors
@@ -24298,7 +24315,7 @@ kong_apis:
 
   - name: peerSurveyCreateMdo
     uris: "{{ forms_service_prefix }}/mdo/peersurvey"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/mdo/peersurvey/create"
+    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peersurvey/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24316,7 +24333,7 @@ kong_apis:
 
   - name: peerSurveyCreateSpv
     uris: "{{ forms_service_prefix }}/spv/peersurvey"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/spv/peersurvey/create"
+    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peersurvey/create"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24334,7 +24351,7 @@ kong_apis:
         
   - name: peerSurveyUpdateMdo
     uris: "{{ forms_service_prefix }}/mdo/update/peersurvey"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/mdo/peersurvey"
+    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peersurvey"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24352,7 +24369,7 @@ kong_apis:
         
   - name: peerSurveyUpdateSpv
     uris: "{{ forms_service_prefix }}/spv/update/peersurvey"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/spv/peersurvey"
+    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peersurvey"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24370,7 +24387,7 @@ kong_apis:
 
   - name: peerSurveySearchSpv
     uris: "{{ forms_service_prefix }}/spv/peersurvey/search"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/spv/peersurvey/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/spv/peersurvey/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24388,7 +24405,7 @@ kong_apis:
 
   - name: peerSurveySearchMdo
     uris: "{{ forms_service_prefix }}/mdo/peersurvey/search"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/mdo/peersurvey/search"
+    upstream_url: "{{ forms_service_url }}/forms/v2/mdo/peersurvey/search"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24406,7 +24423,7 @@ kong_apis:
 
   - name: peerSurveyPublish
     uris: "{{ forms_service_prefix }}/peersurvey/publish"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/peersurvey/publish"
+    upstream_url: "{{ forms_service_url }}/forms/v2/peersurvey/publish"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24424,7 +24441,7 @@ kong_apis:
 
   - name: peerSurveyArchive
     uris: "{{ forms_service_prefix }}/peersurvey/archive"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/peersurvey/archive"
+    upstream_url: "{{ forms_service_url }}/forms/v2/peersurvey/archive"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24586,7 +24603,7 @@ kong_apis:
 
   - name: peerSurveyEnd
     uris: "{{ forms_service_prefix }}/peersurvey/end"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/peersurvey/end"
+    upstream_url: "{{ forms_service_url }}/forms/v2/peersurvey/end"
     strip_uri: true
     plugins:
       - name: jwt
@@ -24604,7 +24621,7 @@ kong_apis:
 
   - name: peerSurveySubmit
     uris: "{{ forms_service_prefix }}/peersurvey/submit"
-    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/peersurvey/submit"
+    upstream_url: "{{ forms_service_url }}/forms/v2/peersurvey/submit"
     strip_uri: true
     plugins:
       - name: jwt
@@ -26079,3 +26096,59 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+
+  - name: extEnrollmentStatus
+    uris: "{{ external_enrollment_prefix }}/v1/enrollment/status"
+    upstream_url: "{{ cb_external_enrollment_service_url }}/cios-enroll/v1/enrollment/status"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+          - 'contentPartner'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: adminCommunityJoin
+    uris: "{{ community_prefix }}/admin/join"
+    upstream_url: "{{ cb_community_service_url }}/community/v1/admin/join"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: adminCommunityUnJoin
+    uris: "{{ community_prefix }}/admin/unjoin"
+    upstream_url: "{{ cb_community_service_url }}/community/v1/admin/unjoin"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"

@@ -45,7 +45,7 @@ form.search-max-page=1000
 form.search-max-page-size=200
 form.search-default-page-size=10
 form.es-timeout-seconds=30
-form.search-index=fs-forms-v3
+form.search-index=fs-forms-alias-v2
 form.search-supported-context-types=form,completionSurvey,peerValidationSurvey,assignment
 form.search-allowed-filter-keys=formId,status,contextType,createdBy,orgId,startDateFrom,startDateTo,endDateFrom,endDateTo
 
@@ -56,7 +56,7 @@ form.validation-url-allowed-keys=assignmentUrl,thumbnailUrl,submitUrl,thumbnail
 form.validation-url-allowed-domains=portal.dev.karmayogibharat.net,igot.gov.in
 
 sso.realm={{ keycloak_realm_name }}
-sso.url={{ keycloak_domain }}
+sso.url={{ keycloak_domain }}/
 accesstoken.publickey.basepath=/keys/
 
 #Cassandra
