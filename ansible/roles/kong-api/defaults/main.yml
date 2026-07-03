@@ -189,7 +189,7 @@ content_health_prefix: /contenthealth
 user_volunteer_prefix: /user/volunteer
 formsConfig_service_prefix: /formsConfig
 cb_ext_ngouserprofile_prefix: /user/ngo/profile
-ngo_achievement_prefix: /learner/ngo/achievement
+ngo_achievement_prefix: learner/achievement/ngo
 ai_itsm_chatbot_prefix: /ai/chatbot
 
 # Service URLs
@@ -25662,7 +25662,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: achievementListNgo
-    uris: "{{ ngo_achievement_prefix }}/ngo/list"
+    uris: "{{ ngo_achievement_prefix }}/list"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/ngo/list"
     strip_uri: true
     plugins:
