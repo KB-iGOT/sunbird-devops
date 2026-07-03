@@ -189,7 +189,7 @@ content_health_prefix: /contenthealth
 user_volunteer_prefix: /user/volunteer
 formsConfig_service_prefix: /formsConfig
 cb_ext_ngouserprofile_prefix: /user/ngo/profile
-ngo_achievement_prefix: learner/achievement/ngo
+ngo_achievement_prefix: /learner/achievement/ngo
 ai_itsm_chatbot_prefix: /ai/chatbot
 
 # Service URLs
