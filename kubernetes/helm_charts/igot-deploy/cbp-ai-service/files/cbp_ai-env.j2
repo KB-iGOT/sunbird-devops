@@ -23,3 +23,9 @@ MDO_PORTAL_URL=https://mdo.{{ static_domain_name }}
 REDIS_HOST={{ kp_redis_ip }}
 REDIS_PORT=6379
 REDIS_DB=6
+
+GOOGLE_PROJECT_LOCATION_GLOBAL=global
+GOOGLE_GENAI_USE_VERTEXAI={{cbp_ai_google_genai_use_vertexai | default("True")}}
+ 
+GEMINI_PRO_MODEL_NAME={{cbp_ai_gemini_pro_model_name}}
+GEMINI_FLASH_MODEL_NAME={{cbp_ai_gemini_flash_model_name}}
