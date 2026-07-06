@@ -28,6 +28,6 @@ metadata:
   name: dl-edge-conf
   namespace: {{ .Values.namespace }}
 data:
-  nginx.conf: |
+  edge.conf: |
 {{ .Values.dledgeconf | indent 4 }}
 
