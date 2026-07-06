@@ -12,7 +12,7 @@ helm_env_file_name: "{{ helm_env_file_location }}/{{ service_ui_proxies_service 
 #chart_path: "../kubernetes-deploy/ui-proxies"
 compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
 user_friendly_name: UI proxies service
-
+logout_public_home_hosts: "{{ kc_logout_hosts }}"
 
 # For service
 application_port: "{{ service_ui_proxies_port }}"
