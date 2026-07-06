@@ -31,6 +31,9 @@ spec:
         - name: dl-nginx-conf
           configMap:
             name: dl-nginx-conf
+        - name: dl-edge-conf
+          configMap:
+            name: dl-edge-conf            
       serviceAccountName: cb-download-proxy-sa
       containers:
       - name: {{ .Chart.Name }}
@@ -55,7 +58,11 @@ spec:
         - name: dl-nginx-conf
           mountPath: /usr/local/openresty/nginx/conf/nginx.conf
           subPath: nginx.conf
-          readOnly: true            
+          readOnly: true
+        - name: dl-edge-conf
+          mountPath: /usr/local/openresty/nginx/conf/edge.conf
+          subPath: edge.conf
+          readOnly: true                     
         ports:
         - containerPort: {{ .Values.network.port }}
 
