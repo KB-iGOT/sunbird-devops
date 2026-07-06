@@ -203,7 +203,7 @@
 
 - name: Create a directory for SMS provider configuration
   file:
-    path: "{{ keycloak_home }}/bin/sms-provider"
+    path: "{{ keycloak_home }}/sms-provider"
     state: directory
     mode: 0755
   when: "{{ sms_required|default(false) }}"
@@ -212,7 +212,7 @@
 - name: SMS provider configuration file
   copy:
     src: "sunbird_auth_{{ sunbird_auth_version }}.config/AmnexSmsCreds.json"
-    dest: "{{ keycloak_home }}/bin/sms-provider/AmnexSmsCreds.json"
+    dest: "{{ keycloak_home }}/sms-provider/AmnexSmsCreds.json"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0755
@@ -223,7 +223,7 @@
 - name: SMS provider configuration file
   copy:
     src: "sunbird_auth_{{ sunbird_auth_version }}.config/NetCoreSmsCreds.json"
-    dest: "{{ keycloak_home }}/bin/sms-provider/NetCoreSmsCreds.json"
+    dest: "{{ keycloak_home }}/sms-provider/NetCoreSmsCreds.json"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0755
@@ -234,7 +234,7 @@
 - name: SMS provider configuration file
   copy:
     src: "sunbird_auth_{{ sunbird_auth_version }}.config/SinchSmsCreds.json"
-    dest: "{{ keycloak_home }}/bin/sms-provider/SinchSmsCreds.json"
+    dest: "{{ keycloak_home }}/sms-provider/SinchSmsCreds.json"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0755
