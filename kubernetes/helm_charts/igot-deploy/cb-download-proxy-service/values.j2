@@ -207,7 +207,7 @@ dledgeconf: |
   server {
       # Behind the GCP LB. The LB does TLS; we speak HTTP on 8080.
       listen 8080;
-      server_name dl.{{ nginx_proxy_server_name }};
+      server_name dl.{{ static_domain_name }};
   
       # Hard caps to blunt abuse.
       limit_conn edge_conn 8;          # max 8 concurrent downloads per client IP
