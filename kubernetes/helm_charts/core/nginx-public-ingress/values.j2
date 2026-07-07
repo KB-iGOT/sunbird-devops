@@ -720,6 +720,11 @@ proxyconfig: |-
 
     location ~ /apis/proxies/v8/sunbirdigot/search {
       # Enabling caching
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods; 
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -5461,6 +5466,11 @@ proxyconfig: |-
 
     location ~ /apis/proxies/v8/sunbirdigot/search {
       # Enabling caching
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;       
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -6914,6 +6924,11 @@ proxyconfig: |-
 
     location ~ /apis/proxies/v8/sunbirdigot/search {
       # Enabling caching
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;       
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
