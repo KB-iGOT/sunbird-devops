@@ -8110,12 +8110,12 @@ proxyconfig: |-
     }
 
   server {
-    if ($host = opik.{{ nginx_proxy_server_name }}) {
+    if ($host = langfuse.{{ nginx_proxy_server_name }}) {
         return 301 https://$host$request_uri;
         }
 
       listen       80;
-      server_name  opik.{{ nginx_proxy_server_name }};
+      server_name  langfuse.{{ nginx_proxy_server_name }};
       return 404;
     }
 
@@ -8125,7 +8125,7 @@ proxyconfig: |-
     ssl_certificate_key   /etc/secrets/site.key;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA HIGH !RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS";
-    server_name *.opik.{{ nginx_proxy_server_name }} opik.{{ nginx_proxy_server_name }};
+    server_name *.langfuse.{{ nginx_proxy_server_name }} langfuse.{{ nginx_proxy_server_name }};
     {#
     custom nginx server config section
     eg:
@@ -8151,13 +8151,13 @@ proxyconfig: |-
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
-      return 301 {{proto}}://opik.{{ nginx_proxy_server_name }};
+      return 301 {{proto}}://langfuse.{{ nginx_proxy_server_name }};
     }
     location ~* ^/auth/realms/master {
-      return 301 {{proto}}://opik.{{ nginx_proxy_server_name }};
+      return 301 {{proto}}://langfuse.{{ nginx_proxy_server_name }};
     }
     location ~* ^/auth/admin/master/console/ {
-      return 301 {{proto}}://opik.{{ nginx_proxy_server_name }};
+      return 301 {{proto}}://langfuse.{{ nginx_proxy_server_name }};
     }
     location ~* ^/auth/realms/(.+)/token/introspect/ {
           return 301 {{proto}}://$host/api/auth/v1/realms/$1/token/introspect;
@@ -8178,7 +8178,7 @@ proxyconfig: |-
       return 301 {{proto}}://$host/api/auth/v1/realms/$1/clients-registrations/;
     }
     location ~* ^/auth/admin/master/console/ {
-      return 301 {{proto}}://opik.{{ nginx_proxy_server_name }};
+      return 301 {{proto}}://langfuse.{{ nginx_proxy_server_name }};
     }
 
     location / {
