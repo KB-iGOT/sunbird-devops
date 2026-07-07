@@ -31,6 +31,10 @@ spec:
         - name: gcpdeterministicchatbotstoragecredentialsjson
           configMap:
             name: gcpdeterministicchatbotstoragecredentialsjson
+        - name: allocation-file
+          configMap:
+            name: deterministic-chatbot-allocation
+
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -50,6 +54,9 @@ spec:
         - name: gcpdeterministicchatbotstoragecredentialsjson
           mountPath: /app/gcp/gcp_storage_credentials.json
           subPath: gcp_storage_credentials.json
+        - name: allocation-file
+          mountPath: /app/data/Allocation_28.10.2025.xlsx
+          subPath: Allocation_28.10.2025.xlsx
         ports:
         - containerPort: {{ .Values.network.port }}
 ---
