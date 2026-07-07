@@ -800,7 +800,11 @@ proxyconfig: |-
     }
 
       location /apis/proxies/v8/cqfquestionset/submit {
-      include /etc/nginx/cors.conf;                             
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;                        
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -1645,7 +1649,11 @@ proxyconfig: |-
     }
     
     location /api/ {
-      include /etc/nginx/cors.conf;   
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;
       set $custom_header "";
       if ( $arg_eHVyhwSdt ) {
         set $custom_header "Bearer $arg_eHVyhwSdt";
@@ -1710,6 +1718,10 @@ proxyconfig: |-
 
     location /apis/ {
       include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
