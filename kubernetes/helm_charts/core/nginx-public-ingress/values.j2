@@ -264,6 +264,12 @@ proxyconfig: |-
     }
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;  
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -291,6 +297,12 @@ proxyconfig: |-
     }
     # This is Caching mechanism for Content search
     location ~ /api/content/v1/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -318,6 +330,12 @@ proxyconfig: |-
     }
     # This is Caching mechanism for POST requests
     location ~ /api/org/v1/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -345,6 +363,12 @@ proxyconfig: |-
 
     # This is Caching mechanism for POST requests
     location ~ /api/org/v1/search|/api/data/v1/(form/read|location/search) {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -370,6 +394,12 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
     location ~ /api/(framework/v1/read|data/v1/system/settings/get) {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
@@ -395,6 +425,12 @@ proxyconfig: |-
   }
 
     location ~ /apis/proxies/v8/forms/v2/getFormById {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache framework_cache;
@@ -421,6 +457,12 @@ proxyconfig: |-
     }
 
   location ~ /api/forms/v2/getFormById {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;    
     # Enabling caching
     proxy_cache_key "$request_uri";
     proxy_cache content_cache;
@@ -448,6 +490,12 @@ proxyconfig: |-
   }
 
     location ~ /apis/proxies/v8/forms/getFormById {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache framework_cache;
@@ -474,6 +522,12 @@ proxyconfig: |-
     }
 
   location ~ /api/forms/getFormById {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;      
     # Enabling caching
     proxy_cache_key "$request_uri";
     proxy_cache content_cache;
@@ -502,6 +556,12 @@ proxyconfig: |-
 
   # This is Caching mechanism for Content search
   location ~ /api/discussion/recent {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;      
     # Enabling caching
     proxy_cache_key "$request_uri|$request_body";
     proxy_cache content_cache;
@@ -530,6 +590,12 @@ proxyconfig: |-
 
   # This is Caching mechanism for discussion hub
   location ~ /api/discussion/categories {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;      
     # Enabling caching
     proxy_cache_key "$request_uri|$request_body";
     proxy_cache content_cache;
@@ -557,6 +623,12 @@ proxyconfig: |-
   }
 
   location ~ /api/discussion/tags {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;      
     # Enabling caching
     proxy_cache_key "$request_uri|$request_body";
     proxy_cache content_cache;
@@ -584,6 +656,12 @@ proxyconfig: |-
   }
 
     location ~ /apis/proxies/v8/discussion/categories {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -611,6 +689,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/discussion/tags {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -638,6 +722,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/competency/v4/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -665,6 +755,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/sunbirdigot/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;    
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -692,6 +788,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/(content/v2/read|course/v1/hierarchy) {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -751,6 +853,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/contentpartner/v1/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -778,6 +886,12 @@ proxyconfig: |-
     }
     
     location ~ /api/composite/v1/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -804,7 +918,7 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
 
-      location /apis/proxies/v8/cqfquestionset/submit {
+    location /apis/proxies/v8/cqfquestionset/submit {
       include /etc/nginx/cors.conf;
       proxy_hide_header Access-Control-Allow-Origin;
       proxy_hide_header Access-Control-Allow-Credentials;
@@ -824,6 +938,12 @@ proxyconfig: |-
   }
 
     location ~ /api/composite/v4/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;    
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -851,6 +971,12 @@ proxyconfig: |-
     }
 
     location ~ /api/ratings/v1/summary/ {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -878,6 +1004,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/ratings/v1/summary {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -905,6 +1037,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/ratings/v2/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -932,6 +1070,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/action/content/v3/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -959,6 +1103,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/sunbirdigot/v4/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -986,6 +1136,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/public/v8/careers/list {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache ratings_cache;
@@ -1013,6 +1169,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/public/v8/tenders/list {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache ratings_cache;
@@ -1040,6 +1202,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/sunbirdigot/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -1067,6 +1235,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/sunbirdigot/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -1094,6 +1268,12 @@ proxyconfig: |-
     }
 
     location ~ /api/user/v1/positions {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1121,6 +1301,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/protected/v8/user/profileRegistry/getMasterLanguages {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1148,6 +1334,12 @@ proxyconfig: |-
     }
 
     location ~ /api/masterData/v1/getLanguages {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1175,6 +1367,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/protected/v8/user/profileRegistry/getMasterNationalities {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1202,6 +1400,12 @@ proxyconfig: |-
     }
 
     location ~ /api/masterData/v1/getNationalities {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1229,6 +1433,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/masterData/v2/deptPosition {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1256,6 +1466,12 @@ proxyconfig: |-
     }
 
     location ~ /api/masterData/v2/deptPosition {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1283,6 +1499,12 @@ proxyconfig: |-
     }
 
     location ~ /api/course/v2/explore {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1310,6 +1532,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/v1/search/competenciesByOrg {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache ratings_cache;
@@ -1337,6 +1565,12 @@ proxyconfig: |-
     }
 
     location ~ /api/course/v1/explore {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1364,6 +1598,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/trending/content/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -1391,6 +1631,12 @@ proxyconfig: |-
     }
 
     location ~ /api/trending/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache ratings_cache;
@@ -1418,6 +1664,12 @@ proxyconfig: |-
     }
 
     location ~ /api/faq/v1/assistant/available/language {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1445,6 +1697,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/extended/content/v1/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -1472,6 +1730,12 @@ proxyconfig: |-
     }
 
     location /api/extended/content/v1/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -1499,6 +1763,12 @@ proxyconfig: |-
     }
 
     location ~ /api/faq/v1/assistant/configs/language {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_method|$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -1526,6 +1796,12 @@ proxyconfig: |-
     }
 
     location ~ /api/extendedprofile/list/states {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -1553,6 +1829,12 @@ proxyconfig: |-
     }
 
     location ~ /api/extendedprofile/list/districts {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
@@ -1580,6 +1862,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/protected/v8/portal/listDeptNames {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache ratings_cache;
@@ -1607,6 +1895,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/user/v1/positions {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache ratings_cache;
@@ -1633,7 +1927,7 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
-    location /protected/v8/aiassessmentlogin/ {
+    location /protected/v8/aiassessmentlogin/ {    
       # add_header Access-Control-Allow-Origin "*";
       # add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       include /etc/nginx/cors.conf;
@@ -1683,6 +1977,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/v1/form/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -1709,6 +2009,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/protected/v8/user/telemetry {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;    
       rewrite ^/apis/protected/v8/user/telemetry /data/v1/public/telemetry break;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
@@ -1818,6 +2124,12 @@ proxyconfig: |-
     }
 
     location /apis/proxies/v8/operationalreports/v3/download/ {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # if ($request_method = OPTIONS ) {
        #       add_header Access-Control-Allow-Origin $cors_origin always;
        #       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
@@ -2005,6 +2317,12 @@ proxyconfig: |-
     }
 
     location ~ /apis/public/v8/playlist/landingpage {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache ratings_cache;
@@ -2682,6 +3000,12 @@ proxyconfig: |-
       proxy_pass http://ui-static;
     }
     location /api/channel/v1/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -2915,6 +3239,12 @@ proxyconfig: |-
     }
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -2942,6 +3272,12 @@ proxyconfig: |-
     }
     # This is Caching mechanism for Content search
     location ~ /api/content/v1/search {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -2969,6 +3305,12 @@ proxyconfig: |-
     }
     # This is Caching mechanism for POST requests
     location ~ /api/org/v1/search|/api/data/v1/(form/read|location/search) {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -2994,6 +3336,12 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
     location ~ /api/(framework/v1/read|data/v1/system/settings/get) {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
@@ -3046,6 +3394,12 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
     location ~ /apis/v1/form/read {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;        
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -3256,6 +3610,12 @@ proxyconfig: |-
       proxy_pass             https://$s3_bucket/v3/preview/$url_full;
   }
    location ~ /content-editor/telemetry|collection-editor/telemetry {
+      # Include CORS
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;       
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
@@ -3269,7 +3629,7 @@ proxyconfig: |-
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_pass http://ui-cbp-igot;
     }
-  location ~* ^/content-editor/(.*) {
+  location ~* ^/content-editor/(.*) {  
           # Enabling compression
           gzip            on;
           gzip_min_length 100000;
@@ -3318,10 +3678,6 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
       include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
       set $s3_bucket        "{{plugin_upstream_url}}";
       set $url_full         '$1';
       proxy_http_version     1.1;
@@ -3354,16 +3710,13 @@ proxyconfig: |-
       proxy_pass             https://$s3_bucket/collection-editor/$url_full;
   }
     location ~* ^/generic-editor/(.*) {
+      # Include CORS
+      include /etc/nginx/cors.conf;     
           # Enabling compression
           gzip            on;
           gzip_min_length 100000;
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
-      include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
       set $s3_bucket        "{{plugin_upstream_url}}";
       set $url_full         '$1';
       proxy_http_version     1.1;
@@ -3406,10 +3759,6 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
       include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
          set $s3_bucket        "{{plugin_upstream_url}}";
          set $url_full         '$1';
          proxy_http_version     1.1;
@@ -3441,7 +3790,7 @@ proxyconfig: |-
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
   }
-    location /thirdparty {
+    location /thirdparty {   
           # Enabling cache for Response code 200
           expires 1M;
           add_header Pragma public;
@@ -3886,6 +4235,11 @@ proxyconfig: |-
   }
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -3911,6 +4265,11 @@ proxyconfig: |-
     }
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -3938,6 +4297,11 @@ proxyconfig: |-
     }
     # This is Caching mechanism for Content search
     location ~ /api/content/v1/search {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache content_cache;
@@ -3965,6 +4329,11 @@ proxyconfig: |-
     }
     # This is Caching mechanism for POST requests
     location ~ /api/org/v1/search|/api/data/v1/(form/read|location/search) {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -3990,6 +4359,11 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
     location ~ /api/(framework/v1/read|data/v1/system/settings/get) {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
@@ -4042,6 +4416,11 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
     location ~ /apis/v1/form/read {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache framework_cache;
@@ -4184,11 +4563,7 @@ proxyconfig: |-
           gzip_min_length 100000;
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
-      include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
+      include /etc/nginx/cors.conf; 
       set $s3_bucket        "{{plugin_upstream_url}}";
       set $url_full         '$1';
       proxy_http_version     1.1;
@@ -4241,10 +4616,6 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
       include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
       set $s3_bucket        "{{plugin_upstream_url}}";
       set $url_full         '$1';
       proxy_http_version     1.1;
@@ -4283,10 +4654,6 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
       include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
       set $s3_bucket        "{{plugin_upstream_url}}";
       set $url_full         '$1';
       proxy_http_version     1.1;
@@ -4325,10 +4692,6 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
       include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
       set $s3_bucket        "{{plugin_upstream_url}}";
       set $url_full         '$1';
       proxy_http_version     1.1;
@@ -4371,10 +4734,6 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
       include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
          set $s3_bucket        "{{plugin_upstream_url}}";
          set $url_full         '$1';
          proxy_http_version     1.1;
@@ -4552,6 +4911,11 @@ proxyconfig: |-
       proxy_read_timeout 70;
     }
     location  ~ /resourcebundles/v1/read|/learner/data/v1/(role/read|system/settings/get)|/v1/tenant/info  {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -4570,6 +4934,11 @@ proxyconfig: |-
       proxy_pass http://ui-cbp-igot;
     }
     location /api/channel/v1/read {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       proxy_cache_key $proxy_host$request_uri;
       proxy_cache framework_cache;
       add_header X-Proxy-Cache $upstream_cache_status;
@@ -4737,6 +5106,11 @@ proxyconfig: |-
     }
     
     location / {
+      include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;     
       rewrite ^/(.*) /$1 break;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
