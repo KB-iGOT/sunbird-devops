@@ -35,6 +35,9 @@ spec:
         - name: nginx-config
           configMap:
             name: nginx-conf
+        - name: cors-config
+          configMap:
+            name: cors-conf            
 {{- if .Values.searchbycompetencyapi_response_json }}
         - name: searchbycompetencyapi-response-json
           configMap:
@@ -64,6 +67,9 @@ spec:
           - name: nginx-config
             mountPath: /etc/nginx/nginx.conf
             subPath: nginx.conf
+          - name: cors-config
+            mountPath: /etc/nginx/cors.conf
+            subPath: cors.conf            
 {{- if .Values.searchbycompetencyapi_response_json }}
           - name: searchbycompetencyapi-response-json
             mountPath: /var/www/html

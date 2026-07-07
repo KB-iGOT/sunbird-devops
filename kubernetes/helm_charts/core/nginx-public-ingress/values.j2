@@ -799,15 +799,16 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
 
-     location /apis/proxies/v8/cqfquestionset/submit {
-      if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin $cors_origin always;
-              add_header Access-Control-Allow-Methods "POST";
-              add_header Access-Control-Allow-Headers "Authorization, Content-Type, user-id, Content-Encoding";
-              add_header Content-Length 0;
-              add_header Content-Type text/plain;
-              return 200;
-      }                                                                         
+      location /apis/proxies/v8/cqfquestionset/submit {
+#      if ($request_method = OPTIONS ) {
+#              add_header Access-Control-Allow-Origin $cors_origin always;
+#              add_header Access-Control-Allow-Methods "POST";
+#              add_header Access-Control-Allow-Headers "Authorization, Content-Type, user-id, Content-Encoding";
+#              add_header Content-Length 0;
+#              add_header Content-Type text/plain;
+#              return 200;
+#      }                       
+      include /etc/nginx/cors.conf;                             
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -1632,16 +1633,18 @@ proxyconfig: |-
     }
 
     location /protected/v8/aiassessmentlogin/ {
-      if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin $cors_origin always;
-              add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
-              add_header Access-Control-Allow-Headers "Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
-              add_header Content-Length 0;
-              add_header Content-Type text/plain;
-              return 200;
-      }
+#      if ($request_method = OPTIONS ) {
+#              add_header Access-Control-Allow-Origin $cors_origin always;
+#              add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
+#              add_header Access-Control-Allow-Headers "Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
+#              add_header Content-Length 0;
+#              add_header Content-Type text/plain;
+#              return 200;
+#      }
+
       # add_header Access-Control-Allow-Origin "*";
       # add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      include /etc/nginx/cors.conf;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -1655,14 +1658,15 @@ proxyconfig: |-
     }
     
     location /api/ {
-      if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin $cors_origin always;
-              add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
-              add_header Access-Control-Allow-Headers "x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
-              add_header Content-Length 0;
-              add_header Content-Type text/plain;
-              return 200;
-      }
+#      if ($request_method = OPTIONS ) {
+#              add_header Access-Control-Allow-Origin $cors_origin always;
+#              add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
+#              add_header Access-Control-Allow-Headers "x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
+#              add_header Content-Length 0;
+#              add_header Content-Type text/plain;
+#              return 200;
+#      }
+      include /etc/nginx/cors.conf;   
       set $custom_header "";
       if ( $arg_eHVyhwSdt ) {
         set $custom_header "Bearer $arg_eHVyhwSdt";
@@ -10407,6 +10411,22 @@ compressionConfig: |-
   text/css
   text/plain
   ;
+
+corsconfig: |-
+  if ($request_method = OPTIONS) {
+      add_header Access-Control-Allow-Origin $cors_origin always;
+      add_header Access-Control-Allow-Credentials "true" always;
+      add_header Access-Control-Allow-Methods "GET, POST, PATCH, OPTIONS" always;
+      add_header Access-Control-Allow-Headers "Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath, locale" always;
+      add_header Vary "Origin" always;
+      add_header Content-Length 0;
+      add_header Content-Type text/plain;
+      return 204;
+  }
+  add_header Access-Control-Allow-Origin $cors_origin always;
+  add_header Access-Control-Allow-Credentials "true" always;
+  add_header Vary "Origin" always;
+
 serviceMonitor:
   enabled: true
   labels: # labels with which the prometheus choose the serviceMonitor
