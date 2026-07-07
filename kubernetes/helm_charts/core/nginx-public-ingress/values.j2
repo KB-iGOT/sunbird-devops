@@ -1628,6 +1628,10 @@ proxyconfig: |-
       # add_header Access-Control-Allow-Origin "*";
       # add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       include /etc/nginx/cors.conf;
+      proxy_hide_header Access-Control-Allow-Origin;
+      proxy_hide_header Access-Control-Allow-Credentials;
+      proxy_hide_header Access-Control-Allow-Headers;
+      proxy_hide_header Access-Control-Allow-Methods;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
