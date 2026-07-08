@@ -305,8 +305,9 @@ dledgeconf: |
               local filename = claims.fname or (claims.fid .. ".zip")
               -- security cleanup
               filename = string.gsub(filename, "[\r\n\"]", "")
-              filename = string.gsub(filename, "%s+", "_")
               filename = string.gsub(filename, "[/\\]", "_")
+              filename = string.gsub(filename, "%s+", "_")
+              filename = string.gsub(filename, "[^%w%._%-]", "")
   
               -- trim underscores that may appear from cleanup
               filename = string.gsub(filename, "^_+", "")
