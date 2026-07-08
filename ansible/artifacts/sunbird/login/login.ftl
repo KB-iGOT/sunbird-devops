@@ -105,6 +105,7 @@
                                         <span class="ui text error hide" id="inCorrectPasswordError">${msg("inCorrectPasswordError")}</span>
                                     </div>
                                     <div class="field">
+                                    <#-- Captcha disabled so login works without captcha
                                     <#if recaptchaRequired??>
                                         <div class="form-group">
                                             <div class="${properties.kcInputWrapperClass!}">
@@ -112,11 +113,14 @@
                                             </div>
                                         </div>
                                     </#if>
+                                    -->
                                     </div>
+                                    <#--
                                     <div class="captcha" id="captchaBlock">
                                         <div id="captcha"></div>
-                                        
+
                                     </div>
+                                    -->
                                     <div class="field">
                                         <button id="login" class="ui fluid button">${msg("doLogIn")}</button>
                                     </div>
@@ -288,7 +292,8 @@ rgb(0,116,182);color: white;">
                 document.getElementById('ivField').value = CryptoJS.enc.Base64.stringify(iv);
 
                 passwordField.value = encrypted;
-                return validateRecaptcha();
+                // return validateRecaptcha(); // captcha disabled - login works without captcha
+                return true;
         }
     </script>
     <script type="text/javascript">
@@ -332,55 +337,60 @@ rgb(0,116,182);color: white;">
                 if (userEmail && userEmail.length > 0) {
 		if(userEmail.length > 5 && !userEmail.match(validRegex)) {
                         document.getElementById("emailLengthErr").innerHTML = "email is not valid"
-                        if(grecaptcha && grecaptcha.getResponse().length > 0) {
+                        // Captcha check disabled - login works without captcha
+                        // if(grecaptcha && grecaptcha.getResponse().length > 0) {
                                 document.getElementById("login").disabled = false
-                        } else {
-                            document.getElementById("login").disabled = true
-                        }
+                        // } else {
+                        //     document.getElementById("login").disabled = true
+                        // }
                     }
                     const email = userEmail.split('@')
                     if (email && email.length === 2) {
                         if((email[0] && email[0].length > 64 ) || (email[1] && email[1].length >255)) {
                             document.getElementById("emailLengthErr").innerHTML = "Max 64 characters before @ & 255 characters after @ are valid."
-                            if(grecaptcha && grecaptcha.getResponse().length > 0) {
+                            // Captcha check disabled - login works without captcha
+                            // if(grecaptcha && grecaptcha.getResponse().length > 0) {
                                 document.getElementById("login").disabled = false
-                            } else {
-                                document.getElementById("login").disabled = true
-                            }
-                            
+                            // } else {
+                            //     document.getElementById("login").disabled = true
+                            // }
+
                         } else {
                             document.getElementById("emailLengthErr").innerHTML = ""
-                                if(grecaptcha && grecaptcha.getResponse().length > 0) {
+                                // Captcha check disabled - login works without captcha
+                                // if(grecaptcha && grecaptcha.getResponse().length > 0) {
                                     document.getElementById("login").disabled = false
-                                } else {
-                                    document.getElementById("login").disabled = true
-                                }
+                                // } else {
+                                //     document.getElementById("login").disabled = true
+                                // }
                             }
                         }
                     }
 			else if (userEmail.replace(/\s+/g, '').length == 0 || userEmail === "") {
                         	document.getElementById("emailLengthErr").innerHTML = "email field can not be blank"
-                        	if(grecaptcha && grecaptcha.getResponse().length > 0) {
+                        	// Captcha check disabled - login works without captcha
+                        	// if(grecaptcha && grecaptcha.getResponse().length > 0) {
                                 document.getElementById("login").disabled = false
-                            } else {
-                                document.getElementById("login").disabled = true
-                            }
+                            // } else {
+                            //     document.getElementById("login").disabled = true
+                            // }
                     }
                 } 
 
     
     </script>
-    <script type="text/javascript">    
+    <#-- Captcha disabled so login works without captcha
+    <script type="text/javascript">
         function recaptchaCheckedCallback() {
             if(grecaptcha && grecaptcha.getResponse().length > 0) {
                 document.getElementById("login").disabled = false
             } else {
                 document.getElementById("login").disabled = true
             }
-        }  
+        }
         function recaptchaExpiredCallback() {
             grecaptcha.reset();
-        }  
+        }
         var onloadCallback = function() {
             grecaptcha.render('captcha', {
             'sitekey' : '6Lcl-CQqAAAAAMEPv0kxyrtYhBVZBXtXygyHNoyX',
@@ -408,6 +418,7 @@ rgb(0,116,182);color: white;">
      <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
+    -->
     </#if>
 </#if>
 </@layout.registrationLayout>
