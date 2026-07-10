@@ -138,7 +138,15 @@ dlnginxconf: |
           default $sent_http_x_audit_reject;
           ""      $nginx_reject_reason;
       }
-  
+
+      map $request_uri $block_bad_uri {
+        default 0;
+        ~*%5c                1;
+        ~*%2e%2e             1;
+        ~*\.\.               1;
+        ~*%252e%252e         1;
+        ~*%00                1;
+      }
       # ---- Audit logging (JSON → Cloud Logging via stdout) ----
       log_format edge_audit escape=json
           '{'
@@ -180,6 +188,199 @@ dlnginxconf: |
       include /usr/local/openresty/nginx/conf/edge.conf;
   }
 
+dledgeconf: |
+  # edge.conf — production
+  # The download vhost. Sits behind the GCP external HTTPS load balancer.
+  # TLS is terminated at the LB, so this listens on plain HTTP on the pod port.
+  
+  upstream gcs_upstream {
+      server storage.googleapis.com:443;
+      keepalive 64;
+      keepalive_requests 1000;
+      keepalive_timeout 60s;
+  }
+  
+  # Pre-auth flood protection on the redeem endpoint.
+  limit_req_zone  $binary_remote_addr zone=edge_redeem:20m rate=20r/s;
+  limit_conn_zone $binary_remote_addr zone=edge_conn:20m;
+  
+  server {
+      # Behind the GCP LB. The LB does TLS; we speak HTTP on 8080.
+      listen 8080;
+      server_name dl.{{ static_domain_name }};
+  
+      # Hard caps to blunt abuse.
+      limit_conn edge_conn 8;          # max 8 concurrent downloads per client IP
+  
+      # Security headers on every response.
+      add_header X-Content-Type-Options nosniff always;
+      add_header X-Frame-Options DENY always;
+      #add_header Referrer-Policy no-referrer always;
+      # HSTS is set by the LB / on the HTTPS listener; if set here it is harmless.
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+      add_header Referrer-Policy "strict-origin";
+      add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+      add_header Cache-Control "max-age=0";
+      proxy_hide_header X-XSS-Protection;
+      proxy_set_header    Host              $host;
+      proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header    X-Forwarded-SSL   on;
+      proxy_set_header    X-Forwarded-Proto $scheme;      
+  
+      if ($block_bad_uri) {                                                                                                                               
+         return 400;                                                                                                                                             
+      } 
+      # Health/readiness for the GCP LB and GKE probes. No auth, no logging.
+      location = /health {
+          access_log off;
+          default_type 'text/plain';
+          return 200 'ok';
+      }
+      location = /ready {
+          access_log off;
+          content_by_lua_block {
+              -- Ready only if keys + signer initialized.
+              local ok = require("ticket").is_ready() and require("gcs_signer").is_ready()
+              if ok then ngx.status = 200; ngx.say("ready")
+              else ngx.status = 503; ngx.say("not-ready") end
+          }
+      }
+  
+      # =========================================================================
+      # Download endpoint
+      # =========================================================================
+      location ~ ^/download/v3/operational/report/(?<file_id>[A-Za-z0-9_-]+)$ {
+          limit_req zone=edge_redeem burst=40 nodelay;
+  
+          set $gcs_bucket '';
+          set $gcs_object '';
+          set $gcs_signed_query '';
+          set $download_filename '';
+  
+          access_by_lua_block {
+              local ticket = require "ticket"
+              local signer = require "gcs_signer"
+  
+              -- 1. Extract ticket (query param preferred; header fallback).
+              local args = ngx.req.get_uri_args()
+              local jwt_str = args.t or args.ticket
+              if not jwt_str then
+                  local auth = ngx.var.http_authorization
+                  if auth then jwt_str = auth:match("^Bearer%s+(.+)$") end
+              end
+              if not jwt_str then
+                  ngx.header["X-Audit-Reject"] = "missing_ticket"
+                  return ngx.exit(401)
+              end
+  
+              -- 2. Verify JWT (RS256, key from JWKS cache). Validates sig, exp,
+              --    nbf, iss, aud, required claims, and jti replay.
+              local claims, err = ticket.verify(jwt_str)
+              if not claims then
+                  ngx.header["X-Audit-Reject"] = "ticket_invalid:" .. (err or "?")
+                  return ngx.exit(401)
+              end
+  
+              -- 3. file_id in path must equal file_id in ticket.
+              if claims.fid ~= ngx.var.file_id then
+                  ngx.header["X-Audit-Reject"] = "file_id_mismatch"
+                  return ngx.exit(403)
+              end
+  
+              -- 4. Client IP must match the bound IP .
+              local client_ip = ngx.var.remote_addr
+              -- if claims.ip ~= client_ip then
+              --     ngx.header["X-Audit-Reject"] = "ip_mismatch"
+              --     return ngx.exit(403)
+              -- end
+  
+              -- 5. Session still valid in Redis (concurrent-session policy).
+              local ok, rerr = ticket.check_session(claims.uid, claims.sid, claims.jti)
+              if not ok then
+                  ngx.header["X-Audit-Reject"] = "session_invalid:" .. (rerr or "?")
+                  return ngx.exit(403)
+              end
+  
+              -- extract filename from JWT
+              local filename = claims.fname or (claims.fid .. ".zip")
+              -- security cleanup
+              filename = string.gsub(filename, "[\r\n\"]", "")
+              filename = string.gsub(filename, "[/\\]", "_")
+              filename = string.gsub(filename, "%s+", "_")
+              filename = string.gsub(filename, "[^%w%._%-]", "")
+  
+              -- trim underscores that may appear from cleanup
+              filename = string.gsub(filename, "^_+", "")
+              filename = string.gsub(filename, "_+$", "")
+  
+              -- ensure .zip is present only if not already there
+              filename = filename:gsub("%s+$", "")
+              if not filename:lower():match("%.zip$") then
+                  filename = filename .. ".zip"
+              end
+  
+              -- final safety fallback
+              if filename == nil or filename == "" then
+                  filename = (claims.fid .. ".zip")
+              end
+              ngx.var.download_filename = filename
+  
+              -- 6. Sign an internal GCS V4 URL via IAM signBlob. Short TTL,
+              --    IP-locked. Never leaves this process.
+              local signed_query, serr = signer.sign_v4(claims.bkt, claims.obj, {
+                  ttl_seconds = 300,
+                  method      = "GET",
+              })
+              if not signed_query then
+                  ngx.log(ngx.ERR, "sign failed: ", serr)
+                  ngx.header["X-Audit-Reject"] = "sign_failed"
+                  return ngx.exit(502)
+              end
+  
+              ngx.var.gcs_bucket       = claims.bkt
+              ngx.var.gcs_object       = claims.obj
+              ngx.var.gcs_signed_query = signed_query
+  
+              -- Audit headers (consumed by log_format via $sent_http_*).
+              ngx.header["X-Audit-User"] = claims.uid
+              ngx.header["X-Audit-File"] = claims.fid
+              ngx.header["X-Audit-Jti"]  = claims.jti
+          }
+  
+          proxy_pass https://gcs_upstream/$gcs_bucket/$gcs_object$gcs_signed_query;
+          proxy_ssl_server_name on;
+          proxy_ssl_name storage.googleapis.com;
+          proxy_set_header Host      storage.googleapis.com;
+          proxy_set_header Range     $http_range;
+          proxy_set_header If-Range  $http_if_range;
+          proxy_pass_request_headers off;
+          proxy_pass_request_body    off;
+  
+          proxy_pass_header Content-Length;
+          proxy_pass_header Content-Range;
+          proxy_pass_header Accept-Ranges;
+          proxy_pass_header ETag;
+          proxy_pass_header Last-Modified;
+  
+          # Don't leak the audit headers or GCS internals to the client.
+          proxy_hide_header x-goog-hash;
+          proxy_hide_header x-goog-generation;
+          proxy_hide_header x-goog-metageneration;
+          proxy_hide_header x-goog-stored-content-encoding;
+          proxy_hide_header x-goog-stored-content-length;
+          proxy_hide_header x-goog-storage-class;
+          proxy_hide_header alt-svc;
+          more_clear_headers "X-Audit-User" "X-Audit-File" "X-Audit-Jti" "X-Audit-Reject";
+  
+          # Force a download disposition with the ZIP name from the ticket if you
+          # want; otherwise GCS object metadata governs. Optional.
+          # add_header Content-Disposition 'attachment' always;
+          add_header Content-Disposition "attachment; filename*=UTF-8''$download_filename" always;
+      }
+  
+      # Everything else is 404. No directory listing, no debug endpoints in prod.
+      location / { return 404; }
+  }
 
 autoscaling:
   enabled: {{ cb_download_proxy_autoscaling_enabled | default('false') }}
