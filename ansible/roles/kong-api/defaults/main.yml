@@ -26169,45 +26169,9 @@ kong_apis:
       config.hour: "{{ medium_rate_limit_per_hour }}"
       config.limit_by: credential
     - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"        
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: extendedCourseUnEnrolment
-    uris: "{{ course_service_prefix }}/v2/unenroll"
-    upstream_url: "{{ lms_service_url }}/v2/course/unenroll"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'courseAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
-
-  - name: extendedCourseReEnrolment
-    uris: "{{ course_service_prefix }}/v1/reenroll"
-    upstream_url: "{{ lms_service_url }}/v1/course/reenroll"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'courseAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
-
-  - name: CBNonGovtUserBulkUpload
+  - name: userNgoBulkUpload
     uris: "{{ user_service_prefix }}/nongovt/v1/bulkupload"
     upstream_url: "{{ sb_cb_ext_service_url }}/user/nongovt/v1/bulkupload"
     strip_uri: true
@@ -26223,22 +26187,4 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
-  - name: UserContentInfo
-    uris: "/user/content/info"
-    upstream_url: "{{ cb_ext_course_service_url }}/content/user/info"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'contentAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"      
