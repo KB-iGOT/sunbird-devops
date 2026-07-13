@@ -16,6 +16,7 @@ statsd_pulgin:
   config.port: "{{ statsd_port }}"
 
 # Default Rate limits
+x_small_rate_limit_per_hour: 100
 small_rate_limit_per_hour: 1000
 medium_rate_limit_per_hour: 5000
 x_medium_rate_limit_per_hour: 5000
@@ -22379,7 +22380,7 @@ kong_apis:
           - 'dataAccess'
       - name: rate-limiting
         config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.hour: "{{ x_small_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
@@ -26079,3 +26080,59 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+
+  - name: extEnrollmentStatus
+    uris: "{{ external_enrollment_prefix }}/v1/enrollment/status"
+    upstream_url: "{{ cb_external_enrollment_service_url }}/cios-enroll/v1/enrollment/status"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+          - 'contentPartner'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: adminCommunityJoin
+    uris: "{{ community_prefix }}/admin/join"
+    upstream_url: "{{ cb_community_service_url }}/community/v1/admin/join"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: adminCommunityUnJoin
+    uris: "{{ community_prefix }}/admin/unjoin"
+    upstream_url: "{{ cb_community_service_url }}/community/v1/admin/unjoin"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
