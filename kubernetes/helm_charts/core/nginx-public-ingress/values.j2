@@ -3110,6 +3110,7 @@ proxyconfig: |-
       }
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -9359,6 +9360,7 @@ proxyconfig: |-
       }
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
