@@ -99,7 +99,7 @@ CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000
 
 # ── Observability (Langfuse) ──────────────────────────────────────────────────
 # Set LANGFUSE_ENABLED=true to activate tracing. Keys from cloud.langfuse.com.
-LANGFUSE_ENABLED=false
+LANGFUSE_ENABLED=true
 LANGFUSE_PUBLIC_KEY={{ langfuse_public_key }}
 LANGFUSE_SECRET_KEY={{ langfuse_secret_key }}
 LANGFUSE_HOST={{ langfuse_host }}
@@ -114,7 +114,7 @@ BHASHINI_USER_ID=
 # ── YP allocation data ────────────────────────────────────────────────────────
 # Path to CSV (preferred) or XLSX file — never commit this file (contains PII).
 # Leave empty to start with no YP data (flow degrades gracefully).
-YP_ALLOCATION_FILE=/home/aswin/work_local/deterministic_chatbot/saathi/data/Allocation_28.10.2025.xlsx
+YP_ALLOCATION_FILE=/app/data/Allocation_28.10.2025.xlsx
 
 # ── Local testing (scripts/test_local.py) ────────────────────────────────────
 # Paste a real Karmayogi user UUID here to enable live API assertions.
