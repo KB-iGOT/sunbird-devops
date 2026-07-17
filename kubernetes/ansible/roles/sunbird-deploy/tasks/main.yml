@@ -45,12 +45,6 @@
     content: "{{ core_vault_sunbird_sso_publickey }}"
   when: release_name in mount_keycloak_key_apps
 
-- name: Create the KC24 token public key file
-  copy:
-    dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid_kc24 }}"
-    content: "{{ core_vault_sunbird_sso_publickey_kc24 }}"
-  when: release_name in mount_keycloak_key_apps
-
 - name: Replace ansible variables with values
   template:
     src: "{{ role_path }}/{{ opa_policies_path }}/{{ release_name }}/{{ item }}"
