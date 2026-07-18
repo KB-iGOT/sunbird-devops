@@ -1,127 +1,41 @@
-#!/bin/bash
-### BEGIN INIT INFO
-# Provides:          keycloak
-# Required-Start:    $remote_fs
-# Required-Stop:     $remote_fs
-# Should-Start:      $all
-# Should-Stop:       $all
-# Default-Start:     3 4 5
-# Default-Stop:      0 1 6
-### END INIT INFO
+[Unit]
+Description=Keycloak 24 Service
+After=network.target
 
-keycloakuser=keycloak
-keycloakpath=/opt/keycloak/bin
-_JAVA_OPTIONS='-Dlog4j2.formatMsgNoLookups=true'
-# Normal output log
-LOGOUT=/var/log/keycloak.out.log
-# Error output log
-LOGERR=/var/log/keycloak.err.log
+[Service]
+Type=simple
 
-## script start here
+User=keycloak
+Group=keycloak
 
+WorkingDirectory=/opt/keycloak
 
-function echo_failure() { echo -en "\n[FAILED]"; }
-function echo_success() { echo -en "\n[OK]"; }
-[ -f /etc/rc.d/init.d/functions ] && source /etc/rc.d/init.d/functions
+# External environment file
+EnvironmentFile=/opt/keycloak/conf/keycloak.conf
+Environment="KEYCLOAK_ADMIN={{ kc24_admin_user }}"
+Environment="KEYCLOAK_ADMIN_PASSWORD={{ kc24_admin_password }}"
+Environment="sunbird_user_service_base_url={{ sunbird_user_service_base_url }}"
+Environment="sunbird_authorization={{ core_vault_sunbird_ekstep_api_key }}"
+Environment="sunbird_lms_base_url=https://{{ nginx_proxy_server_name }}/api"
+Environment="sunbird_login_otp_template=loginWithOTP"
+Environment="sunbird_login_otp_email_subject="OTP Details for Login""
 
-FINDPID="pgrep -u $keycloakuser -n -f standalone.sh";
-function _is_running() {
-    $FINDPID 1>/dev/null
-    return $?
-}
+# Logging
+StandardOutput=append:/var/log/keycloak.out.log
+StandardError=append:/var/log/keycloak.err.log
 
-function stop_keycloak() {
-    _is_running
-    if [ $? -ne 0 ]; then
-        echo -n "$0 is not running, cannot stop."
-        echo_failure
-        echo
-        return 1
-    else
-        echo -n "Stopping $0..."
+# Start command
+ExecStart=/opt/keycloak/bin/kc.sh start --optimized
 
-        $FINDPID | xargs ps h -o pid --ppid | xargs kill
-        sleep 1
-        _is_running
-        if [ $? -eq 0 ]; then
-            echo_failure
-            echo
-            return 1
-        else
-            echo_success
-            echo
-            return 0
-        fi
-    fi
+# Restart policy
+Restart=always
+RestartSec=10
 
-}
+# Limits
+LimitNOFILE=65535
 
-function status() {
-    _is_running
-    if [ $? -eq 0 ]; then
-        echo -n "$0 is running."
-        echo_success
-        echo
-        return 0
-    else
-        echo -n "$0 does not run."
-     #   echo_failure
-     #   echo
-     #   return 1
-    fi
-}
+# Graceful shutdown
+TimeoutStopSec=60
 
-function start_keycloak() {
-    _is_running
-    if [ $? -eq 0 ]; then
-        echo -n "$0 already running."
-        echo_failure
-        echo
-        return 1
-    else
-        echo -n "Starting $0..."
-        # Make sure log files exist and are writable by $PDIUSER first
-        touch $LOGOUT $LOGERR
-        chown $keycloakuser:$keycloakuser $LOGOUT $LOGERR
-        su - $keycloakuser -c "cd $keycloakpath && (nohup sh ./standalone.sh -b=0.0.0.0 -bprivate={{ansible_default_ipv4.address}} --server-config standalone-ha.xml 0<&- 1>>$LOGOUT 2>>$LOGERR &)"
-        sleep 1
-        _is_running
-        if [ $? -eq 0 ]; then
-            echo_success
-            echo
-            return 0
-        else
-            echo_failure
-            echo
-            return 1
-        fi
-    fi
-}
-
-case "$1" in
-    start)
-        start_keycloak
-        exit $?
-        ;;
-    stop)
-        stop_keycloak
-        exit $?
-        ;;
-    reload|force-reload|restart|force-restart)
-        stop_keycloak
-        if [ $? -eq 0 ]; then
-            start_keycloak
-            exit $?
-        else
-            exit 1
-        fi
-        ;;
-    status)
-       status
-       exit $?
-       ;;
-    *)
-        echo "Usage: $0 {start|stop|restart|status}"
-        exit 2
-esac
-exit 0
+[Install]
+WantedBy=multi-user.target

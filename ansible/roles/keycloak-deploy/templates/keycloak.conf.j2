@@ -1,0 +1,52 @@
+# Database configuration - PostgreSQL
+db=postgres
+db-url={{ kc24_db_url }}
+db-username={{ kc24_db_username }}
+db-password={{ kc24_db_password }}
+
+# Basic HTTP configuration
+http-enabled=true
+http-port=8080
+#https-port=0
+
+# Hostname configuration (for local development)
+hostname-strict=false
+hostname-strict-https=false
+hostname-debug=true
+
+# Log level
+log-level=INFO
+
+# Enable features for realm import
+features=js-adapter,admin-fine-grained-authz,scripts
+
+# Development mode
+#start-dev=false
+
+log=file
+log-file=/opt/keycloak/logs/keycloak.log
+# log configuration
+quarkus.log.file.enable=true
+quarkus.log.file.path=/opt/keycloak/logs/keycloak.log
+quarkus.log.file.rotation.max-file-size=10M
+quarkus.log.file.rotation.max-backup-index=10
+
+# Proxy / HTTPS
+proxy=edge
+proxy-headers=xforwarded
+#proxy=none
+hostname={{ kc24_hostname }}
+http-relative-path={{ kc24_http_relative_path }}
+
+features=admin-fine-grained-authz,scripts
+
+health-enabled=true
+metrics-enabled=true
+
+{% if kc24_cluster_enabled | default(false) | bool %}
+cache=ispn
+cache-config-file=cache-ispn.xml
+spi-sticky-session-encoder-infinispan-should-attach-route=true
+{% else %}
+cache=local
+{% endif %}
