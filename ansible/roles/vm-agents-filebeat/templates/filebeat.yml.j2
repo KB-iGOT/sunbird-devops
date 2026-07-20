@@ -41,7 +41,7 @@ output.elasticsearch:
       source: elasticsearch/.*es.*/
   - index: "keycloak-%{+yyyy.MM.dd}"
     when.contains:
-      source: /opt/keycloak/standalone/log/
+      source: /opt/keycloak/logs/
   - index: "neo4j-%{+yyyy.MM.dd}"
     when.contains:
       source: neo4j
