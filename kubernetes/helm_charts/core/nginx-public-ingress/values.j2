@@ -801,7 +801,7 @@ proxyconfig: |-
 
      location /apis/proxies/v8/cqfquestionset/submit {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -1633,7 +1633,7 @@ proxyconfig: |-
 
     location /protected/v8/aiassessmentlogin/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -1656,7 +1656,7 @@ proxyconfig: |-
     
     location /api/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -1774,7 +1774,7 @@ proxyconfig: |-
     }
 
     location /testpdf/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1894,7 +1894,7 @@ proxyconfig: |-
     }
 
     location /cbp-tpc-ai/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1910,7 +1910,7 @@ proxyconfig: |-
     }
 
     location /ai-assment-generation/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1926,7 +1926,7 @@ proxyconfig: |-
     }
 
     location /ai-assessment/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1943,7 +1943,7 @@ proxyconfig: |-
     }
 
     location /ai-assment-generation-ui/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1959,7 +1959,7 @@ proxyconfig: |-
     }
     
     location /training-pla-ai/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -1975,7 +1975,7 @@ proxyconfig: |-
     }
 
     location /ai-cbp-admin-panel/ {
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -2019,7 +2019,7 @@ proxyconfig: |-
 
     location /api/cloud-services/mlcore/v1/files/upload {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -2051,7 +2051,7 @@ proxyconfig: |-
 
     location /protected/v8/resource/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -2090,7 +2090,7 @@ proxyconfig: |-
 
     location /apis/public/v8/course/batch/cert/download/mobile {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -2114,7 +2114,7 @@ proxyconfig: |-
 
     location /apis/public/v8/cert/download/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -2138,7 +2138,7 @@ proxyconfig: |-
 
     location /apis/public/v8/milestone/cert/download/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -2235,7 +2235,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -2295,7 +2295,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -2341,7 +2341,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -2387,7 +2387,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -2437,7 +2437,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -2471,7 +2471,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -2510,7 +2510,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -2544,7 +2544,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
@@ -3045,7 +3045,7 @@ proxyconfig: |-
 
     location /api/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -3101,14 +3101,14 @@ proxyconfig: |-
 
     location /apis/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
@@ -3126,7 +3126,7 @@ proxyconfig: |-
 
     location /protected/v8/resource/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Content-Security-Policy upgrade-insecure-requests;
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
@@ -3192,7 +3192,7 @@ proxyconfig: |-
 
      location /apis/proxies/v8/cqfquestionset/submit {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -3261,7 +3261,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -3321,7 +3321,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -3367,7 +3367,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -3413,7 +3413,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -3463,7 +3463,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -3497,7 +3497,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -3536,7 +3536,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -3570,7 +3570,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
@@ -4081,7 +4081,7 @@ proxyconfig: |-
 
     location /api/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -4137,14 +4137,14 @@ proxyconfig: |-
 
     location /apis/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -4161,7 +4161,7 @@ proxyconfig: |-
 
     location /protected/v8/resource/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -4261,7 +4261,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -4321,7 +4321,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -4367,7 +4367,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -4413,7 +4413,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -4463,7 +4463,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -4497,7 +4497,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -4815,14 +4815,14 @@ proxyconfig: |-
 
     location /routes/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
@@ -5729,7 +5729,7 @@ proxyconfig: |-
 
     location /api/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -5852,7 +5852,7 @@ proxyconfig: |-
 
     location /api/cloud-services/mlcore/v1/files/upload {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -5884,7 +5884,7 @@ proxyconfig: |-
 
     location /protected/v8/resource/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -5922,7 +5922,7 @@ proxyconfig: |-
 
     location /protected/v8/eclogin/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -5945,7 +5945,7 @@ proxyconfig: |-
 
     location /apis/public/v8/course/batch/cert/download/mobile {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -5996,7 +5996,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -6056,7 +6056,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -6102,7 +6102,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -6148,7 +6148,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -6198,7 +6198,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -6232,7 +6232,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -7220,7 +7220,7 @@ proxyconfig: |-
 
     location /api/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -7343,7 +7343,7 @@ proxyconfig: |-
 
     location /api/cloud-services/mlcore/v1/files/upload {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, x-authenticated-user-token, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -7375,7 +7375,7 @@ proxyconfig: |-
 
     location /protected/v8/resource/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -7412,7 +7412,7 @@ proxyconfig: |-
 
     location /protected/v8/eclogin/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -7435,7 +7435,7 @@ proxyconfig: |-
 
     location /apis/public/v8/course/batch/cert/download/mobile {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -7486,7 +7486,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -7546,7 +7546,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -7592,7 +7592,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -7638,7 +7638,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -7688,7 +7688,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -7722,7 +7722,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -8275,7 +8275,7 @@ proxyconfig: |-
 
     location /api/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -8331,14 +8331,14 @@ proxyconfig: |-
 
     location /apis/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
@@ -8356,7 +8356,7 @@ proxyconfig: |-
 
     location /protected/v8/resource/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -8466,7 +8466,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -8526,7 +8526,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -8572,7 +8572,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -8618,7 +8618,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -8668,7 +8668,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -8702,7 +8702,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -8741,7 +8741,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -8775,7 +8775,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
@@ -9295,7 +9295,7 @@ proxyconfig: |-
 
     location /api/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
               add_header Content-Length 0;
@@ -9351,14 +9351,14 @@ proxyconfig: |-
 
     location /apis/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, locale";
               add_header Content-Length 0;
               add_header Content-Type text/plain;
               return 200;
       }
-      add_header Access-Control-Allow-Origin "*";
+      add_header Access-Control-Allow-Origin $cors_origin always;
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
       add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
@@ -9376,7 +9376,7 @@ proxyconfig: |-
 
     location /protected/v8/resource/ {
       if ($request_method = OPTIONS ) {
-              add_header Access-Control-Allow-Origin "*" ;
+              add_header Access-Control-Allow-Origin $cors_origin always;
               add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
               add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
               add_header Content-Length 0;
@@ -9501,7 +9501,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -9561,7 +9561,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -9607,7 +9607,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -9653,7 +9653,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -9703,7 +9703,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -9737,7 +9737,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$s3_bucket/content-plugins/$url_full;
@@ -9776,7 +9776,7 @@ proxyconfig: |-
           gzip_proxied    expired no-cache no-store private auth;
           gzip_types application/javascript application/x-javascript text/css text/javascript;
           if ($request_method = OPTIONS ) {
-                  add_header Access-Control-Allow-Origin "*" ;
+                  add_header Access-Control-Allow-Origin $cors_origin always;
                   add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
                   add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id";
                   # add_header Access-Control-Allow-Credentials "true";
@@ -9810,7 +9810,7 @@ proxyconfig: |-
          proxy_ignore_headers   "Set-Cookie";
          proxy_buffering        off;
          proxy_intercept_errors on;
-         add_header             Access-Control-Allow-Origin "*";
+         add_header             Access-Control-Allow-Origin $cors_origin always;
          add_header             Access-Control-Allow-Methods GET;
          proxy_set_header X-Request-ID $sb_request_id;
          proxy_pass             https://$offline_bucket/$url_full;
@@ -10119,6 +10119,12 @@ nginxconfig: |
         default  $upstream_cache_status;
         ''       "NONE";
       }
+      # CORS Origin Mapping - MDO only
+      map $http_origin $cors_origin {
+        default "";
+        ~^https://mdo\.qa\.karmayogibharat\.net$ $http_origin;
+      }
+      
       # Defining metrics
       init_worker_by_lua_block {
         prometheus = require("prometheus").init("prometheus_metrics")

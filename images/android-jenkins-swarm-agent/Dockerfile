@@ -31,4 +31,11 @@ RUN wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-cl
 
 ADD ./images/android-jenkins-swarm-agent/custom-jenkins-slave.sh /opt/custom-jenkins-slave.sh
 
+RUN chown -R jenkins:jenkins \
+    /opt/android-sdk-linux \
+    /opt/jenkins \
+    /home/jenkins
+
+USER jenkins
+
 ENTRYPOINT /opt/custom-jenkins-slave.sh
