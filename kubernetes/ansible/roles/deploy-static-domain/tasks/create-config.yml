@@ -211,7 +211,7 @@
 
     - name: Adding Course and Cornell Cources
       set_fact:
-        live_course_cornell_count: "{{ external_content_count | int }}"
+        live_course_cornell_count: "{{ external_content_count | int + live_course_count | int }}"
 
     - name: course duration list
       set_fact:
