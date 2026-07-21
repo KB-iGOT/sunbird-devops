@@ -175,22 +175,22 @@
   when: "{{ sms_required|default(false) }}"
   ignore_errors: true
 
-# - name: Keycloak configuration XML file
-#   copy:
-#     src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
-#     dest: "{{ keycloak_home }}/standalone/configuration/standalone-ha.xml"
-#     mode: 0750
-#     owner: "{{ wildfly_user }}"
-#     group: "{{ wildfly_group }}"
-#     remote_src: true
+- name: Keycloak configuration XML file
+  copy:
+    src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
+    dest: "{{ keycloak_home }}/standalone/configuration/standalone-ha.xml"
+    mode: 0750
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    remote_src: true
 
-# - name: Keycloak standalone.conf file
-#   template:
-#     src: templates/standalone.conf.j2
-#     dest: "{{ keycloak_home }}/bin/standalone.conf"
-#     owner: "{{ wildfly_user }}"
-#     group: "{{ wildfly_group }}"
-#     mode: 0755
+- name: Keycloak standalone.conf file
+  template:
+    src: templates/standalone.conf.j2
+    dest: "{{ keycloak_home }}/bin/standalone.conf"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    mode: 0755
 
 - name: Postgresql Configuration- module.xml
   copy:
