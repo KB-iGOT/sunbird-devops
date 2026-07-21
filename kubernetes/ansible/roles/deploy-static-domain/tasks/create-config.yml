@@ -108,6 +108,29 @@
     - debug:
         var: retired_course_count
 
+    - name: External Content Query Elasticsearch and Process Response
+      uri:
+        url: "{{ elasticsearch_host }}:{{ elasticsearch_http_port }}/cios_content_entity/_search"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body_format: json
+        body: "{{ external_content_api_body }}"
+        status_code: [200, 201, 302, 308]
+      register: external_content_output
+      until: external_content_output is not failed
+      retries: 10
+      delay: 2
+      
+    - name: Extract External Content Count
+      set_fact:
+        external_content_count: "{{ external_content_output.json.hits.total.value | default(external_content_output.json.hits.total) }}"
+      failed_when: external_content_count | int == 0
+      
+    - name: Display External Content Count
+      debug:
+        msg: "Active External Content Count: {{ external_content_count }}"
+
     - name: Total no. of Pending Publish Courses API call
       uri:
         url: "{{ domain_sb_es }}/{{ compositesearch }}/_search"
@@ -188,7 +211,7 @@
 
     - name: Adding Course and Cornell Cources
       set_fact:
-        live_course_cornell_count: "{{ live_course_count | int + cornell_course_count | int }}"
+        live_course_cornell_count: "{{ external_content_count | int }}"
 
     - name: course duration list
       set_fact:
