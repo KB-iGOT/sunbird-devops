@@ -79,7 +79,7 @@ if [[ "$POD_COUNT" -eq 0 ]]; then
 else
     UNHEALTHY_FOUND=0
     STALE_FOUND=0
-    HIGH_RESTART_HARD_FAIL=200   # restart counts this high are never "just a warning"
+    HIGH_RESTART_HARD_FAIL=5
     while IFS=$'\t' read -r name phase ready restarts waitreason; do
         [[ -z "$name" ]] && continue
         [[ -z "$POD_NAME" ]] && POD_NAME="$name"   # first pod feeds steps 3-5
