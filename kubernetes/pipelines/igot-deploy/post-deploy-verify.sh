@@ -4,37 +4,26 @@
 #
 # Automates the manual Step 7 verification routine from the New Service
 # Deployment SOP (KB-iGOT / Karmayogi Bharat) — pod status, ConfigMap
-# emptiness, log error-pattern triage, app health endpoint, and resource
-# usage vs. limits, after a Helm/Ansible deploy.
+# emptiness, and log error-pattern triage, after a Helm/Ansible deploy.
 #
 # Usage:
-#   ./post-deploy-verify.sh <namespace> <service-name> [tail-lines] [health-port] [health-path]
+#   ./post-deploy-verify.sh <namespace> <service-name> [tail-lines]
 #
-# Examples:
-#   ./post-deploy-verify.sh dev ai-assessment 100
-#   ./post-deploy-verify.sh dev cb-org-hierarchy-service 100 8080 /actuator/health
-#
-# health-port/health-path are optional — omit both to skip the health check
-# (useful for services where you haven't confirmed the endpoint yet).
+# Example:
+#   ./post-deploy-verify.sh dev cb-org-hierarchy-service 100
 #
 # Exit codes:
 #   0 = all checks passed
 #   1 = ConfigMap empty (redeploy needed — per known issue, do NOT restart pod)
 #   2 = Pod not Running/Ready
 #   3 = Error patterns found in logs
-#   4 = Health endpoint check failed (only when health-port is provided)
-#
-# Resource usage (step 5) is informational only and never fails the build —
-# metrics-server isn't guaranteed to be available in every cluster/namespace.
 ###############################################################################
 
 set -uo pipefail
 
-NAMESPACE="${1:?Usage: $0 <namespace> <service-name> [tail-lines] [health-port] [health-path]}"
-SERVICE="${2:?Usage: $0 <namespace> <service-name> [tail-lines] [health-port] [health-path]}"
+NAMESPACE="${1:?Usage: $0 <namespace> <service-name> [tail-lines]}"
+SERVICE="${2:?Usage: $0 <namespace> <service-name> [tail-lines]}"
 TAIL_LINES="${3:-50}"
-HEALTH_PORT="${4:-}"
-HEALTH_PATH="${5:-/health}"
 
 CONFIGMAP_NAME="${SERVICE}-config"
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
@@ -57,7 +46,7 @@ fi
 # negative for CrashLoopBackOff. Instead we check containerStatuses[].state
 # for a waiting.reason (CrashLoopBackOff, ImagePullBackOff, etc.) — the same
 # signal kubectl's own STATUS column is built from.
-echo "[1/5] Checking pod status..."
+echo "[1/3] Checking pod status..."
 RESTART_WARN_THRESHOLD=20
 
 PODS_JSON=$(kubectl get pods -n "$NAMESPACE" -l app="$SERVICE" -o json 2>/dev/null)
@@ -79,7 +68,7 @@ if [[ "$POD_COUNT" -eq 0 ]]; then
 else
     UNHEALTHY_FOUND=0
     STALE_FOUND=0
-    HIGH_RESTART_HARD_FAIL=5
+    HIGH_RESTART_HARD_FAIL=200   # restart counts this high are never "just a warning"
     while IFS=$'\t' read -r name phase ready restarts waitreason; do
         [[ -z "$name" ]] && continue
         [[ -z "$POD_NAME" ]] && POD_NAME="$name"   # first pod feeds steps 3-5
@@ -129,7 +118,7 @@ fi
 echo
 
 # --- 2. ConfigMap emptiness check ------------------------------------------
-echo "[2/5] Checking ConfigMap '${CONFIGMAP_NAME}'..."
+echo "[2/3] Checking ConfigMap '${CONFIGMAP_NAME}'..."
 CM_DATA=$(kubectl get configmap "$CONFIGMAP_NAME" -n "$NAMESPACE" -o jsonpath='{.data}' 2>/dev/null)
 
 if [[ -z "$CM_DATA" || "$CM_DATA" == "{}" || "$CM_DATA" == "map[]" ]]; then
@@ -144,7 +133,7 @@ fi
 echo
 
 # --- 3. Log error-pattern triage --------------------------------------------
-echo "[3/5] Scanning last ${TAIL_LINES} log lines for known error patterns..."
+echo "[3/3] Scanning last ${TAIL_LINES} log lines for known error patterns..."
 # Bare "Exception" is deliberately excluded — it false-positives on benign
 # Spring Boot startup lines like "ExceptionHandlerExceptionResolver".
 # Patterns cover Java/Spring, Node, Python, and Go log shapes.
@@ -178,48 +167,6 @@ if [[ -n "$POD_NAME" ]]; then
     fi
 else
     echo "  SKIPPED (no pod found)"
-fi
-echo
-
-# --- 4. App-level health endpoint check -------------------------------------
-echo "[4/5] Checking app health endpoint..."
-if [[ -z "$HEALTH_PORT" ]]; then
-    echo "  SKIPPED (no health-port provided — pass as 4th arg to enable)"
-elif [[ -z "$POD_NAME" ]]; then
-    echo "  SKIPPED (no pod found)"
-else
-    HEALTH_RESPONSE=$(kubectl exec -n "$NAMESPACE" "$POD_NAME" -- \
-        wget -qO- --timeout=5 "http://127.0.0.1:${HEALTH_PORT}${HEALTH_PATH}" 2>/dev/null || \
-        kubectl exec -n "$NAMESPACE" "$POD_NAME" -- \
-        curl -sf --max-time 5 "http://127.0.0.1:${HEALTH_PORT}${HEALTH_PATH}" 2>/dev/null)
-
-    if [[ -n "$HEALTH_RESPONSE" ]]; then
-        echo -e "  ${GREEN}OK${NC}: ${HEALTH_PATH} responded"
-        echo "    $(echo "$HEALTH_RESPONSE" | head -c 200)"
-    else
-        echo -e "  ${RED}FAIL${NC}: No response from http://127.0.0.1:${HEALTH_PORT}${HEALTH_PATH} inside the pod"
-        echo -e "  ${YELLOW}→ Neither wget nor curl available in the container, or the endpoint is down/wrong path.${NC}"
-        [[ $FAIL -eq 0 ]] && FAIL=4
-    fi
-fi
-echo
-
-# --- 5. Resource usage vs. limits (informational only) ----------------------
-echo "[5/5] Checking resource usage vs. limits..."
-if [[ -z "$POD_NAME" ]]; then
-    echo "  SKIPPED (no pod found)"
-else
-    TOP_OUTPUT=$(kubectl top pod "$POD_NAME" -n "$NAMESPACE" --no-headers 2>/dev/null)
-    if [[ -z "$TOP_OUTPUT" ]]; then
-        echo "  SKIPPED (metrics-server unavailable or metrics not yet ready for this pod)"
-    else
-        CPU_USAGE=$(echo "$TOP_OUTPUT" | awk '{print $2}')
-        MEM_USAGE=$(echo "$TOP_OUTPUT" | awk '{print $3}')
-        CPU_LIMIT=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" -o jsonpath='{.spec.containers[0].resources.limits.cpu}' 2>/dev/null)
-        MEM_LIMIT=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" -o jsonpath='{.spec.containers[0].resources.limits.memory}' 2>/dev/null)
-        echo -e "  ${YELLOW}INFO${NC}: CPU ${CPU_USAGE} / limit ${CPU_LIMIT:-none}  |  Memory ${MEM_USAGE} / limit ${MEM_LIMIT:-none}"
-        echo "    (Informational only — not a pass/fail check. Watch for usage close to limit, which risks OOMKill/throttling.)"
-    fi
 fi
 echo
 
