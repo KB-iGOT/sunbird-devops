@@ -1,0 +1,65 @@
+@Library('deploy-conf') _
+node() {
+    try {
+        String ANSI_GREEN = "\u001B[32m"
+        String ANSI_NORMAL = "\u001B[0m"
+        String ANSI_BOLD = "\u001B[1m"
+        String ANSI_RED = "\u001B[31m"
+        String ANSI_YELLOW = "\u001B[33m"
+        stage('checkout public repo') {
+            folder = new File("$WORKSPACE/.git")
+            if (folder.exists())
+            {
+               println "Found .git folder. Clearing it.."
+               sh'git clean -fxd'
+            }  
+            checkout scm
+        }
+        stage('deploy') {
+            values = docker_params()
+            jobName = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-1].trim().toLowerCase()
+            namespace = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[1].trim().toLowerCase()
+            currentWs = sh(returnStdout: true, script: 'pwd').trim()
+            ansiblePlaybook = "$currentWs/kubernetes/ansible/main.yaml"
+            ansibleExtraArgs = "--tag $role_name --extra-vars \"chart_path=${currentWs}/kubernetes/helm_charts/igot-deploy/$jobName release_name=$jobName image_tag=$values.image_tag image_name=$values.image_name role_name=${params.role_name}\" --vault-password-file /var/lib/jenkins/secrets/vault-pass -v"
+            values.put('currentWs', currentWs)
+            values.put('ansiblePlaybook', ansiblePlaybook)
+            values.put('ansibleExtraArgs', ansibleExtraArgs)
+            ansible_playbook_run(values)
+            archiveArtifacts 'metadata.json'
+            currentBuild.description = "Image: ${values.image_tag}, Private: ${params.private_branch}, Public: ${params.branch_or_tag}"
+        }
+        stage('Post-Deploy Verify') {
+            sh 'chmod +x kubernetes/pipelines/igot-deploy/post-deploy-verify.sh'
+            sh "kubectl rollout status deployment/${jobName} -n ${namespace} --timeout=120s"
+
+            verifyStatus = sh(
+                script: "./kubernetes/pipelines/igot-deploy/post-deploy-verify.sh ${namespace} ${jobName} 100",
+                returnStatus: true
+            )
+
+            if (verifyStatus == 1) {
+                println(ANSI_BOLD + ANSI_YELLOW + "ConfigMap empty for ${jobName} in ${namespace} — redeploy required, do not restart pod" + ANSI_NORMAL)
+                currentBuild.result = "UNSTABLE"
+            } else if (verifyStatus == 2) {
+                error("Pod not Running/Ready for ${jobName} in ${namespace}")
+            } else if (verifyStatus == 3) {
+                println(ANSI_BOLD + ANSI_YELLOW + "Known error patterns found in ${jobName} logs — review console output" + ANSI_NORMAL)
+                currentBuild.result = "UNSTABLE"
+            } else if (verifyStatus != 0) {
+                error("post-deploy-verify.sh failed with exit code ${verifyStatus}")
+            } else {
+                println(ANSI_BOLD + ANSI_GREEN + "Post-deploy verification passed for ${jobName}" + ANSI_NORMAL)
+            }
+        }
+        summary()
+     }
+    catch (err) {
+        currentBuild.result = "FAILURE"
+        throw err
+    }
+    finally {
+    //    slack_notify(currentBuild.result)
+    //    email_notify()
+    }
+}
