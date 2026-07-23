@@ -72,7 +72,12 @@ echo
 echo "[3/3] Scanning last ${TAIL_LINES} log lines for known error patterns..."
 if [[ -n "$POD_NAME" ]]; then
     LOGS=$(kubectl logs -n "$NAMESPACE" "$POD_NAME" --tail="$TAIL_LINES" 2>/dev/null)
-    PATTERNS='connection refused|ECONNREFUSED|invalid_grant|UndefinedVariable|Exception|OOMKilled|CrashLoopBackOff|127\.0\.0\.1'
+    # Note: bare "Exception" is deliberately excluded — it false-positives on
+    # benign Spring Boot startup lines like "ExceptionHandlerExceptionResolver"
+    # and "@ExceptionHandler methods in exceptionHandler". Instead we look for
+    # an actual ERROR log level, a thrown exception message ("Exception:"),
+    # or a stack trace marker ("Caused by:").
+    PATTERNS='  ERROR |connection refused|ECONNREFUSED|invalid_grant|UndefinedVariable|Exception:|Caused by:|OOMKilled|CrashLoopBackOff|127\.0\.0\.1'
     MATCHES=$(echo "$LOGS" | grep -iE "$PATTERNS")
 
     if [[ -n "$MATCHES" ]]; then
