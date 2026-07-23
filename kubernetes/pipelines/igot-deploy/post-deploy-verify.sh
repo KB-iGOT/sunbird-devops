@@ -145,17 +145,33 @@ echo
 
 # --- 3. Log error-pattern triage --------------------------------------------
 echo "[3/5] Scanning last ${TAIL_LINES} log lines for known error patterns..."
-if [[ -n "$POD_NAME" ]]; then
-    LOGS=$(kubectl logs -n "$NAMESPACE" "$POD_NAME" --tail="$TAIL_LINES" 2>/dev/null)
-    # Bare "Exception" is deliberately excluded — it false-positives on benign
-    # Spring Boot startup lines like "ExceptionHandlerExceptionResolver".
-    # Patterns cover Java/Spring, Node, Python, and Go log shapes.
-    PATTERNS='  ERROR |connection refused|ECONNREFUSED|invalid_grant|UndefinedVariable|Exception:|Caused by:|OOMKilled|CrashLoopBackOff|127\.0\.0\.1|FATAL|panic:|UnhandledPromiseRejection|Unhandled Rejection|Traceback \(most recent call last\)'
-    MATCHES=$(echo "$LOGS" | grep -iE "$PATTERNS")
+# Bare "Exception" is deliberately excluded — it false-positives on benign
+# Spring Boot startup lines like "ExceptionHandlerExceptionResolver".
+# Patterns cover Java/Spring, Node, Python, and Go log shapes.
+PATTERNS='  ERROR |connection refused|ECONNREFUSED|invalid_grant|UndefinedVariable|Exception:|Caused by:|OOMKilled|CrashLoopBackOff|127\.0\.0\.1|FATAL|panic:|UnhandledPromiseRejection|Unhandled Rejection|Traceback \(most recent call last\)|MODULE_NOT_FOUND|^Error:|: Error:|Cannot find module'
 
-    if [[ -n "$MATCHES" ]]; then
-        echo -e "  ${RED}FAIL${NC}: Suspicious log lines found:"
-        echo "$MATCHES" | sed 's/^/    /'
+if [[ -n "$POD_NAME" ]]; then
+    ANY_MATCH=0
+    # Scan every pod found in step 1, not just the first — a crash-looping
+    # pod's CURRENT container instance may not have logged the error yet at
+    # the moment of the query, so its --previous (last terminated) instance
+    # needs checking too.
+    while IFS=$'\t' read -r pname; do
+        [[ -z "$pname" ]] && continue
+        for logflag in "" "--previous"; do
+            LOGS=$(kubectl logs -n "$NAMESPACE" "$pname" $logflag --tail="$TAIL_LINES" 2>/dev/null)
+            [[ -z "$LOGS" ]] && continue
+            MATCHES=$(echo "$LOGS" | grep -iE "$PATTERNS")
+            if [[ -n "$MATCHES" ]]; then
+                LABEL="$pname"; [[ -n "$logflag" ]] && LABEL="$pname (previous instance)"
+                echo -e "  ${RED}FAIL${NC}: Suspicious log lines in ${LABEL}:"
+                echo "$MATCHES" | sort -u | sed 's/^/    /'
+                ANY_MATCH=1
+            fi
+        done
+    done < <(echo "$PODS_JSON" | jq -r '.items[].metadata.name')
+
+    if [[ "$ANY_MATCH" -eq 1 ]]; then
         [[ $FAIL -eq 0 ]] && FAIL=3
     else
         echo -e "  ${GREEN}OK${NC}: No known error patterns in recent logs"
