@@ -79,18 +79,33 @@ if [[ "$POD_COUNT" -eq 0 ]]; then
 else
     UNHEALTHY_FOUND=0
     STALE_FOUND=0
+    HIGH_RESTART_HARD_FAIL=200   # restart counts this high are never "just a warning"
     while IFS=$'\t' read -r name phase ready restarts waitreason; do
         [[ -z "$name" ]] && continue
         [[ -z "$POD_NAME" ]] && POD_NAME="$name"   # first pod feeds steps 3-5
 
+        # Stale/orphaned pods: Unknown phase, or Failed phase with 0 restarts
+        # (never actually started under this ReplicaSet — a leftover, not a
+        # live crash) get flagged separately rather than as a hard failure.
         if [[ "$phase" == "Unknown" || "$waitreason" == "ContainerStatusUnknown" ]]; then
             echo -e "  ${YELLOW}WARN${NC}: $name is stale (phase=$phase) — likely an orphaned pod from an old ReplicaSet, consider cleanup"
+            STALE_FOUND=1
+            continue
+        fi
+        if [[ "$phase" == "Failed" && "$restarts" == "0" ]]; then
+            echo -e "  ${YELLOW}WARN${NC}: $name is stale (phase=Failed, never restarted) — likely an orphaned pod from an old ReplicaSet, consider cleanup"
             STALE_FOUND=1
             continue
         fi
 
         if [[ -n "$waitreason" && "$waitreason" != "null" ]]; then
             echo -e "  ${RED}FAIL${NC}: $name is stuck in ${waitreason} (restarts: ${restarts})"
+            UNHEALTHY_FOUND=1
+        elif [[ "$phase" == "Failed" ]]; then
+            echo -e "  ${RED}FAIL${NC}: $name is in Failed phase (restarts: ${restarts}) — likely an active crash loop"
+            UNHEALTHY_FOUND=1
+        elif [[ "$restarts" =~ ^[0-9]+$ && "$restarts" -gt "$HIGH_RESTART_HARD_FAIL" ]]; then
+            echo -e "  ${RED}FAIL${NC}: $name has ${restarts} restarts — treated as an active crash loop regardless of momentary ready state"
             UNHEALTHY_FOUND=1
         elif [[ "$phase" == "Running" && "$ready" == "true" ]]; then
             if [[ "$restarts" =~ ^[0-9]+$ && "$restarts" -gt "$RESTART_WARN_THRESHOLD" ]]; then
