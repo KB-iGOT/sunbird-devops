@@ -154,7 +154,7 @@
 - name: SMS provider configuration file
   template:
     src: "roles/keycloak-deploy/templates/AmnexSmsCreds.json.j2"
-    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/Amles/keycloak-deplnexSmsCreds.json"
+    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/AmnexSmsCreds.json"
     mode: 0755
   when: "{{ sms_required|default(false) }}"
   ignore_errors: true
