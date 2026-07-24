@@ -34,9 +34,6 @@ spec:
         - name: allocation-file
           configMap:
             name: deterministic-chatbot-allocation
-        - name: allocation-file
-          configMap:
-            name: deterministic-chatbot-allocation
 
       containers:
       - name: {{ .Chart.Name }}
