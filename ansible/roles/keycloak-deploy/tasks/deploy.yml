@@ -151,30 +151,6 @@
     dest: "sunbird_auth_{{ sunbird_auth_version }}.config/module.xml"
     mode: 0750
 
-- name: SMS provider configuration file
-  template:
-    src: "roles/keycloak-deploy/templates/AmnexSmsCreds.json.j2"
-    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/AmnexSmsCreds.json"
-    mode: 0755
-  when: "{{ sms_required|default(false) }}"
-  ignore_errors: true
-
-- name: SMS provider configuration file
-  template:
-    src: "roles/keycloak-deploy/templates/NetCoreSmsCreds.json.j2"
-    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/NetCoreSmsCreds.json"
-    mode: 0755
-  when: "{{ sms_required|default(false) }}"
-  ignore_errors: true
-
-- name: SinchSmsCreds SMS provider configuration file
-  template:
-    src: "roles/keycloak-deploy/templates/SinchSmsCreds.json.j2"
-    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/SinchSmsCreds.json"
-    mode: 0755
-  when: "{{ sms_required|default(false) }}"
-  ignore_errors: true
-
 # - name: Keycloak configuration XML file
 #   copy:
 #     src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
@@ -250,6 +226,14 @@
     path: ./sunbird_auth_{{ sunbird_auth_version }}.config
     state: absent
     force: true
+
+- name: Deploy Keycloak environment file
+  template:
+    src: "roles/keycloak-deploy/templates/keycloak.env.j2"
+    dest: "{{ keycloak_home }}/conf/keycloak.env"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_user }}"
+    mode: "0600"
 
 # - name: Overriding JAVA_HOME
 #   become: true
