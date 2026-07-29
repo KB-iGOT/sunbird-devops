@@ -26262,7 +26262,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: PrivateDurationSyncAPIs
-    uris: "{{ private_content_prefix }}/v1/durationSync"
+    uris: "admin/v1/durationSync"
     upstream_url: "{{ content_service_url }}/content/v1/durationSync"
     strip_uri: true
     plugins:
@@ -26280,7 +26280,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: PrivateReplaceVideoAPIs
-    uris: "{{ private_content_prefix }}/v1/replaceVideo"
+    uris: "admin/content/v1/replaceVideo"
     upstream_url: "{{ content_service_url }}/content/v1/replaceVideo"
     strip_uri: true
     plugins:
