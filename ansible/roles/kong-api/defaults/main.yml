@@ -26095,7 +26095,7 @@ kong_apis:
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: BPSearchV4
-    uris: "{{ composite_service_prefix }}/v4/search"
+    uris: "{{ composite_service_prefix }}/v4/bp/search"
     upstream_url: "{{ search_url }}/v4/bp/search"
     strip_uri: true
     plugins:
