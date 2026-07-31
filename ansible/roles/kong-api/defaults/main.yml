@@ -26351,7 +26351,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: QRStatus
-    uris: "/v1/batch/enrollment/qrcode/status"
+    uris: "/batch/v1/enrollment/qrcode/status"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/batch/enrollment/qrcode/status"
     strip_uri: true
     plugins:
@@ -26369,7 +26369,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: downloadEnrollmentQR
-    uris: "/v1/batch/enrollment/qrcode/download"
+    uris: "/batch/v1/enrollment/qrcode/download"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/batch/enrollment/qrcode/download"
     strip_uri: true
     plugins:
