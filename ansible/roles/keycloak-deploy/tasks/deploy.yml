@@ -259,6 +259,14 @@
     group: "{{ wildfly_user }}"
     mode: "0600"
 
+- name: Add logrotate for keycloak logs
+  template:
+    src: "roles/keycloak-deploy/templates/keycloak.logrotate.j2"
+    dest: "/etc/logrotate.d/keycloak"
+    owner: root
+    group: root
+    mode: "0644"
+
 # - name: Overriding JAVA_HOME
 #   become: true
 #   lineinfile:
