@@ -26,8 +26,14 @@ features=js-adapter,admin-fine-grained-authz,scripts
 log=file
 log-file=/opt/keycloak/logs/keycloak.log
 # log configuration
-quarkus.log.file.enable=true
-quarkus.log.file.path=/opt/keycloak/logs/keycloak.log
+# Log level
+log-level=INFO
+# Disable Keycloak/Quarkus log rotation
+log-file-rotation-enabled=false
+
+#### If you disable logrotation in quarkus, you have to add logrotate for daily log rotation ###
+#quarkus.log.file.enable=true
+#quarkus.log.file.path=/opt/keycloak/logs/keycloak.log
 #quarkus.log.file.rotation.max-file-size=10M
 #quarkus.log.file.rotation.max-backup-index=10
 
