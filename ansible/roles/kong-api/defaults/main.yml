@@ -16,7 +16,6 @@ statsd_pulgin:
   config.port: "{{ statsd_port }}"
 
 # Default Rate limits
-x_small_rate_limit_per_hour: 100
 small_rate_limit_per_hour: 1000
 medium_rate_limit_per_hour: 5000
 x_medium_rate_limit_per_hour: 5000
@@ -189,7 +188,7 @@ content_health_prefix: /contenthealth
 user_volunteer_prefix: /user/volunteer
 formsConfig_service_prefix: /formsConfig
 cb_ext_ngouserprofile_prefix: /user/ngo/profile
-ngo_achievement_prefix: /learner/achievement/ngo
+ngo_achievement_prefix: /learner/ngo/achievement
 ai_itsm_chatbot_prefix: /ai/chatbot
 
 # Service URLs
@@ -15872,11 +15871,9 @@ kong_apis:
           - 'courseAccess'
       - name: rate-limiting
         config.policy: local
-        config.hour: "{{ large_rate_limit_per_hour }}"
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: extEnrollmentReadByUserId
@@ -19180,9 +19177,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: listCourseEnrollmentSummary
+  - name: listCourseEnrollmentSummaryV4
     uris: "{{ course_service_prefix }}/v4/user/enrollment/summary"
-    upstream_url: "{{ lms_service_url }}/v2/user/enrol/summary"
+    upstream_url: "{{ lms_service_url }}/v4/user/enrol/summary"
     strip_uri: true
     plugins:
       - name: jwt
@@ -22396,7 +22393,7 @@ kong_apis:
           - 'dataAccess'
       - name: rate-limiting
         config.policy: local
-        config.hour: "{{ x_small_rate_limit_per_hour }}"
+        config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
@@ -25535,7 +25532,7 @@ kong_apis:
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: ratingAndReviewsNgo
-    uris: "/volunteer/ratings/v1/read"
+    uris: "/ratings/volunteer/v1/read"
     upstream_url: "{{ sb_cb_ext_service_url }}/volunteer/ratings/v1/read"
     strip_uri: true
     plugins:
@@ -25679,7 +25676,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: achievementListNgo
-    uris: "{{ ngo_achievement_prefix }}/list"
+    uris: "{{ ngo_achievement_prefix }}/ngo/list"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/learner/achievement/ngo/list"
     strip_uri: true
     plugins:
@@ -26097,6 +26094,98 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: BPSearchV4
+    uris: "{{ composite_service_prefix }}/v4/bp/search"
+    upstream_url: "{{ search_url }}/v4/bp/search"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAdmin'
+          - 'contentTempAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: programCoordinatorUpsert
+    uris: "/program/coordinator"
+    upstream_url: "{{ sb_cb_ext_service_url }}/program/coordinator"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: programCoordinatorList
+    uris: "/program/coordinator/list"
+    upstream_url: "{{ sb_cb_ext_service_url }}/program/coordinator/list"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: getProgramCoordinatorsV1
+    uris: "/v1/program"
+    upstream_url: "{{ sb_cb_ext_service_url }}/v1/program"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: programCoordinatorRoles
+    uris: "/program/coordinator/roles"
+    upstream_url: "{{ sb_cb_ext_service_url }}/program/coordinator/roles"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
 
   - name: extEnrollmentStatus
     uris: "{{ external_enrollment_prefix }}/v1/enrollment/status"
@@ -26187,7 +26276,7 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"      
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: extendedCourseUnEnrolment
     uris: "{{ course_service_prefix }}/v2/unenroll"
@@ -26262,7 +26351,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: QRStatus
-    uris: "/v1/batch/enrollment/qrcode/status"
+    uris: "/batch/v1/enrollment/qrcode/status"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/batch/enrollment/qrcode/status"
     strip_uri: true
     plugins:
@@ -26280,7 +26369,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: downloadEnrollmentQR
-    uris: "/v1/batch/enrollment/qrcode/download"
+    uris: "/batch/v1/enrollment/qrcode/download"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/batch/enrollment/qrcode/download"
     strip_uri: true
     plugins:
