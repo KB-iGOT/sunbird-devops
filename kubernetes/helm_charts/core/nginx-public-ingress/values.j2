@@ -1470,9 +1470,6 @@ proxyconfig: |-
     }
 
     location /api/extended/content/v1/read {
-      # Cache Disabling for testing
-      proxy_cache_bypass 1;
-      proxy_no_cache 1;
       # Enabling caching
       proxy_cache_key "$request_uri|$request_body";
       proxy_cache sunbirdigot_cache;
