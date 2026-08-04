@@ -9,33 +9,33 @@
     state: stopped
   ignore_errors: yes
 
-- name: Adding ENV Vars to bashrc
-  lineinfile:
-    path: '/etc/environment'
-    line: '{{item.var}}={{item.value}}'
-    regexp: "{{ item.var }}.*"
-  with_items:
-    - {var: 'sunbird_user_service_base_url', value: '{{ sunbird_user_service_base_url }}'}
-    - {var: 'sunbird_authorization', value: '{{ core_vault_sunbird_ekstep_api_key }}'}
-    - {var: 'sunbird_lms_base_url', value: 'https://{{ nginx_proxy_server_name }}/api'}
-    - {var: 'sunbird_login_otp_template', value: 'loginWithOTP'}
-    - {var: 'sunbird_login_otp_email_subject', value: '"OTP Details for Login"'}
+# - name: Adding ENV Vars to bashrc
+#   lineinfile:
+#     path: '/etc/environment'
+#     line: '{{item.var}}={{item.value}}'
+#     regexp: "{{ item.var }}.*"
+#   with_items:
+#     - {var: 'sunbird_user_service_base_url', value: '{{ sunbird_user_service_base_url }}'}
+#     - {var: 'sunbird_authorization', value: '{{ core_vault_sunbird_ekstep_api_key }}'}
+#     - {var: 'sunbird_lms_base_url', value: 'https://{{ nginx_proxy_server_name }}/api'}
+#     - {var: 'sunbird_login_otp_template', value: 'loginWithOTP'}
+#     - {var: 'sunbird_login_otp_email_subject', value: '"OTP Details for Login"'}
 
-- name: Remove old ENV Vars from environemt file
-  lineinfile:
-    path: '/etc/environment'
-    line: '{{item.var}}'
-    regexp: "{{ item.var }}.*"
-    state: absent
-  with_items:
-    - {var: 'sunbird_encryption_key'}
-    - {var: 'sunbird_sso_username'}
-    - {var: 'sunbird_sso_password'}
-    - {var: 'sunbird_sso_url'}
-    - {var: 'sunbird_sso_realm'}
-    - {var: 'sunbird_sso_client_id'}
-    - {var: 'sunbird_cassandra_host'}
-    - {var: 'sunbird_cs_base_url'}
+# - name: Remove old ENV Vars from environemt file
+#   lineinfile:
+#     path: '/etc/environment'
+#     line: '{{item.var}}'
+#     regexp: "{{ item.var }}.*"
+#     state: absent
+#   with_items:
+#     - {var: 'sunbird_encryption_key'}
+#     - {var: 'sunbird_sso_username'}
+#     - {var: 'sunbird_sso_password'}
+#     - {var: 'sunbird_sso_url'}
+#     - {var: 'sunbird_sso_realm'}
+#     - {var: 'sunbird_sso_client_id'}
+#     - {var: 'sunbird_cassandra_host'}
+#     - {var: 'sunbird_cs_base_url'}
 
 - name: Remove keycloak
   become: true
@@ -206,6 +206,8 @@
     path: "{{ keycloak_home }}/sms-provider"
     state: directory
     mode: 0755
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"    
   when: "{{ sms_required|default(false) }}"
   ignore_errors: true
 
@@ -248,6 +250,22 @@
     path: ./sunbird_auth_{{ sunbird_auth_version }}.config
     state: absent
     force: true
+
+- name: Deploy Keycloak environment file
+  template:
+    src: "roles/keycloak-deploy/templates/keycloak.env.j2"
+    dest: "{{ keycloak_home }}/conf/keycloak.env"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_user }}"
+    mode: "0600"
+
+- name: Add logrotate for keycloak logs
+  template:
+    src: "roles/keycloak-deploy/templates/keycloak.logrotate.j2"
+    dest: "/etc/logrotate.d/keycloak"
+    owner: root
+    group: root
+    mode: "0644"
 
 # - name: Overriding JAVA_HOME
 #   become: true

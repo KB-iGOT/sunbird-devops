@@ -1,0 +1,190 @@
+### Default variable file for thumbnail_generation-service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+service:
+  type: {{ cb_download_proxy_type | default('LoadBalancer') }}
+  cb_download_proxy_ip: {{ cb_download_proxy_ip }}  
+  annotations: {{cb_download_proxy_annotations|to_json}}
+
+env:
+  javaoptions: {{cb_download_proxy_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{cb_download_proxy_replicacount|default(1)}}
+repository: {{ image_cb_download_proxy_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{cb_download_proxy_cpu_req|default('200m')}}
+    memory: {{cb_download_proxy_mem_req|default('200Mi')}}
+  limits:
+    cpu: {{cb_download_proxy_cpu_limit|default('500m')}}
+    memory: {{cb_download_proxy_mem_limit|default('800Mi')}}
+network:
+  port: {{ service_cb_download_proxy_port }}
+  targetport: {{ service_cb_download_proxy_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ cb_download_proxy_maxsurge|default('25%') }}
+  maxunavailable: {{ cb_download_proxy_maxunavailable|default('25%') }}
+
+cbdownloadproxypubkey: |-
+{{cb_download_public_key | indent(2, true)}}
+
+cbdownloadproxyprivkey: |-
+{{cb_download_private_key | indent(2, true)}}
+
+cb_download_proxy_service_account: {{ cb_download_proxy_signer_sa_email }}
+serviceAccount:
+  enabled: true
+  name: cb-download-proxy-sa
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+dlnginxconf: |
+  # nginx.conf — from template
+  # Download edge for iGOT per-org report ZIPs.
+  # Mounted at /usr/local/openresty/nginx/conf/nginx.conf
+  
+  user  appuser;
+  worker_processes auto;
+  worker_rlimit_nofile 131072;
+  
+  # Send fatal errors to stderr so they land in container logs / Cloud Logging.
+  error_log  /dev/stderr  warn;
+  pid        /tmp/nginx.pid;
+  
+  env TICKET_ISS;
+  env TICKET_AUD;
+  env TICKET_PUBKEY_DIR;
+  env TICKET_PUBKEY_KIDS;
+  env SIGNER_SA_EMAIL;
+  env REDIS_HOST;
+  env REDIS_PORT;
+  env REDIS_PASS;
+  env REDIS_TLS;
+  env GCS_METADATA_HOST;
+  env REDIS_PREFIX;
+  
+  events {
+      worker_connections 16384;
+      multi_accept on;
+      use epoll;
+  }
+  
+  http {
+      lua_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+      lua_ssl_verify_depth 5;
+      
+      include       mime.types;
+      default_type  application/octet-stream;
+      server_tokens off;                 # don't leak OpenResty version
+  
+      # ---- Streaming tuning for large report ZIPs to slow clients ----
+      sendfile        on;
+      tcp_nopush      on;
+      tcp_nodelay     on;
+      keepalive_timeout       120s;
+      client_header_timeout   30s;
+      client_body_timeout     30s;
+  
+      # A 5 GB ZIP at 1 Mbps is ~11 hours. Set timeouts to cover the worst
+      # realistic case for your largest org. ADJUST to your real max file size.
+      send_timeout            12h;
+      proxy_read_timeout      12h;
+      proxy_send_timeout      12h;
+      proxy_connect_timeout   10s;
+  
+      # Stream straight through; never buffer multi-GB bodies to disk.
+      proxy_buffering         off;
+      proxy_request_buffering off;
+      proxy_http_version      1.1;
+  
+      # ---- Lua ----
+      lua_package_path "/etc/openresty/lualib/?.lua;/usr/local/openresty/lualib/?.lua;;";
+      lua_shared_dict ticket_replay   128m;   # jti replay cache
+      lua_shared_dict jwks_cache        1m;   # cached verification public key(s)
+      lua_shared_dict signer_token      1m;   # cached GCP access token for signBlob
+      lua_code_cache  on;                      # MUST be on in prod
+  
+      # Init the verification keys + signer once per worker.
+      init_worker_by_lua_block {
+          require("ticket").init()
+          require("gcs_signer").init()
+      }
+  
+      # ---- DNS resolver for dynamic upstreams ----
+      # On GKE, point at the cluster DNS (kube-dns/CoreDNS) ClusterIP, OR use a
+      # public resolver. ADJUST. 169.254.169.254 is the GCE metadata server and
+      # is NOT a DNS resolver — do not use it here.
+      resolver {{ kube_dns_ip }} ipv6=off valid=30s;
+      resolver_timeout 5s;
+  
+      map $status $nginx_reject_reason {
+          401 "nginx_unauthorized";
+          403 "nginx_forbidden";
+          404 "not_found";
+          429 "rate_limited";
+          default "nginx_unclassified";
+      }
+  
+      map $sent_http_x_audit_reject $audit_reject_reason {
+          default $sent_http_x_audit_reject;
+          ""      $nginx_reject_reason;
+      }
+  
+      # ---- Audit logging (JSON → Cloud Logging via stdout) ----
+      log_format edge_audit escape=json
+          '{'
+          '"ts":"$time_iso8601",'
+          '"severity":"INFO",'
+          '"remote_addr":"$remote_addr",'
+          '"req_id":"$request_id",'
+          '"method":"$request_method",'
+          '"uri":"$uri",'
+          '"status":$status,'
+          '"bytes_sent":$bytes_sent,'
+          '"duration_s":$request_time,'
+          '"upstream_status":"$upstream_status",'
+          '"user_id":"$sent_http_x_audit_user",'
+          '"file_id":"$sent_http_x_audit_file",'
+          '"ticket_jti":"$sent_http_x_audit_jti",'
+          '"reject_reason":"$audit_reject_reason"'
+          '}';
+  
+      access_log /dev/stdout edge_audit;
+  
+      # ---- Real client IP ----
+      # The GCP external HTTPS LB sets X-Forwarded-For. Trust ONLY the GCP LB
+      # ranges so a client cannot spoof XFF. These are GCP's documented LB
+      # source ranges; verify against current GCP docs before deploy.
+      set_real_ip_from 130.211.0.0/22;
+      set_real_ip_from 35.191.0.0/16;
+      real_ip_header   X-Forwarded-For;
+      real_ip_recursive on;
+  
+      # ---- TLS (terminated here only if NOT terminating at the GCP LB) ----
+      # If the GCP HTTPS LB terminates TLS (recommended), the edge listens on
+      # plain HTTP behind it and this block is unused. See docs/CONFIG_GUIDE.md.
+      ssl_protocols TLSv1.2 TLSv1.3;
+      ssl_prefer_server_ciphers off;
+      ssl_session_cache shared:SSL:10m;
+      ssl_session_timeout 1h;
+  
+      include /usr/local/openresty/nginx/conf/edge.conf;
+  }
+
+
+autoscaling:
+  enabled: {{ cb_download_proxy_autoscaling_enabled | default('false') }}
+  minReplicas: {{ cb_download_proxy_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ cb_download_proxy_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ cb_download_proxy_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ cb_download_proxy_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+

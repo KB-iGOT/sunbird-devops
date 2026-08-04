@@ -1,4 +1,12 @@
 ---
+- name: getting kube dns ip
+  shell: kubectl get service --namespace kube-system kube-dns -o jsonpath="{.spec.clusterIP}"
+  register: kube_dns_ip
+
+- name: setting variable
+  set_fact:
+    kube_dns_ip: "{{ kube_dns_ip.stdout }}"
+
 - name: Including shared vars
   block:
     - name: Including shared vars
@@ -21,7 +29,7 @@
         dest: "{{ helm_env_file_location }}/{{ item | basename}}.env"
       with_fileglob:
         - "{{ template_shared_env_file_name }}"
-      when: release_name not in ['ml-kb-portal-service','pdf-generator-service','ml-template-validation-portal','ml-template-validation-backend-service','nlp-search-service','certificate-generator-service','report-generation-service','comment-tree-service','cb-search-service','cb-ext-userprofile-service','cb-notification-service','cb-ext-course-service','cb-notification-wrapper-service','custom-field-service','kb-agent-service','id-mapping-service','content-moderation-service','cb-ext-workallocation-tool-service','itsm-bot-service','cbp-ai-service','supporttool-service','ai-assessment-service','ai-cbp-mdo-service','ai-ui-assessment-service']
+      when: release_name not in ['ml-kb-portal-service','pdf-generator-service','ml-template-validation-portal','ml-template-validation-backend-service','nlp-search-service','certificate-generator-service','report-generation-service','comment-tree-service','cb-search-service','cb-ext-userprofile-service','cb-notification-service','cb-ext-course-service','cb-notification-wrapper-service','custom-field-service','kb-agent-service','id-mapping-service','content-moderation-service','cb-ext-workallocation-tool-service','itsm-bot-service','cbp-ai-service','supporttool-service','ai-assessment-service','ai-cbp-mdo-service','ai-ui-assessment-service','ai-assessment-worker-service','cb-ext-form-service','cbp-ai-ui']
     - name: template helm env file
       template:
         src: "{{ item }}"
@@ -53,6 +61,7 @@
       copy:
         dest: "{{ chart_path }}/keys/{{ adminutil_refresh_token_public_key_kid }}"
         content: "{{ core_vault_sunbird_sso_publickey }}"
+
   when: release_name in [
     "cb-pores-service",
     "content-partner-provider",
@@ -80,7 +89,9 @@
     "id-mapping-service",
     "frac-backend-service",
     "cb-ext-workallocation-tool-service",
-    "form-service"
+    "form-service",
+    "cb-ext-config-service",
+    "cb-ext-form-service"
     ]
 
 - name: helm upgrade

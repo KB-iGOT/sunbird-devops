@@ -122,9 +122,13 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-
+    proxy_hide_header X-XSS-Protection;
+    add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     #add_header Content-Security-Policy "frame-ancestors 'self'; frame-src *.youtube.com *.igot-stage.in *.{{ nginx_proxy_server_name }};";
-
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    } 
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
 
@@ -1799,6 +1803,38 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
+    location /apis/proxies/v8/operationalreports/v3/download/ {
+      # if ($request_method = OPTIONS ) {
+       #       add_header Access-Control-Allow-Origin "*" ;
+       #       add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST";
+       #       add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding, rootorg, org, wid, hostpath";
+        #      add_header Content-Length 0;
+        #      add_header Content-Type text/plain;
+        #      return 200;
+      #}
+      # add_header Access-Control-Allow-Origin "*";
+      # add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      proxy_cookie_path ~*^/.* /;
+      proxy_set_header X-Real-IP  $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      rewrite ^/apis/(.*) /$1 break;
+      proxy_pass http://ui-proxies:3003;
+      proxy_connect_timeout 3600;
+      proxy_cache off;
+      proxy_send_timeout 3600;
+      proxy_read_timeout 3600;
+      send_timeout 3600s;
+      proxy_ignore_client_abort on;
+      # Disable buffering for streaming
+      proxy_buffering off;
+      proxy_request_buffering off;
+      # Avoid temp file buffering
+      proxy_max_temp_file_size 0;
+    }
+
     location /mligot/ {
      proxy_set_header Host $host;
      proxy_set_header X-Real-IP $remote_addr;
@@ -1867,7 +1903,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
       rewrite ^/cbp-tpc-ai/(.*) /$1 break;
-      proxy_pass http://{{ ai_cbp_plan_vm }}:8030;
+      proxy_pass http://cbp-ai-service:8000;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
       proxy_read_timeout 300;
@@ -1932,7 +1968,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header X-Forwarded-Server $host;
       rewrite ^/training-pla-ai/(.*) /$1 break;
-      proxy_pass http://{{ ai_cbp_plan_vm }}:8040;
+      proxy_pass http://cbp-ai-ui;
       proxy_connect_timeout 10;
       proxy_send_timeout 300;
       proxy_read_timeout 300;
@@ -2764,6 +2800,12 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
+    proxy_hide_header X-XSS-Protection;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }    
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
@@ -3068,6 +3110,7 @@ proxyconfig: |-
       }
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -3786,6 +3829,12 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
+    proxy_hide_header   X-XSS-Protection;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    } 
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
@@ -4557,7 +4606,7 @@ proxyconfig: |-
       add_header X-Frame-Options "SAMEORIGIN";
       add_header X-Content-Type-Options nosniff;
       add_header Referrer-Policy 'strict-origin';
-      add_header X-XSS-Protection "1; mode=block" always;
+      proxy_hide_header X-XSS-Protection;
       add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains; preload';
       add_header 'Access-Control-Allow-Headers'  'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-channel-id, x-app-id, Authorization, auth-token, x-user-id';
       proxy_set_header X-Scheme $scheme;
@@ -4698,6 +4747,12 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
+    proxy_hide_header   X-XSS-Protection;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }    
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
@@ -4839,6 +4894,11 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }       
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
@@ -6371,6 +6431,11 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }       
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
@@ -7871,6 +7936,11 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }    
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
@@ -7961,7 +8031,12 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;    
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }    
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
       return 301 {{proto}}://spv.{{ nginx_proxy_server_name }};
@@ -8265,6 +8340,7 @@ proxyconfig: |-
       }
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -8975,10 +9051,13 @@ proxyconfig: |-
     proxy_set_header    X-Real-IP         {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
-    add_header Permissions-Policy "camera=(self), microphone=(self), geolocation=(self)" always;
+    add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
+    if ($block_bad_uri) {                                                                                                                               
+       return 400;                                                                                                                                             
+    }    
     location ~* ^/auth/(.*)/impersonation {
       return 301 {{proto}}://mdo.{{ nginx_proxy_server_name }};
     }
@@ -9281,6 +9360,7 @@ proxyconfig: |-
       }
       add_header Access-Control-Allow-Origin "*";
       add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -9989,7 +10069,15 @@ nginxconfig: |
       add_header Referrer-Policy "strict-origin";
       add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
       add_header Cache-Control "max-age=0";
-
+      proxy_hide_header X-XSS-Protection;
+      map $request_uri $block_bad_uri {
+        default 0;
+        ~*%5c                1;
+        ~*%2e%2e             1;
+        ~*\.\.               1;
+        ~*%252e%252e         1;
+        ~*%00                1;
+      }
       server_tokens off;
       {#
       This is to define custom nginx_http_configs

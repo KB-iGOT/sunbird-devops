@@ -66,12 +66,18 @@ spec:
         - mountPath: {{ .Values.frac_backend_basepath }}
           name: access-keys
 {{- end }}
+        - name: cbdownloadprivkeypem-config
+          mountPath: /mnt/report-download-private-key.pem
+          subPath: report-download-private-key.pem
       volumes:
       - name: {{ .Chart.Name }}-xml-config
         configMap:
           name: {{ .Chart.Name }}-xml-config
 {{- $keys := .Files.Glob "keys/*" }}
 {{- if $keys }}
+      - name: cbdownloadprivkeypem-config
+        configMap:
+          name: cbdownloadprivkeypem-config
       - name: access-keys
         secret:
           secretName: cb-ext-access-keys

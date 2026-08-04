@@ -9,3 +9,13 @@ type: Opaque
 data:
 {{ (.Files.Glob "keys/*").AsSecrets | indent 2 }}
 {{ end }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cbdownloadprivkeypem-config
+  namespace: {{ .Values.namespace }}
+data:
+  report-download-private-key.pem: |
+{{ .Values.cbdownloadprivkeypem | indent 4 }}

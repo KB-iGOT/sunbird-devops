@@ -28,13 +28,13 @@ spec:
         - name: gcpaiassessmentcredentialsjson
           configMap:
             name: gcpaiassessmentcredentialsjson
+        - name: gcpaiassessmentstoragecredentialsjson
+          configMap:
+            name: gcpaiassessmentstoragecredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
         imagePullPolicy: Always
-        env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /app/gcp/aswin-model-access-account.json
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config
@@ -42,8 +42,11 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: gcpaiassessmentcredentialsjson
-          mountPath: /app/gcp/aswin-model-access-account.json
-          subPath: aswin-model-access-account.json
+          mountPath: /app/gcp/gcpaiassessmentcredentials.json
+          subPath: gcpaiassessmentcredentials.json
+        - name: gcpaiassessmentstoragecredentialsjson
+          mountPath: /app/gcp/gcp_storage_credentials.json
+          subPath: gcp_storage_credentials.json
         ports:
         - containerPort: {{ .Values.network.port }}
 ---

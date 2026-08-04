@@ -1,0 +1,124 @@
+#GOOGLE_LOCATION=global
+#GENAI_MODEL_NAME=gemini-3.1-flash-lite
+#LOG_LEVEL=INFO
+MAX_CONCURRENCY=50
+WORKER_BATCH_SIZE=50
+MAX_ATTEMPTS=3
+SCORM_FLAG=false
+CLEANUP_RETENTION_DAYS=7
+CLEANUP_SCHEDULE_HOUR=3
+CLEANUP_SCHEDULE_MINUTE=0
+
+DISABLE_AUTH_VERIFICATION=false
+REQUIRED_ROLE=AI_ASSESSMENT_CREATOR
+
+KARMAYOGI_BASE_URL=https://{{domain_name}}
+LEARNING_AI_BASE_URL={{ learning_ai_base_url }}
+#GOOGLE_PROJECT_ID={{ ai_assessment_google_project_id }}
+#KARMAYOGI_API_KEY={{ bearer_token }}
+SUNBIRD_SSO_URL=https://{{ domain_name }}/auth/
+SUNBIRD_SSO_REALM={{ keycloak_sso_realm }}
+
+KAFKA_REQUEST_TOPIC={{env}}.assessment.request
+KAFKA_BOOTSTRAP_SERVERS={{ kafka_servers_list }}
+KAFKA_TOPIC={{env}}.assessment.lifecycle.events
+
+#GOOGLE_APPLICATION_CREDENTIALS=/app/gcp/gcpaiassessmentcredentials.json
+
+GCS_CREDENTIALS=/app/gcp/gcp_storage_credentials.json
+GCS_BUCKET_NAME=igotai
+GCS_UPLOAD_PREFIX=ai-assessments/uploads
+DOCUMENT_STORAGE_TYPE=gcs
+
+-----------------------------------------------------------------------
+
+# ── Runtime ───────────────────────────────────────────────────────────────────
+IGOT_ENV={{env}}
+#LOG_LEVEL=DEBUG
+LOG_FILE=
+
+# ── Database ──────────────────────────────────────────────────────────────────
+# Uses the existing local Postgres (same instance as legacy app — no new container needed).
+# saathi_db was created with: psql -c "CREATE DATABASE saathi_db OWNER myuser;"
+# LangGraph checkpoint tables auto-created on first startup via AsyncPostgresSaver.setup().
+POSTGRES_URL={{ deterministic_chatbot_db_dsn }}
+
+# ── Redis (run: docker compose up redis) ─────────────────────────────────────
+REDIS_URL=redis://{{redis_host}}:6379/3
+IGOT_REDIS_NAMESPACE=saathi
+
+# ── Auth ──────────────────────────────────────────────────────────────────────
+KEYCLOAK_HOST=https://{{ auth_domain_name }}
+#KEYCLOAK_REALM={{ keycloak_realm_name }}
+# KEYCLOAK_AUDIENCE=saathi
+# Auth behaviour flags
+AUTH_DISABLED=false
+AUTH_HEADER_NAME=x-authenticated-user-token
+# AUTH_REQUIRED_ROLE: role that must be in user_roles claim; empty = skip check
+AUTH_REQUIRED_ROLE=
+
+# ── LLM ───────────────────────────────────────────────────────────────────────
+LLM_PROVIDER=vertex
+LLM_KILL_SWITCH=false
+GENAI_MODEL_NAME=gemini-2.5-flash
+LLM_MAX_CALLS_PER_SESSION=5
+
+# ── Vertex AI / Google Cloud ─────────────────────────────────────────────────
+GOOGLE_PROJECT_ID={{ ai_assessment_google_project_id }}
+GOOGLE_LOCATION=asia-south1
+GOOGLE_APPLICATION_CREDENTIALS=/app/gcp/gcpaiassessmentcredentials.json
+
+# ── Zoho Desk ─────────────────────────────────────────────────────────────────
+ZOHO_BASE_URL={{ zoho_base_url }}
+ZOHO_OAUTH_BASE={{ zoho_oauth_base }}
+ZOHO_REFRESH_TOKEN={{ zoho_refresh_token }}
+ZOHO_CLIENT_ID={{ zoho_client_id }}
+ZOHO_CLIENT_SECRET={{ zoho_client_secret }}
+ZOHO_ORG_ID={{ zoho_org_id }}
+ZOHO_DEPARTMENT_ID={{ zoho_department_id }}
+
+# ── Karmayogi Platform ────────────────────────────────────────────────────────
+# All platform API calls route via Kong in deployed envs; use UAT URL for local dev.
+KARMAYOGI_PORTAL_BASE_URL=https://{{ karmayogi_portal_url }}
+KARMAYOGI_API_KEY={{ karmayogi_api_key }}
+
+# ── Translation ───────────────────────────────────────────────────────────────
+TRANSLATION_ENABLED=true
+TRANSLATION_PRIMARY=gemini
+TRANSLATION_GEMINI_TIMEOUT_S=10.0
+TRANSLATION_GOOGLE_TRANSLATE_TIMEOUT_S=5.0
+TRANSLATION_BHASHINI_TIMEOUT_S=4.0
+# leave blank to use ADC (same GCP project — recommended)
+GOOGLE_TRANSLATE_API_KEY=
+
+# ── Session ───────────────────────────────────────────────────────────────────
+IGOT_WEB_SESSION_TTL_MINUTES=30
+
+# ── CORS ──────────────────────────────────────────────────────────────────────
+CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000
+
+# ── Observability (Langfuse) ──────────────────────────────────────────────────
+# Set LANGFUSE_ENABLED=true to activate tracing. Keys from cloud.langfuse.com.
+LANGFUSE_ENABLED=true
+LANGFUSE_PUBLIC_KEY={{ langfuse_public_key }}
+LANGFUSE_SECRET_KEY={{ langfuse_secret_key }}
+LANGFUSE_HOST={{ langfuse_host }}
+# 1.0 = trace every request; 0.1 = 10% sampling (use lower in prod to save quota)
+LANGFUSE_SAMPLE_RATE=1.0
+
+# ── Bhashini (translation last-resort, optional) ─────────────────────────────
+BHASHINI_UDYAT_KEY=
+BHASHINI_API_ENDPOINT=
+BHASHINI_USER_ID=
+
+# ── YP allocation data ────────────────────────────────────────────────────────
+# Path to CSV (preferred) or XLSX file — never commit this file (contains PII).
+# Leave empty to start with no YP data (flow degrades gracefully).
+YP_ALLOCATION_FILE=/app/data/Allocation_28.10.2025.xlsx
+
+# ── Local testing (scripts/test_local.py) ────────────────────────────────────
+# Paste a real Karmayogi user UUID here to enable live API assertions.
+# In dev mode this UUID is passed directly to Karmayogi (no HMAC hash).
+IGOT_TEST_USER_ID={{ igot_test_user_id }}
+
+LLM_TIMEOUT_SECONDS=8

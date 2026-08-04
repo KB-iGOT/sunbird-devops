@@ -128,3 +128,7 @@ spring.cassandra.username=sunbird
 spring.cassandra.password=""
 spring.cassandra.local-datacenter=DC1
 spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+
+connection.allowed.transitions.pending=Approved,Rejected,Withdrawn
+connection.allowed.transitions.approved=Removed,Blocked
+connection.allowed.transitions.blocked=Unblocked

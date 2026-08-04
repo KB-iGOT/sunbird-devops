@@ -272,9 +272,17 @@ OIL_USER_DETAILS_URL={{oil_user_details_url}}
 IGOT_REDIS_HOST={{igot_redis_host}}
 IGOT_REDIS_PORT={{igot_redis_port}}
 
-KEYCLOAK_PUBLIC_KEY={{ core_vault_sunbird_sso_publickey }}
+KEYCLOAK_PUBLIC_KEY={{ core_vault_sunbird_sso_publickey_kc24 }}
 UPSTREAM_KEEPALIVE_TIMEOUT=20000
+
+NTPC_CLIENT_ID={{ntpc_client_id}}
+NTPC_CLIENT_SECRET={{ntpc_client_secret}}
+NTPC_AUTH_URL={{ntpc_auth_url}}
+NTPC_TOKEN_URL={{ntpc_token_url}}
 
 AI_ASSESSMENT_PORTAL_HOST=https://{{ portal_domain_name }}/ai-assessment
 AI_ASSESSMENT_REDIRECT_PATH=/
 AIC_ASSESSMENT_PORTAL_HOST=https://{{ portal_domain_name }}/ai-assessment
+
+## ui-proxies
+LOGOUT_PUBLIC_HOME_HOSTS={{kc_logout_hosts}}

@@ -1,7 +1,10 @@
 LOG_LEVEL={{ ai_cbp_mdo_log_level }}
 DATABASE_URL={{ ai_cbp_mdo_database_url }}
-KB_BASE_URL=https://{{ portal_domain_name }}
+KB_BASE_URL=https://{{ domain_name }}
 KB_AUTH_TOKEN={{ bearer_token }}
 REQUIRED_ROLE=["MDO_ADMIN", "MDO_LEADER"]
 SUNBIRD_SSO_URL={{ ai_cbp_mdo_sso_url }}/
 SUNBIRD_SSO_REALM={{ ai_cbp_mdo_sso_realm }}
+
+NOTIFICATION_BASE_URL=http://{{ private_ingressgateway_ip }}/notification
+ENABLE_EMAIL_NOTIFICATION={{ ai_cbp_mdo_enable_email_notification }}

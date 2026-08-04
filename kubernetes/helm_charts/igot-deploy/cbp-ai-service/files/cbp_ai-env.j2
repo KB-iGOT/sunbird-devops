@@ -3,9 +3,29 @@ DOCUMENT_STORAGE_TYPE=gcp
 GCP_STORAGE_BUCKET={{cbp_ai_bucket}}
 GCP_STORAGE_CREDENTIALS=/app/gcp_storage_credentials.json
 GOOGLE_APPLICATION_CREDENTIALS=/app/gcp_application_credentials.json
-EMBEDDING_MODEL_NAME={{cbp_ai_embedding_model_name}}
+GOOGLE_EMBEDDING_MODEL={{cbp_ai_embedding_model_name}}
+GOOGLE_API_KEY={{cbp_ai_google_Api_key}}
 GOOGLE_PROJECT_LOCATION=us-central1
 GOOGLE_PROJECT_ID={{ cbp_ai_google_project_id }}
 KB_BASE_URL=https://{{ domain_name }}
 KB_AUTH_TOKEN={{ cbp_ai_kb_auth_token }}
 SECRET_KEY={{ cbp_ai_secret_key }}
+BHASHINI_USER_ID={{ bhashini_user_id }}
+BHASHINI_API_KEY={{ bhashini_api_key }}
+BHASHINI_PIPELINE_ID={{ bhashini_pipeline_id }}
+BHASHINI_CONFIG_API_URL={{ bhashini_config_api_url }}
+BHASHINI_SUPPORTED_LANGUAGES={{ bhashini_supported_languages }}
+NOTIFICATION_BASE_URL=http://{{ private_ingressgateway_ip }}/notification
+ENABLE_EMAIL_NOTIFICATION=False
+SPV_PORTAL_URL=https://spv.{{ static_domain_name }}
+MDO_PORTAL_URL=https://mdo.{{ static_domain_name }}
+
+REDIS_HOST={{ kp_redis_ip }}
+REDIS_PORT=6379
+REDIS_DB=6
+
+GOOGLE_PROJECT_LOCATION_GLOBAL=asia-northeast1
+GOOGLE_GENAI_USE_VERTEXAI={{cbp_ai_google_genai_use_vertexai | default("True")}}
+ 
+GEMINI_PRO_MODEL_NAME={{cbp_ai_gemini_pro_model_name}}
+GEMINI_FLASH_MODEL_NAME={{cbp_ai_gemini_flash_model_name}}
