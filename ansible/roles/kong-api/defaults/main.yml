@@ -26336,7 +26336,7 @@ kong_apis:
 
   - name: listFormsconfigV2
     uris: "{{ formsConfig_service_prefix }}/v2/list"
-    upstream_url: "{{ cb_ext_config_service_url }}/v2/admin/list"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/v2/admin/list"
     strip_uri: true
     plugins:
       - name: jwt
