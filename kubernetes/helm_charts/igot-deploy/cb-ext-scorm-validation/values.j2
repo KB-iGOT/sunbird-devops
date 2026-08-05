@@ -1,4 +1,4 @@
-### Default variable file for cb-ext-scorm-validation ###
+### Default variable file for cb_ext_scorm_validation ###
 
 namespace: {{ namespace }}
 imagepullsecrets: {{ imagepullsecrets }}
@@ -6,29 +6,29 @@ dockerhub: {{ docker_hub_url }}
 
 
 env:
-  javaoptions: {{cb-ext-scorm-validation_java_mem_limit|default('-Xmx600m')}}
+  javaoptions: {{cb_ext_scorm_validation_java_mem_limit|default('-Xmx600m')}}
 
-replicaCount: {{cb-ext-scorm-validation_replicacount|default(1)}}
-repository: {{ image_cb-ext-scorm-validation_service }}
+replicaCount: {{cb_ext_scorm_validation_replicacount|default(1)}}
+repository: {{ image_cb_ext_scorm_validation_service }}
 image_tag: {{image_tag}}
 resources:
   requests:
-    cpu: {{cb-ext-scorm-validation_cpu_req|default('100m')}}
-    memory: {{cb-ext-scorm-validation_mem_req|default('100Mi')}}
+    cpu: {{cb_ext_scorm_validation_cpu_req|default('100m')}}
+    memory: {{cb_ext_scorm_validation_mem_req|default('100Mi')}}
   limits:
-    cpu: {{cb-ext-scorm-validation_cpu_limit|default('1')}}
-    memory: {{cb-ext-scorm-validation_mem_limit|default('1024Mi')}}
+    cpu: {{cb_ext_scorm_validation_cpu_limit|default('1')}}
+    memory: {{cb_ext_scorm_validation_mem_limit|default('1024Mi')}}
 network:
-  port: {{ service_cb-ext-scorm-validation_port }}
-  targetport: {{ service_cb-ext-scorm-validation_port }}
+  port: {{ service_cb_ext_scorm_validation_port }}
+  targetport: {{ service_cb_ext_scorm_validation_port }}
 strategy:
   type: RollingUpdate
-  maxsurge: {{ cb-ext-scorm-validation_maxsurge|default('25%') }}
-  maxunavailable: {{ cb-ext-scorm-validation_maxunavailable|default('25%') }}
+  maxsurge: {{ cb_ext_scorm_validation_maxsurge|default('25%') }}
+  maxunavailable: {{ cb_ext_scorm_validation_maxunavailable|default('25%') }}
 
-{{ cb-ext-scorm-validation_liveness_readiness | to_nice_yaml }}
+{{ cb_ext_scorm_validation_liveness_readiness | to_nice_yaml }}
 
-cb-ext-scorm-validation_backend_basepath: {{ cb-ext-scorm-validation_backend_basepath | default('/keys/') }}
+cb_ext_scorm_validation_backend_basepath: {{ cb_ext_scorm_validation_backend_basepath | default('/keys/') }}
 
 
 serviceMonitor:
@@ -38,9 +38,9 @@ serviceMonitor:
     release: prometheus-operator
 
 autoscaling:
-  enabled: {{ cb-ext-scorm-validation_service_autoscaling_enabled | default('false') }}
-  minReplicas: {{ cb-ext-scorm-validation_service_autoscaling_minReplicas|default(1) }}
-  maxReplicas: {{ cb-ext-scorm-validation_service_autoscaling_maxReplicas|default(2) }}
-  targetCPUUtilizationPercentage: {{ cb-ext-scorm-validation_service_autoscaling_targetCPUUtilizationPercentage|default(60) }}
-  targetMemoryUtilizationPercentage: {{ cb-ext-scorm-validation_service_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+  enabled: {{ cb_ext_scorm_validation_service_autoscaling_enabled | default('false') }}
+  minReplicas: {{ cb_ext_scorm_validation_service_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ cb_ext_scorm_validation_service_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ cb_ext_scorm_validation_service_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ cb_ext_scorm_validation_service_autoscaling_targetMemoryUtilizationPercentage|default('') }}
 
