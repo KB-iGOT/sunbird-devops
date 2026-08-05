@@ -1,0 +1,57 @@
+server.port={{ application_port }}
+ 
+# PostgreSQL configuration
+spring.datasource.url=jdbc:postgresql://{{ postgresql_host }}:{{ postgresql_port }}/sunbird
+spring.datasource.username={{postgresql_username_sunbird }}
+spring.datasource.password={{ postgresql_password_sunbird }}
+spring.datasource.driver-class-name=org.postgresql.Driver
+ 
+## Hibernate Properties
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=false
+spring.jpa.hibernate.ddl-auto=update
+ 
+#------------------secretes------------#
+jwt.secret.key={{comment_hub_jwt_secret_key}}
+ 
+#----------------------------------Redis -----------------------------
+spring.redis.host={{ kp_redis_ip }}
+spring.redis.port=6379
+redis.ttl=720000
+spring.redis.data.host={{ redis_host }}
+spring.redis.data.port=6379
+ 
+#----------------------------Configure Logback pattern -----------------------
+logging.pattern.console=%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+# Log to console and file
+logging.file=logs/commentHub.log
+
+spring.cassandra.startupTimeoutInSeconds=100000
+spring.cassandra.contact-points={{ sunbird_cassandra_db_host }}
+spring.cassandra.port=9042
+spring.cassandra.keyspace-name={{ keyspace_sunbird }}
+spring.cassandra.username={{ cassandra_username }}
+spring.cassandra.password={{ cassandra_password }}
+spring.cassandra.local-datacenter=DC1
+cassandra.config.host={{ sunbird_cassandra_db_host }}
+
+accesstoken.publickey.basepath=/keys/
+sso.url=https://{{ domain_name }}/auth/
+sso.realm={{ keycloak_sso_realm }}
+
+content-service-host=http://content-service:9000/
+content-read-endpoint=content/v3/read
+content-read-endpoint-fields=?fields=primaryCategory,identifier,batches,versionKey,additionalTags
+default.content.properties=name,identifier,contentType,createdFor,creatorContacts,creatorIDs,creatorDetails,creator,reviewer
+
+server.compression.enabled=true
+server.compression.mime-types=text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+server.compression.min-response-size=2048
+redis.ttl.comment.tree=86400
+
+sunbird_cassandra_consistency_level=ONE
+notification.api.url=http://cb-notification-wrapper-service:8081/notifications/create
+
