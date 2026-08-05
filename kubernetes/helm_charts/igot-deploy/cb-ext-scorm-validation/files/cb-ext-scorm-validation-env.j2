@@ -26,9 +26,9 @@ content-service-host=http://content-service:9000/
 content-read-endpoint=content/v3/read
 
 # Cloud storage
-cloud.storage.type.name=azure
+cloud.storage.type.name={{ cloud_service_provider }}
 cloud.storage.key={{ cloud_storage_key }}
-cloud.storage.secret={{ cloud_storage_secret }}
+cloud.storage.secret={{ cloud_storage_secret | replace('\n', '\\n')}}
 cloud.storage.endpoint={{ cloud_storage_endpoint }}
 scorm.validation.container.name=igot
 scorm.validation.supported.mime-types=application/vnd.ekstep.html-archive
