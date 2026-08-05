@@ -31,25 +31,6 @@ docker_service_stack_name: lms
 docker_service_name: "{{ service_cb_ext_scorm_validation_service }}"
 force_reload: "{{ force_reload_cb_ext_scorm_validation_service }}"
 
-cb_ext_scorm_validation_liveness_readiness:
-  healthcheck: true
-  readinessProbe:
-    httpGet:
-      path: /liveness
-      port: 8099
-    initialDelaySeconds: 30
-    periodSeconds: 30
-    timeoutSeconds: 15
-    failureThreshold: 2
-  livenessProbe:
-    httpGet:
-      path: /liveness
-      port: 8099
-    initialDelaySeconds: 30
-    periodSeconds: 30
-    timeoutSeconds: 15
-    failureThreshold: 2
-
 # For application
 server_connection_timeout: 5000
 tomcat_max_threads: 400
