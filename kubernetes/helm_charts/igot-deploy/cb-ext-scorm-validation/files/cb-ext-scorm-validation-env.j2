@@ -14,7 +14,7 @@ sunbird_cassandra_consistency_level=ONE
 # Kafka
 spring.kafka.bootstrap-servers=localhost:9092
 kafka.scorm.validation.request.topic={{ env }}.scorm.validation.request
-kafka.scorm.validation.request.topic.group=scormvalidator
+kafka.scorm.validation.request.topic.group={{env}}.scormvalidator
 
 # SSO / Keycloak (JWT verification)
 accesstoken.publickey.basepath=/keys/
