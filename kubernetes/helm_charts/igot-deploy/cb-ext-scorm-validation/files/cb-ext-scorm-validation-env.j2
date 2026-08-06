@@ -12,7 +12,7 @@ cassandra.config.host={{ sunbird_cassandra_db_host }}
 sunbird_cassandra_consistency_level=ONE
 
 # Kafka
-spring.kafka.bootstrap-servers=localhost:9092
+spring.kafka.bootstrap-servers={{ kafka_servers_list }}
 kafka.scorm.validation.request.topic={{ env }}.scorm.validation.request
 kafka.scorm.validation.request.topic.group={{env}}.scormvalidator
 
