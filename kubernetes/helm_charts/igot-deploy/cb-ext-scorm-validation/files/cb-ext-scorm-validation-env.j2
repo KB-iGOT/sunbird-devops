@@ -13,7 +13,7 @@ sunbird_cassandra_consistency_level=ONE
 
 # Kafka
 spring.kafka.bootstrap-servers=localhost:9092
-kafka.scorm.validation.request.topic=scorm.validation.request
+kafka.scorm.validation.request.topic={{ env }}.scorm.validation.request
 kafka.scorm.validation.request.topic.group=scormvalidator
 
 # SSO / Keycloak (JWT verification)
@@ -32,6 +32,3 @@ cloud.storage.secret={{ cloud_storage_secret | replace('\n', '\\n')}}
 cloud.storage.endpoint={{ cloud_storage_endpoint }}
 scorm.validation.container.name=igot
 scorm.validation.supported.mime-types=application/vnd.ekstep.html-archive
-
-kafka.scorm.validation.request.topic={{ env }}.scorm.validation.request
-kafka.scorm.validation.request.topic.group=scormvalidator
