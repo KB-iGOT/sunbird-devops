@@ -91,7 +91,7 @@
     "cb-ext-workallocation-tool-service",
     "form-service",
     "cb-ext-config-service",
-    "cb-ext-form-service"
+    "cb-ext-form-service",
     "cb-ext-scorm-validation"
     ]
 
