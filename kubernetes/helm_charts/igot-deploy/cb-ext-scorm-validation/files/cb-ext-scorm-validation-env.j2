@@ -32,3 +32,6 @@ cloud.storage.secret={{ cloud_storage_secret | replace('\n', '\\n')}}
 cloud.storage.endpoint={{ cloud_storage_endpoint }}
 scorm.validation.container.name=igot
 scorm.validation.supported.mime-types=application/vnd.ekstep.html-archive
+
+kafka.scorm.validation.request.topic={{ env }}.scorm.validation.request
+kafka.scorm.validation.request.topic.group=scormvalidator
