@@ -26532,7 +26532,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
   - name: AdminprogramCoordinatorUpsert
-    uris: "program/admin/coordinator/upsert"
+    uris: "/program/admin/coordinator/upsert"
     upstream_url: "{{ sb_cb_ext_service_url }}/admin/program/coordinator/upsert"
     strip_uri: true
     plugins:
