@@ -46,7 +46,7 @@ redis.timeout=84600
 content-service-host=http://content-service:9000/
 content-read-endpoint=content/v4/admin/read
 content-read-endpoint-fields=?fields=identifier,courseCategory
-content.read.fields=identifier,courseCategory,contentType,posterImage,status,batches,startData,endDate,name,appIcon,resourceType,primaryCategory,languageMapV1,channel,organisation,creatorLogo,duration,avgRating,difficultyLevel,leafNodes,childNodes
+content.read.fields=identifier,courseCategory,contentType,posterImage,status,batches,startData,endDate,name,appIcon,resourceType,primaryCategory,languageMapV1,channel,organisation,creatorLogo,duration,avgRating,difficultyLevel,leafNodes,childNodes,endDate
 
 cbplan.allowed.fields.update=name,endDate,id,isApar,contextData,status,contentList
 cb-plan.update.publish.authorized.roles=MDO_LEADER
@@ -152,4 +152,11 @@ content.health.redis.db.index=12
 enrolment.dictionary.request={"request":{"userId":"%s","identifier":%s}}
 enrolment.dictionary.url=/v1/user/enrol/dictionary
 lms.host=http://lms-service:9000/
-moderated.course.search.request={"request":{"filters":{"contentType":["Course"],"courseCategory":["Moderated Course","Moderated Program","Moderated Assessment"],"status":["Live"],"secureSettings.organisation":"%s"},"limit":0,"offset":0,"sort_by":{"createdOn":"desc"}}}
+moderated.course.search.request={"request":{"filters":{"contentType":["Course"],"courseCategory":["Moderated Course","Moderated Program","Moderated Assessment"],"status":["Live"],"secureSettings.organisation":"%s"},"fields":["identifier"],"sort_by":{"createdOn":"desc"}}}
+
+org.eligibility.elasticsearch.host={{ sb_es_host }}
+org.eligibility.elasticsearch.port={{ sb_es_port }}
+org.eligibility.elasticsearch.username={{ sb_es_username }}
+org.eligibility.elasticsearch.password={{ sb_es_password }}
+org.eligibility.index=org_eligibility_alias
+elastic.required.field.org.eligibility.json.path=/EsRequiredFields/EsRequiredFieldsOrgEligibility.json
