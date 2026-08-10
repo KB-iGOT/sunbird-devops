@@ -19177,9 +19177,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: listCourseEnrollmentSummaryV4
+  - name: listCourseEnrollmentSummary
     uris: "{{ course_service_prefix }}/v4/user/enrollment/summary"
-    upstream_url: "{{ lms_service_url }}/v4/user/enrol/summary"
+    upstream_url: "{{ lms_service_url }}/v2/user/enrol/summary"
     strip_uri: true
     plugins:
       - name: jwt
