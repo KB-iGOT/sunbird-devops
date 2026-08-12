@@ -51,7 +51,7 @@ GCP_STORAGE_SECRET={{ cloud_storage_secret | replace('\n', '\\n')}}
 GCP_STORAGE_ENDPOINT={{ cloud_storage_endpoint }}
 GCP_STORAGE_KEY={{ cloud_storage_key }}
  
-specialEventDetailsMap={{ specialEventDetailsMap }}
+specialEventDetailsMap={{ specialEventDetailsMap | to_json }}
 specialCertificateTemplateMap={{ specialCertificateTemplateMap | to_json }}
 special.event.cache.ttl=24
 org_read_api=/v1/org/read
