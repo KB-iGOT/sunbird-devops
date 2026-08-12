@@ -240,16 +240,16 @@ proxyconfig: |-
     # This is Caching mechanism for POST requests location search
     location ~ /learner/data/v1/location/search {
       # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache framework_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 43200;
+      #proxy_cache_key "$request_uri|$request_body";
+      #proxy_cache framework_cache;
+      #add_header X-Proxy-Cache $upstream_cache_status;
+      #add_header X-Proxy-Cache-Date $upstream_http_date;
+      #proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      #proxy_cache_methods GET HEAD POST;
+      #proxy_cache_revalidate on;
+      #proxy_cache_background_update on;
+      #proxy_cache_lock on;
+      #proxy_cache_valid 200 43200;
       proxy_set_header Connection "";
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
@@ -265,16 +265,16 @@ proxyconfig: |-
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 7200s;
+      #proxy_cache_key "$request_uri|$request_body";
+      #proxy_cache content_cache;
+      #add_header X-Proxy-Cache $upstream_cache_status;
+      #add_header X-Proxy-Cache-Date $upstream_http_date;
+      #proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      #proxy_cache_methods GET HEAD POST;
+      #proxy_cache_revalidate on;
+      #proxy_cache_background_update on;
+      #proxy_cache_lock on;
+      #proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -693,16 +693,16 @@ proxyconfig: |-
 
     location ~ /apis/proxies/v8/(content/v2/read|course/v1/hierarchy) {
       # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 7200s;
+      #proxy_cache_key "$request_uri|$request_body";
+      #proxy_cache content_cache;
+      #add_header X-Proxy-Cache $upstream_cache_status;
+      #add_header X-Proxy-Cache-Date $upstream_http_date;
+      #proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      #proxy_cache_methods GET HEAD POST;
+      #proxy_cache_revalidate on;
+      #proxy_cache_background_update on;
+      #proxy_cache_lock on;
+      #proxy_cache_valid 200 7200s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -2941,16 +2941,16 @@ proxyconfig: |-
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      #proxy_cache_key "$request_uri|$request_body";
+      #proxy_cache content_cache;
+      #add_header X-Proxy-Cache $upstream_cache_status;
+      #add_header X-Proxy-Cache-Date $upstream_http_date;
+      #proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      #proxy_cache_methods GET HEAD POST;
+      #proxy_cache_revalidate on;
+      #proxy_cache_background_update on;
+      #proxy_cache_lock on;
+      #proxy_cache_valid 200 14400s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -3977,16 +3977,16 @@ proxyconfig: |-
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
       # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      #proxy_cache_key "$request_uri|$request_body";
+      #proxy_cache content_cache;
+      #add_header X-Proxy-Cache $upstream_cache_status;
+      #add_header X-Proxy-Cache-Date $upstream_http_date;
+      #proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      #proxy_cache_methods GET HEAD POST;
+      #proxy_cache_revalidate on;
+      #proxy_cache_background_update on;
+      #proxy_cache_lock on;
+      #proxy_cache_valid 200 14400s;
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -5056,17 +5056,7 @@ proxyconfig: |-
 
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
-      # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -5539,17 +5529,7 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/(content/v2/read|course/v1/hierarchy) {
-      # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -6547,17 +6527,7 @@ proxyconfig: |-
 
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
-      # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -7030,17 +7000,7 @@ proxyconfig: |-
     }
 
     location ~ /apis/proxies/v8/(content/v2/read|course/v1/hierarchy) {
-      # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -8170,17 +8130,7 @@ proxyconfig: |-
     }
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
-      # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
@@ -9190,17 +9140,7 @@ proxyconfig: |-
     }
     # Caching for content consumption
     location ~ /api/(content/v1/read|content/v2/read|course/v1/hierarchy) {
-      # Enabling caching
-      proxy_cache_key "$request_uri|$request_body";
-      proxy_cache content_cache;
-      add_header X-Proxy-Cache $upstream_cache_status;
-      add_header X-Proxy-Cache-Date $upstream_http_date;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      proxy_cache_methods GET HEAD POST;
-      proxy_cache_revalidate on;
-      proxy_cache_background_update on;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 14400s;
+      
       # Increasing the proxy buffer size
       proxy_buffer_size 16k;
       proxy_busy_buffers_size 16k;
