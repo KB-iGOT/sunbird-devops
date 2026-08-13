@@ -1,0 +1,6 @@
+---
+- hosts: "{{remote}}"
+  become: yes
+  roles:
+    - kafka-config-update
+
