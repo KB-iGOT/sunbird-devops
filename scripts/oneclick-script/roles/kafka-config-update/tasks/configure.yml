@@ -1,5 +1,13 @@
 ---
 
+- name: Detect if this is a systemd based system
+  command: cat /proc/1/comm
+  register: init
+- set_fact: use_systemd=True
+  when: init.stdout == 'systemd'
+- set_fact: use_systemd=False
+  when: init.stdout != 'systemd'
+  
 - name: create upstart config
   template: dest={{kafka_upstart_conf}} owner=root group=root mode=644 src=kafka.conf.j2
   notify:
