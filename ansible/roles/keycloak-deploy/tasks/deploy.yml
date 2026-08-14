@@ -3,41 +3,39 @@
     path: /opt/keycloak
   register: keycloak_installed_path
 
-- name: stop keycloak service
-  debug: msg="stopping keycloak"
-  notify:
-    - stop service
-    - wait for keycloak to stop
-  changed_when: true
-  when: keycloak_installed_path.stat.exists
+- name: Stop Keycloak service
+  systemd:
+    name: keycloak
+    state: stopped
+  ignore_errors: yes
 
-- name: Adding ENV Vars to bashrc
-  lineinfile:
-    path: '/etc/environment'
-    line: '{{item.var}}={{item.value}}'
-    regexp: "{{ item.var }}.*"
-  with_items:
-    - {var: 'sunbird_user_service_base_url', value: '{{ sunbird_user_service_base_url }}'}
-    - {var: 'sunbird_authorization', value: '{{ core_vault_sunbird_ekstep_api_key }}'}
-    - {var: 'sunbird_lms_base_url', value: 'https://{{ nginx_proxy_server_name }}/api'}
-    - {var: 'sunbird_login_otp_template', value: 'loginWithOTP'}
-    - {var: 'sunbird_login_otp_email_subject', value: '"OTP Details for Login"'}
+# - name: Adding ENV Vars to bashrc
+#   lineinfile:
+#     path: '/etc/environment'
+#     line: '{{item.var}}={{item.value}}'
+#     regexp: "{{ item.var }}.*"
+#   with_items:
+#     - {var: 'sunbird_user_service_base_url', value: '{{ sunbird_user_service_base_url }}'}
+#     - {var: 'sunbird_authorization', value: '{{ core_vault_sunbird_ekstep_api_key }}'}
+#     - {var: 'sunbird_lms_base_url', value: 'https://{{ nginx_proxy_server_name }}/api'}
+#     - {var: 'sunbird_login_otp_template', value: 'loginWithOTP'}
+#     - {var: 'sunbird_login_otp_email_subject', value: '"OTP Details for Login"'}
 
-- name: Remove old ENV Vars from environemt file
-  lineinfile:
-    path: '/etc/environment'
-    line: '{{item.var}}'
-    regexp: "{{ item.var }}.*"
-    state: absent
-  with_items:
-    - {var: 'sunbird_encryption_key'}
-    - {var: 'sunbird_sso_username'}
-    - {var: 'sunbird_sso_password'}
-    - {var: 'sunbird_sso_url'}
-    - {var: 'sunbird_sso_realm'}
-    - {var: 'sunbird_sso_client_id'}
-    - {var: 'sunbird_cassandra_host'}
-    - {var: 'sunbird_cs_base_url'}
+# - name: Remove old ENV Vars from environemt file
+#   lineinfile:
+#     path: '/etc/environment'
+#     line: '{{item.var}}'
+#     regexp: "{{ item.var }}.*"
+#     state: absent
+#   with_items:
+#     - {var: 'sunbird_encryption_key'}
+#     - {var: 'sunbird_sso_username'}
+#     - {var: 'sunbird_sso_password'}
+#     - {var: 'sunbird_sso_url'}
+#     - {var: 'sunbird_sso_realm'}
+#     - {var: 'sunbird_sso_client_id'}
+#     - {var: 'sunbird_cassandra_host'}
+#     - {var: 'sunbird_cs_base_url'}
 
 - name: Remove keycloak
   become: true
@@ -56,7 +54,7 @@
     group: "{{ wildfly_group }}"
     force: true
 
-- name: Extarct the folder
+- name: Extract the folder
   unarchive:
     src: "/opt/{{ artifact }}"
     dest: /opt/
@@ -112,6 +110,28 @@
     group: "{{ wildfly_group }}" 
     recurse: yes
 
+- name: Save keycloak vars to json
+  template:
+    src: "roles/keycloak-deploy/templates/keycloak.conf.j2"
+    dest: "{{ keycloak_home }}/conf/keycloak.conf"
+    mode: "0644"
+#  run_once: true
+
+- name: Deploy cache config
+  template:
+    src: "roles/keycloak-deploy/templates/cache-ispn.xml.j2"
+    dest: "{{ keycloak_home }}/conf/cache-ispn.xml"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_user }}"
+    mode: '0644'
+  when: kc24_cluster_enabled|default(false)|bool
+
+- name: Remove cache config when standalone
+  file:
+    path: "{{ keycloak_home }}/conf/cache-ispn.xml"
+    state: absent
+  when: not (kc24_cluster_enabled|default(false)|bool)
+    
 - name: Create directory for sunbird auth package config
   file:
     path: sunbird_auth_{{ sunbird_auth_version }}.config
@@ -119,11 +139,11 @@
     mode: 0755
     force: true
 
-- name: Keycloak configuration XML file
-  template:
-    src: "roles/keycloak-deploy/templates/standalone-ha.xml"
-    dest: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
-    mode: 0750
+# - name: Keycloak configuration XML file
+#   template:
+#     src: "roles/keycloak-deploy/templates/standalone-ha.xml"
+#     dest: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
+#     mode: 0750
 
 - name: Postgresql Configuration- module.xml
   template:
@@ -155,22 +175,22 @@
   when: "{{ sms_required|default(false) }}"
   ignore_errors: true
 
-- name: Keycloak configuration XML file
-  copy:
-    src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
-    dest: "{{ keycloak_home }}/standalone/configuration/standalone-ha.xml"
-    mode: 0750
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    remote_src: true
+# - name: Keycloak configuration XML file
+#   copy:
+#     src: "sunbird_auth_{{ sunbird_auth_version }}.config/standalone-ha.xml"
+#     dest: "{{ keycloak_home }}/standalone/configuration/standalone-ha.xml"
+#     mode: 0750
+#     owner: "{{ wildfly_user }}"
+#     group: "{{ wildfly_group }}"
+#     remote_src: true
 
-- name: Keycloak standalone.conf file
-  template:
-    src: templates/standalone.conf.j2
-    dest: "{{ keycloak_home }}/bin/standalone.conf"
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    mode: 0755
+# - name: Keycloak standalone.conf file
+#   template:
+#     src: templates/standalone.conf.j2
+#     dest: "{{ keycloak_home }}/bin/standalone.conf"
+#     owner: "{{ wildfly_user }}"
+#     group: "{{ wildfly_group }}"
+#     mode: 0755
 
 - name: Postgresql Configuration- module.xml
   copy:
@@ -183,16 +203,18 @@
 
 - name: Create a directory for SMS provider configuration
   file:
-    path: "{{ keycloak_home }}/bin/sms-provider"
+    path: "{{ keycloak_home }}/sms-provider"
     state: directory
     mode: 0755
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"    
   when: "{{ sms_required|default(false) }}"
   ignore_errors: true
 
 - name: SMS provider configuration file
   copy:
     src: "sunbird_auth_{{ sunbird_auth_version }}.config/AmnexSmsCreds.json"
-    dest: "{{ keycloak_home }}/bin/sms-provider/AmnexSmsCreds.json"
+    dest: "{{ keycloak_home }}/sms-provider/AmnexSmsCreds.json"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0755
@@ -203,7 +225,7 @@
 - name: SMS provider configuration file
   copy:
     src: "sunbird_auth_{{ sunbird_auth_version }}.config/NetCoreSmsCreds.json"
-    dest: "{{ keycloak_home }}/bin/sms-provider/NetCoreSmsCreds.json"
+    dest: "{{ keycloak_home }}/sms-provider/NetCoreSmsCreds.json"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0755
@@ -214,7 +236,7 @@
 - name: SMS provider configuration file
   copy:
     src: "sunbird_auth_{{ sunbird_auth_version }}.config/SinchSmsCreds.json"
-    dest: "{{ keycloak_home }}/bin/sms-provider/SinchSmsCreds.json"
+    dest: "{{ keycloak_home }}/sms-provider/SinchSmsCreds.json"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0755
@@ -229,26 +251,48 @@
     state: absent
     force: true
 
-- name: Overriding JAVA_HOME
-  become: true
-  lineinfile:
-    regexp: '^SERVER_OPTS=""'
-    insertafter: '^SERVER_OPTS=""'
-    line: 'JAVA_HOME=""'
-    path: "{{ keycloak_home }}/bin/standalone.sh"
-    
-- name: Add trustStore Path
-  become: true
-  lineinfile:
-    path: "{{ keycloak_home }}/bin/standalone.sh"
-    insertafter: "DEFAULT_MODULAR_JVM_OPTIONS"
-    line: '    JAVA_OPTS="-Djavax.net.ssl.trustStore=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit $JAVA_OPTS"'
+- name: Deploy Keycloak environment file
+  template:
+    src: "roles/keycloak-deploy/templates/keycloak.env.j2"
+    dest: "{{ keycloak_home }}/conf/keycloak.env"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_user }}"
+    mode: "0600"
 
-- name: start keycloak service
-  debug: msg="starting keycloak"
-  notify:
-    - start service
-    - wait for keycloak to start
-  changed_when: true
+- name: Add logrotate for keycloak logs
+  template:
+    src: "roles/keycloak-deploy/templates/keycloak.logrotate.j2"
+    dest: "/etc/logrotate.d/keycloak"
+    owner: root
+    group: root
+    mode: "0644"
+
+# - name: Overriding JAVA_HOME
+#   become: true
+#   lineinfile:
+#     regexp: '^SERVER_OPTS=""'
+#     insertafter: '^SERVER_OPTS=""'
+#     line: 'JAVA_HOME=""'
+#     path: "{{ keycloak_home }}/bin/standalone.sh"
+    
+# - name: Add trustStore Path
+#   become: true
+#   lineinfile:
+#     path: "{{ keycloak_home }}/bin/standalone.sh"
+#     insertafter: "DEFAULT_MODULAR_JVM_OPTIONS"
+#     line: '    JAVA_OPTS="-Djavax.net.ssl.trustStore=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit $JAVA_OPTS"'
+
+- name: Run Keycloak build
+  command: sudo -u "{{ wildfly_user }}" "{{ keycloak_home }}"/bin/kc.sh build --verbose
+  args:
+    chdir: "{{ keycloak_home }}"
+  become: yes
+  register: keycloak_build
+
+- name: Start Keycloak service
+  systemd:
+    name: keycloak
+    state: started
+    enabled: yes
 
 - meta: flush_handlers
