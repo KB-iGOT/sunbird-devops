@@ -7,7 +7,7 @@
 - name: Update Elasticsearch unicast hosts
   become: yes
   replace:
-    path: "{{ conf_dir }}/elasticsearch.yml"
+    path: "/etc/elasticsearch/{{ es_instance_name }}/elasticsearch.yml"
     regexp: '(?ms)^discovery\.zen\.ping\.unicast\.hosts:\s*\n(?:\s*-\s*[^\n]+\n?)+'
     replace: 'discovery.zen.ping.unicast.hosts:\n- {{ groups["es"] | join("\n- ") }}\n'
     owner: "{{ es_user }}"
