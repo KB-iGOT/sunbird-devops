@@ -1,12 +1,13 @@
 ---
+
 - name: Registering node name
-    set_fact:
-      es_instance_name: "{% for servername in play_hosts %}{% if inventory_hostname==servername %}es-{{ loop.index }}{% endif %}{% endfor %}"
+  set_fact:
+    es_instance_name: "{% for servername in play_hosts %}{% if inventory_hostname == servername %}es-{{ loop.index }}{% endif %}{% endfor %}"
 
 - name: Update Elasticsearch unicast hosts
   become: yes
   lineinfile:
-    path: "{{ conf_dir }}/elasticsearch.yml"
+    path: "/etc/elasticsearch/{{ es_instance_name }}/elasticsearch.yml"
     regexp: '^#?\s*discovery\.zen\.ping\.unicast\.hosts:'
     line: 'discovery.zen.ping.unicast.hosts: [{{ groups["es"] | map("quote") | join(", ") }}]'
     owner: "{{ es_user }}"
