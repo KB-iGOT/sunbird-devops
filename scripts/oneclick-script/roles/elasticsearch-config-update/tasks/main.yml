@@ -1,4 +1,7 @@
 ---
+- name: Registering node name
+    set_fact:
+      es_instance_name: "{% for servername in play_hosts %}{% if inventory_hostname==servername %}es-{{ loop.index }}{% endif %}{% endfor %}"
 
 - name: Update Elasticsearch unicast hosts
   become: yes
