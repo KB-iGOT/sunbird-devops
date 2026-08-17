@@ -3,6 +3,7 @@
 postgresql_enablerepo: ""
 
 postgresql_config_path: /etc/postgresql/10/main
+postgresql_daemon: postgresql
 
 # Set postgresql state when configuration changes are made. Recommended values:
 # `restarted` or `reloaded`
