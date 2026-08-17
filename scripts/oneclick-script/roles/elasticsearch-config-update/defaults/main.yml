@@ -3,7 +3,7 @@ es_major_version: "6.x"
 es_version: "6.8.22"
 es_version_lock: false
 es_use_repository: true
-conf_dir={{ es_conf_dir }}/{{es_instance_name}}
+conf_dir: {{ es_conf_dir }}/{{es_instance_name}}
 es_templates_fileglob: "files/templates/*.json"
 es_apt_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
 es_apt_url: "deb https://artifacts.elastic.co/packages/{{ es_major_version }}/apt stable main"
