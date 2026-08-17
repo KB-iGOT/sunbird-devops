@@ -1,0 +1,16 @@
+---
+
+- name: Update Elasticsearch unicast hosts
+  become: yes
+  lineinfile:
+    path: "{{ conf_dir }}/elasticsearch.yml"
+    regexp: '^#?\s*discovery\.zen\.ping\.unicast\.hosts:'
+    line: 'discovery.zen.ping.unicast.hosts: [{{ groups["es"] | map("quote") | join(", ") }}]'
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: '0644'
+  notify: restart elasticsearch
+
+- name: Reload systemd configuration
+  become: yes
+  command: systemctl daemon-reload
