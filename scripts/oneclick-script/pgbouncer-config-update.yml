@@ -8,9 +8,6 @@
         path: /etc/pgbouncer/pgbouncer.ini
         regexp: '^\*\s*=\s*host='
         line: '* = host={{ ansible_default_ipv4.address }} port=5432'
-        owner: pgbouncer
-        group: pgbouncer
-        mode: '0640'
       notify: restart pgbouncer
 
   handlers:
@@ -18,4 +15,3 @@
       service:
         name: pgbouncer
         state: restarted
-        enabled: yes
