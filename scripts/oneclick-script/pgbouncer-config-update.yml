@@ -12,6 +12,5 @@
 
   handlers:
     - name: restart pgbouncer
-      service:
-        name: pgbouncer
-        state: restarted
+      become: yes
+      command: systemctl restart pgbouncer
