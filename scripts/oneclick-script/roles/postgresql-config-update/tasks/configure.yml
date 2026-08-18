@@ -8,3 +8,22 @@
     mode: 0644
   with_items: "{{ postgresql_global_config_options }}"
   notify: restart postgresql
+
+- name: Check if PostgreSQL 16 config path exists
+  stat:
+    path: "{{ postgresql_config_path16 }}"
+  register: postgresql_config_path16_stat
+
+- name: Configure PostgreSQL 16 global settings
+  lineinfile:
+    dest: "{{ postgresql_config_path16 }}/postgresql.conf"
+    regexp: "^#?{{ item.option }}.+$"
+    line: "{{ item.option }} = '{{ item.value }}'"
+    state: "{{ item.state | default('present') }}"
+    mode: '0644'
+  with_items: "{{ postgresql_global_config_options }}"
+  when:
+    - postgresql_config_path16_stat.stat.exists
+    - postgresql_config_path16_stat.stat.isdir
+  notify: restart postgresql
+  
