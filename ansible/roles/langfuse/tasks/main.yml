@@ -1,2 +1,7 @@
 ---
 # Langfuse deployment tasks
+
+- name: Render Langfuse values file
+  template:
+    src: values.yaml.j2
+    dest: /tmp/langfuse-values.yaml
