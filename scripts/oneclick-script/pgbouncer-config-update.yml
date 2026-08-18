@@ -1,0 +1,21 @@
+---
+- hosts: postgresql-master
+  become: yes
+
+  tasks:
+    - name: Update PgBouncer PostgreSQL backend IP
+      lineinfile:
+        path: /etc/pgbouncer/pgbouncer.ini
+        regexp: '^\*\s*=\s*host='
+        line: '* = host={{ ansible_default_ipv4.address }} port=5432'
+        owner: pgbouncer
+        group: pgbouncer
+        mode: '0640'
+      notify: restart pgbouncer
+
+  handlers:
+    - name: restart pgbouncer
+      service:
+        name: pgbouncer
+        state: restarted
+        enabled: yes
