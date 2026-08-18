@@ -17,7 +17,7 @@
 - name: Configure PostgreSQL 16 global settings
   lineinfile:
     dest: "{{ postgresql_config_path16 }}/postgresql.conf"
-    regexp: "^#?\s*{{ item.option | regex_escape() }}\s*=.*$"
+    regexp: '^#?\s*{{ item.option | regex_escape() }}\s*=.*$'
     line: "{{ item.option }} = '{{ item.value }}'"
     state: "{{ item.state | default('present') }}"
     mode: '0644'
