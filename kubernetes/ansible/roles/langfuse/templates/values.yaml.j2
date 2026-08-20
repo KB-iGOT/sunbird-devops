@@ -429,13 +429,13 @@ langfuse:
       # -- Path to check for liveness.
       path: "{{ langfuse_liveness_path }}"
       # -- Initial delay seconds for livenessProbe.
-      initialDelaySeconds: 20
+      initialDelaySeconds: 90
       # -- Period seconds for livenessProbe.
       periodSeconds: 10
       # -- Timeout seconds for livenessProbe.
       timeoutSeconds: 5
       # -- Failure threshold for livenessProbe.
-      failureThreshold: 3
+      failureThreshold: 6
       # -- Success threshold for livenessProbe.
       successThreshold: 1
 
