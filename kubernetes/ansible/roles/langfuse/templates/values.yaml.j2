@@ -426,6 +426,8 @@ langfuse:
       maxUnavailable: ""
 
     livenessProbe:
+      # -- Path to check for liveness.
+      path: "{{ langfuse_liveness_path }}"
       # -- Initial delay seconds for livenessProbe.
       initialDelaySeconds: 20
       # -- Period seconds for livenessProbe.
