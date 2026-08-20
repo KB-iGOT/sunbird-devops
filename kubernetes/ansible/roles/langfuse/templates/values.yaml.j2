@@ -427,7 +427,7 @@ langfuse:
 
     livenessProbe:
       # -- Path to check for liveness.
-      path: "{{ langfuse_liveness_path }}"
+      path: /api/health
       # -- Initial delay seconds for livenessProbe.
       initialDelaySeconds: 90
       # -- Period seconds for livenessProbe.
