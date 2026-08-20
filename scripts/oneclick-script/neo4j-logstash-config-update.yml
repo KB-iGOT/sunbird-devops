@@ -1,5 +1,9 @@
 - hosts: learning-neo4j-cluster
   vars_files:
     - "{{inventory_dir}}/secrets.yml"
+  pre_tasks:
+    - name: Registering server_id
+      set_fact:
+        server_id: "{% for servername in play_hosts %}{% if inventory_hostname==servername %}{{ loop.index }}{% endif %}{% endfor %}"
   roles: 
     - neo4j-logstash-config-update
