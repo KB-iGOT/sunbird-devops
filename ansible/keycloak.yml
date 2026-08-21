@@ -4,7 +4,7 @@
   vars_files:
     - ['{{ inventory_dir }}/secrets.yml', 'secrets/{{ env }}.yml']
   roles:
-    - {role: openjdk, tags: provision}
+    - {role: openjdk17, tags: provision}
     - {role: keycloak-provision, tags: provision}
     - keycloak-deploy
   #  - {role: monit, monit_checks: ['keycloak'], tags: deploy}
