@@ -7801,6 +7801,24 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: privateUserMigrateV2
+    uris: "{{ user_service_prefix }}/private/v2/migrate"
+    upstream_url: "{{ sb_cb_ext_service_url }}/user/v2/migrate"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'userUpdate'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
   
   - name: "analyticsGetDashboardsForProfile"
     uris: "{{ dashboard_service_prefix }}/analytics/getDashboardsForProfile/Karmayogi"
@@ -22848,6 +22866,24 @@ kong_apis:
   - name: bulkUploadForOrgUserTransfer
     uris: "/user/v1/org-migration/bulk-upload"
     upstream_url: "{{ sb_cb_ext_service_url }}/user/migration/v1/hierarchy/bulkUpload"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'dataAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: bulkUploadForOrgUserTransferV2
+    uris: "/user/v2/org-migration/bulk-upload"
+    upstream_url: "{{ sb_cb_ext_service_url }}/user/migration/v2/hierarchy/bulkUpload"
     strip_uri: true
     plugins:
     - name: jwt
