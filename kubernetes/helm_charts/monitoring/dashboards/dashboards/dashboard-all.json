@@ -17,7 +17,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3048,
+  "iteration": 1787560068088,
   "links": [],
   "panels": [
     {
@@ -1271,7 +1271,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(sum(increase(nginx_http_requests_total{status!~\"2..|3..|5..\"}[1m])) by (status) / ignoring(status) group_left sum(increase(nginx_http_requests_total[1m]))) * 100",
+          "expr": "(sum(increase(nginx_http_requests_total{cluster=~\"$cluster\", status!~\"2..|3..|5..\"}[5m])) by (status) / ignoring(status) group_left sum(increase(nginx_http_requests_total{cluster=~\"$cluster\"}[5m]))) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1373,7 +1373,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(sum(increase(nginx_http_requests_total{status!~\"2..|3..|4..\"}[1m])) by (status) / ignoring(status) group_left sum(increase(nginx_http_requests_total[1m]))) * 100",
+          "expr": "(sum(increase(nginx_http_requests_total{cluster=~\"$cluster\", status!~\"2..|3..|4..\"}[5m])) by (status) / ignoring(status) group_left sum(increase(nginx_http_requests_total{cluster=~\"$cluster\"}[5m]))) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2018,7 +2018,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "{endpoint=\"https-metrics\", instance=\"10.175.5.111:10250\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", node=\"gke-kb-prd-gke-clust-kb-prd-gke-node--f584abb8-j94z\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\", service=\"sunbird-monitoring-kubelet\"}",
+      "tableColumn": "{endpoint=\"https-metrics\", instance=\"10.175.5.79:10250\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", node=\"gke-kb-prd-gke-clust-kb-prd-gke-node--f584abb8-hsjz\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\", service=\"sunbird-monitoring-kubelet\"}",
       "targets": [
         {
           "expr": "(\n  kubelet_volume_stats_capacity_bytes{cluster=\"\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\"}\n  -\n  kubelet_volume_stats_available_bytes{cluster=\"\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\"}\n)\n/\nkubelet_volume_stats_capacity_bytes{cluster=\"\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\"}\n* 100",
@@ -2321,7 +2321,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "{endpoint=\"https-metrics\", instance=\"10.175.5.111:10250\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", node=\"gke-kb-prd-gke-clust-kb-prd-gke-node--f584abb8-j94z\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\", service=\"sunbird-monitoring-kubelet\"}",
+      "tableColumn": "{endpoint=\"https-metrics\", instance=\"10.175.5.79:10250\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", node=\"gke-kb-prd-gke-clust-kb-prd-gke-node--f584abb8-hsjz\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\", service=\"sunbird-monitoring-kubelet\"}",
       "targets": [
         {
           "expr": "(\n  kubelet_volume_stats_capacity_bytes{cluster=\"\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\"}\n  -\n  kubelet_volume_stats_available_bytes{cluster=\"\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\"}\n)\n/\nkubelet_volume_stats_capacity_bytes{cluster=\"\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"monitoring\", persistentvolumeclaim=\"prometheus-sunbird-monitoring-prometheus-db-prometheus-sunbird-monitoring-prometheus-0\"}\n* 100",
@@ -2354,10 +2354,37 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(nginx_http_requests_total, cluster)",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": "label_values(nginx_http_requests_total, cluster)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -2384,6 +2411,6 @@
   },
   "timezone": "",
   "title": "Dashboard-All",
-  "uid": "hUllvUtDz",
-  "version": 4
+  "uid": "hUllvUtDa",
+  "version": 2
 }
