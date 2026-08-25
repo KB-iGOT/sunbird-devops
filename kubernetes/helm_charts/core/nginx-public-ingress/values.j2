@@ -1329,23 +1329,6 @@ proxyconfig: |-
       proxy_read_timeout 300;
     }
 
-    location /adikarmayogi/ {
-      add_header Access-Control-Allow-Origin "*";
-      add_header Access-Control-Allow-Methods "GET, OPTIONS, PATCH, POST, PUT";
-      proxy_cookie_path ~*^/.* /;
-      proxy_set_header X-Real-IP  $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      proxy_set_header Host $host;
-      proxy_set_header X-Forwarded-Host $host;
-      proxy_set_header X-Forwarded-Server $host;
-      proxy_set_header X-Forwarded-Prefix /ai-assment-generation;
-      rewrite ^/adikarmayogi/(.*) /$1 break;
-      proxy_pass http://multitenant-staticweb:4200;
-      proxy_connect_timeout 10;
-      proxy_send_timeout 300;
-      proxy_read_timeout 300;
-    }
-
     location /support-ui/ {
       proxy_pass http://10.175.2.49:8520/;
  
