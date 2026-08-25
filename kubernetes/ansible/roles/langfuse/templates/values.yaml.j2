@@ -429,16 +429,30 @@ langfuse:
 
     livenessProbe:
       # -- Path to check for liveness.
-      path: /api/health
+      path: "{{ langfuse_liveness_path }}"
       # -- Initial delay seconds for livenessProbe.
-      initialDelaySeconds: 90
+      initialDelaySeconds: 20
       # -- Period seconds for livenessProbe.
       periodSeconds: 10
       # -- Timeout seconds for livenessProbe.
       timeoutSeconds: 5
       # -- Failure threshold for livenessProbe.
-      failureThreshold: 6
+      failureThreshold: 3
       # -- Success threshold for livenessProbe.
+      successThreshold: 1
+
+    readinessProbe:
+      # -- Path to check for readiness.
+      path: "{{ langfuse_readiness_path }}"
+      # -- Initial delay seconds for readinessProbe.
+      initialDelaySeconds: 20
+      # -- Period seconds for readinessProbe.
+      periodSeconds: 10
+      # -- Timeout seconds for readinessProbe.
+      timeoutSeconds: 5
+      # -- Failure threshold for readinessProbe.
+      failureThreshold: 3
+      # -- Success threshold for readinessProbe.
       successThreshold: 1
 
   # NextAuth configuration
