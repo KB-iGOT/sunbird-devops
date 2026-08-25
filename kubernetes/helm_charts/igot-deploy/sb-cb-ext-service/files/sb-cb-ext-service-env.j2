@@ -654,12 +654,17 @@ sb.service.bulk.ngo.user.create.path=/v5/cb/user/ngo/bulkcreate
 
 nongovt.user.bulk.upload.result.headers=Full Name (mandatory),Email (mandatory),Mobile Number (mandatory),Gender,Category,Date Of Birth (dd-mm-yyyy),Mother Tongue,Office Pin Code,Tags,External ID,Status,Error Details
 
+nongovt.user.default.designation=Volunteer
+
+bulk.upload.designation.verification.regex=^[a-zA-Z0-9 ()&/,+-]*$
+
 program.coordinator.allowed.roles=PROGRAM_COORDINATOR
 program.coordinator.sync.topic.group=cb-ext-course-service-coordinator-sync
 program.coordinator.sync.topic={{ env }}.cb.program.coordinator.sync
 user.program.lookup.index=user_program_lookup_v1
 program.coordinator.cache.key.prefix=program_coordinators:
 
-nongovt.user.default.designation=Volunteer
 program.coordinator.admin.allowed.roles=CONTENT_CREATOR,CONTENT_REVIEWER,SPV_PUBLISHER
 program.coordinator.default.limit=20
+
+program.coordinator.sortable.fields=roleId,createdBy,userId,createdOn,updatedOn

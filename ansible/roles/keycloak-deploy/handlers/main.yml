@@ -1,4 +1,8 @@
 ---
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+
 - name: stop service
   become: true
   command: /etc/init.d/keycloak stop
