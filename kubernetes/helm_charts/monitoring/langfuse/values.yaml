@@ -158,8 +158,6 @@ langfuse:
       value: "{{ langfuse_database_url }}"
     - name: NEXT_PUBLIC_BASE_PATH
       value: "{{ langfuse_base_path }}"
-    - name: LANGFUSE_WORKER_ENABLED
-      value: "true"
   # -- Secrets or ConfigMap of additional environment variables to be added to all langfuse deployments. See [documentation](https://langfuse.com/docs/deployment/self-host#configuring-environment-variables) for details.
   additionalEnvFrom: []
   # -- Allows additional containers to be added to all langfuse deployments
@@ -358,7 +356,9 @@ langfuse:
       # -- Allows additional containers to be added to all langfuse worker pods
       extraContainers: []
       # -- List of additional environment variables to be added to all langfuse worker pods. See [documentation](https://langfuse.com/docs/deployment/self-host#configuring-environment-variables) for details.
-      additionalEnv: []
+      additionalEnv:
+        - name: LANGFUSE_WORKER_ENABLED
+          value: "true"
       # -- Secrets or ConfigMap of additional environment variables to be added to all langfuse worker pods. See [documentation](https://langfuse.com/docs/deployment/self-host#configuring-environment-variables) for details.
       additionalEnvFrom: []
     # -- Resources for the langfuse worker pods. Defaults to the global resources
