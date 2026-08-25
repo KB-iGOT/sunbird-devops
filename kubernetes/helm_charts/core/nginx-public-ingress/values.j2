@@ -1893,6 +1893,10 @@ proxyconfig: |-
      proxy_pass http://ml-template-validation-portal-service:3111;
     }
 
+    location = /langfuse {
+        return 301 /langfuse/;
+    }
+
     location /langfuse/ {
      proxy_set_header Host $host;
      proxy_set_header X-Real-IP $remote_addr;
@@ -1904,7 +1908,6 @@ proxyconfig: |-
      proxy_set_header Connection "";
      proxy_http_version 1.1;
      proxy_set_header X-Request-ID $sb_request_id;
-     rewrite ^/langfuse/(.*) /$1 break;
      proxy_pass http://langfuse-web.monitoring.svc.cluster.local:3000;
     }
 
