@@ -668,3 +668,11 @@ program.coordinator.admin.allowed.roles=CONTENT_CREATOR,CONTENT_REVIEWER,SPV_PUB
 program.coordinator.default.limit=20
 
 program.coordinator.sortable.fields=roleId,createdBy,userId,createdOn,updatedOn
+
+kafka.topics.org.user.bulk.transfer.v2.event.group={{env}}user-bulk-transfer-group.v2
+kafka.topics.org.user.bulk.transfer.v2.event={{env}}.org.user.bulk.transfer.v2
+sb.service.user.migrate.v2.path=/private/user/v2/migrate
+
+bulk.user.migration.strict.forwardPath.allowed.roles=MDO_ADMIN
+bulk.user.migration.restriction.roles=STATE_ADMIN,MDO_LEADER
+bulk.user.migration.no.restriction.roles=SPV_ADMIN
