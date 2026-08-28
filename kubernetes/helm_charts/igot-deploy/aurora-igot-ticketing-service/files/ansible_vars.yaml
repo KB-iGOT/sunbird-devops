@@ -3,7 +3,7 @@
 # For script
 release_name: "{{ network_alias_aurora_igot_ticketing_service }}"
 user_friendly_name: aurora-igot-ticketing-service
-template_env_file_name: "aurora_igot_ticketing_service.j2"
+template_env_file_name: "aurora_igot_ticketing-env.j2"
 compose_file_name: "{{ service_aurora_igot_ticketing_service }}.yml"
 env_file_name: "{{ service_aurora_igot_ticketing_service }}.env"
 helm_env_file_location: "../helm_charts/igot-deploy/templates/"
