@@ -14,7 +14,7 @@ env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
 compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
 
 # For service
-application_port: "{{ service_aurora_igot_ticketing_service }}"
+application_port: "{{ service_aurora_igot_ticketing_port }}"
 image_name: "{{ image_aurora_igot_ticketing_service }}"
 tag: "{{ tags_aurora_igot_ticketing_service }}"
 host_port: "{{ application_port }}"
