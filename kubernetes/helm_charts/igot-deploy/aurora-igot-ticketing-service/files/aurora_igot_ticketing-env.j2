@@ -1,0 +1,21 @@
+GOOGLE_API_KEY={{cbp_ai_google_Api_key}}
+IGOT_KEY={{ bearer_token }}
+IGOT_API_HOST_URL=https://{{ domain_name }}
+
+ELASTICSEARCH_HOST={{ elasticsearch_host }}
+ELASTICSEARCH_USERNAME={{ elasticsearch_username }}
+ELASTICSEARCH_PASSWORD={{ elasticsearch_password }}
+ELASTICSEARCH_BOT_INTERACTION_INDEX=agent_interaction
+ELASTICSEARCH_LOGS_INDEX=application_logs
+
+KAFKA_BOOTSTRAP_SERVERS={{ kafka_host }}
+KAFKA_TOPIC={{env}}.resolution.tickets
+KAFKA_GROUP_ID=aurora.resolution.workers
+
+ZOHO_CLIENT_ID={{ zoho_client_id }}
+ZOHO_CLIENT_SECRET= {{ zoho_client_secret }}
+ZOHO_REFRESH_TOKEN={{ zoho_refresh_token }}
+ZOHO_ORG_ID={{ zoho_org_id }}
+
+VALIDATE_EMAIL=false
+RESTRICT_TO_EMAIL_CHANNEL=false
