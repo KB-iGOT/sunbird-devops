@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3573,
-  "iteration": 1782979046667,
+  "iteration": 1788014302269,
   "links": [],
   "panels": [
     {
@@ -2599,7 +2598,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-telemetry-extractor-group\", job=\"processing-kafka-exporter\", topic=\"prod.telemetry.ingest\"})",
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-ingest-router-group\", job=\"ingestion-kafka-exporter\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -2699,7 +2698,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-telemetry-extractor-group\", job=\"processing-kafka-exporter\"})",
+          "expr": "sum without(partition) (kafka_consumergroup_lag{consumergroup=\"prod-telemetry-extractor-group\", job=\"ingestion-kafka-exporter\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -7252,7 +7251,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -7269,5 +7268,5 @@
   "timezone": "",
   "title": "Flink Lag Dashboard",
   "uid": "E0wQMa9Nk",
-  "version": 1
+  "version": 2
 }
