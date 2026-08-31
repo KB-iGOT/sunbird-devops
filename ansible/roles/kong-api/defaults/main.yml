@@ -26633,7 +26633,7 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'itsmAuroraAccess'
+          - 'itsmAuroraWebhookAccess'
           - 'itsmAccess'
       - name: rate-limiting
         config.policy: local
