@@ -26,13 +26,6 @@ strategy:
   maxsurge: {{ aurora_igot_ticketing_maxsurge|default('25%') }}
   maxunavailable: {{ aurora_igot_ticketing_maxunavailable|default('25%') }}
 
-gcpstoragecredentialsjson: |-
- {{gcp_artifcats_upload_service_account}}
-
-gcpapplicationcredentialsjson: |-
- {{aurora_igot_ticketing_gcp_application_service_account}}
-
-
 serviceMonitor:
   enabled: true
   labels: # labels with which the prometheus choose the serviceMonitor

@@ -25,12 +25,6 @@ spec:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
       volumes:
-        - name: aurora-igot-ticketing-service-gcpapplicationcredentialsjson
-          configMap:
-            name: aurora-igot-ticketing-service-gcpapplicationcredentialsjson
-        - name: aurora-igot-ticketing-servicie-gcpstoragecredentialsjson
-          configMap:
-            name: aurora-igot-ticketing-servicie-gcpstoragecredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -51,12 +45,6 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
-        - name: aurora-igot-ticketing-service-gcpapplicationcredentialsjson
-          mountPath: /app/gcp_application_credentials.json
-          subPath: gcp_application_credentials.json
-        - name: aurora-igot-ticketing-servicie-gcpstoragecredentialsjson
-          mountPath: /app/gcp_storage_credentials.json
-          subPath: gcp_storage_credentials.json
         ports:
         - containerPort: {{ .Values.network.port }}
 
