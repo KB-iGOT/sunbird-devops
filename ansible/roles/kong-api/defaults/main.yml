@@ -191,6 +191,7 @@ cb_ext_ngouserprofile_prefix: /user/ngo/profile
 ngo_achievement_prefix: /learner/ngo/achievement
 ai_itsm_chatbot_prefix: /ai/chatbot
 scorm_prefix: /scorm
+org_eligibiliity_prefix: /orgeligibility/v1
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -26802,3 +26803,41 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: orgEligibilityUpsert
+    uris: "{{ org_eligibiliity_prefix }}/upsert"
+    upstream_url: "{{ cb_ext_course_service_url }}/orgeligibility/v1/upsert"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: OrgEigibilityRead
+    uris: "{{ org_eligibiliity_prefix }}/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/orgeligibility/v1/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"        
+                
