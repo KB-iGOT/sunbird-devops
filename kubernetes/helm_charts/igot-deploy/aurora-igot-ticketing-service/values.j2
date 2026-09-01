@@ -1,0 +1,41 @@
+### Default variable file for aurora_igot_ticketing_service ###
+
+namespace: {{ namespace }}
+imagepullsecrets: {{ imagepullsecrets }}
+dockerhub: {{ docker_hub_url }}
+
+
+env:
+  javaoptions: {{aurora_igot_ticketing_java_mem_limit|default('-Xmx600m')}}
+
+replicaCount: {{aurora_igot_ticketing_replicacount|default(1)}}
+repository: {{ image_aurora_igot_ticketing_service }}
+image_tag: {{ image_tag }}
+resources:
+  requests:
+    cpu: {{aurora_igot_ticketing_cpu_req|default('200m')}}
+    memory: {{aurora_igot_ticketing_mem_req|default('600Mi')}}
+  limits:
+    cpu: {{aurora_igot_ticketing_cpu_limit|default('500m')}}
+    memory: {{aurora_igot_ticketing_mem_limit|default('2000Mi')}}
+network:
+  port: {{ service_aurora_igot_ticketing_port }}
+  targetport: {{ service_aurora_igot_ticketing_port }}
+strategy:
+  type: RollingUpdate
+  maxsurge: {{ aurora_igot_ticketing_maxsurge|default('25%') }}
+  maxunavailable: {{ aurora_igot_ticketing_maxunavailable|default('25%') }}
+
+serviceMonitor:
+  enabled: true
+  labels: # labels with which the prometheus choose the serviceMonitor
+    app: prometheus-operator
+    release: prometheus-operator
+
+autoscaling:
+  enabled: {{ aurora_igot_ticketing_autoscaling_enabled | default('false') }}
+  minReplicas: {{ aurora_igot_ticketing_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ aurora_igot_ticketing_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ aurora_igot_ticketing_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ aurora_igot_ticketing_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+

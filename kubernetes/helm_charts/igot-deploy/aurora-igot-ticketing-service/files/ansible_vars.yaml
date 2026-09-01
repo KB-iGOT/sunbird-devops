@@ -1,0 +1,30 @@
+---
+# vars file for aurora-igot-ticketing-service
+# For script
+release_name: "{{ network_alias_aurora_igot_ticketing_service }}"
+user_friendly_name: aurora-igot-ticketing-service
+template_env_file_name: "aurora_igot_ticketing-env.j2"
+compose_file_name: "{{ service_aurora_igot_ticketing_service }}.yml"
+env_file_name: "{{ service_aurora_igot_ticketing_service }}.env"
+helm_env_file_location: "../helm_charts/igot-deploy/templates/"
+helm_env_file_name: "{{ helm_env_file_location }}/{{ service_aurora_igot_ticketing_service }}.env"
+
+
+env_file_deployment_location: "{{ env_files_dir }}/{{ env_file_name }}"
+compose_file_deployment_location: "{{ compose_files_dir }}/{{ compose_file_name }}"
+
+# For service
+application_port: "{{ service_aurora_igot_ticketing_port }}"
+image_name: "{{ image_aurora_igot_ticketing_service }}"
+tag: "{{ tags_aurora_igot_ticketing_service }}"
+host_port: "{{ application_port }}"
+docker_port: "{{ application_port }}"
+replicas: "{{ service_replicas_aurora_igot_ticketing_service }}"
+reserved_memory: "{{ service_mem_reserved_aurora_igot_ticketing_service }}"
+limited_memory: "{{ service_mem_limit_aurora_igot_ticketing_service }}"
+health_check_endpoint: http://127.0.0.1:{{ docker_port }}/healthcheck
+network_alias_name: "{{ network_alias_aurora_igot_ticketing_service }}"
+docker_service_stack_name: ui
+docker_service_name: "{{ service_aurora_igot_ticketing_service }}"
+force_reload: "{{ force_reload_aurora_igot_ticketing_service }}"
+
