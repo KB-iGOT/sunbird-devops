@@ -190,8 +190,7 @@ formsConfig_service_prefix: /formsConfig
 cb_ext_ngouserprofile_prefix: /user/ngo/profile
 ngo_achievement_prefix: /learner/ngo/achievement
 ai_itsm_chatbot_prefix: /ai/chatbot
-scorm_prefix: /scorm
-org_eligibiliity_prefix: /orgeligibility/v1
+ai_itsm_aurora_service_prefix: /itsm/aurora
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -259,7 +258,7 @@ ai_assessment_service_url: "http://ai-assessment-service:8000"
 ai_cbp_mdo_service_url: "http://ai-cbp-mdo-service:8000"
 cb_ext_config_service_url: "http://cb-ext-config-service:7010"
 ai_itsm_chatbot_service_url: "http://deterministic-chatbot:8000"
-cb_ext_scorm_validation_service_url : "http://cb-ext-scorm-validation:7001"
+ai_itsm_aurora_service_url: "http://aurora-igot-ticketing-service:4020"
 
 premium_consumer_rate_limits:
   - api: createContent
