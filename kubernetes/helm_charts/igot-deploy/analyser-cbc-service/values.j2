@@ -26,10 +26,7 @@ strategy:
   maxsurge: {{ analyser_cbc_maxsurge|default('25%') }}
   maxunavailable: {{ analyser_cbc_maxunavailable|default('25%') }}
 
-gcpstoragecredentialsjson: |-
- {{gcp_artifcats_upload_service_account}}
-
-gcpgeminicredentialsjson: |-
+gcpanalysercbccredentialsjson: |-
  {{gcp_gemini_upload_service_account}}
 
 

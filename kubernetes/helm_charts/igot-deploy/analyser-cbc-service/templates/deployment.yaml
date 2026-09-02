@@ -25,6 +25,9 @@ spec:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
       volumes:
+      - name: gcpanalysercbccredentialsjson
+        configMap:
+          name: gcpanalysercbccredentialsjson
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
@@ -45,6 +48,9 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
+        - name: gcpanalysercbccredentialsjson
+          mountPath: /app/gcp/gcpanalysercbccredentials.json
+          subPath: gcpanalysercbccredentials.json
         ports:
         - containerPort: {{ .Values.network.port }}
 
