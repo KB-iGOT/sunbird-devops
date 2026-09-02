@@ -1,4 +1,4 @@
-### Default variable file for thumbnail_generation-service ###
+### Default variable file for analyser_cbc-service ###
 
 namespace: {{ namespace }}
 imagepullsecrets: {{ imagepullsecrets }}
@@ -6,25 +6,25 @@ dockerhub: {{ docker_hub_url }}
 
 
 env:
-  javaoptions: {{thumbnail_generation_java_mem_limit|default('-Xmx600m')}}
+  javaoptions: {{analyser_cbc_java_mem_limit|default('-Xmx600m')}}
 
-replicaCount: {{thumbnail_generation_replicacount|default(1)}}
-repository: {{ image_thumbnail_generation_service }}
+replicaCount: {{analyser_cbc_replicacount|default(1)}}
+repository: {{ image_analyser_cbc_service }}
 image_tag: {{ image_tag }}
 resources:
   requests:
-    cpu: {{thumbnail_generation_cpu_req|default('200m')}}
-    memory: {{thumbnail_generation_mem_req|default('200Mi')}}
+    cpu: {{analyser_cbc_cpu_req|default('200m')}}
+    memory: {{analyser_cbc_mem_req|default('200Mi')}}
   limits:
-    cpu: {{thumbnail_generation_cpu_limit|default('500m')}}
-    memory: {{thumbnail_generation_mem_limit|default('800Mi')}}
+    cpu: {{analyser_cbc_cpu_limit|default('500m')}}
+    memory: {{analyser_cbc_mem_limit|default('800Mi')}}
 network:
-  port: {{ service_thumbnail_generation_port }}
-  targetport: {{ service_thumbnail_generation_port }}
+  port: {{ service_analyser_cbc_port }}
+  targetport: {{ service_analyser_cbc_port }}
 strategy:
   type: RollingUpdate
-  maxsurge: {{ thumbnail_generation_maxsurge|default('25%') }}
-  maxunavailable: {{ thumbnail_generation_maxunavailable|default('25%') }}
+  maxsurge: {{ analyser_cbc_maxsurge|default('25%') }}
+  maxunavailable: {{ analyser_cbc_maxunavailable|default('25%') }}
 
 gcpstoragecredentialsjson: |-
  {{gcp_artifcats_upload_service_account}}
@@ -40,9 +40,9 @@ serviceMonitor:
     release: prometheus-operator
 
 autoscaling:
-  enabled: {{ thumbnail_generation_autoscaling_enabled | default('false') }}
-  minReplicas: {{ thumbnail_generation_autoscaling_minReplicas|default(1) }}
-  maxReplicas: {{ thumbnail_generation_autoscaling_maxReplicas|default(2) }}
-  targetCPUUtilizationPercentage: {{ thumbnail_generation_autoscaling_targetCPUUtilizationPercentage|default(60) }}
-  targetMemoryUtilizationPercentage: {{ thumbnail_generation_autoscaling_targetMemoryUtilizationPercentage|default('') }}
+  enabled: {{ analyser_cbc_autoscaling_enabled | default('false') }}
+  minReplicas: {{ analyser_cbc_autoscaling_minReplicas|default(1) }}
+  maxReplicas: {{ analyser_cbc_autoscaling_maxReplicas|default(2) }}
+  targetCPUUtilizationPercentage: {{ analyser_cbc_autoscaling_targetCPUUtilizationPercentage|default(60) }}
+  targetMemoryUtilizationPercentage: {{ analyser_cbc_autoscaling_targetMemoryUtilizationPercentage|default('') }}
 
