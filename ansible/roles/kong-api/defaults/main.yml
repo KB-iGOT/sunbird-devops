@@ -26917,7 +26917,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: KarmawalletTransactions
-    uris: "/v1/karmawallet/transactions"
+    uris: "/karmawallet/v1/transactions"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/karmawallet/transactions"
     strip_uri: true
     plugins:
@@ -26935,7 +26935,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: KarmawalletPointConvert
-    uris: "/v1/karmawallet/redeem"
+    uris: "/karmawallet/v1/redeem"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/karmawallet/redeem"
     strip_uri: true
     plugins:
@@ -26953,7 +26953,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: KarmawalletPointConvertRedeemStatus
-    uris: "/v1/karmawallet/redeem/status"
+    uris: "/karmawallet/v1/redeem/status"
     upstream_url: "{{ sb_cb_ext_service_url }}/v1/karmawallet/redeem/status"
     strip_uri: true
     plugins:
