@@ -1,0 +1,68 @@
+- name: getting the server hostname
+  command: hostname
+  register: hostnameOfCql
+
+- name: add entry in hosts file
+  become: yes
+  lineinfile:
+    line: "{{ansible_default_ipv4.address}} {{hostnameOfCql.stdout}}"
+    path: /etc/hosts
+
+- name: config | Configuring Cassandra
+  template:
+    src: "cassandra.yaml.j2"
+    dest: "{{ cassandra_root_dir }}/cassandra.yaml"
+    owner: "root"
+    group: "root"
+    mode: 0644
+    backup: true
+
+- name: Stop cassandra nodes if started
+  service:
+    name: cassandra
+    state: stopped
+
+- name: Wait for cassandra to stop
+  wait_for:
+    state: stopped
+    port: 9042
+    delay: 10
+    sleep: 5
+
+- name: Force systemd to reread configs
+  systemd: daemon_reload=yes
+
+- name: Restart Cassandra seeds
+  service:
+    name: cassandra
+    state: restarted
+  delegate_to: "{{ item }}"
+  # ansible won't throw index out of bound exception.
+  with_items: "{{ groups['cassandra'][:2] }}"
+  run_once: true
+
+- name: Wait for cassandra seeds to start
+  wait_for:
+    state: started
+    port: 9042
+    delay: 10
+    sleep: 5
+  delegate_to: "{{ item }}"
+  # ansible won't throw index out of bound exception.
+  with_items: "{{ groups['cassandra'][:2] }}"
+  run_once: true
+
+- name: Restart Cassandra nodes
+  service:
+    name: cassandra
+    state: restarted
+  delegate_to: "{{ item }}"
+  with_items: "{{ groups['cassandra'][2:] }}"
+  when: groups['cassandra'] | length > 2
+  run_once: true
+
+- name: wait for cassandra to be up and running
+  wait_for:
+    host: "{{inventory_hostname}}"
+    port: 9042
+    delay: 30

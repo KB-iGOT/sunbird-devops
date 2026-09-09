@@ -1,0 +1,20 @@
+---
+
+- name: Registering node name
+  set_fact:
+    es_instance_name: "{% for servername in play_hosts %}{% if inventory_hostname == servername %}es-{{ loop.index }}{% endif %}{% endfor %}"
+
+- name: Update Elasticsearch unicast hosts
+  become: yes
+  replace:
+    path: "/etc/elasticsearch/{{ es_instance_name }}/elasticsearch.yml"
+    regexp: '(?ms)^discovery\.zen\.ping\.unicast\.hosts:\s*\n(?:\s*-\s*[^\n]+\n?)+'
+    replace: 'discovery.zen.ping.unicast.hosts:\n- {{ groups["es"] | join("\n- ") }}\n'
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: '0644'
+  notify: restart elasticsearch
+
+- name: Reload systemd configuration
+  become: yes
+  command: systemctl daemon-reload
