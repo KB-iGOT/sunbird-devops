@@ -540,6 +540,7 @@ kong_apis:
       config.whitelist: 
         - 'contentAdmin'
         - 'contentTempAccess'
+        - 'itsmAuroraWebhookAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
@@ -6619,6 +6620,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'contentAccess'
+        - 'itsmAuroraWebhookAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -10680,6 +10682,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAuroraWebhookAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -15855,6 +15858,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'courseAccess'
+        - 'itsmAuroraWebhookAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -17863,6 +17867,7 @@ kong_apis:
      - name: acl
        config.whitelist:
         - 'dataAccess'
+        - 'itsmAuroraWebhookAccess'
      - name: rate-limiting
        config.policy: local
        config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -22061,6 +22066,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
+          - 'itsmAuroraWebhookAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -22702,6 +22708,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAuroraWebhookAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -22987,6 +22994,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentAccess'
+          - 'itsmAuroraWebhookAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -25492,6 +25500,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAuroraWebhookAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -25510,6 +25519,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataAccess'
+          - 'itsmAuroraWebhookAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -25601,6 +25611,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'dataAccess'
+        - 'itsmAuroraWebhookAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
