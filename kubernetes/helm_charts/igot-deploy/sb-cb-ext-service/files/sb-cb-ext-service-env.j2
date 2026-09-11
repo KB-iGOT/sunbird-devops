@@ -132,7 +132,6 @@ cloud.storage.key={{ cloud_storage_key }}
 learning_service_base_url=http://{{ learningservice_ip }}:8080/learning-service
 system.content.update.url=/system/v3/content/update/
 
-kafka.topics.parent.rating.event={{ rating_event_topic }}
 redis.host.name={{ kp_redis_ip }}
 redis.port=6379
 #redis timeout value is in seconds
@@ -684,3 +683,5 @@ sb.service.user.migrate.v2.path=/private/user/v2/migrate
 bulk.user.migration.strict.forwardPath.allowed.roles=MDO_ADMIN
 bulk.user.migration.restriction.roles=STATE_ADMIN,MDO_LEADER
 bulk.user.migration.no.restriction.roles=SPV_ADMIN
+
+karma_points_unified_event_topic={{ env }}.karma.points.unified.v2.event
