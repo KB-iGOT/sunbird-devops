@@ -194,6 +194,9 @@ ai_itsm_chatbot_prefix: /ai/chatbot
 ai_itsm_aurora_service_prefix: /itsm/aurora
 scorm_prefix: /scorm
 org_eligibiliity_prefix: /orgeligibility/v1
+ca_questionset_prefix: /ca/questionset
+ca_assessment_prefix: /ca
+
 
 # Service URLs
 knowledge_mw_service_url: "http://knowledge-mw-service:5000"
@@ -27211,6 +27214,114 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'dataCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: caQuestionSetPublish
+    uris: "{{ ca_questionset_prefix }}/v1/publish"
+    upstream_url: "{{ assessment_service_url }}/ca/questionset/v1/publish"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAdmin'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+  
+  - name: AiAssessmentQuestionCreate
+    uris: "{{ ai_assessment_prefix }}/v1/questions/create"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/questions/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+        
+  - name: AiAssessmentQuestionUpdate
+    uris: "{{ ai_assessment_prefix }}/v1/questions/update"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/questions/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiAssessmentQuestionDelete
+    uris: "{{ ai_assessment_prefix }}/v1/questions/delete"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/questions/delete"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiAssessmentQuestionOrder
+    uris: "{{ ai_assessment_prefix }}/v1/questions/order"
+    upstream_url: "{{ ai_assessment_service_url }}/ai-assessments/v1/questions/order"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: cbPlanV4UserDictionary
+    uris: "{{ cb_plan_prefix }}/v4/user/dictionary"
+    upstream_url: "{{ cb_ext_course_service_url }}/cbplan/v4/user/dictionary"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"

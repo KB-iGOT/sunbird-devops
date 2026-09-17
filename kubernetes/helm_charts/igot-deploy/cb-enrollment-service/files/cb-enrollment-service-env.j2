@@ -54,11 +54,11 @@ lms.enrolment.summary.base.url=http://lms-service:9000
 lms.enrolment.summary.fixed.url=/v2/user/enrol/summary/
 enrollment.karma.points.exempt.groups=Group A,Group B
 
-enrollment.error.partner.overall.limit=Thank you for your interest in this marketplace course. Enrolment slots for this cycle are now filled. We will notify you when the next cycle opens.
-enrollment.error.partner.concurrent.limit=Please complete your ongoing course on the iGOT marketplace before enrolling in a new one.
-enrollment.error.karma.insufficient=Thank you for your interest in this marketplace course. Enrolment slots for this cycle are now filled. We will notify you when the next cycle opens.
+enrollment.error.partner.overall.limit=The enrollment limit for this provider has been reached. You will be notified when the next enrollment cycle starts.
+enrollment.error.partner.concurrent.limit=Please complete your ongoing courses before enrolling in a new one.
+enrollment.error.karma.insufficient=You don't have enough Karma Coins to enroll. Minimum Karma Coins required: %s.
 
-enrollment.error.partner.userwise.limit=You've reached your maximum number of enrollments.
+enrollment.error.partner.userwise.limit=You've reached your maximum number of enrollments for this provider.
 
 coursera.partner.code=COURSE
 service.registry.api.base.url=http://cb-service-registry:8096
@@ -80,3 +80,9 @@ enrollment.message.with.karma=You have been successfully enrolled into %s, and %
 enrollment.message.without.karma=You have been successfully enrolled into %s.
 
 spring.kafka.enrolment.counter.update.failure.topic.name={{env}}.enrolment.counter.update.failure
+
+spring.kafka.karma.points.unified.topic.name={{env}}.karma.points.unified.v2.event
+spring.kafka.user.paid.course.enrolment.topic.name={{env}}.user.paid.course.enrolment
+spring.kafka.user.paid.course.enrolment.consumer.group.id=user.paid.course.enrolment.group
+
+access.settings.error.message=You do not meet the required criteria to enroll in this course
