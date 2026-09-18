@@ -1391,9 +1391,9 @@ proxyconfig: |-
           deny all;
       }
         # Allow only GitHub webhook source IPs
-      include /etc/nginx/github-hooks.conf;
+      #include /etc/nginx/github-hooks.conf;
       # Deny everything else
-      deny all;
+      #deny all;
 
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
