@@ -1392,7 +1392,7 @@ proxyconfig: |-
       }
         # Allow only GitHub webhook source IPs
       include /etc/nginx/github-hooks.conf;
-	  # Deny everything else
+      # Deny everything else
       deny all;
 
       proxy_set_header Host $host;
@@ -9111,7 +9111,7 @@ proxyconfig: |-
       server_name  casestudy.{{ nginx_proxy_server_name }};
       return 404;
     }
-	
+  
   server {
     listen                443 ssl;
     ssl_certificate       /etc/secrets/site.crt;
