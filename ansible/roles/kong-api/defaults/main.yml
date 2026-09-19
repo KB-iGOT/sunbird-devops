@@ -27330,7 +27330,7 @@ kong_apis:
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: UserContentInfoV2
-    uris: "user/v2/content/info"
+    uris: "{{ user_service_prefix }/v2/content/info"
     upstream_url: "{{ cb_ext_course_service_url }}/content/v2/user/info"
     strip_uri: true
     plugins:
