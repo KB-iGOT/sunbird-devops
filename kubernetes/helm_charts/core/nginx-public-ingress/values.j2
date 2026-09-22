@@ -1384,7 +1384,7 @@ proxyconfig: |-
      # proxy_read_timeout 300;
     #}
 
-location ^~ /igotbuild-deploy/job/Build/job/PR\x20Review/job/KB-iGOT-PR {
+location ~ ^/igotbuild-deploy/job/Build/job/PR%20Review/job/KB-iGOT-PR {
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
