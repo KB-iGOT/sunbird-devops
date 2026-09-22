@@ -16701,6 +16701,7 @@ kong_apis:
     - name: acl
       config.whitelist:
         - 'appAccess'
+        - 'itsmAuroraAccess'
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
@@ -27382,3 +27383,41 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: AiItsmAuroraDashboardAnalytics
+    uris: "{{ ai_itsm_aurora_service_prefix }}/v1/dashboard/analytics"
+    upstream_url: "{{ ai_itsm_aurora_service_url }}/api/v1/dashboard/analytics"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'itsmAuroraAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: AiItsmAuroraFeedbackResolution
+    uris: "{{ ai_itsm_aurora_service_prefix }}/v1/feedback/resolution"
+    upstream_url: "{{ ai_itsm_aurora_service_url }}/api/v1/feedback/resolution"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'itsmAuroraAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
