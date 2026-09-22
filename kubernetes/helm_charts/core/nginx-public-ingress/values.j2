@@ -1371,7 +1371,6 @@ proxyconfig: |-
       proxy_read_timeout 86400;
     }
 
-
     #location /igotbuild-deploy/ {
     #  proxy_set_header Host $host;
     #  proxy_set_header X-Real-IP $remote_addr;
@@ -1384,6 +1383,23 @@ proxyconfig: |-
      # proxy_send_timeout 300;
      # proxy_read_timeout 300;
     #}
+
+    location ^~ /igotbuild-deploy/job/Build/job/PR%20Review/job/KB-iGOT-PR {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Port 443;
+
+        proxy_pass http://10.175.2.193:8080;
+        proxy_http_version 1.1;
+
+        proxy_request_buffering off;
+
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
 
     location = /igotbuild-deploy/github-webhook/ {
         # Only POST is allowed
