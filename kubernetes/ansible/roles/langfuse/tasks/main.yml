@@ -1,0 +1,13 @@
+---
+- name: Render Langfuse values file
+  template:
+    src: values.yaml.j2
+    dest: /tmp/langfuse-values.yaml
+
+- name: Deploy Langfuse
+  shell: >
+    helm upgrade --install --atomic --timeout {{ helm_install_timeout | d("20m") }}
+    {{ release_name }}
+    {{ chart_path }}
+    -n monitoring
+    -f /tmp/langfuse-values.yaml
