@@ -27442,7 +27442,7 @@ kong_apis:
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
 
-  - name: questionSetUpdate
+  - name: caQuestionSetUpdate
     uris: "{{ ca_questionset_prefix }}/v1/update"
     upstream_url: "{{ assessment_service_url }}/questionset/v4/update"
     strip_uri: true
@@ -27496,3 +27496,4 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
