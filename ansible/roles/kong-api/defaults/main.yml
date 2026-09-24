@@ -196,6 +196,7 @@ scorm_prefix: /scorm
 org_eligibiliity_prefix: /orgeligibility/v1
 ca_questionset_prefix: /ca/questionset
 ca_assessment_prefix: /ca
+ca_content_prefix: /ca/content
 
 
 # Service URLs
@@ -27421,3 +27422,78 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: caQuestionSetCreate
+    uris: "{{ ca_questionset_prefix }}/v1/create"
+    upstream_url: "{{ assessment_service_url }}/questionset/v4/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: questionSetUpdate
+    uris: "{{ ca_questionset_prefix }}/v1/update"
+    upstream_url: "{{ assessment_service_url }}/questionset/v4/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+  - name: CAContentCreate
+    uris: "{{ ca_content_prefix }}/v1/create"
+    upstream_url: "{{ knowledge_mw_service_url }}/action/content/v3/create"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: CAContentUpdate
+    uris: "{{ ca_content_prefix }}/v1/update"
+    upstream_url: "{{ knowledge_mw_service_url }}/action/content/v3/update"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentUpdate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+git st
