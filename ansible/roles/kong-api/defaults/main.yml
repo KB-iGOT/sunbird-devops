@@ -27441,10 +27441,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-
-  - name: caQuestionSetUpdate
-    uris: "{{ ca_questionset_prefix }}/v1/update"
-    upstream_url: "{{ assessment_service_url }}/questionset/v4/update"
+  - name: caQuestionSetUpdateHierarchy
+    uris: "{{ ca_questionset_prefix }}/v1/hierarchy/update"
+    upstream_url: "{{ assessment_service_url }}/questionset/v4/hierarchy/update"
     strip_uri: true
     plugins:
       - name: jwt
@@ -27459,7 +27458,6 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
 
   - name: CAContentCreate
     uris: "{{ ca_content_prefix }}/v1/create"
