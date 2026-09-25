@@ -146,7 +146,7 @@ event.read.endpoint=/event/v4/read
 domain.host=https://portal.qa.karmayogibharat.net/
 
 logging.level.root=WARN
-cb.plan.cache.ttl.minutes=60
+cb.plan.cache.ttl.minutes=2
 content.health.redis.db.index=12
 
 enrolment.dictionary.request={"request":{"userId":"%s","identifier":%s}}
@@ -165,7 +165,7 @@ lms.enrollment.details.url=/v3/user/enrol/courses/details
 
 cbplan.enriched.content.fields=identifier,name,description,contentType,duration,primaryCategory,status,createdOn,lastUpdatedOn
 cb.plan.v3.batch.size=5
-cb.plan.v3.cache.ttl.minutes=60
+cb.plan.v3.cache.ttl.minutes=2
 cb.plan.v3.caffine.cache.max.size=5000
 cb.plan.v3.redis.cache.ttl.seconds=3600
 cassandra.query.limit.primary.key=1
