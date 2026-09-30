@@ -3438,9 +3438,7 @@ proxyconfig: |-
     proxy_hide_header   X-XSS-Protection;
     add_header Permissions-Policy geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    if ($block_bad_uri) {                                                                                                                               
-       return 400;                                                                                                                                             
-    }    
+ 
     ignore_invalid_headers off;  #pass through headers from Jenkins which are considered invalid by Nginx server.
     resolver {{ kube_dns_ip }} valid=30s;
     location ~* ^/auth/(.*)/impersonation {
