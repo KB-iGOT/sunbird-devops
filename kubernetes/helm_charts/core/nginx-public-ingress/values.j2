@@ -3399,6 +3399,8 @@ proxyconfig: |-
 
     client_max_body_size 1226M;
 
+    }
+
   server {
     if ($host = support.{{ nginx_proxy_server_name }}) {
         return 301 https://$host$request_uri;
@@ -3546,7 +3548,6 @@ proxyconfig: |-
 
     }
 
-    }
   server {
     if ($host = {{ nginx_proxy_server_name }}) {
         return 301 https://$host$request_uri;
