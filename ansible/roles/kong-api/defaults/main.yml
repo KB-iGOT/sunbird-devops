@@ -1661,6 +1661,20 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: getBatchPublic
+    uris: "{{ course_service_prefix }}/v1/batch/public/read"
+    upstream_url: "{{ lms_service_url }}/v1/course/batch/public/read"
+    strip_uri: true
+    plugins:
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: ip
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
   - name: collectionSummaryAgg
     uris: "/v1/collection/summary"
     upstream_url: "{{ lms_service_url }}/v1/collection/summary"
