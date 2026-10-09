@@ -27603,9 +27603,9 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: getParticipantsV2
-    uris: "{{ course_service_prefix }}/v2/batch/participants/list"
-    upstream_url: "{{ lms_service_url }}/v2/batch/participants/list"
+  - name: getProgramBatchParticipants
+    uris: "{{ program_service_prefix }}/v1/batch/participants/list"
+    upstream_url: "{{ lms_service_url }}/program/v1/batch/participants/list"
     strip_uri: true
     plugins:
       - name: jwt
