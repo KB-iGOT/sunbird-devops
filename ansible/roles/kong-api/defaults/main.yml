@@ -2182,7 +2182,7 @@ kong_apis:
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
   - name: searchAllCourseBatches
-    uris: "{{ course_service_prefix }}/v1/batch/listAll"
+    uris: "{{ course_service_prefix }}/v1/learner/batch/list"
     upstream_url: "{{ lms_service_url }}/v1/course/batch/search"
     strip_uri: true
     plugins:
