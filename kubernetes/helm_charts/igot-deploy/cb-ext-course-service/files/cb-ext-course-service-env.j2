@@ -57,7 +57,7 @@ elasticsearch.host={{ elasticsearch_host }}
 elasticsearch.port={{ elasticsearch_http_port }}
 elasticsearch.username={{ elasticsearch_username }}
 elasticsearch.password={{ elasticsearch_password }}
-cb.plan.v2.index=cb_plan_alias
+cb.plan.v2.index=cb_plan_new_alias
 
 user.basic.details.filtered=profileCompletionPercentage,karmaPoints,certificateCount,postCount
 cb.plan.batch.size=5
@@ -198,4 +198,18 @@ cbplan.content.sync.async=true
 spring.kafka.cbplan.ca.link.topic.name={{env}}.trainingplan.ca.events
 spring.kafka.cbplan.ca.link.consumer.group.id=cbPlanCaLinkConsumerGroup
 
-cb.plan.v4.dictionary.redis.cache.ttl.seconds=3600
+cb.plan.v4.dictionary.redis.cache.ttl.seconds=28800
+
+usergroup.allow.empty.root.org.ids=true
+cbplan.v4.retire.ca.linked.warning=This Training Plan is linked to a Comprehensive Assessment. Remove the CA link if you want to fully decouple the plan.
+
+cbplan.redis.host={{ cbplan_redis_ip }}
+cbplan.redis.port=6379
+cbplan.redis.db.index=0
+userprofile.redis.host={{ kp_redis_ip }}
+userprofile.redis.port=6379
+userprofile.redis.db.index=0
+extcontent.redis.host={{ kp_redis_ip }}
+extcontent.redis.port=6379
+extcontent.redis.db.index=0
+cbplan.v4.cache.invalidate.async=true

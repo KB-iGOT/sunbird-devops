@@ -197,6 +197,7 @@ org_eligibiliity_prefix: /orgeligibility/v1
 ca_questionset_prefix: /ca/questionset
 ca_assessment_prefix: /ca
 ca_content_prefix: /ca/content
+mobile_prefix: /mobile
 
 
 # Service URLs
@@ -1661,6 +1662,24 @@ kong_apis:
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: getBatchPublic
+    uris: "{{ course_service_prefix }}/v1/batch/public/read"
+    upstream_url: "{{ lms_service_url }}/v1/course/batch/read"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
   - name: collectionSummaryAgg
     uris: "/v1/collection/summary"
     upstream_url: "{{ lms_service_url }}/v1/collection/summary"
@@ -1840,6 +1859,24 @@ kong_apis:
   - name: getParticipants
     uris: "{{ course_service_prefix }}/v1/batch/participants/list"
     upstream_url: "{{ lms_service_url }}/v1/batch/participants/list"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseCreate'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: getParticipantsByAdmin
+    uris: "{{ course_service_prefix }}/v1/batch/admin/participants/list"
+    upstream_url: "{{ lms_service_url }}/v1/batch/admin/participants/list"
     strip_uri: true
     plugins:
     - name: jwt
@@ -2165,6 +2202,24 @@ kong_apis:
 
   - name: searchCourseBatches
     uris: "{{ course_service_prefix }}/v1/batch/list"
+    upstream_url: "{{ lms_service_url }}/v1/course/batch/search"
+    strip_uri: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist:
+        - 'courseAccess'
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: searchAllCourseBatches
+    uris: "{{ course_service_prefix }}/v1/learner/batch/list"
     upstream_url: "{{ lms_service_url }}/v1/course/batch/search"
     strip_uri: true
     plugins:
@@ -23891,6 +23946,7 @@ kong_apis:
       - name: acl
         config.whitelist:
           - 'contentCreate'
+          - itsmAuroraAccess
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ x2_large_rate_limit_per_hour }}"
@@ -27414,6 +27470,7 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
+          - 'itsmAuroraWebhookAccess'
           - 'itsmAuroraAccess'
           - 'itsmAccess'
       - name: rate-limiting
@@ -27495,9 +27552,60 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: getProgramBatchParticipants
-    uris: "{{ program_prefix }}v1/batch/participants/list"
-    upstream_url: "{{ lms_service_url }}v1/batch/participants/list"
+  - name: AiItsmAuroraTrackingTicket
+    uris: "{{ ai_itsm_aurora_service_prefix }}/v1/resolution/tracking"
+    upstream_url: "{{ ai_itsm_aurora_service_url }}/api/v1/resolution/tracking"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'itsmAuroraAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: userGroupV2Search
+    uris: "{{ user_group_prefix }}/v1/searchV2"
+    upstream_url: "{{ cb_ext_course_service_url }}/usergroup/v1/searchV2"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: addUserDetailsInCampaign
+    uris: "{{ user_service_prefix }}/campaign/v1/register"
+    upstream_url: "{{ cb_ext_userprofile_service_url }}/campaign/v1/register"
+    strip_uri: true
+    plugins:
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ large_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: getParticipantsV2
+    uris: "{{ course_service_prefix }}/v2/batch/participants/list"
+    upstream_url: "{{ lms_service_url }}/v2/batch/participants/list"
     strip_uri: true
     plugins:
       - name: jwt
@@ -27512,4 +27620,39 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+  
+  - name: programCoordinatorBulkUpload
+    uris: "/program/coordinator/bulk-upload"
+    upstream_url: "{{ sb_cb_ext_service_url }}/program/coordinator/bulk-upload"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
+  - name: mobileFirstLoginLastLogin
+    uris: "{{ mobile_prefix }}/v1/login"
+    upstream_url: "{{ learning_service_url }}/v1/user/mobile/login"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+           - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"

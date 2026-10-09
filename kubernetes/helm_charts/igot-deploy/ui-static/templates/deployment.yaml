@@ -31,9 +31,6 @@ spec:
         - name: site-config
           configMap:
             name: karmayogi-site-config
-        - name: env-js
-          configMap:
-            name: karmayogi-env-js
         - name: apps-json
           configMap:
             name: karmayogi-apps-json
@@ -70,9 +67,6 @@ spec:
         - name: site-config
           mountPath: /app/dist/www/en/assets/configurations/site.config.json
           subPath: site.config.json
-        - name: env-js
-          mountPath: /app/dist/www/en/assets/env.json
-          subPath: env.json
         - name: apps-json
           mountPath: /app/dist/www/en/assets/configurations/feature/apps.json
           subPath: apps.json

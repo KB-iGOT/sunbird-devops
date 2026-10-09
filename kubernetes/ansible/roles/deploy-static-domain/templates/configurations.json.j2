@@ -20,6 +20,21 @@
     "lookerProMobileUrl": "{{ staticdomain_lookerpromobileurl}}",
     "recaptchaSiteKey": "{{igot_recaptchakey}}",
     "defaultRoute": "",
+    "netcoreConfig": {
+        "isActive": true,
+        "scriptUrl": "{{netcore_scripturl}}",
+        "createKey": "{{netcore_createkey}}",
+        "dataCenter": "tin",
+        "registerKey": "{{netcore_registerkey}}",
+        "listId": "",
+        "leadIdentity": "mobile",
+        "events": {
+            "campaign_register": {
+                "isActive": true,
+                "eventName": "campaign_register"
+            }
+        }
+    },
     "telemetryConfig" : {
       "pdata": {
         "id": "sunbird-cb-staticportal",

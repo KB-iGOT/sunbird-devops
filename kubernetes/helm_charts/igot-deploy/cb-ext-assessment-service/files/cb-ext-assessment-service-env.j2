@@ -516,8 +516,8 @@ content-read-endpoint-fields=?fields=primaryCategory,identifier,batches,versionK
 cb.ext.course.service.host=http://cb-ext-course-service:7005
 content.state.update.endpoint=/content/v2/state/update
 
-mandatory.course.categories.for.certificate.generation=Course,Standalone Assessment,Moderated Course,Comprehensive Assessment
-mandatory.context.categories.for.pass.requirement=Preliminary Assessment,Final Milestone Assessment,Comprehensive Assessment
+mandatory.course.categories.for.certificate.generation=Standalone Assessment,Moderated Course,Comprehensive Assessment
+mandatory.context.categories.for.pass.requirement=Preliminary Assessment,Final Milestone Assessment
 assessment.cooloff.error.message=You've used all your retake attempts for this assessment. You can try again in {remainingDays} day(s). (Cool-off period: {coolOffPeriod} days).
 
 assessment.learningpathway.assessment.notfound.error=Assessment {assessmentId} not found in Learning Pathway {coursed}
@@ -525,3 +525,9 @@ assessment.learningpathway.assessment.notfound.error=Assessment {assessmentId} n
 assessment.shuffle.allowed.qtypes=MCQ-SCA,MTF,FTB,MCQ-MCA,MCQ-SCA-TF
 
 kafka.topics.assessment.failed.audit.error={{env}}.assessment.failed.audit.error
+karma.points.unified.event.topic={{env}}.karma.points.unified.v2.event
+karma.points.assessment.event.enabled=true
+karma.points.assessment.eligible.primary.categories=Course Assessment
+karma.points.assessment.excluded.course.categories=Program,Curated Program,Blended Program
+karma.points.assessment.high.score.threshold=75
+karma.points.event.version=1
