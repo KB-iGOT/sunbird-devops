@@ -1663,7 +1663,7 @@ kong_apis:
 
   - name: getBatchPublic
     uris: "{{ course_service_prefix }}/v1/batch/public/read"
-    upstream_url: "{{ lms_service_url }}/v1/course/batch/public/read"
+    upstream_url: "{{ lms_service_url }}/v1/course/batch/read"
     strip_uri: true
     plugins:
     - name: cors
