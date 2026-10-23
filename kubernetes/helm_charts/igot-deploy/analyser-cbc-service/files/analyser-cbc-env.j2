@@ -1,7 +1,7 @@
 SERVICE_ENVIRONMENT={{env}}
 LOG_LEVEL=INFO
 OPENAI_API_KEY={{analyser_cbc_openai_api_key}}
-DATABASE_URL=postgresql://{{postgresql_username_sunbird}}:{{postgresql_password_sunbird}}@{{postgresql_host}}:{{postgresql_port}}/cbc_case_study
+DATABASE_URL={{ cbc_case_study_db_dsn }}
 USE_GEMINI=true
 GOOGLE_PROJECT_ID={{thumbnail_generation_gcp_gemini_project_id}}
 GOOGLE_LOCATION=global
