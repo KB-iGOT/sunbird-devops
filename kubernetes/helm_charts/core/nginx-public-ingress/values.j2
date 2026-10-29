@@ -2357,6 +2357,47 @@ proxyconfig: |-
       #rewrite ^/discussions/(.*) /$1 break;
       proxy_pass $target;
   }
+    # ---- Real Time Survey: cb-ext-rts-service (join page + WebSocket) ----
+    # /rts -> /rts/ (the page connects to "ws" relative to its own address)
+    location = /rts {
+      return 301 /rts/;
+    }
+    # WebSocket: /rts/ws -> service /ws (long-lived; the service pings every 20 s)
+    location /rts/ws {
+      set $target http://cb-ext-rts-service.{{ namespace }}.svc.cluster.local:{{ service_cb_ext_rts_port | d('8080') }};
+      rewrite ^/rts/(.*) /$1 break;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 3600;
+      proxy_read_timeout 3600;
+      proxy_buffering off;
+      proxy_pass $target;
+    }
+    # health and metrics endpoints are not for the internet (probes call the pod directly)
+    location /rts/actuator/ {
+      return 404;
+    }
+    # join page (/rts/ -> /) and /rts/stats
+    location /rts/ {
+      set $target http://cb-ext-rts-service.{{ namespace }}.svc.cluster.local:{{ service_cb_ext_rts_port | d('8080') }};
+      rewrite ^/rts/(.*) /$1 break;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Request-ID $sb_request_id;
+      proxy_connect_timeout 5;
+      proxy_send_timeout 30;
+      proxy_read_timeout 40;
+      proxy_pass $target;
+    }
    location ~* ^/content/preview/(.*) {
           # Enabling compression
           gzip            on;
