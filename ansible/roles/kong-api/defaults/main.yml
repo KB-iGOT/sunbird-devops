@@ -9103,7 +9103,7 @@ kong_apis:
       
   - name: saveFormSubmit
     uris: "{{ forms_service_prefix }}/v1/saveFormSubmit"
-    upstream_url: "{{ forms_service_url }}/forms/v1/saveFormSubmit"
+    upstream_url: "{{ cb_ext_form_service_url }}/forms/v3/v1/saveFormSubmit"
     strip_uri: true
     plugins:
     - name: jwt
