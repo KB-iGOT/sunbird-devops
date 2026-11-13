@@ -46,14 +46,21 @@ form.search-max-page-size=200
 form.search-default-page-size=10
 form.es-timeout-seconds=30
 form.search-index=fs-forms-alias-v2
-form.search-supported-context-types=form,completionSurvey,peerValidationSurvey,assignment
+form.nps-form-id={{ nps_form_id | default('') }}
+form.nps-form-secondary-id={{ nps_form_secondary_id | default('') }}
+form.nps-form-upgraded-id={{ platform_rating_survey_id | default('') }}
+form.nps-topic={{env}}.nps_submission
+form.nps-upgraded-topic={{env}}.nps_upgraded_submission
+form.nps-data-index=fs-forms-data
+form.nps-activity-log-index=fs-forms-activity-log
+form.search-supported-context-types=form,completionSurvey,peerValidationSurvey,assignment,sankalp
 form.search-allowed-filter-keys=formId,status,contextType,createdBy,orgId,startDateFrom,startDateTo,endDateFrom,endDateTo
 
 form.submission-allowed-filter-keys=formId,status,createdBy,createdDate,submittedBy,submittedDate,contextId,updatedBy,updatedDate,additionalProperties.batchId,contextType,contextOrgId
 form.form-context-hide-creator-fields=AGKPublicSurvey,completionSurvey
 form.max-allowed-filter-list-size=50
 form.validation-url-allowed-keys=assignmentUrl,thumbnailUrl,submitUrl,thumbnail
-form.validation-url-allowed-domains=portal.dev.karmayogibharat.net,igot.gov.in
+form.validation-url-allowed-domains=portal.dev.karmayogibharat.net,portal.qa.karmayogibharat.net,portal.uat.karmayogibharat.net,portal.igotkarmayogi.gov.in
 
 sso.realm={{ keycloak_realm_name }}
 sso.url={{ keycloak_domain }}/
@@ -81,7 +88,7 @@ peer.survey.notification.read.topic={{env}}.peer.survey.notification.read
 peer.survey.notification.sent.topic={{env}}.peer.survey.notification.sent
 peer.survey.notification.read.group={{env}}.form.service.peer.survey.consumer
 
-form.attachment-allowed-domains=storage.googleapis.com,portal.dev.karmayogibharat.net
+form.attachment-allowed-domains=storage.googleapis.com,portal.dev.karmayogibharat.net,portal.qa.karmayogibharat.net,portal.uat.karmayogibharat.net,portal.igotkarmayogi.gov.in
 
 form.elasticsearch.host={{ elasticsearch_host }}
 form.elasticsearch.port={{ elasticsearch_http_port }}
@@ -95,3 +102,6 @@ form.allowed-field-property-keys=refApi,logicalGroupCode,name,notApplicable,fiel
 form.allowed-form-property-keys=title,meta,fields,clientVersion,contextType,additionalProperties,version
 
 max.allowed.form.title.length=100
+
+form.content-base-url=http://content-service:9000
+form.allowed-context-types=form,assignment,peerValidationSurvey,completionSurvey,AGKPublicSurvey,sankalp

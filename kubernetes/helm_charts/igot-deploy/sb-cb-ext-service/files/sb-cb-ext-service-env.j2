@@ -376,7 +376,7 @@ cbplan.content.request.notification.template=cbplanContentRequestTemplate
 user.registration.welcome.email.profileUpdateLink=https://{{ domain_name }}/app/user-profile/details
 
 report.property.file.allMdo=ContentCompetencyMapping.csv
-km.base.composite.search.fields=appIcon,channel,contentType,description,duration,idealScreenSize,identifier,instructions,license,mimeType,name,objectType,organisation,pkgVersion,posterImage,primaryCategory,purpose,version,resourceCategory,cloudStorageKey,artifactUrl,bannerLanguage,bannerPlacement,sequenceId,creatorLogo,selfEnrollment
+km.base.composite.search.fields=appIcon,channel,contentType,description,duration,idealScreenSize,identifier,instructions,license,mimeType,name,objectType,organisation,pkgVersion,posterImage,primaryCategory,purpose,version,resourceCategory,cloudStorageKey,artifactUrl,bannerLanguage,bannerPlacement,sequenceId,creatorLogo,selfEnrollment,createdOn
 es.default.result.limit=250
 
 sb.role.read=/v1/user/role/read/
@@ -487,6 +487,12 @@ wingspan.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialec
 wingspan.datasource.driver-class-name=org.postgresql.Driver
 wingspan.jpa.properties.hibernate.format_sql=true
 wingspan.jpa.show-sql=false
+form.datasource.jdbc-url=jdbc:postgresql://{{ postgresql_host }}:{{ postgresql_port }}/form
+form.datasource.username={{ form_postgresql_username | default(postgresql_username_sunbird) }}
+form.datasource.password={{ form_postgresql_password | default(postgresql_password_sunbird) }}
+form.datasource.driver-class-name=org.postgresql.Driver
+form.datasource.read-only=true
+form.datasource.maximum-pool-size=5
 igot.es.user.form.index=fs-forms-data
 es.form.index.type=_doc
 bp.user.enrolment.report.container.name=gcpbpreports
@@ -563,9 +569,9 @@ bp.assignment.ans.folder.name=bp-assignment
 bp.assignment.answer.file.upload.max-size-kb=5000
 bp.assignment.answer.file.upload.allowed-extensions=pdf,doc,docx
 
-form.service.host=http://form-service:8099/
+form.service.host=http://cb-ext-form-service:8099/
 igot.es.user.form.data.index.v2=fs-forms-data-alias-v2
-get.v2.formbyid.path=forms/v2/getFormById
+get.v2.formbyid.path=forms/v3/getFormById
 
 email.domain.not.allowed=Your email domain isn\u2019t recognised \u2014 please contact your department for registration.
 email.invalid=Invalid Email ID.
@@ -706,3 +712,8 @@ smt.to.slt.min.completed.batches=3
 smt.to.slt.min.learners.trained=100
 
 program.coordinator.bulk.upload.no.batch.settings.fallback.enabled=false
+
+user_profile_redis_host={{user_profile_redis_host}}
+user_profile_redis_port=6379
+user_profile_redis_index=0
+user_profile_redis_password_enabled=false
