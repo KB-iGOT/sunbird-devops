@@ -1466,33 +1466,6 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
 
-    location /apis/public/v8/waitTest {
-      include /etc/nginx/cors.conf;
-      proxy_hide_header Access-Control-Allow-Origin;
-      proxy_hide_header Access-Control-Allow-Credentials;
-      proxy_hide_header Access-Control-Allow-Headers;
-      proxy_hide_header Access-Control-Allow-Methods; 
-      # add_header Access-Control-Allow-Origin "*";
-      # add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
-      proxy_cookie_path ~*^/.* /;
-      proxy_set_header X-Real-IP  $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      rewrite ^/apis/(.*) /$1 break;
-      proxy_set_header Host $host;
-      proxy_set_header X-Forwarded-Host $host;
-      proxy_set_header X-Forwarded-Server $host;
-
-      proxy_intercept_errors on;
-
-      # hack to cleanup the duplicate cookies
-      error_page 403 = @resource_slash_403;
-
-      proxy_pass http://ui-proxies:3003;
-      proxy_connect_timeout 10;
-      proxy_send_timeout 20;
-      proxy_read_timeout 20;
-    }
-
     location ~ /apis/proxies/v8/survey/v2/getFormById {
       # Enabling caching
       proxy_cache_key "$request_uri";
