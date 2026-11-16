@@ -1466,7 +1466,7 @@ proxyconfig: |-
       proxy_pass http://kong;
     }
 
-    location /apis/public/v8/waitTest/ {
+    location /apis/public/v8/waitTest {
       include /etc/nginx/cors.conf;
       proxy_hide_header Access-Control-Allow-Origin;
       proxy_hide_header Access-Control-Allow-Credentials;
@@ -1488,8 +1488,8 @@ proxyconfig: |-
 
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
-      proxy_read_timeout 300;
+      proxy_send_timeout 20;
+      proxy_read_timeout 20;
     }
 
     location ~ /apis/proxies/v8/survey/v2/getFormById {
