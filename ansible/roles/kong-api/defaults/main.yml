@@ -5830,7 +5830,7 @@ kong_apis:
     
   - name: publicDownloadRegCertificateV2
     uris: "{{ cert_registry_service_prefix }}/public/v2/certs/download"
-    upstream_url: "{{ certificate_generator_service_url }}/v1/certs/legacy/render"
+    upstream_url: "http://{{ network_alias_pdf_generator_service }}:{{ service_pdf_generator_port }}/public/v2/cert/download"
     strip_uri: true
     plugins:
       - name: cors
@@ -27938,6 +27938,24 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
+  - name: getFormConfigByIdForTest
+    uris: "{{ formsConfig_service_prefix }}/v1/readByIdForTest"
+    upstream_url: "{{ cb_ext_config_service_url }}/formsConfig/v1/readForTest"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
   - name: ltiAdminConfig
     uris: "{{ ciosIntegration_prefix }}/v1/lti/admin/platform-config"
     upstream_url: "{{ cios_content_service_url }}/ciosIntegration/v1/lti/admin/platform-config"
@@ -28128,3 +28146,21 @@ kong_apis:
         config.limit_by: ip
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: ltiCourseLaunch
+    uris: "{{ external_enrollment_prefix }}/lti/redirect"
+    upstream_url: "{{ cb_external_enrollment_service_url }}/cios-enroll/lti/redirect"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'courseAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"        
