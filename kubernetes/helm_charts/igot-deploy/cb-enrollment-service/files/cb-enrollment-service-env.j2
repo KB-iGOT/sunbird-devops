@@ -91,3 +91,15 @@ failed.enrollment.ttl.seconds=300
 dedupe.ttl.seconds=14400
 
 karma.wallet.cache.ttl.seconds=300
+
+cb.ext.course.service.base.url=http://cb-ext-course-service:7005
+provider.access.validate.api.url=/accessSettings/provider/v1/validate
+provider.licence.alert.thresholds=50,75,90,100
+provider.licence.alert.sender=support@igot-dev.in
+provider.licence.alert.lock.ttl.seconds=86400
+notification.service.base.url=http://notification-service:9000
+notification.service.send.api.url=/v2/notification/send
+enrollment.error.provider.group.licence.exhausted=Licences for this course are exhausted.
+enrollment.error.provider.access.denied=This course isn't available to you
+spring.kafka.provider.licence.alert.topic.name=dev.provider.licence.alert
+spring.kafka.provider.licence.alert.consumer.group.id=provider-licence-alert
