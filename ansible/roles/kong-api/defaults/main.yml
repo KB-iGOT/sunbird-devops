@@ -28268,4 +28268,35 @@ kong_apis:
         config.limit_by: credential
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+
+  - name: ltiLineItem
+    uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems/1/lineitem/scores"
+    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems/1/lineitem/scores"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: ip
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+
+  - name: ltiLineItems
+    uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems"
+    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: ip
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
         
