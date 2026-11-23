@@ -256,6 +256,12 @@ data:
           proxy_http_version 1.1;
           proxy_pass $target;
         }
+        location /cios-content/ {
+          set $target http://cios-content-service.{{ .Values.namespace }}.svc.cluster.local:7001;
+          rewrite ^/cios-content/(.*) /$1 break;
+          proxy_http_version 1.1;
+          proxy_pass $target;
+        }
         location /kibana/ {
           set $target {{ .Values.kibana_url }};
           proxy_http_version 1.1;
