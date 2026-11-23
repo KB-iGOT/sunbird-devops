@@ -28163,18 +28163,140 @@ kong_apis:
         config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: credential
       - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"        
+
+  - name: providerAccessRuleUpsert
+    uris: "{{ cb_ext_course_prefix }}/provider/v1/upsert"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/provider/v1/upsert"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: ltiDeepLinkingInitiate
-    uris: "{{ ciosIntegration_prefix }}/lti/deeplinking/initiate"
-    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/deeplinking/initiate"
+  - name: providerAccessRuleRead
+    uris: "{{ cb_ext_course_prefix }}/provider/v1/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/provider/v1/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: providerAccessRuleNotificationUpsert
+    uris: "{{ cb_ext_course_prefix }}/provider/v1/notification/upsert"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/provider/v1/notification/upsert"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentCreate'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: providerAccessRuleNotificationRead
+    uris: "{{ cb_ext_course_prefix }}/provider/v1/notification/read"
+    upstream_url: "{{ cb_ext_course_service_url }}/accessSettings/provider/v1/notification/read"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'contentAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+  - name: orgHierarchyOrgLookup
+    uris: "{{ org_service_prefix }}/v2/hierarchy/org-lookup"
+    upstream_url: "{{ cb_org_hierarchy_service_url }}/org/v2/hierarchy/org-lookup"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: orgHierarchyUnmappedOrgs
+    uris: "{{ org_service_prefix }}/v2/hierarchy/unmapped-orgs"
+    upstream_url: "{{ cb_org_hierarchy_service_url }}/org/v2/hierarchy/unmapped-orgs"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+
+  - name: ltiLineItem
+    uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems/1/lineitem/scores"
+    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems/1/lineitem/scores"
     strip_uri: true
     plugins:
       - name: cors
       - "{{ statsd_pulgin }}"
       - name: rate-limiting
         config.policy: local
-        config.hour: "{{ small_rate_limit_per_hour }}"
+        config.hour: "{{ medium_rate_limit_per_hour }}"
         config.limit_by: ip
       - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_rate_limit_per_hour }}"
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+
+
+  - name: ltiLineItems
+    uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems"
+    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems"
+    strip_uri: true
+    plugins:
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: ip
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ medium_request_size_limit }}"
+        
