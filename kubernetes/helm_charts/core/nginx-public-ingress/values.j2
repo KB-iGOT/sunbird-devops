@@ -16587,7 +16587,7 @@ nginxconfig: |
       #dont add this add_header Content-Security-Policy "default-src 'self'; font-src *;img-src * data:; script-src *; style-src *";
       #add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains; preload';
       add_header Referrer-Policy "strict-origin";
-      add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+      add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(self),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()" always;
       add_header Cache-Control "max-age=0";
       proxy_hide_header X-XSS-Protection;
       map $request_uri $block_bad_uri {
