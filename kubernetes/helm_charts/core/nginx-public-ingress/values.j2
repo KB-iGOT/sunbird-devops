@@ -513,7 +513,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;                
   }
 
@@ -916,7 +916,7 @@ proxyconfig: |-
       proxy_set_header X-Scheme $scheme;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_connect_timeout 5;
-      proxy_send_timeout 7200;
+      proxy_send_timeout 60;
       proxy_read_timeout 7200;
       proxy_http_version 1.1;
       proxy_pass http://kong;
@@ -1011,7 +1011,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1035,7 +1035,7 @@ proxyconfig: |-
       rewrite ^/pdf-processing/(.*) /$1 break;
       proxy_pass http://192.168.3.103:5000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1051,7 +1051,7 @@ proxyconfig: |-
       rewrite ^/testpdf/(.*) /$1 break;
       proxy_pass http://192.168.3.103:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1067,7 +1067,7 @@ proxyconfig: |-
       rewrite ^/course-metadata/(.*) /$1 break;
       proxy_pass http://course-metadata-service:80;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1083,7 +1083,7 @@ proxyconfig: |-
       rewrite ^/course-metadata-v2/(.*) /$1 break;
       proxy_pass http://course-metadata-v2-service:80;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1099,7 +1099,7 @@ proxyconfig: |-
       rewrite ^/course-metadata-scenario-v2/(.*) /$1 break;
       proxy_pass http://s2-content-metadata-service:80;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1115,7 +1115,7 @@ proxyconfig: |-
       rewrite ^/course-metadata-scenario-v3/(.*) /$1 break;
       proxy_pass http://s3-content-metadata-service:80;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1131,7 +1131,7 @@ proxyconfig: |-
       rewrite ^/ai-pocs/(.*) /$1 break;
       proxy_pass http://ai-pocs-service:80;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1147,7 +1147,7 @@ proxyconfig: |-
       rewrite ^/kcr-feedback/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1162,7 +1162,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://10.175.2.49:5000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
     location /profanity-check/ {
@@ -1177,7 +1177,7 @@ proxyconfig: |-
       rewrite ^/profanity-check/(.*) /$1 break;
       proxy_pass http://10.175.2.49:3001;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1193,7 +1193,7 @@ proxyconfig: |-
       rewrite ^/acbp-training-plan-poc/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8070;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1210,7 +1210,7 @@ proxyconfig: |-
       rewrite ^/cbp-tpc-ai/(.*) /$1 break;
       proxy_pass http://cbp-ai-service:8000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1226,7 +1226,7 @@ proxyconfig: |-
       rewrite ^/training-pla-ai/(.*) /$1 break;
       proxy_pass http://cbp-ai-ui;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1242,7 +1242,7 @@ proxyconfig: |-
       rewrite ^/training-pla-ai-with-designation/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8030;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1258,7 +1258,7 @@ proxyconfig: |-
       rewrite ^/ai-driven-cbp/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8060;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }    
 
@@ -1275,7 +1275,7 @@ proxyconfig: |-
       rewrite ^/ai-assessment-generation/(.*) /$1 break;
       proxy_pass http://ai-assessment-service:8000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1292,7 +1292,7 @@ proxyconfig: |-
       rewrite ^/ai-assment-generation/(.*) /$1 break;
       proxy_pass http://ai-assessment-service:8000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
     
@@ -1309,7 +1309,7 @@ proxyconfig: |-
       rewrite ^/ai-assment-generation-ui/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8501;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
     location /ai-assessment/ {
@@ -1325,7 +1325,7 @@ proxyconfig: |-
       rewrite ^/ai-assessment/(.*) /$1 break;
       proxy_pass http://ai-ui-assessment-service;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1437,7 +1437,7 @@ proxyconfig: |-
       proxy_request_buffering off;
  
       proxy_connect_timeout 5s;
-      proxy_send_timeout 10s;
+      proxy_send_timeout 60;
       proxy_read_timeout 10s;
     }
     
@@ -1457,7 +1457,7 @@ proxyconfig: |-
       rewrite ^/profanity-check-api/(.*) /$1 break;
       proxy_pass http://10.175.2.49:8800;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
   
@@ -1471,7 +1471,7 @@ proxyconfig: |-
       rewrite ^/gen-model/(.*) /$1 break;
       proxy_pass http://192.168.3.103:11434;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1484,7 +1484,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       return 301 {{ missionninty_url }};
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
     
@@ -1542,7 +1542,7 @@ proxyconfig: |-
      proxy_http_version 1.1;
      proxy_set_header X-Request-ID $sb_request_id;
      proxy_connect_timeout 5;
-     proxy_send_timeout 120;
+     proxy_send_timeout 60;
      proxy_read_timeout 120;
      proxy_pass http://cios-content-service:7001;
     }
@@ -1555,7 +1555,7 @@ proxyconfig: |-
      proxy_set_header X-Real-IP $remote_addr;
      proxy_set_header X-Scheme $scheme;
      proxy_connect_timeout 5;
-     proxy_send_timeout 120;
+     proxy_send_timeout 60;
      proxy_read_timeout 120;
      proxy_set_header    X-Forwarded-Proto $scheme;
      proxy_set_header Connection "";
@@ -1643,7 +1643,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1666,7 +1666,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1689,7 +1689,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1713,7 +1713,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1737,7 +1737,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -1759,7 +1759,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Proto $scheme;
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_connect_timeout 5;
-      proxy_send_timeout 3600;
+      proxy_send_timeout 60;
       proxy_read_timeout 3600;
       proxy_buffering off;
       proxy_pass $target;
@@ -1778,7 +1778,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Proto $scheme;
       proxy_set_header X-Request-ID $sb_request_id;
       proxy_connect_timeout 5;
-      proxy_send_timeout 30;
+      proxy_send_timeout 60;
       proxy_read_timeout 40;
       proxy_pass $target;
     }
@@ -1816,7 +1816,7 @@ proxyconfig: |-
     proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header X-Scheme $scheme;
     proxy_connect_timeout 1;
-    proxy_send_timeout 30;
+    proxy_send_timeout 60;
     proxy_read_timeout 40;
     proxy_set_header    X-Forwarded-Proto $scheme;
     proxy_set_header    X-Forwarded-For   $http_x_forwarded_for;
@@ -1830,7 +1830,7 @@ proxyconfig: |-
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
       proxy_connect_timeout 1;
-      proxy_send_timeout 30;
+      proxy_send_timeout 60;
       proxy_read_timeout 40;
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header X-Request-ID $sb_request_id;
@@ -2282,7 +2282,7 @@ proxyconfig: |-
       rewrite ^/tktdashboard/(.*) /$1 break;
       proxy_pass http://10.175.2.49:7003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 750;
     }
     
@@ -2822,7 +2822,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -2846,7 +2846,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -2869,7 +2869,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -2906,7 +2906,7 @@ proxyconfig: |-
     proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header X-Scheme $scheme;
     proxy_connect_timeout 1;
-    proxy_send_timeout 30;
+    proxy_send_timeout 60;
     proxy_read_timeout 40;
     proxy_set_header    X-Forwarded-Proto $scheme;
     proxy_set_header    X-Forwarded-For   $http_x_forwarded_for;
@@ -2920,7 +2920,7 @@ proxyconfig: |-
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
       proxy_connect_timeout 1;
-      proxy_send_timeout 30;
+      proxy_send_timeout 60;
       proxy_read_timeout 40;
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header X-Request-ID $sb_request_id;
@@ -3379,7 +3379,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;                
   }
   
@@ -3593,7 +3593,7 @@ proxyconfig: |-
       rewrite ^/routes/(.*) /$1 break;
       proxy_pass http://supporttool-service:5000/api;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
     
@@ -3785,7 +3785,7 @@ proxyconfig: |-
       rewrite ^/(.*) /$1 break;
       proxy_pass http://zoho-desk-service:5000/zoho-auto-desk;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -3944,7 +3944,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -3972,7 +3972,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -3995,7 +3995,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -4012,7 +4012,7 @@ proxyconfig: |-
       rewrite ^/adikarmayogi/(.*) /$1 break;
       proxy_pass http://multitenant-staticweb:4200;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -4049,7 +4049,7 @@ proxyconfig: |-
     proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header X-Scheme $scheme;
     proxy_connect_timeout 1;
-    proxy_send_timeout 30;
+    proxy_send_timeout 60;
     proxy_read_timeout 40;
     proxy_set_header    X-Forwarded-Proto $scheme;
     proxy_set_header    X-Forwarded-For   $http_x_forwarded_for;
@@ -4063,7 +4063,7 @@ proxyconfig: |-
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
       proxy_connect_timeout 1;
-      proxy_send_timeout 30;
+      proxy_send_timeout 60;
       proxy_read_timeout 40;
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header X-Request-ID $sb_request_id;
@@ -4451,7 +4451,7 @@ proxyconfig: |-
       client_body_buffer_size              128k;
       proxy_pass http://10.175.2.49:9000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
     location /v3/device/register {
@@ -5498,7 +5498,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -5512,7 +5512,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       return 301 {{ missionninty_url }};
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -5594,7 +5594,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -5617,7 +5617,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -5641,7 +5641,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -6892,7 +6892,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -6906,7 +6906,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       return 301 {{ missionninty_url }};
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -6988,7 +6988,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -7011,7 +7011,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -7035,7 +7035,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -8274,7 +8274,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -8324,7 +8324,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -8347,7 +8347,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -9208,7 +9208,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -9290,7 +9290,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -9313,7 +9313,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -9337,7 +9337,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -10142,7 +10142,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -10192,7 +10192,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -10215,7 +10215,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -11076,7 +11076,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -11158,7 +11158,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -11181,7 +11181,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -11205,7 +11205,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -11632,7 +11632,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -11655,7 +11655,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -11678,7 +11678,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -12106,7 +12106,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -12161,7 +12161,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -12184,7 +12184,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -12208,7 +12208,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -12634,7 +12634,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -12657,7 +12657,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -12680,7 +12680,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13108,7 +13108,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13163,7 +13163,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13186,7 +13186,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13210,7 +13210,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://pdf-generator-service:3000;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13278,7 +13278,7 @@ proxyconfig: |-
         proxy_set_header X-Request-ID $sb_request_id;
 
         proxy_connect_timeout 5;
-        proxy_send_timeout 3600;
+        proxy_send_timeout 60;
         proxy_read_timeout 3600;
     }
 
@@ -13598,7 +13598,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13621,7 +13621,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13644,7 +13644,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -13681,7 +13681,7 @@ proxyconfig: |-
     proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header X-Scheme $scheme;
     proxy_connect_timeout 1;
-    proxy_send_timeout 30;
+    proxy_send_timeout 60;
     proxy_read_timeout 40;
     proxy_set_header    X-Forwarded-Proto $scheme;
     proxy_set_header    X-Forwarded-For   $http_x_forwarded_for;
@@ -13695,7 +13695,7 @@ proxyconfig: |-
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
       proxy_connect_timeout 1;
-      proxy_send_timeout 30;
+      proxy_send_timeout 60;
       proxy_read_timeout 40;
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header X-Request-ID $sb_request_id;
@@ -14559,7 +14559,7 @@ proxyconfig: |-
       rewrite ^/apis/(.*) /$1 break;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -14582,7 +14582,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -14605,7 +14605,7 @@ proxyconfig: |-
       proxy_set_header X-Forwarded-Server $host;
       proxy_pass http://ui-proxies:3003;
       proxy_connect_timeout 10;
-      proxy_send_timeout 300;
+      proxy_send_timeout 60;
       proxy_read_timeout 300;
     }
 
@@ -14655,7 +14655,7 @@ proxyconfig: |-
     proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
     proxy_set_header X-Scheme $scheme;
     proxy_connect_timeout 1;
-    proxy_send_timeout 30;
+    proxy_send_timeout 60;
     proxy_read_timeout 40;
     proxy_set_header    X-Forwarded-Proto $scheme;
     proxy_set_header    X-Forwarded-For   $http_x_forwarded_for;
@@ -14669,7 +14669,7 @@ proxyconfig: |-
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
       proxy_connect_timeout 1;
-      proxy_send_timeout 30;
+      proxy_send_timeout 60;
       proxy_read_timeout 40;
       proxy_set_header    X-Forwarded-Proto $scheme;
       proxy_set_header X-Request-ID $sb_request_id;
@@ -15549,3 +15549,4 @@ serviceMonitor:
 {# apple_app_site_association: '{"applinks":{"apps":[],"details":[{"appID":"123456.dev.sunbird.app","paths":["/explore","/dial/*","/get/dial","/play/content","/play/collection","/learn/course","/explore-course/course","/explore-course","/search","/search/Library","/faq","/profile","/play/quiz","/explore","/learn","/resources"]}]}}' #}
 searchbycompetencyapi_response_json: |
   {{ searchbycompetencyapi_response_json | default("") }}
+  
