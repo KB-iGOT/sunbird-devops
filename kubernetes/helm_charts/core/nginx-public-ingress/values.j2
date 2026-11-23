@@ -123,7 +123,7 @@ proxyconfig: |-
     proxy_set_header    X-Forwarded-SSL   on;
     proxy_set_header    X-Forwarded-Proto $scheme;
     proxy_hide_header X-XSS-Protection;
-    large_client_header_buffers: 4 32k;
+    large_client_header_buffers 4 32k;
     add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     #add_header Content-Security-Policy "frame-ancestors 'self'; frame-src *.youtube.com *.igot-stage.in *.{{ nginx_proxy_server_name }};";
