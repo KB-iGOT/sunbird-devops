@@ -599,6 +599,11 @@ proxyconfig: |-
     }
 
     location ~ /apis/protected/v8/user/profileRegistry/getMasterNationalities {
+
+      # Mirror request to testing backend
+      mirror /_mirror_master_nationalities$is_args$args;
+      mirror_request_body on;
+
       # Enabling caching
       proxy_cache_key "$request_uri";
       proxy_cache sunbirdigot_cache;
@@ -623,6 +628,26 @@ proxyconfig: |-
       proxy_read_timeout 70;
       proxy_http_version 1.1;
       proxy_pass http://ui-proxies:3003;
+    }
+
+    # Internal mirror endpoint
+    location = /_mirror_master_nationalities {
+
+      internal;
+
+      proxy_set_header Connection "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Scheme $scheme;
+      proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+      proxy_connect_timeout 5;
+      proxy_send_timeout 60;
+      proxy_read_timeout 70;
+      proxy_http_version 1.1;
+
+      # Replace with your testing backend
+      proxy_pass http://ui-proxies-24:3003/protected/v8/user/profileRegistry/getMasterNationalities;
     }
 
     location ~ /api/masterData/v1/getNationalities {
