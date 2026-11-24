@@ -84,7 +84,7 @@
                                         <#-- TODO: need to find alternative for prepopulating username -->
                                         <input class="mt-8" id="username" name="username" type="text" disabled />
                                         <#else>
-                                        <input class="mt-8" id="username" name="username" onkeyup="validateEmailChar()" onfocusin="inputBoxFocusIn(this)" onfocusout="inputBoxFocusOut(this)" type="text" autofocus autocomplete="off" maxLength=95 />
+                                        <input class="mt-8" id="username" name="username" oninput="validateEmailChar(); updateLoginButtonState()" onfocusin="inputBoxFocusIn(this)" onfocusout="inputBoxFocusOut(this)" type="text" autofocus autocomplete="off" maxLength=95 />
                                         <span id="emailLengthErr" class="ui text error" style="font-size:11px!important;"></span>
                                         </#if>
                                     </div>
@@ -101,7 +101,7 @@
                                                 ${msg("placeholderForPassword")}
                                             </label>
                                         </div>
-                                        <input placeholder="${msg('passwordPlaceholder')}" class=" mt-8" id="password" onfocusin="inputBoxFocusIn(this)" onfocusout="inputBoxFocusOut(this)" name="password" type="password" autocomplete="off" maxLength=100 />
+                                        <input placeholder="${msg('passwordPlaceholder')}" class=" mt-8" id="password" oninput="updateLoginButtonState()" onfocusin="inputBoxFocusIn(this)" onfocusout="inputBoxFocusOut(this)" name="password" type="password" autocomplete="off" maxLength=100 />
                                         <span class="ui text error hide" id="inCorrectPasswordError">${msg("inCorrectPasswordError")}</span>
                                     </div>
                                     <div class="field">
@@ -118,7 +118,7 @@
                                         
                                     </div>
                                     <div class="field">
-                                        <button id="login" class="ui fluid button">${msg("doLogIn")}</button>
+                                        <button id="login" class="ui fluid button" disabled>${msg("doLogIn")}</button>
                                     </div>
                                     <div class="field or-container">
                                         <div class="or-holder">
@@ -332,52 +332,48 @@ rgb(0,116,182);color: white;">
                 if (userEmail && userEmail.length > 0) {
 		if(userEmail.length > 5 && !userEmail.match(validRegex)) {
                         document.getElementById("emailLengthErr").innerHTML = "email is not valid"
-                        if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                document.getElementById("login").disabled = false
-                        } else {
-                            document.getElementById("login").disabled = true
-                        }
+                        updateLoginButtonState()
                     }
                     const email = userEmail.split('@')
                     if (email && email.length === 2) {
                         if((email[0] && email[0].length > 64 ) || (email[1] && email[1].length >255)) {
                             document.getElementById("emailLengthErr").innerHTML = "Max 64 characters before @ & 255 characters after @ are valid."
-                            if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                document.getElementById("login").disabled = false
-                            } else {
-                                document.getElementById("login").disabled = true
-                            }
+                            updateLoginButtonState()
                             
                         } else {
                             document.getElementById("emailLengthErr").innerHTML = ""
-                                if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                    document.getElementById("login").disabled = false
-                                } else {
-                                    document.getElementById("login").disabled = true
-                                }
+                                updateLoginButtonState()
                             }
                         }
                     }
 			else if (userEmail.replace(/\s+/g, '').length == 0 || userEmail === "") {
                         	document.getElementById("emailLengthErr").innerHTML = "email field can not be blank"
-                        	if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                                document.getElementById("login").disabled = false
-                            } else {
-                                document.getElementById("login").disabled = true
-                            }
+                        	updateLoginButtonState()
                     }
                 } 
 
     
     </script>
     <script type="text/javascript">    
-        function recaptchaCheckedCallback() {
-            if(grecaptcha && grecaptcha.getResponse().length > 0) {
-                document.getElementById("login").disabled = false
-            } else {
-                document.getElementById("login").disabled = true
+        function isCaptchaSolved() {
+            try {
+                return typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length > 0;
+            } catch (e) {
+                return false;
             }
-        }  
+        }
+        // Enable Login only when email, password and captcha are all provided.
+        // A disabled (prepopulated) username field counts as provided.
+        function updateLoginButtonState() {
+            var username = document.getElementById("username");
+            var password = document.getElementById("password");
+            var hasUsername = username.disabled || username.value.trim() !== "";
+            var hasPassword = password.value.trim() !== "";
+            document.getElementById("login").disabled = !(hasUsername && hasPassword && isCaptchaSolved());
+        }
+        function recaptchaCheckedCallback() {
+            updateLoginButtonState();
+        }
         function recaptchaExpiredCallback() {
             grecaptcha.reset();
         }  
