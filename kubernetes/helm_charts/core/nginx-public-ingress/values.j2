@@ -634,6 +634,7 @@ proxyconfig: |-
     location = /_mirror_master_nationalities {
 
     internal;
+    access_log /var/log/nginx/mirror_debug.log mirror_debug;
 
     proxy_set_header Connection "";
     proxy_set_header Host $host;
@@ -15296,6 +15297,18 @@ nginxconfig: |
                         ' "$http_x_device_id" "$http_x_channel_id" "$http_x_app_id"'
                         ' "$http_x_app_ver" "$http_x_session_id"';
       access_log  /var/log/nginx/access.log  main;
+
+      # Mirror request debugging log
+     log_format mirror_debug
+        '$time_local '
+        'request_uri="$request_uri" '
+        'uri="$uri" '
+        'status=$status '
+        'upstream_addr="$upstream_addr" '
+        'upstream_status="$upstream_status" '
+        'request_time=$request_time '
+        'upstream_response_time="$upstream_response_time"';
+
       # Shared dictionary to store metrics
       lua_shared_dict prometheus_metrics 100M;
       {% if nginx_token_refresh is defined and nginx_token_refresh %}
