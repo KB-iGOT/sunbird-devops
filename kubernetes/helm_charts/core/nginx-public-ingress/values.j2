@@ -1028,6 +1028,10 @@ proxyconfig: |-
       #}
       # add_header Access-Control-Allow-Origin "*";
       # add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+
+          # Mirror all API requests to testing backend
+      mirror /_mirror_all_apis;
+      mirror_request_body on;
       proxy_cookie_path ~*^/.* /;
       proxy_set_header X-Real-IP  $remote_addr;
       proxy_set_header X-Forwarded-For $remote_addr;
@@ -1039,6 +1043,29 @@ proxyconfig: |-
       proxy_connect_timeout 10;
       proxy_send_timeout 60;
       proxy_read_timeout 300;
+    }
+
+     # Internal mirror endpoint
+     location = /_mirror_all_apis {
+
+        internal;
+
+        access_log /var/log/nginx/mirror_debug.log mirror_debug;
+
+        proxy_set_header Connection "";
+        proxy_set_header Host $host;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Nginx-Mirror "true";
+
+        proxy_connect_timeout 10s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 300s;
+        proxy_http_version 1.1;
+
+        # Send mirrored request to testing backend
+        proxy_pass http://ui-proxies-24:3003;
     }
 
     location /pdf-processing/ {
