@@ -28272,7 +28272,7 @@ kong_apis:
 
   - name: ltiLineItem
     uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems/lineitem/scores"
-    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems/1/lineitem/scores"
+    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems/lineitem/scores"
     strip_uri: true
     plugins:
       - name: cors
