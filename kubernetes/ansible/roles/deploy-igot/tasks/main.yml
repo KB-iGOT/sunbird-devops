@@ -96,7 +96,8 @@
     "analyser-cbc-service",
     "cb-ext-survey-service",
     "cb-ext-rts-service",
-    "cb-org-hierarchy-service"
+    "cb-org-hierarchy-service",
+    "cios-content-service"
     ]
 
 - name: helm upgrade

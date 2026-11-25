@@ -28271,7 +28271,7 @@ kong_apis:
 
 
   - name: ltiLineItem
-    uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems/1/lineitem/scores"
+    uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems/lineitem/scores"
     upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems/1/lineitem/scores"
     strip_uri: true
     plugins:
@@ -28284,21 +28284,6 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-
-
-  - name: ltiLineItems
-    uris: "{{ ciosIntegration_prefix }}/lti/ags/lineitems"
-    upstream_url: "{{ cios_content_service_url }}/ciosIntegration/lti/ags/lineitems"
-    strip_uri: true
-    plugins:
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: ip
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
         
   - name: ltiDeepLinkingInitiate
     uris: "{{ ciosIntegration_prefix }}/lti/deeplinking/initiate"
