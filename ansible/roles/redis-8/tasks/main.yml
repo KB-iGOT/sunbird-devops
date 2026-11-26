@@ -95,6 +95,20 @@
     chdir: "{{ redis_home }}"
     creates: "{{ redis_home }}/src/redis-server"
 
+- name: Put redis binaries on the PATH (/usr/local/bin)
+  become: yes
+  file:
+    src: "{{ redis_home }}/src/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+    force: yes
+  loop:
+    - redis-cli
+    - redis-server
+    - redis-benchmark
+    - redis-check-aof
+    - redis-check-rdb
+
 - name: Kernel tuning recommended by redis
   become: yes
   copy:
