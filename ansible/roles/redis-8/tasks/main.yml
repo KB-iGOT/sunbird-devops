@@ -1,13 +1,22 @@
 ---
 # tasks file for redis 8.2 (source build, password protected)
 
-- name: Fail early if redis_password is not set
+- name: Check redis_password is set
   assert:
     that:
       - redis_password is defined
+      - redis_password | length > 0
+    fail_msg: >-
+      redis_password is empty or not defined for {{ inventory_hostname }}.
+      Check that the host is in the group where you defined the variable.
+
+- name: Check redis_password length
+  assert:
+    that:
       - redis_password | length >= 16
-    fail_msg: "redis_password must be set (min 16 chars). Pass it via ansible-vault."
-  no_log: true
+    fail_msg: >-
+      redis_password is only {{ redis_password | length }} characters;
+      use at least 16.
 
 - name: Install build dependencies (Debian/Ubuntu)
   become: yes
@@ -32,6 +41,22 @@
       - openssl-devel
     state: present
   when: ansible_os_family == "RedHat"
+
+- name: Create group {{ learner_user }} if it does not exist
+  become: yes
+  group:
+    name: "{{ learner_user }}"
+    state: present
+
+- name: Create user {{ learner_user }} if it does not exist
+  become: yes
+  user:
+    name: "{{ learner_user }}"
+    group: "{{ learner_user }}"
+    home: "{{ learner_user_home }}"
+    create_home: yes
+    shell: /bin/bash
+    state: present
 
 - name: Ensure data dir exists and is owned by {{ learner_user }}
   become: yes
