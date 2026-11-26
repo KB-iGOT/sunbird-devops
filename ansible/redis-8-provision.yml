@@ -1,0 +1,6 @@
+---
+
+- hosts: redis-8
+  become: yes
+  roles:
+    - redis-8

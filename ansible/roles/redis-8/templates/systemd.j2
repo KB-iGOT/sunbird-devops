@@ -1,0 +1,21 @@
+[Unit]
+Description=Redis {{ redis_version }} In-Memory Data Store
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User={{ learner_user }}
+Group={{ learner_user }}
+Type=notify
+ExecStart={{ redis_home }}/src/redis-server {{ redis_home }}/redis.conf
+# No ExecStop with redis-cli: it would need the password.
+# systemd sends SIGTERM and redis shuts down gracefully (saves RDB/AOF).
+TimeoutStartSec=90
+TimeoutStopSec=90
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,128 @@
+---
+# tasks file for redis 8.2 (source build, password protected)
+
+- name: Fail early if redis_password is not set
+  assert:
+    that:
+      - redis_password is defined
+      - redis_password | length >= 16
+    fail_msg: "redis_password must be set (min 16 chars). Pass it via ansible-vault."
+  no_log: true
+
+- name: Install build dependencies (Debian/Ubuntu)
+  become: yes
+  apt:
+    name:
+      - build-essential
+      - pkg-config
+      - libsystemd-dev
+      - libssl-dev
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Install build dependencies (RHEL family)
+  become: yes
+  yum:
+    name:
+      - gcc
+      - make
+      - pkgconfig
+      - systemd-devel
+      - openssl-devel
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Ensure data dir exists and is owned by {{ learner_user }}
+  become: yes
+  file:
+    path: "{{ redis_data_dir }}"
+    state: directory
+    owner: "{{ learner_user }}"
+    group: "{{ learner_user }}"
+    mode: "0750"
+
+- name: Download redis {{ redis_version }} source
+  become: yes
+  become_user: "{{ learner_user }}"
+  get_url:
+    url: "{{ redis_tar_ball }}"
+    dest: "{{ learner_user_home }}/redis-{{ redis_version }}.tar.gz"
+    timeout: 60
+    force: no
+
+- name: Extract redis source
+  become: yes
+  become_user: "{{ learner_user }}"
+  unarchive:
+    src: "{{ learner_user_home }}/redis-{{ redis_version }}.tar.gz"
+    dest: "{{ learner_user_home }}"
+    remote_src: yes
+    creates: "{{ redis_home }}/Makefile"
+
+- name: Build redis (skipped if already built)
+  become: yes
+  become_user: "{{ learner_user }}"
+  command: >
+    make -j{{ redis_make_jobs }} USE_SYSTEMD=yes
+    {{ 'BUILD_TLS=yes' if redis_build_tls | bool else '' }}
+  args:
+    chdir: "{{ redis_home }}"
+    creates: "{{ redis_home }}/src/redis-server"
+
+- name: Kernel tuning recommended by redis
+  become: yes
+  copy:
+    dest: /etc/sysctl.d/99-redis.conf
+    mode: "0644"
+    content: |
+      vm.overcommit_memory = 1
+      net.core.somaxconn = 1024
+  register: redis_sysctl
+
+- name: Apply kernel tuning
+  become: yes
+  command: sysctl -p /etc/sysctl.d/99-redis.conf
+  when: redis_sysctl is changed
+
+- name: Deploy redis.conf (contains password - restricted permissions)
+  become: yes
+  template:
+    src: redis.conf.j2
+    dest: "{{ redis_home }}/redis.conf"
+    owner: "{{ learner_user }}"
+    group: "{{ learner_user }}"
+    mode: "0640"
+  notify: restart redis
+
+- name: Deploy systemd unit
+  become: yes
+  template:
+    src: systemd.j2
+    dest: /etc/systemd/system/redis.service
+    mode: "0644"
+  notify: restart redis
+
+- name: Enable and start redis
+  become: yes
+  systemd:
+    name: redis
+    enabled: yes
+    state: started
+    daemon_reload: yes
+
+- name: Apply pending restarts before the health check
+  meta: flush_handlers
+
+- name: Verify redis answers with the password
+  become: yes
+  become_user: "{{ learner_user }}"
+  command: "{{ redis_home }}/src/redis-cli -p {{ redis_port }} ping"
+  environment:
+    REDISCLI_AUTH: "{{ redis_password }}"   # keeps password out of the process list
+  register: redis_ping
+  retries: 5
+  delay: 3
+  until: redis_ping.stdout == "PONG"
+  changed_when: false
+  no_log: true

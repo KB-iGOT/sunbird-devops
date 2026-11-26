@@ -1,0 +1,6 @@
+---
+galaxy_info:
+  role_name: redis
+  description: Redis 8.2 built from source, password protected, managed by systemd
+  min_ansible_version: "2.9"
+dependencies: []

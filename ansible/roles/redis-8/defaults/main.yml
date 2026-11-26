@@ -1,0 +1,31 @@
+---
+# ---- User / paths (same layout as the old 6.2.5 role) ----
+learner_user: learning
+learner_user_home: "/home/{{ learner_user }}"
+
+redis_version: 8.2.11
+redis_tar_ball: "https://download.redis.io/releases/redis-{{ redis_version }}.tar.gz"
+# Fallback if download.redis.io is blocked in your network:
+# redis_tar_ball: "https://github.com/redis/redis/archive/refs/tags/{{ redis_version }}.tar.gz"
+redis_home: "{{ learner_user_home }}/redis-{{ redis_version }}"
+redis_data_dir: /data
+
+# ---- Network ----
+redis_port: 6379
+redis_bind: "0.0.0.0"          # restrict to private IPs if possible, e.g. "127.0.0.1 10.0.0.5"
+redis_protected_mode: "yes"
+
+# ---- Authentication ----
+# REQUIRED. Do not hardcode here - pass from ansible-vault / inventory secrets.
+# Avoid spaces and double quotes in the password.
+redis_password: ""
+
+# ---- Memory / persistence ----
+redis_maxmemory: ""            # e.g. "2gb"; empty = no limit
+redis_maxmemory_policy: noeviction
+redis_appendonly: "no"
+redis_databases: 16
+
+# ---- Build options ----
+redis_build_tls: false         # true = compile with TLS support
+redis_make_jobs: "{{ ansible_processor_vcpus | default(2) }}"
