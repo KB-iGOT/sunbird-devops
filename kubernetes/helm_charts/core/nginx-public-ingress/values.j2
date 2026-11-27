@@ -50,6 +50,7 @@ repository: {{proxy_repository|default('proxy')}}
 image_tag: {{ image_tag }}
 
 proxyconfig: |-
+{% set csp_policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.userway.org https://*." ~ nginx_proxy_server_name ~ "; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*." ~ nginx_proxy_server_name ~ " wss://*." ~ nginx_proxy_server_name ~ " https://api.userway.org; frame-src 'self' https://*.youtube.com https://*.igot-stage.in https://*." ~ nginx_proxy_server_name ~ " https://api.userway.org; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://*." ~ nginx_proxy_server_name ~ ";" %}
   {% if proto=='https' %}
   server {
     listen 80;
@@ -2314,7 +2315,8 @@ proxyconfig: |-
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP {{ nginx_client_public_ip_header | d('$remote_addr') }};
       proxy_set_header X-Scheme $scheme;
-      add_header Content-Security-Policy "frame-ancestors *;";
+      add_header Content-Security-Policy "frame-ancestors *;" always;
+      add_header Content-Security-Policy-Report-Only "{{ csp_policy }}" always;
       proxy_connect_timeout 5;
       proxy_send_timeout 60;
       proxy_read_timeout 70;
@@ -4476,6 +4478,7 @@ proxyconfig: |-
       add_header Referrer-Policy 'strict-origin';
       add_header X-XSS-Protection "1; mode=block" always;
       add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains; preload';
+      add_header Content-Security-Policy-Report-Only "{{ csp_policy }}" always;
       add_header 'Access-Control-Allow-Headers'  'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-channel-id, x-app-id, Authorization, auth-token, x-user-id';
       proxy_set_header X-Scheme $scheme;
       proxy_connect_timeout 5;
